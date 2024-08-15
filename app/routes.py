@@ -14,8 +14,9 @@ def index():
     uid = common.authenticate(db, username, password, {})
 
     models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object')
-    partners = models.execute_kw(db, uid, password,
-                                 'res.partner', 'search_read',
-                                 [[]], {'fields': ['name', 'email'], 'limit': 10})
+    tasks = models.execute_kw(db, uid, password,
+                              'project.task', 'search_read',
+                              [[]], 
+                              {'fields': ['name', 'stage_id', 'user_id'], 'limit': 10}) 
     
-    return render_template('index.html', partners=partners)
+    return render_template('index.html', tasks=tasks)

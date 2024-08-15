@@ -1,17 +1,20 @@
-<!-- app/templates/index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <title>Uçuş Planlaması</title>
 </head>
 <body>
-    <div class="button-container">
-        <a href="#" class="btn">Admin</a>
-        <a href="#" class="btn">Kullanıcı</a>
-        <a href="#" class="btn">Acenta</a>
-    </div>
+    <h1>Uçuş Planlaması</h1>
+    <ul>
+        {% for task in tasks %}
+            <li>
+                <strong>{{ task['name'] }}</strong><br>
+                Aşama: {{ task['stage_id'][1] }}<br>
+                Sorumlu: {% if task['user_id'] %} {{ task['user_id'][1] }} {% else %} Belirtilmemiş {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
 </body>
 </html>
