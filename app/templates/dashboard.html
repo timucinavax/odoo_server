@@ -5,25 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
-            text-align: center;
-        }
-        h1 {
-            margin-bottom: 50px;
-            color: #333;
-        }
         .button {
             display: inline-block;
-            margin: 20px;
             padding: 15px 30px;
             font-size: 18px;
             color: white;
@@ -31,8 +14,8 @@
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            transition: background-color 0.3s;
             text-decoration: none;
+            transition: background-color 0.3s;
         }
         .button:hover {
             background-color: #0056b3;
@@ -40,11 +23,7 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Welcome to the Panel</h1>
-        <a href="{{ url_for('main.admin_panel') }}" class="button">Admin Panel</a>
-        <a href="{{ url_for('main.user_panel') }}" class="button">User Panel</a>
-        <a href="{{ url_for('main.agency_panel') }}" class="button">Agency Panel</a>
-    </div>
+    <h1>Dashboard</h1>
+    <a href="{{ url_for('admin_panel') }}" class="button">Admin Paneline Git</a>
 </body>
 </html>
