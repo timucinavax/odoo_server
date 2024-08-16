@@ -1,11 +1,10 @@
-from flask import Flask, render_template , current_app
+from flask import Blueprint, render_template, current_app
 import xmlrpc.client
 
-app = Flask(__name__)
+main = Blueprint('main', __name__)
 
-@app.route('/')
+@main.route('/')
 def index():
-
     url = current_app.config['ODOO_URL']
     db = current_app.config['ODOO_DB']
     username = current_app.config['ODOO_USERNAME']
