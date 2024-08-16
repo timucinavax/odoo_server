@@ -12,7 +12,6 @@
         <div class="kanban-card" style="border-left: 5px solid rgb({{ task.color or 0 }})">
             <h2>{{ task.display_name }}</h2>
             <p>Partner: {{ task.partner_id[1] }}</p>
-            <p>Task Count: {{ task.task_count }}</p>
             <p>Open Tasks: {{ task.open_task_count }}</p>
             <p>Closed Tasks: {{ task.closed_task_count }}</p>
             <p>Milestones: {{ task.milestone_count_reached }}/{{ task.milestone_count }}</p>

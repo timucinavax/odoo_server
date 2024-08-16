@@ -20,11 +20,10 @@ def index():
 
     models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object')
 
-    # Odoo'dan project.task modeline ait görevleri al
     tasks = models.execute_kw(db, uid, password,
                               'project.task', 'search_read',
                               [[]], 
-                              {'fields': ['display_name', 'partner_id', 'color', 'task_count', 'closed_task_count',
+                              {'fields': ['display_name', 'partner_id', 'color', 'closed_task_count',
                                           'open_task_count', 'milestone_count_reached', 'milestone_count',
                                           'allow_milestones', 'label_tasks', 'alias_email', 'is_favorite',
                                           'rating_count', 'rating_avg', 'rating_status', 'rating_active',
@@ -33,8 +32,3 @@ def index():
     
     # HTML şablonuna görevleri geçir
     return render_template('index.html', tasks=tasks)
-
-app.register_blueprint(main)
-
-if __name__ == "__main__":
-    app.run(debug=True)
