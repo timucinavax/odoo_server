@@ -4,6 +4,10 @@ import xmlrpc.client
 main = Blueprint('main', __name__)
 
 @main.route('/')
+def admin_panel():
+    return render_template('dashboard.html')
+
+@main.route('/admin')
 def index():
     url = current_app.config['ODOO_URL']
     db = current_app.config['ODOO_DB']
@@ -19,4 +23,4 @@ def index():
                               'project.task', 'search_read',
                               [[]], 
                               {})
-    return render_template('index.html', tasks=tasks)
+    return render_template('admin_panel.html', tasks=tasks)
