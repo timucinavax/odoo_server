@@ -1,14 +1,19 @@
-from flask import Blueprint, render_template, current_app
+from flask import Flask, render_template, current_app
 import xmlrpc.client
 
-main = Blueprint('main', __name__)
+app = Flask(__name__)
 
-@main.route('/')
-def admin_panel():
+app.config['ODOO_URL'] = 'http://217.160.138.215:8447'
+app.config['ODOO_DB'] = 'odoo_db'
+app.config['ODOO_USERNAME'] = 'admin'
+app.config['ODOO_PASSWORD'] = 'admin'
+
+@app.route('/')
+def dashboard():
     return render_template('dashboard.html')
 
-@main.route('/admin')
-def index():
+@app.route('/admin')
+def admin_panel():
     url = current_app.config['ODOO_URL']
     db = current_app.config['ODOO_DB']
     username = current_app.config['ODOO_USERNAME']
@@ -24,3 +29,6 @@ def index():
                               [[]], 
                               {})
     return render_template('admin_panel.html', tasks=tasks)
+
+if __name__ == '__main__':
+    app.run(debug=True)
