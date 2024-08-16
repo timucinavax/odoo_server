@@ -1,12 +1,6 @@
-from flask import Flask, render_template, current_app
+from flask import render_template, current_app
 import xmlrpc.client
-
-app = Flask(__name__)
-
-app.config['ODOO_URL'] = 'http://217.160.138.215:8447'
-app.config['ODOO_DB'] = 'odoo_db'
-app.config['ODOO_USERNAME'] = 'admin'
-app.config['ODOO_PASSWORD'] = 'admin'
+from app import app
 
 @app.route('/')
 def dashboard():
@@ -29,6 +23,3 @@ def admin_panel():
                               [[]], 
                               {})
     return render_template('admin_panel.html', tasks=tasks)
-
-if __name__ == '__main__':
-    app.run(debug=True)
