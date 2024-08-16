@@ -3,17 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Uçuş Planlaması</title>
+    <title>Task List</title>
 </head>
 <body>
-    <h1>Uçuş Planlaması</h1>
+    <h1>Task List</h1>
     <ul>
         {% for task in tasks %}
-            <li>
-                <strong>{{ task['name'] }}</strong><br>
-                Aşama: {{ task['stage_id'][1] }}<br>
-                Sorumlu: {% if task['user_id'] %} {{ task['user_id'][1] }} {% else %} Belirtilmemiş {% endif %}
-            </li>
+            <li>{{ task.name }} - {{ task.stage_id }} - {{ task.assigned_to }}</li>
         {% endfor %}
     </ul>
 </body>

@@ -9,14 +9,15 @@ def index():
     db = current_app.config['ODOO_DB']
     username = current_app.config['ODOO_USERNAME']
     password = current_app.config['ODOO_PASSWORD']
-
     common = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/common')
     uid = common.authenticate(db, username, password, {})
 
     models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object')
+
     tasks = models.execute_kw(db, uid, password,
                               'project.task', 'search_read',
                               [[]], 
-                              {'fields': ['name', 'stage_id', 'user_id'], 'limit': 10}) 
+                              {'fields': ['name', 'stage_id', 'assigned_to'], 'limit': 10})
     
+    # HTML şablonuna görevleri geçir
     return render_template('index.html', tasks=tasks)
