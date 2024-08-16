@@ -3,26 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Uçuş Planlaması</title>
+    <title>Project Tasks</title>
 </head>
 <body>
-    <h1>Admin Panel</h1>
-    <div class="kanban">
+    <h1>Project Tasks</h1>
+    <div class="task-list">
         {% for task in tasks %}
-        <div class="kanban-card" style="border-left: 5px solid rgb({{ task.color or 0 }})">
-            <h2>{{ task.display_name }}</h2>
-            <p>Partner: {{ task.partner_id[1] }}</p>
-            <p>Open Tasks: {{ task.open_task_count }}</p>
-            <p>Closed Tasks: {{ task.closed_task_count }}</p>
-            <p>Milestones: {{ task.milestone_count_reached }}/{{ task.milestone_count }}</p>
-            <p>Email Alias: {{ task.alias_email }}</p>
-            <p>Assigned To: {{ task.user_id[1] }}</p>
-            <p>Last Update: {{ task.last_update_status }}</p>
-            <p>Tags: 
-                {% for tag in task.tag_ids %}
-                <span>{{ tag }}</span>
+        <div class="task">
+            <h2>{{ task['display_name'] }}</h2>
+            <ul>
+                {% for key, value in task.items() %}
+                <li><strong>{{ key }}:</strong> {{ value }}</li>
                 {% endfor %}
-            </p>
+            </ul>
         </div>
         {% endfor %}
     </div>
