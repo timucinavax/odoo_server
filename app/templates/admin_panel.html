@@ -3,44 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Admin Panel</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f4f4f4;
         }
-        .panel {
+        .kanban-board {
+            display: flex;
+            gap: 20px;
+        }
+        .kanban-column {
+            width: 25%;
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .kanban-column h2 {
             text-align: center;
-            padding: 20px;
+            background-color: #333;
+            color: white;
+            margin: -10px -10px 10px -10px;
+            padding: 10px;
+            border-radius: 5px 5px 0 0;
+        }
+        .task {
             background-color: white;
+            margin-bottom: 10px;
+            padding: 10px;
             border-radius: 5px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
-        .panel h1 {
-            margin-bottom: 20px;
-        }
-        .panel a {
-            display: inline-block;
-            padding: 10px 20px;
-            font-size: 16px;
-            color: white;
-            background-color: #007bff;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-        .panel a:hover {
-            background-color: #0056b3;
+        .task h3 {
+            margin: 0 0 5px 0;
+            font-size: 1.2em;
         }
     </style>
 </head>
 <body>
-    <div class="panel">
-        <h1>Admin Dashboard</h1>
-        <a href="{{ url_for('main.adminPanel') }}">Admin Panel</a>
+    <h1>Admin Panel</h1>
+    <div class="kanban-board">
+        <div class="kanban-column">
+            <h2>Yeni</h2>
+            {% for task in tasks if task['stage_id'][1] == 'Yeni' %}
+            <div class="task">
+                <h3>{{ task['name'] }}</h3>
+                <p><strong>Assigned to:</strong> {{ task['user_id'][1] if task['user_id'] else 'Unassigned' }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="kanban-column">
+            <h2>Atanmış</h2>
+            {% for task in tasks if task['stage_id'][1] == 'Atanmış' %}
+            <div class="task">
+                <h3>{{ task['name'] }}</h3>
+                <p><strong>Assigned to:</strong> {{ task['user_id'][1] if task['user_id'] else 'Unassigned' }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="kanban-column">
+            <h2>Devam Eden</h2>
+            {% for task in tasks if task['stage_id'][1] == 'Devam Eden' %}
+            <div class="task">
+                <h3>{{ task['name'] }}</h3>
+                <p><strong>Assigned to:</strong> {{ task['user_id'][1] if task['user_id'] else 'Unassigned' }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="kanban-column">
+            <h2>Biten</h2>
+            {% for task in tasks if task['stage_id'][1] == 'Biten' %}
+            <div class="task">
+                <h3>{{ task['name'] }}</h3>
+                <p><strong>Assigned to:</strong> {{ task['user_id'][1] if task['user_id'] else 'Unassigned' }}</p>
+            </div>
+            {% endfor %}
+        </div>
     </div>
 </body>
 </html>
