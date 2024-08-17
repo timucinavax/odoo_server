@@ -34,27 +34,38 @@ def login():
 @app.route('/register', methods=['POST'])
 def register():
     role = request.form.get('role')
+    name = request.form.get('name')
     username = request.form.get('username')
     password = request.form.get('password')
 
     url = current_app.config['ODOO_URL']
     db = current_app.config['ODOO_DB']
-    
+    admin_username = current_app.config['ODOO_USERNAME']
+    admin_password = current_app.config['ODOO_PASSWORD']
+
     common = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/common')
-    uid = common.authenticate(db, current_app.config['ODOO_USERNAME'], current_app.config['ODOO_PASSWORD'], {})
+    uid = common.authenticate(db, admin_username, admin_password, {})
 
     models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object')
 
-    if uid:
-        # Yeni kullanıcıyı Odoo'da oluşturma
-        user_id = models.execute_kw(db, uid, current_app.config['ODOO_PASSWORD'], 'res.users', 'create', [{
-            'name': username,
-            'login': username,
-            'password': password,
-            'groups_id': [(6, 0, [role_id])],  # Rol bilgisi burada eklenir
-        }])
-        
-        flash("Kayıt başarılı! Giriş yapabilirsiniz.")
+    # Role ID'sini dinamik olarak alıyoruz
+    role_id = models.execute_kw(db, uid, admin_password, 'res.groups', 'search', [[('name', '=', role)]])
+    if role_id:
+        role_id = role_id[0]  # İlk eşleşen rolün ID'sini alıyoruz
+    else:
+        flash("Belirtilen rol bulunamadı.")
+        return redirect(url_for('dashboard'))
+
+    # Kullanıcı oluşturma
+    user_id = models.execute_kw(db, uid, admin_password, 'res.users', 'create', [{
+        'name': name,
+        'login': username,
+        'password': password,
+        'groups_id': [(6, 0, [role_id])],  # Rol bilgisi burada eklenir
+    }])
+
+    if user_id:
+        flash("Kayıt başarılı. Giriş yapabilirsiniz.")
         return redirect(url_for('dashboard'))
     else:
         flash("Kayıt sırasında bir hata oluştu.")
