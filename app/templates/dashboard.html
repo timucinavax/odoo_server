@@ -6,13 +6,89 @@
     <title>Sehlen Turizm Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
     <style>
-        ::-webkit-scrollbar {
-            display: none;
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Raleway', sans-serif;
+            height: 100%;
+            width: 100%;
+            overflow-x: hidden;
         }
-        footer {
-            display: none;
+
+        .header {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            background: url('images/images.jpg') no-repeat center center/cover;
+            color: white;
+        }
+
+        .navbar {
+            background-color: transparent;
+            padding: 20px;
+        }
+
+        .navbar-nav .nav-link {
+            font-weight: 600;
+            color: #c0c0c0;
+            text-transform: uppercase;
+            margin: 0 15px;
+            position: relative;
+            padding-bottom: 5px;
+            transition: color 0.3s, border-color 0.3s;
+        }
+
+        .navbar-nav .nav-link::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 2px;
+            background-color: #c0c0c0;
+            transition: width 0.3s;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #6f6d6b;
+        }
+
+        .navbar-nav .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(122, 121, 121, 0.5);
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 1.5em;
+            margin: 0 10px;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: #c1bcbc;
         }
     </style>
 </head>
@@ -21,7 +97,7 @@
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">
-                    <img src="{{ url_for('static', filename='images/sehlen_logo.png') }}" alt="Sehlen Turizm" class="logo">
+                    <img src="images/sehlen_logo.png" alt="Sehlen Turizm" class="logo">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -29,13 +105,13 @@
                 <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('admin_panel') }}">Admin</a>
+                            <a class="nav-link" href="#">Admin</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('user_panel') }}">Kullanıcı</a>
+                            <a class="nav-link" href="#">Kullanıcı</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('agency_panel') }}">Acenta</a>
+                            <a class="nav-link" href="#">Acenta</a>
                         </li>
                     </ul>
                 </div>
@@ -54,6 +130,5 @@
             </div>
         </div>
     </header>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
