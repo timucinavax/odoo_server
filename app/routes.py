@@ -84,3 +84,7 @@ def user_panel():
 @app.route('/agency')
 def agency_panel():
     return render_template('agency_panel.html')
+
+@app.route('/plane_rev')
+def plane_rev():
+    return render_template('plane_rev.html')
