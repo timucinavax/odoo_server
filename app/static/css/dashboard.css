@@ -20,7 +20,7 @@ body, html {
     justify-content: space-between;
     align-items: center;
     padding: 15px 30px;
-    background-color: rgba(61, 61, 61, 0.7); /* Arka planı yarı saydam koyu renk yapalım */
+    background-color: rgba(0, 0, 0, 0.7); /* Arka planı yarı saydam koyu renk yapalım */
 }
 
 .logo {
@@ -43,8 +43,8 @@ nav {
 }
 
 .menu-link:hover {
-    color: #a4a7a8; /* Maviye dönüşüm */
-    border-bottom: 2px solid #a4a7a8; /* Alt çizgi mavi */
+    color: #00bfff; /* Maviye dönüşüm */
+    border-bottom: 2px solid #00bfff; /* Alt çizgi mavi */
 }
 
 .hero {
@@ -76,13 +76,14 @@ nav {
 }
 
 .social-icons a:hover {
-    color: #c1bcbc;
+    color: #00bfff;
 }
 
 .footer {
     text-align: center;
-    color: rgb(0, 0, 0);
+    color: white;
     padding: 20px;
+    background-color: rgba(0, 0, 0, 0.7);
 }
 
 .footer p {
