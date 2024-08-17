@@ -211,17 +211,15 @@
                         {% for user in users %}
                         {% if user.role != 'admin' %}
                         <tr>
-                            <td>{{ loop.index }}</td>
                             <td>{{ user.username }}</td>
                             <td>{{ user.email }}</td>
                             <td>
                                 {% if user.role == 'agency' %}
-                                Acenta - {{ user.username }}
+                                Acenta
                                 {% elif user.role == 'user' %}
-                                Kullanıcı - {{ user.username }}
+                                Kullanıcı 
                                 {% endif %}
                             </td>
-                            <td>{{ user.assigned_flights | join(', ') }}</td>
                         </tr>
                         {% endif %}
                         {% endfor %}
