@@ -113,7 +113,6 @@ def add_flight():
 
 @app.route('/admin')
 def admin_panel():
-    # Odoo bağlantısı
     url = current_app.config['ODOO_URL']
     db = current_app.config['ODOO_DB']
     admin_username = current_app.config['ODOO_USERNAME']
@@ -124,11 +123,9 @@ def admin_panel():
 
     models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object')
 
-    # Uçuşları çekme
     flights = models.execute_kw(db, uid, admin_password, 'flight.management', 'search_read', [[]], {'fields': ['flight_number', 'available_seats', 'departure_airport', 'arrival_airport', 'departure_time']})
 
-    # Kullanıcıları çekme
-    users = models.execute_kw(db, uid, admin_password, 'custom.user', 'search_read', [[]], {'fields': ['username', 'email', 'role', 'assigned_flights']})
+    users = models.execute_kw(db, uid, admin_password, 'custom.user', 'search_read', [[]], {'fields': ['username', 'email', 'role']})
 
     return render_template('admin_panel.html', flights=flights, users=users)
 
