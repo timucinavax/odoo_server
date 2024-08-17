@@ -109,6 +109,11 @@
             font-weight: bold;
             width: 100%;
         }
+
+        .login-form select {
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
@@ -146,9 +151,14 @@
             <div class="col-md-4">
                 <div id="loginForm" class="login-form">
                     <h5 class="text-center mb-3">Giriş Yap</h5>
-                    <input type="text" class="form-control" placeholder="Kullanıcı Adı">
-                    <input type="password" class="form-control" placeholder="Şifre">
-                    <button class="btn btn-primary mt-3">Giriş Yap</button>
+                    <select id="roleSelect" class="form-control">
+                        <option value="user">User</option>
+                        <option value="admin">Admin</option>
+                        <option value="agency">Acenta</option>
+                    </select>
+                    <input type="text" id="usernameInput" class="form-control" placeholder="Kullanıcı Adı" disabled>
+                    <input type="password" id="passwordInput" class="form-control" placeholder="Şifre" disabled>
+                    <button class="btn btn-primary mt-3" id="submitBtn" disabled>Giriş Yap</button>
                 </div>
             </div>
         </div>
@@ -201,6 +211,24 @@
             var loginButton = document.getElementById('loginButton');
             if (!form.contains(event.target) && event.target !== loginButton) {
                 form.style.display = 'none';
+            }
+        });
+
+        // Rol seçildiğinde inputları aktif hale getir
+        document.getElementById('roleSelect').addEventListener('change', function() {
+            var role = this.value;
+            var usernameInput = document.getElementById('usernameInput');
+            var passwordInput = document.getElementById('passwordInput');
+            var submitBtn = document.getElementById('submitBtn');
+
+            if (role) {
+                usernameInput.disabled = false;
+                passwordInput.disabled = false;
+                submitBtn.disabled = false;
+            } else {
+                usernameInput.disabled = true;
+                passwordInput.disabled = true;
+                submitBtn.disabled = true;
             }
         });
     </script>
