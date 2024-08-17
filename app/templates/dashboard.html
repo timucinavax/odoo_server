@@ -21,8 +21,20 @@
             padding: 15px;
         }
 
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+        }
+
         .navbar-brand img {
             max-height: 50px;
+            margin-right: 10px;
+        }
+
+        .navbar-brand span {
+            font-weight: bold;
+            color: black;
+            font-size: 1.5rem;
         }
 
         .navbar-nav .nav-link {
@@ -104,6 +116,7 @@
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
                 <img src="{{ url_for('static', filename='images/sehlen_logo.png') }}" alt="Sehlen Turizm">
+                <span>SEHLEN TURİZM</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -143,6 +156,7 @@
 
     <section class="hero">
         <div class="container">
+            <h1>SEHLEN TURİZM</h1>
             <h1>Merhaba, Nereye Gitmek İstersiniz?</h1>
             <div class="search-box mt-5">
                 <form>
