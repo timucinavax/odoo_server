@@ -73,6 +73,51 @@ def register():
         flash("Kayıt sırasında bir hata oluştu.")
         return redirect(url_for('dashboard'))
 
+@app.route('/add_flight', methods=['POST'])
+def add_flight():
+    flight_code = request.form.get('flight_code')
+    passenger_count = request.form.get('passenger_count')
+    departure = request.form.get('departure')
+    arrival = request.form.get('arrival')
+    date = request.form.get('date')
+
+    # Odoo bağlantı bilgileri
+    url = current_app.config['ODOO_URL']
+    db = current_app.config['ODOO_DB']
+    username = current_app.config['ODOO_USERNAME']
+    password = current_app.config['ODOO_PASSWORD']
+
+    # Odoo'ya bağlanma
+    common = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/common')
+    uid = common.authenticate(db, username, password, {})
+
+    if not uid:
+        flash('Odoo ile bağlantı kurulamadı.')
+        return redirect(url_for('admin_panel'))
+
+    # Flight Management modeli üzerinde işlem yapmak için
+    models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object')
+
+    # Uçuş ekleme işlemi
+    flight_id = models.execute_kw(db, uid, password, 'flight.management', 'create', [{
+        'flight_number': flight_code,
+        'available_seats': passenger_count,
+        'departure_airport': departure,
+        'arrival_airport': arrival,
+        'departure_time': date,  # Bu alanı datetime formatında ayarlamanız gerekebilir
+        'arrival_time': date,  # Örneğin: departure_time ve arrival_time'ı doğru formatta gönderin
+        'flight_duration': '00:00',  # Uçuş süresi hesaplanarak eklenebilir
+        'price': 0,  # Uçuş fiyatı ile ilgili işlem burada yapılabilir
+        'user_id': uid,  # Admin kullanıcı ID'si, Odoo'dan alınabilir
+    }])
+
+    if flight_id:
+        flash('Uçuş başarıyla eklendi.')
+    else:
+        flash('Uçuş eklenirken bir hata oluştu.')
+
+    return redirect(url_for('admin_panel'))
+
 @app.route('/admin')
 def admin_panel():
     return render_template('admin_panel.html')

@@ -121,6 +121,35 @@
     </section>
 
     <div class="container">
+        <!-- Uçuş Ekleme Formu -->
+        <div class="panel-section">
+            <div class="panel-heading">Uçuş Ekle</div>
+            <form action="{{ url_for('add_flight') }}" method="POST">
+                <div class="mb-3">
+                    <label for="flightCode" class="form-label">Uçuş Kodu</label>
+                    <input type="text" class="form-control" id="flightCode" name="flight_code" required>
+                </div>
+                <div class="mb-3">
+                    <label for="passengerCount" class="form-label">Yolcu Sayısı</label>
+                    <input type="number" class="form-control" id="passengerCount" name="passenger_count" required>
+                </div>
+                <div class="mb-3">
+                    <label for="departure" class="form-label">Kalkış Yeri</label>
+                    <input type="text" class="form-control" id="departure" name="departure" required>
+                </div>
+                <div class="mb-3">
+                    <label for="arrival" class="form-label">Varış Yeri</label>
+                    <input type="text" class="form-control" id="arrival" name="arrival" required>
+                </div>
+                <div class="mb-3">
+                    <label for="date" class="form-label">Tarih</label>
+                    <input type="date" class="form-control" id="date" name="date" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Uçuş Ekle</button>
+            </form>
+        </div>
+
+        <!-- Mevcut Uçuşlar -->
         <div class="panel-section">
             <div class="panel-heading">Uçuşlar</div>
             <table class="table table-bordered">
@@ -149,6 +178,7 @@
             </table>
         </div>
 
+        <!-- Mevcut Kullanıcılar -->
         <div class="panel-section">
             <div class="panel-heading">Kullanıcılar</div>
             <table class="table table-bordered">
