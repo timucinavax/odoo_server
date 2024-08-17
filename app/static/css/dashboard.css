@@ -55,7 +55,7 @@ body, html {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: calc(100vh - 80px); /* Navbar yüksekliğini çıkararak hesapla */
+    height: calc(100vh - 80px);
     text-align: center;
 }
 
@@ -81,4 +81,8 @@ body, html {
 
 .social-icons a:hover {
     color: #c1bcbc;
+}
+
+.footer {
+    display: none; /* Footer kaldırıldı */
 }
