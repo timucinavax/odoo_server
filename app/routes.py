@@ -3,6 +3,7 @@ import xmlrpc.client
 from app import app
 
 @app.route('/')
+@app.route('/home')
 def dashboard():
     return render_template('dashboard.html')
 
@@ -23,3 +24,11 @@ def admin_panel():
                               [[]], 
                               {})
     return render_template('admin_panel.html', tasks=tasks)
+
+@app.route('/user')
+def user_panel():
+    return render_template('user_panel.html')
+
+@app.route('/agency')
+def agency_panel():
+    return render_template('agency_panel.html')

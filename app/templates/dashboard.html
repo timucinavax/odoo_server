@@ -1,25 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sehlen Turizm Dashboard</title>
-    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <div class="dashboard-container">
-        <header>
-            <h1>SEHLEN TURİZM</h1>
-        </header>
-        <div class="buttons-container">
-            <a href="{{ url_for('admin_panel') }}" class="dashboard-button">Admin Panel</a>
-            <a href="{{ url_for('user_panel') }}" class="dashboard-button">Kullanıcı Paneli</a>
-            <a href="{{ url_for('agency_panel') }}" class="dashboard-button">Acenta Paneli</a>
+    <header class="header">
+        <div class="navbar">
+            <img src="{{ url_for('static', filename='images/sehlen_logo.png') }}" alt="Sehlen Turizm" class="logo">
+            <nav>
+                <a href="{{ url_for('admin_panel') }}" class="menu-link">Admin</a>
+                <a href="{{ url_for('user_panel') }}" class="menu-link">Kullanıcı</a>
+                <a href="{{ url_for('agency_panel') }}" class="menu-link">Acenta</a>
+            </nav>
         </div>
-        <footer>
-            <p>© 2024 Sehlen Turizm. All rights reserved.</p>
-        </footer>
-    </div>
+        <div class="hero">
+            <div class="hero-text">
+                <h1>SEHLEN TURİZM</h1>
+                <p>Sizin için en güzel tatil fırsatları burada!</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-google-plus-g"></i></a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <footer class="footer">
+        <p>© 2024 Sehlen Turizm. All rights reserved.</p>
+    </footer>
 </body>
 </html>
