@@ -3,14 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kullanıcı Paneli - Sehlen Turizm</title>
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap" rel="stylesheet">
+    <title>Kullanıcı - Sehlen Turizm</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            font-family: 'Raleway', sans-serif;
+        body {
+            font-family: Arial, sans-serif;
             background-color: #f5f5f5;
         }
 
@@ -19,163 +16,205 @@
             padding: 15px;
         }
 
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+            color: #d71921;
+        }
+
         .navbar-brand img {
             max-height: 50px;
             margin-right: 10px;
         }
 
-        .navbar-brand span {
-            font-weight: bold;
-            color: black;
-            font-size: 1.5rem;
-        }
-
         .date-selector {
             display: flex;
-            justify-content: center;
-            padding: 20px 0;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding: 10px 0;
             background-color: white;
-            border-bottom: 1px solid #ddd;
+            border-radius: 5px;
         }
 
         .date-item {
             text-align: center;
-            margin: 0 10px;
+            flex: 1;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            cursor: pointer;
+        }
+
+        .date-item:hover {
+            background-color: #f1f1f1;
         }
 
         .date-item.active {
-            border-bottom: 2px solid #007bff;
+            background-color: #d71921;
+            color: white;
         }
 
-        .date-item span {
-            display: block;
-        }
-
-        .filter-section {
-            background-color: white;
-            padding: 10px 20px;
-            margin-bottom: 10px;
+        .filter-bar {
+            margin: 20px 0;
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .filter-section button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-        }
-
-        .flight-list {
             background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            border-radius: 5px;
         }
 
-        .flight-item {
-            border: 1px solid #ddd;
-            border-radius: 5px;
+        .flight-card {
+            background-color: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
             padding: 15px;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .flight-details {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .flight-info {
-            display: flex;
-            align-items: center;
-        }
-
-        .flight-time {
-            font-weight: bold;
+            flex: 3;
             margin-right: 15px;
         }
 
-        .flight-select-btn {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            padding: 10px 20px;
+        .flight-time {
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
+
+        .flight-price {
+            flex: 2;
+            text-align: right;
+        }
+
+        .flight-price span {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .flight-class {
+            font-weight: bold;
+            margin-bottom: 5px;
+            text-align: center;
+            background-color: #f5f5f5;
+            padding: 10px;
             border-radius: 5px;
+        }
+
+        .flight-details .flight-info,
+        .flight-details .flight-price {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .filter-bar button {
+            flex: 1;
+            margin-right: 10px;
+        }
+
+        .filter-bar button:last-child {
+            margin-right: 0;
+        }
+
+        .price-button {
+            width: 100%;
+            padding: 15px;
+            text-align: center;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            margin-top: 10px;
             cursor: pointer;
         }
 
-        .flight-select-btn:hover {
-            background-color: #218838;
+        .price-button:hover {
+            background-color: #f1f1f1;
         }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light">
+
+    <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
                 <img src="{{ url_for('static', filename='images/sehlen_logo.png') }}" alt="Sehlen Turizm">
-                <span>SEHLEN TURİZM</span>
+                SEHLEN TURİZM
             </a>
         </div>
     </nav>
 
-    <div class="date-selector">
-        <div class="date-item">
-            <span>06 Eylül</span>
-            <span>TRY 1.507</span>
-        </div>
-        <div class="date-item">
-            <span>07 Eylül</span>
-            <span>TRY 1.507</span>
-        </div>
-        <div class="date-item">
-            <span>08 Eylül</span>
-            <span>TRY 1.507</span>
-        </div>
-        <div class="date-item active">
-            <span>09 Eylül</span>
-            <span>TRY 1.507</span>
-        </div>
-        <div class="date-item">
-            <span>10 Eylül</span>
-            <span>TRY 1.507</span>
-        </div>
-        <div class="date-item">
-            <span>11 Eylül</span>
-            <span>TRY 1.507</span>
-        </div>
-        <div class="date-item">
-            <span>12 Eylül</span>
-            <span>TRY 1.507</span>
-        </div>
-    </div>
-
-    <div class="filter-section">
-        <div>
-            <button>Direkt/Aktarmalı</button>
-            <button>Havayolu Firması</button>
-        </div>
-        <div>
-            <button>Sıralama Kriteri</button>
-        </div>
-    </div>
-
-    <div class="container">
-        <div class="flight-list">
-            <div class="flight-item">
-                <div class="flight-info">
-                    <div class="flight-time">03:10</div>
-                    <div>ESB Ankara - IST İstanbul</div>
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-12">
+                <h3>Ankara - İstanbul, 9 Eylül Pazartesi</h3>
+                <div class="date-selector">
+                    <div class="date-item">06<br>Cuma<br><strong>TRY 1.507</strong></div>
+                    <div class="date-item">07<br>Cumartesi<br><strong>TRY 1.507</strong></div>
+                    <div class="date-item">08<br>Pazar<br><strong>TRY 1.507</strong></div>
+                    <div class="date-item active">09<br>Pazartesi<br><strong>TRY 1.507</strong></div>
+                    <div class="date-item">10<br>Salı<br><strong>TRY 1.507</strong></div>
+                    <div class="date-item">11<br>Çarşamba<br><strong>TRY 1.507</strong></div>
+                    <div class="date-item">12<br>Perşembe<br><strong>TRY 1.507</strong></div>
                 </div>
-                <button class="flight-select-btn">Seç</button>
             </div>
-            <div class="flight-item">
-                <div class="flight-info">
-                    <div class="flight-time">06:00</div>
-                    <div>ESB Ankara - IST İstanbul</div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="filter-bar">
+                    <button class="btn btn-outline-secondary">Havayolu firması</button>
+                    <button class="btn btn-outline-secondary">Uçuş doluluğu</button>
+                    <button class="btn btn-primary">Sıralama: Önerilen</button>
                 </div>
-                <button class="flight-select-btn">Seç</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="flight-card">
+                    <div class="flight-details">
+                        <div class="flight-info">
+                            <div class="flight-time">03:10 - 04:25</div>
+                            <div>ESB Ankara - IST İstanbul</div>
+                            <div>Uçuş süresi: 1s 15dk | Uçak tipi: Airbus A320 - Dar gövde</div>
+                        </div>
+                        <div class="flight-price">
+                            <div class="flight-class">ECONOMY</div>
+                            <span>Dolu</span>
+                        </div>
+                        <div class="flight-price">
+                            <div class="flight-class">BUSINESS</div>
+                            <span>Dolu</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flight-card">
+                    <div class="flight-details">
+                        <div class="flight-info">
+                            <div class="flight-time">04:45 - 06:00</div>
+                            <div>ESB Ankara - IST İstanbul</div>
+                            <div>Uçuş süresi: 1s 15dk | Uçak tipi: Airbus A321-232 - Dar gövde</div>
+                        </div>
+                        <div class="flight-price">
+                            <div class="flight-class">ECONOMY</div>
+                            <div class="price-button">TRY 4.007,03</div>
+                        </div>
+                        <div class="flight-price">
+                            <div class="flight-class">BUSINESS</div>
+                            <div class="price-button">TRY 8.691,42</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ekstra uçuşlar buraya eklenebilir -->
             </div>
         </div>
     </div>
