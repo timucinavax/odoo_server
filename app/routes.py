@@ -1,7 +1,6 @@
 from flask import render_template, request, redirect, url_for, current_app, flash
 import xmlrpc.client
 from werkzeug.security import generate_password_hash, check_password_hash
-from datetime import datetime
 from app import app
 
 @app.route('/')
@@ -80,13 +79,9 @@ def add_flight():
     passenger_count = request.form.get('passenger_count')
     departure = request.form.get('departure')
     arrival = request.form.get('arrival')
-    departure_time_str = request.form.get('departure_time')
-    arrival_time_str = request.form.get('arrival_time')
+    departure_time = request.form.get('departure_time')
+    arrival_time = request.form.get('arrival_time')
     price = request.form.get('price')
-
-    # Tarihleri uygun formata çevir
-    departure_time = datetime.strptime(departure_time_str, '%Y-%m-%dT%H:%M').strftime('%Y-%m-%d %H:%M:%S')
-    arrival_time = datetime.strptime(arrival_time_str, '%Y-%m-%dT%H:%M').strftime('%Y-%m-%d %H:%M:%S')
 
     url = current_app.config['ODOO_URL']
     db = current_app.config['ODOO_DB']
@@ -106,7 +101,7 @@ def add_flight():
         'departure_time': departure_time,
         'arrival_time': arrival_time,
         'price': price,
-        'user_id': False,  # User atanmadığı için False olarak ayarlanıyor
+        'user_id': False,  
     }])
 
     if flight_id:
@@ -118,7 +113,24 @@ def add_flight():
 
 @app.route('/admin')
 def admin_panel():
-    return render_template('admin_panel.html')
+    # Odoo bağlantısı
+    url = current_app.config['ODOO_URL']
+    db = current_app.config['ODOO_DB']
+    admin_username = current_app.config['ODOO_USERNAME']
+    admin_password = current_app.config['ODOO_PASSWORD']
+
+    common = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/common')
+    uid = common.authenticate(db, admin_username, admin_password, {})
+
+    models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object')
+
+    # Uçuşları çekme
+    flights = models.execute_kw(db, uid, admin_password, 'flight.management', 'search_read', [[]], {'fields': ['flight_number', 'available_seats', 'departure_airport', 'arrival_airport', 'departure_time']})
+
+    # Kullanıcıları çekme
+    users = models.execute_kw(db, uid, admin_password, 'custom.user', 'search_read', [[]], {'fields': ['username', 'email', 'role', 'assigned_flights']})
+
+    return render_template('admin_panel.html', flights=flights, users=users)
 
 @app.route('/user')
 def user_panel():

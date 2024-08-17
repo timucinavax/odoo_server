@@ -126,7 +126,7 @@
 
     <div class="container">
         <!-- Uçuş Ekleme Kartı -->
-        <div class="card">
+        <div class="card mx-auto" style="max-width: 600px;">
             <div class="card-header">Uçuş Ekle</div>
             <div class="card-body">
                 <form action="{{ url_for('add_flight') }}" method="post">
@@ -182,11 +182,11 @@
                         {% for flight in flights %}
                         <tr>
                             <td>{{ loop.index }}</td>
-                            <td>{{ flight.code }}</td>
-                            <td>{{ flight.passenger_count }}</td>
-                            <td>{{ flight.departure }}</td>
-                            <td>{{ flight.arrival }}</td>
-                            <td>{{ flight.date }}</td>
+                            <td>{{ flight.flight_number }}</td>
+                            <td>{{ flight.available_seats }}</td>
+                            <td>{{ flight.departure_airport }}</td>
+                            <td>{{ flight.arrival_airport }}</td>
+                            <td>{{ flight.departure_time }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -201,7 +201,6 @@
                 <table class="table table-bordered">
                     <thead class="table-dark">
                         <tr>
-                            <th>#</th>
                             <th>Kullanıcı Adı</th>
                             <th>Email</th>
                             <th>Rol</th>
