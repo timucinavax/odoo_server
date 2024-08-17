@@ -79,7 +79,9 @@ def add_flight():
     passenger_count = request.form.get('passenger_count')
     departure = request.form.get('departure')
     arrival = request.form.get('arrival')
-    date = request.form.get('date')
+    departure_time = request.form.get('departure_time')
+    arrival_time = request.form.get('arrival_time')
+    price = request.form.get('price')
 
     # Odoo bağlantı bilgileri
     url = current_app.config['ODOO_URL']
@@ -104,11 +106,10 @@ def add_flight():
         'available_seats': passenger_count,
         'departure_airport': departure,
         'arrival_airport': arrival,
-        'departure_time': date,  # Bu alanı datetime formatında ayarlamanız gerekebilir
-        'arrival_time': date,  # Örneğin: departure_time ve arrival_time'ı doğru formatta gönderin
-        'flight_duration': '00:00',  # Uçuş süresi hesaplanarak eklenebilir
-        'price': 0,  # Uçuş fiyatı ile ilgili işlem burada yapılabilir
-        'user_id': uid,  # Admin kullanıcı ID'si, Odoo'dan alınabilir
+        'departure_time': departure_time,
+        'arrival_time': arrival_time,
+        'price': price,
+        'user_id': False,  # user_id boş bırakılıyor
     }])
 
     if flight_id:
