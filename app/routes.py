@@ -18,18 +18,25 @@ def login():
     
     common = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/common')
     uid = common.authenticate(db, username, password, {})
-    
+
     if uid:
-        # Kullanıcı başarılı bir şekilde doğrulandı, role göre yönlendir
-        if role == 'admin':
-            return redirect(url_for('admin_panel'))
-        elif role == 'user':
-            return redirect(url_for('user_panel'))
-        elif role == 'agency':
-            return redirect(url_for('agency_panel'))
+        models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object')
+        user_id = models.execute_kw(db, uid, password, 'custom.user', 'search', [
+            [('login', '=', username), ('password', '=', password), ('role', '=', role)]
+        ])
+        if user_id:
+            if role == 'admin':
+                return redirect(url_for('admin_panel'))
+            elif role == 'user':
+                return redirect(url_for('user_panel'))
+            elif role == 'agency':
+                return redirect(url_for('agency_panel'))
+        else:
+            flash("Giriş bilgileri hatalı, lütfen tekrar deneyin.")
     else:
-        flash("Giriş bilgileri hatalı, lütfen tekrar deneyin.")
-        return redirect(url_for('dashboard'))
+        flash("Giriş sırasında bir hata oluştu.")
+    
+    return redirect(url_for('dashboard'))
 
 @app.route('/register', methods=['POST'])
 def register():
@@ -48,20 +55,12 @@ def register():
 
     models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object')
 
-    # Role ID'sini dinamik olarak alıyoruz
-    role_id = models.execute_kw(db, uid, admin_password, 'res.groups', 'search', [[('name', '=', role)]])
-    if role_id:
-        role_id = role_id[0]  # İlk eşleşen rolün ID'sini alıyoruz
-    else:
-        flash("Belirtilen rol bulunamadı.")
-        return redirect(url_for('dashboard'))
-
     # Kullanıcı oluşturma
-    user_id = models.execute_kw(db, uid, admin_password, 'res.users', 'create', [{
+    user_id = models.execute_kw(db, uid, admin_password, 'custom.user', 'create', [{
         'name': name,
         'login': username,
         'password': password,
-        'groups_id': [(6, 0, [role_id])],  # Rol bilgisi burada eklenir
+        'role': role,
     }])
 
     if user_id:
@@ -83,10 +82,7 @@ def admin_panel():
 
     models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object')
 
-    tasks = models.execute_kw(db, uid, password,
-                              'project.task', 'search_read',
-                              [[]], 
-                              {})
+    tasks = models.execute_kw(db, uid, password, 'project.task', 'search_read', [[]], {})
     return render_template('admin_panel.html', tasks=tasks)
 
 @app.route('/user')
