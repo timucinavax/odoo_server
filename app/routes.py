@@ -16,13 +16,20 @@ def login():
 
     url = current_app.config['ODOO_URL']
     db = current_app.config['ODOO_DB']
+    admin_username = current_app.config['ODOO_USERNAME']
+    admin_password = current_app.config['ODOO_PASSWORD']
 
     common = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/common')
-    uid = common.authenticate(db, username, password, {})
+    uid = common.authenticate(db, admin_username, admin_password, {})
 
     models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object')
 
-    user_ids = models.execute_kw(db, uid, password, 'custom.user', 'search_read', [[('email', '=', email) , ('username', '=', username), ('password', '=', password), ('role', '=', role)]])
+    user_ids = models.execute_kw(db, uid, admin_password, 'custom.user', 'search', [[
+        ('email', '=', email), 
+        ('username', '=', username), 
+        ('password', '=', password),
+        ('role', '=', role)
+    ]])
     
     if user_ids:
         if role == 'admin':
