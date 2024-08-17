@@ -83,25 +83,17 @@ def add_flight():
     arrival_time = request.form.get('arrival_time')
     price = request.form.get('price')
 
-    # Odoo bağlantı bilgileri
     url = current_app.config['ODOO_URL']
     db = current_app.config['ODOO_DB']
-    username = current_app.config['ODOO_USERNAME']
-    password = current_app.config['ODOO_PASSWORD']
+    admin_username = current_app.config['ODOO_USERNAME']
+    admin_password = current_app.config['ODOO_PASSWORD']
 
-    # Odoo'ya bağlanma
     common = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/common')
-    uid = common.authenticate(db, username, password, {})
+    uid = common.authenticate(db, admin_username, admin_password, {})
 
-    if not uid:
-        flash('Odoo ile bağlantı kurulamadı.')
-        return redirect(url_for('admin_panel'))
-
-    # Flight Management modeli üzerinde işlem yapmak için
     models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object')
 
-    # Uçuş ekleme işlemi
-    flight_id = models.execute_kw(db, uid, password, 'flight.management', 'create', [{
+    flight_id = models.execute_kw(db, uid, admin_password, 'flight.management', 'create', [{
         'flight_number': flight_code,
         'available_seats': passenger_count,
         'departure_airport': departure,
@@ -109,7 +101,7 @@ def add_flight():
         'departure_time': departure_time,
         'arrival_time': arrival_time,
         'price': price,
-        'user_id': False,  # user_id boş bırakılıyor
+        'user_id': False,  
     }])
 
     if flight_id:
