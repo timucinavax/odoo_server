@@ -9,39 +9,36 @@ def dashboard():
 
 @app.route('/login', methods=['POST'])
 def login():
+    email = request.form.get('email')
     role = request.form.get('role')
     username = request.form.get('username')
     password = request.form.get('password')
 
     url = current_app.config['ODOO_URL']
     db = current_app.config['ODOO_DB']
-    
+
     common = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/common')
     uid = common.authenticate(db, username, password, {})
 
-    if uid:
-        models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object')
-        user_id = models.execute_kw(db, uid, password, 'custom.user', 'search', [
-            [('login', '=', username), ('password', '=', password), ('role', '=', role)]
-        ])
-        if user_id:
-            if role == 'admin':
-                return redirect(url_for('admin_panel'))
-            elif role == 'user':
-                return redirect(url_for('user_panel'))
-            elif role == 'agency':
-                return redirect(url_for('agency_panel'))
-        else:
-            flash("Giriş bilgileri hatalı, lütfen tekrar deneyin.")
-    else:
-        flash("Giriş sırasında bir hata oluştu.")
+    models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object')
+
+    user_ids = models.execute_kw(db, uid, password, 'custom.user', 'search_read', [[('email', '=', email) , ('username', '=', username), ('password', '=', password), ('role', '=', role)]])
     
-    return redirect(url_for('dashboard'))
+    if user_ids:
+        if role == 'admin':
+            return redirect(url_for('admin_panel'))
+        elif role == 'user':
+            return redirect(url_for('user_panel'))
+        elif role == 'agency':
+            return redirect(url_for('agency_panel'))
+    else:
+        flash("Giriş bilgileri hatalı, lütfen tekrar deneyin.")
+        return redirect(url_for('dashboard'))
 
 @app.route('/register', methods=['POST'])
 def register():
     role = request.form.get('role')
-    name = request.form.get('name')
+    email = request.form.get('email')
     username = request.form.get('username')
     password = request.form.get('password')
 
@@ -55,10 +52,9 @@ def register():
 
     models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object')
 
-    # Kullanıcı oluşturma
     user_id = models.execute_kw(db, uid, admin_password, 'custom.user', 'create', [{
-        'name': name,
-        'login': username,
+        'email': email,
+        'username': username,
         'password': password,
         'role': role,
     }])

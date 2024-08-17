@@ -206,6 +206,7 @@
                             <button type="button" class="role-btn" data-role="admin">Admin</button>
                             <button type="button" class="role-btn" data-role="agency">Acenta</button>
                         </div>
+                        <input type="text" name="email" id="emailInput" class="form-control" placeholder="E Mail Giriniz" disabled>
                         <input type="text" name="username" id="usernameInput" class="form-control" placeholder="Kullanıcı Adı" disabled>
                         <input type="password" name="password" id="passwordInput" class="form-control" placeholder="Şifre" disabled>
                         <button type="submit" class="btn btn-primary mt-3" id="submitBtn" disabled>Giriş Yap</button>
@@ -228,7 +229,7 @@
                             <button type="button" class="role-btn" data-role="admin">Admin</button>
                             <button type="button" class="role-btn" data-role="agency">Acenta</button>
                         </div>
-                        <input type="text" name="name" id="nameRegister" class="form-control" placeholder="Adınız">
+                        <input type="text" name="email" id="nameRegister" class="form-control" placeholder="E Mail Giriniz">
                         <input type="text" name="username" id="usernameRegister" class="form-control" placeholder="Kullanıcı Adı">
                         <input type="password" name="password" id="passwordRegister" class="form-control" placeholder="Şifre">
                         <button type="submit" class="btn btn-primary mt-3">Kayıt Ol</button>
@@ -274,7 +275,8 @@
                 const selectedRole = this.getAttribute('data-role');
                 document.getElementById('selectedRole').value = selectedRole;
                 document.getElementById('selectedRoleRegister').value = selectedRole;
-
+                
+                document.getElementById('emailInput').disabled = false;
                 document.getElementById('usernameInput').disabled = false;
                 document.getElementById('passwordInput').disabled = false;
                 document.getElementById('submitBtn').disabled = false;
