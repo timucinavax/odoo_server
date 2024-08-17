@@ -1,4 +1,4 @@
-from flask import render_template, current_app
+from flask import render_template, request, redirect, url_for, current_app, flash
 import xmlrpc.client
 from app import app
 
@@ -6,6 +6,59 @@ from app import app
 @app.route('/home')
 def dashboard():
     return render_template('dashboard.html')
+
+@app.route('/login', methods=['POST'])
+def login():
+    role = request.form.get('role')
+    username = request.form.get('username')
+    password = request.form.get('password')
+
+    url = current_app.config['ODOO_URL']
+    db = current_app.config['ODOO_DB']
+    
+    common = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/common')
+    uid = common.authenticate(db, username, password, {})
+    
+    if uid:
+        # Kullanıcı başarılı bir şekilde doğrulandı, role göre yönlendir
+        if role == 'admin':
+            return redirect(url_for('admin_panel'))
+        elif role == 'user':
+            return redirect(url_for('user_panel'))
+        elif role == 'agency':
+            return redirect(url_for('agency_panel'))
+    else:
+        flash("Giriş bilgileri hatalı, lütfen tekrar deneyin.")
+        return redirect(url_for('dashboard'))
+
+@app.route('/register', methods=['POST'])
+def register():
+    role = request.form.get('role')
+    username = request.form.get('username')
+    password = request.form.get('password')
+
+    url = current_app.config['ODOO_URL']
+    db = current_app.config['ODOO_DB']
+    
+    common = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/common')
+    uid = common.authenticate(db, current_app.config['ODOO_USERNAME'], current_app.config['ODOO_PASSWORD'], {})
+
+    models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object')
+
+    if uid:
+        # Yeni kullanıcıyı Odoo'da oluşturma
+        user_id = models.execute_kw(db, uid, current_app.config['ODOO_PASSWORD'], 'res.users', 'create', [{
+            'name': username,
+            'login': username,
+            'password': password,
+            'groups_id': [(6, 0, [role_id])],  # Rol bilgisi burada eklenir
+        }])
+        
+        flash("Kayıt başarılı! Giriş yapabilirsiniz.")
+        return redirect(url_for('dashboard'))
+    else:
+        flash("Kayıt sırasında bir hata oluştu.")
+        return redirect(url_for('dashboard'))
 
 @app.route('/admin')
 def admin_panel():
