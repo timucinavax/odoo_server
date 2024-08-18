@@ -10,9 +10,9 @@
     <div id="container" class="container">
         <div class="row">
             <!-- Register Form -->
-            <div class="col align-items-center flex-col sign-up" id="registerForm">
+            <div class="col align-items-center flex-col sign-up" id="registerForm" {% if form_type == 'login' %}style="display: none;"{% endif %}>
                 <div class="form-wrapper align-items-center">
-                    <div class="form sign-up">
+                    <form method="POST" action="{{ url_for('register') }}">
                         <div class="role-selector">
                             <button type="button" class="role-btn" data-role="agency">Acenta</button>
                             <button type="button" class="role-btn" data-role="user">Müşteri</button>
@@ -34,20 +34,16 @@
                             Sign up
                         </button>
                         <p>
-                            <span>
-                                Already have an account?
-                            </span>
-                            <b onclick="toggleForm('login')" class="pointer">
-                                Sign in here
-                            </b>
+                            <span>Already have an account?</span>
+                            <b onclick="toggleForm('login')" class="pointer">Sign in here</b>
                         </p>
-                    </div>
+                    </form>
                 </div>
             </div>
             <!-- Login Form -->
-            <div class="col align-items-center flex-col sign-in" id="loginForm">
+            <div class="col align-items-center flex-col sign-in" id="loginForm" {% if form_type == 'register' %}style="display: none;"{% endif %}>
                 <div class="form-wrapper align-items-center">
-                    <div class="form sign-in">
+                    <form method="POST" action="{{ url_for('login') }}">
                         <div class="role-selector">
                             <button type="button" class="role-btn" data-role="agency">Acenta</button>
                             <button type="button" class="role-btn" data-role="user">Müşteri</button>
@@ -64,37 +60,13 @@
                             Sign in
                         </button>
                         <p>
-                            <b>
-                                Forgot password?
-                            </b>
+                            <b>Forgot password?</b>
                         </p>
                         <p>
-                            <span>
-                                Don't have an account?
-                            </span>
-                            <b onclick="toggleForm('register')" class="pointer">
-                                Sign up here
-                            </b>
+                            <span>Don't have an account?</span>
+                            <b onclick="toggleForm('register')" class="pointer">Sign up here</b>
                         </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row content-row">
-            <div class="col align-items-center flex-col">
-                <div class="text sign-in">
-                    <h2>
-                        Welcome
-                    </h2>
-                </div>
-                <div class="img sign-in"></div>
-            </div>
-            <div class="col align-items-center flex-col">
-                <div class="img sign-up"></div>
-                <div class="text sign-up">
-                    <h2>
-                        Join with us
-                    </h2>
+                    </form>
                 </div>
             </div>
         </div>
