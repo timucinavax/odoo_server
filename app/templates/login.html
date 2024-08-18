@@ -98,21 +98,29 @@
         }
 
         button {
-            border-radius: 20px;
-            border: 1px solid #FF4B2B;
-            background-color: #FF4B2B;
-            color: #FFFFFF;
-            font-size: 10px;
-            font-weight: bold;
-            padding: 8px 30px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            transition: transform 80ms ease-in;
-        }
-
-        button:active {
-            transform: scale(0.95);
-        }
+			border-radius: 20px;
+			border: 1px solid #007BFF; /* Mavi tonlarında bir sınır rengi */
+			background-color: #FFFFFF; /* Beyaz arka plan */
+			color: #007BFF; /* Mavi metin rengi */
+			font-size: 10px;
+			font-weight: bold;
+			padding: 8px 30px;
+			letter-spacing: 1px;
+			text-transform: uppercase;
+			transition: background-color 0.3s, color 0.3s, border-color 0.3s, transform 80ms ease-in;
+		}
+		
+		button:active {
+			background-color: #E0F3FF; /* Açık mavi tonlarında arka plan */
+			color: #0056b3; /* Daha koyu mavi metin rengi */
+			border-color: #0056b3; /* Daha koyu mavi sınır rengi */
+			transform: scale(0.95);
+		}
+		
+		button:focus {
+			outline: none;
+		}
+		
 
         button:focus {
             outline: none;
@@ -213,20 +221,17 @@
         }
 
         .overlay {
-            background: #FF416C;
-            background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);
-            background: linear-gradient(to right, #FF4B2B, #FF416C);
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-position: 0 0;
-            color: #FFFFFF;
-            position: relative;
-            left: -100%;
-            height: 100%;
-            width: 200%;
-            transform: translateX(0);
-            transition: transform 0.6s ease-in-out;
-        }
+			background: #FFFFFF; /* Arka planı beyaz yapar */
+			color: #000000; /* Metin rengini siyah yapar */
+			border: 2px solid #000000; /* Siyah sınır ekler */
+			position: relative;
+			left: -100%;
+			height: 100%;
+			width: 200%;
+			transform: translateX(0);
+			transition: transform 0.6s ease-in-out;
+			box-sizing: border-box; /* Border'ın içerik boyutuna dahil edilmesini sağlar */
+		}		
 
         .container.right-panel-active .overlay {
             transform: translateX(50%);
@@ -268,21 +273,6 @@
             margin: 10px 0;
         }
 
-        .social-container a {
-            border: 1px solid #000000;
-            border-radius: 8px;
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0 5px;
-            height: 32px;
-            width: 32px;
-            background-color: #FFFFFF;
-            color: #000000;
-            text-decoration: none;
-            font-size: 16px;
-        }
-
         .role-selector {
             display: flex;
             justify-content: center;
@@ -291,22 +281,24 @@
         }
 
         .role-selector button {
-            flex: 1;
-            padding: 0.4rem 0.8rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            border-radius: 8px;
-            border: 1px solid #FF4B2B;
-            background-color: transparent;
-            color: #FF4B2B;
-            cursor: pointer;
-            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-        }
-
-        .role-selector button.active {
-            background-color: #FF4B2B;
-            color: white;
-        }
+			flex: 1;
+			padding: 0.4rem 0.8rem;
+			font-weight: bold;
+			text-transform: uppercase;
+			border-radius: 8px;
+			border: 1px solid #007BFF; /* Mavi tonlarında bir sınır rengi */
+			background-color: #FFFFFF; /* Beyaz arka plan */
+			color: #007BFF; /* Mavi metin rengi */
+			cursor: pointer;
+			transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+		}
+		
+		.role-selector button.active {
+			background-color: #E0F3FF; /* Açık mavi tonlarında arka plan */
+			color: #0056b3; /* Daha koyu mavi metin rengi */
+			border-color: #0056b3; /* Daha koyu mavi sınır rengi */
+		}
+		
     </style>
 </head>
 
