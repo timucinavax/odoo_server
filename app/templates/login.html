@@ -14,7 +14,7 @@
             --gray: #efefef;
             --gray-2: #757575;
         }
-        
+
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');
 
         * {
@@ -25,18 +25,69 @@
         }
 
         body, html {
-            height: 100vh;
-            background-image: url('{{ url_for("static", filename="images/background-min.png") }}'); /* Arka plan resmi */
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
+        }
+
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 200%;
+            background-image: url('{{ url_for("static", filename="images/background-min.png") }}');
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+            animation: moveBackground 30s linear infinite;
+        }
+
+        @keyframes moveBackground {
+            0% {
+                transform: translate(0, 0);
+            }
+            50% {
+                transform: translate(-25%, -25%);
+            }
+            100% {
+                transform: translate(0, 0);
+            }
+        }
+
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            padding: 1rem;
+        }
+
+        .navbar-brand {
+            display: flex;
             align-items: center;
-            justify-content: center;
+        }
+
+        .navbar-brand img {
+            max-height: 50px;
+            margin-right: 10px;
         }
 
         .container {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .card {
             width: 400px;
             padding: 2rem;
             background-color: var(--white);
@@ -57,32 +108,15 @@
             }
         }
 
-        .form-wrapper {
-            width: 100%;
-        }
-
-        .form {
-            width: 100%;
-        }
-
         .input-group {
             position: relative;
             width: 100%;
             margin: 1rem 0;
         }
 
-        .input-group i {
-            position: absolute;
-            top: 50%;
-            left: 1rem;
-            transform: translateY(-50%);
-            font-size: 1.4rem;
-            color: var(--gray-2);
-        }
-
         .input-group input {
             width: 100%;
-            padding: 1rem 3rem;
+            padding: 1rem;
             font-size: 1rem;
             background-color: var(--gray);
             border-radius: .5rem;
@@ -166,7 +200,7 @@
         }
 
         @media (max-width: 425px) {
-            .container {
+            .card {
                 width: 95%;
                 padding: 1.5rem;
             }
@@ -178,10 +212,12 @@
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light w-100">
+    <div class="background"></div>
+
+    <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
-                <img src="{{ url_for('static', filename='images/sehlen_logo.png') }}" alt="Sehlen Turizm" style="max-height: 50px; margin-right: 10px;">
+                <img src="{{ url_for('static', filename='images/sehlen_logo.png') }}" alt="Sehlen Turizm">
                 <span>SEHLEN TURİZM</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -209,58 +245,60 @@
     </nav>
 
     <div class="container">
-        <div class="form-wrapper">
-            <!-- Register Form -->
-            <div id="registerForm" {% if form_type == 'login' %}style="display: none;"{% endif %}>
-                <form method="POST" action="{{ url_for('register') }}">
-                    <div class="role-selector">
-                        <button type="button" class="role-btn" data-role="agency">Acenta</button>
-                        <button type="button" class="role-btn" data-role="user">Müşteri</button>
-                        <button type="button" class="role-btn" data-role="admin">Admin</button>
-                    </div>
-                    <div class="input-group">
-                        <i class='bx bxs-user'></i>
-                        <input type="text" name="username" id="usernameRegister" placeholder="Username">
-                    </div>
-                    <div class="input-group">
-                        <i class='bx bx-mail-send'></i>
-                        <input type="email" name="email" id="emailRegister" placeholder="Email">
-                    </div>
-                    <div class="input-group">
-                        <i class='bx bxs-lock-alt'></i>
-                        <input type="password" name="password" id="passwordRegister" placeholder="Password">
-                    </div>
-                    <button type="submit">Sign up</button>
-                    <p>
-                        <span>Already have an account?</span>
-                        <b onclick="toggleForm('login')">Sign in here</b>
-                    </p>
-                </form>
-            </div>
-            <!-- Login Form -->
-            <div id="loginForm" {% if form_type == 'register' %}style="display: none;"{% endif %}>
-                <form method="POST" action="{{ url_for('login') }}">
-                    <div class="role-selector">
-                        <button type="button" class="role-btn" data-role="agency">Acenta</button>
-                        <button type="button" class="role-btn" data-role="user">Müşteri</button>
-                    </div>
-                    <div class="input-group">
-                        <i class='bx bxs-user'></i>
-                        <input type="text" name="username" id="usernameLogin" placeholder="Username">
-                    </div>
-                    <div class="input-group">
-                        <i class='bx bxs-lock-alt'></i>
-                        <input type="password" name="password" id="passwordLogin" placeholder="Password">
-                    </div>
-                    <button type="submit">Sign in</button>
-                    <p>
-                        <b>Forgot password?</b>
-                    </p>
-                    <p>
-                        <span>Don't have an account?</span>
-                        <b onclick="toggleForm('register')">Sign up here</b>
-                    </p>
-                </form>
+        <div class="card">
+            <div class="form-wrapper">
+                <!-- Register Form -->
+                <div id="registerForm" {% if form_type == 'login' %}style="display: none;"{% endif %}>
+                    <form method="POST" action="{{ url_for('register') }}">
+                        <div class="role-selector">
+                            <button type="button" class="role-btn" data-role="agency">Acenta</button>
+                            <button type="button" class="role-btn" data-role="user">Müşteri</button>
+                            <button type="button" class="role-btn" data-role="admin">Admin</button>
+                        </div>
+                        <div class="input-group">
+                            <i class='bx bxs-user'></i>
+                            <input type="text" name="username" id="usernameRegister" placeholder="Username">
+                        </div>
+                        <div class="input-group">
+                            <i class='bx bx-mail-send'></i>
+                            <input type="email" name="email" id="emailRegister" placeholder="Email">
+                        </div>
+                        <div class="input-group">
+                            <i class='bx bxs-lock-alt'></i>
+                            <input type="password" name="password" id="passwordRegister" placeholder="Password">
+                        </div>
+                        <button type="submit">Sign up</button>
+                        <p>
+                            <span>Already have an account?</span>
+                            <b onclick="toggleForm('login')">Sign in here</b>
+                        </p>
+                    </form>
+                </div>
+                <!-- Login Form -->
+                <div id="loginForm" {% if form_type == 'register' %}style="display: none;"{% endif %}>
+                    <form method="POST" action="{{ url_for('login') }}">
+                        <div class="role-selector">
+                            <button type="button" class="role-btn" data-role="agency">Acenta</button>
+                            <button type="button" class="role-btn" data-role="user">Müşteri</button>
+                        </div>
+                        <div class="input-group">
+                            <i class='bx bxs-user'></i>
+                            <input type="text" name="username" id="usernameLogin" placeholder="Username">
+                        </div>
+                        <div class="input-group">
+                            <i class='bx bxs-lock-alt'></i>
+                            <input type="password" name="password" id="passwordLogin" placeholder="Password">
+                        </div>
+                        <button type="submit">Sign in</button>
+                        <p>
+                            <b>Forgot password?</b>
+                        </p>
+                        <p>
+                            <span>Don't have an account?</span>
+                            <b onclick="toggleForm('register')">Sign up here</b>
+                        </p>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
