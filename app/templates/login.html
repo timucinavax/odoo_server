@@ -3,101 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giriş Yap</title>
+    <title>Giriş Yap / Kayıt Ol</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
 </head>
 <body>
     <div id="container" class="container">
-		<div class="row">
-			<div class="col align-items-center flex-col sign-up">
-				<div class="form-wrapper align-items-center">
-					<div class="form sign-up">
+        <div class="row">
+            <!-- Register Form -->
+            <div class="col align-items-center flex-col sign-up" id="registerForm">
+                <div class="form-wrapper align-items-center">
+                    <div class="form sign-up">
                         <div class="role-selector">
                             <button type="button" class="role-btn" data-role="agency">Acenta</button>
                             <button type="button" class="role-btn" data-role="user">Müşteri</button>
                             <button type="button" class="role-btn" data-role="admin">Admin</button>
                         </div>
-						<div class="input-group">
-							<i class='bx bxs-user'></i>
-							<input type="text" name="username" id="usernameRegister" placeholder="Username">
-						</div>
-						<div class="input-group">
-							<i class='bx bx-mail-send'></i>
-							<input type="email" name="email" id="emailRegister" placeholder="Email">
-						</div>
-						<div class="input-group">
-							<i class='bx bxs-lock-alt'></i>
-							<input type="password" name="password" id="passwordRegister" placeholder="Password">
-						</div>
-						<button type="submit">
-							Sign up
-						</button>
-						<p>
-							<span>
-								Already have an account?
-							</span>
-							<b onclick="toggle()" class="pointer">
-								Sign in here
-							</b>
-						</p>
-					</div>
-				</div>
-			</div>
-			<div class="col align-items-center flex-col sign-in">
-				<div class="form-wrapper align-items-center">
-					<div class="form sign-in">
+                        <div class="input-group">
+                            <i class='bx bxs-user'></i>
+                            <input type="text" name="username" id="usernameRegister" placeholder="Username">
+                        </div>
+                        <div class="input-group">
+                            <i class='bx bx-mail-send'></i>
+                            <input type="email" name="email" id="emailRegister" placeholder="Email">
+                        </div>
+                        <div class="input-group">
+                            <i class='bx bxs-lock-alt'></i>
+                            <input type="password" name="password" id="passwordRegister" placeholder="Password">
+                        </div>
+                        <button type="submit">
+                            Sign up
+                        </button>
+                        <p>
+                            <span>
+                                Already have an account?
+                            </span>
+                            <b onclick="toggleForm('login')" class="pointer">
+                                Sign in here
+                            </b>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- Login Form -->
+            <div class="col align-items-center flex-col sign-in" id="loginForm">
+                <div class="form-wrapper align-items-center">
+                    <div class="form sign-in">
                         <div class="role-selector">
                             <button type="button" class="role-btn" data-role="agency">Acenta</button>
                             <button type="button" class="role-btn" data-role="user">Müşteri</button>
                         </div>
-						<div class="input-group">
-							<i class='bx bxs-user'></i>
-							<input type="text" name="username" id="usernameLogin" placeholder="Username">
-						</div>
-						<div class="input-group">
-							<i class='bx bxs-lock-alt'></i>
-							<input type="password" name="password" id="passwordLogin" placeholder="Password">
-						</div>
-						<button type="submit">
-							Sign in
-						</button>
-						<p>
-							<b>
-								Forgot password?
-							</b>
-						</p>
-						<p>
-							<span>
-								Don't have an account?
-							</span>
-							<b onclick="toggle()" class="pointer">
-								Sign up here
-							</b>
-						</p>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row content-row">
-			<div class="col align-items-center flex-col">
-				<div class="text sign-in">
-					<h2>
-						Welcome
-					</h2>
-				</div>
-				<div class="img sign-in"></div>
-			</div>
-			<div class="col align-items-center flex-col">
-				<div class="img sign-up"></div>
-				<div class="text sign-up">
-					<h2>
-						Join with us
-					</h2>
-				</div>
-			</div>
-		</div>
-	</div>
+                        <div class="input-group">
+                            <i class='bx bxs-user'></i>
+                            <input type="text" name="username" id="usernameLogin" placeholder="Username">
+                        </div>
+                        <div class="input-group">
+                            <i class='bx bxs-lock-alt'></i>
+                            <input type="password" name="password" id="passwordLogin" placeholder="Password">
+                        </div>
+                        <button type="submit">
+                            Sign in
+                        </button>
+                        <p>
+                            <b>
+                                Forgot password?
+                            </b>
+                        </p>
+                        <p>
+                            <span>
+                                Don't have an account?
+                            </span>
+                            <b onclick="toggleForm('register')" class="pointer">
+                                Sign up here
+                            </b>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row content-row">
+            <div class="col align-items-center flex-col">
+                <div class="text sign-in">
+                    <h2>
+                        Welcome
+                    </h2>
+                </div>
+                <div class="img sign-in"></div>
+            </div>
+            <div class="col align-items-center flex-col">
+                <div class="img sign-up"></div>
+                <div class="text sign-up">
+                    <h2>
+                        Join with us
+                    </h2>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+    <script>
+        function toggleForm(formType) {
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            
+            if (formType === 'login') {
+                loginForm.style.display = 'block';
+                registerForm.style.display = 'none';
+                window.history.pushState({}, '', '/login');
+            } else if (formType === 'register') {
+                loginForm.style.display = 'none';
+                registerForm.style.display = 'block';
+                window.history.pushState({}, '', '/register');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPath = window.location.pathname;
+            if (currentPath === '/register') {
+                toggleForm('register');
+            } else {
+                toggleForm('login');
+            }
+        });
+    </script>
 </body>
 </html>
