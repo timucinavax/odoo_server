@@ -10,7 +10,6 @@ def dashboard():
 
 @app.route('/login', methods=['POST'])
 def login():
-    email = request.form.get('email')
     username = request.form.get('username')
     password = request.form.get('password')
     role = request.form.get('role')
@@ -23,7 +22,7 @@ def login():
 
     models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object')
 
-    user = models.execute_kw(db, uid, current_app.config['ODOO_PASSWORD'], 'custom.user', 'search_read', [[('email', '=', email), ('username', '=', username), ('role', '=', role)]], {'limit': 1})
+    user = models.execute_kw(db, uid, current_app.config['ODOO_PASSWORD'], 'custom.user', 'search_read', [[('username', '=', username), ('role', '=', role)]], {'limit': 1})
 
     if user:
         stored_password_hash = user[0]['password']
