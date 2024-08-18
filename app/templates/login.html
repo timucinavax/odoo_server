@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Giriş Yap / Kayıt Ol</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         :root {
             --primary-color: #1E90FF; /* Mavi renk (Dodger Blue) */
@@ -30,6 +31,7 @@
             background-position: center;
             background-repeat: no-repeat;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
         }
@@ -41,6 +43,7 @@
             border-radius: 15px;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
             animation: fadeIn 0.5s ease-in-out;
+            margin-top: 1rem;
         }
 
         @keyframes fadeIn {
@@ -171,47 +174,14 @@
             .role-selector button {
                 padding: 0.5rem;
             }
-
-			.navbar {
-				background-color: white;
-				padding: 15px;
-			}
-	
-			.navbar-brand {
-				display: flex;
-				align-items: center;
-			}
-	
-			.navbar-brand img {
-				max-height: 50px;
-				margin-right: 10px;
-			}
-	
-			.navbar-brand span {
-				font-weight: bold;
-				color: black;
-				font-size: 1.5rem;
-			}
-	
-			.navbar-nav .nav-link {
-				color: black;
-				margin-right: 20px;
-				text-transform: uppercase;
-				transition: color 0.3s;
-			}
-	
-			.navbar-nav .nav-link:hover {
-				color: #666666;
-			}
         }
     </style>
 </head>
 <body>
-
-	<nav class="navbar navbar-expand-lg navbar-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light w-100">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
-                <img src="{{ url_for('static', filename='images/sehlen_logo.png') }}" alt="Sehlen Turizm">
+                <img src="{{ url_for('static', filename='images/sehlen_logo.png') }}" alt="Sehlen Turizm" style="max-height: 50px; margin-right: 10px;">
                 <span>SEHLEN TURİZM</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -295,6 +265,7 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         function toggleForm(formType) {
             const loginForm = document.getElementById('loginForm');
