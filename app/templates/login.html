@@ -4,7 +4,177 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Giriş Yap / Kayıt Ol</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+    <style>
+        :root {
+            --primary-color: #1E90FF; /* Mavi renk (Dodger Blue) */
+            --secondary-color: #4682B4; /* Çelik Mavisi */
+            --black: #000000;
+            --white: #ffffff;
+            --gray: #efefef;
+            --gray-2: #757575;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');
+
+        * {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100vh;
+            overflow: hidden;
+            background-image: url('{{ url_for("static", filename="images/background-min.png") }}'); /* Arka plan resmi */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .container {
+            position: relative;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            height: 100vh;
+        }
+
+        .col {
+            width: 50%;
+        }
+
+        .align-items-center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .form-wrapper {
+            width: 100%;
+            max-width: 28rem;
+        }
+
+        .form {
+            padding: 2rem;
+            background-color: var(--white);
+            border-radius: 1.5rem;
+            width: 100%;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+            transition: .5s ease-in-out;
+        }
+
+        .input-group {
+            position: relative;
+            width: 100%;
+            margin: 1rem 0;
+        }
+
+        .input-group i {
+            position: absolute;
+            top: 50%;
+            left: 1rem;
+            transform: translateY(-50%);
+            font-size: 1.4rem;
+            color: var(--gray-2);
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 1rem 3rem;
+            font-size: 1rem;
+            background-color: var(--gray);
+            border-radius: .5rem;
+            border: 0.125rem solid var(--white);
+            outline: none;
+        }
+
+        .input-group input:focus {
+            border: 0.125rem solid var(--primary-color);
+        }
+
+        .role-selector {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .role-selector button {
+            flex: 1;
+            margin-right: 5px;
+            padding: 0.6rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-radius: 5px;
+            border: 1px solid var(--primary-color);
+            background-color: var(--white);
+            color: var(--primary-color);
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .role-selector button:last-child {
+            margin-right: 0;
+        }
+
+        .role-selector button.active {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+
+        .form button {
+            cursor: pointer;
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: .5rem;
+            border: none;
+            background-color: var(--primary-color);
+            color: var(--white);
+            font-size: 1.2rem;
+            outline: none;
+            transition: background-color 0.3s;
+        }
+
+        .form button:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .form p {
+            margin: 1rem 0;
+            font-size: 0.9rem;
+            color: var(--gray-2);
+        }
+
+        .form p b {
+            color: var(--primary-color);
+            cursor: pointer;
+        }
+
+        .flex-col {
+            flex-direction: column;
+        }
+
+        .pointer {
+            cursor: pointer;
+        }
+
+        /* RESPONSIVE DESIGN */
+        @media only screen and (max-width: 768px) {
+            .col {
+                width: 100%;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+        }
+
+    </style>
 </head>
 <body>
     <div id="container" class="container">
@@ -30,9 +200,7 @@
                             <i class='bx bxs-lock-alt'></i>
                             <input type="password" name="password" id="passwordRegister" placeholder="Password">
                         </div>
-                        <button type="submit">
-                            Sign up
-                        </button>
+                        <button type="submit">Sign up</button>
                         <p>
                             <span>Already have an account?</span>
                             <b onclick="toggleForm('login')" class="pointer">Sign in here</b>
@@ -56,9 +224,7 @@
                             <i class='bx bxs-lock-alt'></i>
                             <input type="password" name="password" id="passwordLogin" placeholder="Password">
                         </div>
-                        <button type="submit">
-                            Sign in
-                        </button>
+                        <button type="submit">Sign in</button>
                         <p>
                             <b>Forgot password?</b>
                         </p>
