@@ -10,98 +10,98 @@
         @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
 
         * {
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background: #f6f5f7;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            overflow: hidden;
-        }
-
-        .video-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 100%;
-            object-fit: cover;
-            z-index: -1;
-        }
-
-        .navbar {
-            z-index: 1000;
-            background-color: rgba(255, 255, 255, 0.8);
-            padding: 0.5rem 1rem;
-            width: 100%;
-            position: fixed;
-            top: 0;
-            left: 0;
-        }
-
-        .navbar-brand img {
-            max-height: 30px;
-            margin-right: 10px;
-        }
-
-        .navbar-brand span {
-            font-weight: bold;
-            color: black;
-            font-size: 1.5rem;
-        }
-
-        .navbar-nav .nav-link {
-            color: #000;
-            margin-right: 20px;
-            text-transform: uppercase;
-            transition: color 0.3s;
-        }
-
-        .navbar-nav .nav-link:hover {
-            color: #666666;
-        }
-
-        h1 {
-            font-weight: bold;
-            font-size: 22px;
-            margin-top: 80px;
-        }
-
-        h2 {
-            text-align: center;
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        p {
-            font-size: 12px;
-            font-weight: 100;
-            line-height: 18px;
-            letter-spacing: 0.5px;
-            margin: 10px 0;
-        }
-
-        span {
-            font-size: 10px;
-        }
-
-        a {
-            color: #333;
-            font-size: 12px;
-            text-decoration: none;
-            margin: 5px 0;
-        }
-
-        button {
+			box-sizing: border-box;
+		}
+		
+		body {
+			font-family: 'Montserrat', sans-serif;
+			background: #f6f5f7;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+			margin: 0;
+			overflow: hidden;
+		}
+		
+		.video-background {
+			position: fixed;
+			top: 0;
+			left: 0;
+			height: 100%;
+			width: 100%;
+			object-fit: cover;
+			z-index: -1;
+		}
+		
+		.navbar {
+			z-index: 1000;
+			background-color: rgba(255, 255, 255, 0.8);
+			padding: 0.5rem 1rem;
+			width: 100%;
+			position: fixed;
+			top: 0;
+			left: 0;
+		}
+		
+		.navbar-brand img {
+			max-height: 30px;
+			margin-right: 10px;
+		}
+		
+		.navbar-brand span {
+			font-weight: bold;
+			color: black;
+			font-size: 1.5rem;
+		}
+		
+		.navbar-nav .nav-link {
+			color: #000;
+			margin-right: 20px;
+			text-transform: uppercase;
+			transition: color 0.3s;
+		}
+		
+		.navbar-nav .nav-link:hover {
+			color: #666666;
+		}
+		
+		h1 {
+			font-weight: bold;
+			font-size: 22px;
+			margin-top: 80px;
+		}
+		
+		h2 {
+			text-align: center;
+			font-size: 18px;
+			font-weight: bold;
+		}
+		
+		p {
+			font-size: 12px;
+			font-weight: 100;
+			line-height: 18px;
+			letter-spacing: 0.5px;
+			margin: 10px 0;
+		}
+		
+		span {
+			font-size: 10px;
+		}
+		
+		a {
+			color: #333;
+			font-size: 12px;
+			text-decoration: none;
+			margin: 5px 0;
+		}
+		
+		button {
 			border-radius: 20px;
-			border: 1px solid #007BFF; /* Mavi tonlarında bir sınır rengi */
-			background-color: #FFFFFF; /* Beyaz arka plan */
-			color: #007BFF; /* Mavi metin rengi */
+			border: 1px solid #007BFF;
+			background-color: #FFFFFF;
+			color: #007BFF;
 			font-size: 10px;
 			font-weight: bold;
 			padding: 8px 30px;
@@ -111,9 +111,9 @@
 		}
 		
 		button:active {
-			background-color: #E0F3FF; /* Açık mavi tonlarında arka plan */
-			color: #0056b3; /* Daha koyu mavi metin rengi */
-			border-color: #0056b3; /* Daha koyu mavi sınır rengi */
+			background-color: #E0F3FF;
+			color: #0056b3;
+			border-color: #0056b3;
 			transform: scale(0.95);
 		}
 		
@@ -121,182 +121,178 @@
 			outline: none;
 		}
 		
-
-        button:focus {
-            outline: none;
-        }
-
-        button.ghost {
-            background-color: transparent;
-            border-color: #FFFFFF;
-        }
-
-        form {
-            background-color: #FFFFFF;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            padding: 0 30px;
-            height: 100%;
-            text-align: center;
-        }
-
-        input {
-            background-color: #eee;
-            border: none;
-            padding: 8px 10px;
-            margin: 6px 0;
-            width: 100%;
-        }
-
-        .container {
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-            position: relative;
-            overflow: hidden;
-            width: 560px;
-            max-width: 100%;
-            min-height: 440px;
-            z-index: 1;
-        }
-
-        .form-container {
-            position: absolute;
-            top: 0;
-            height: 100%;
-            transition: all 0.6s ease-in-out;
-        }
-
-        .sign-in-container {
-            left: 0;
-            width: 50%;
-            z-index: 2;
-        }
-
-        .container.right-panel-active .sign-in-container {
-            transform: translateX(100%);
-        }
-
-        .sign-up-container {
-            left: 0;
-            width: 50%;
-            opacity: 0;
-            z-index: 1;
-        }
-
-        .container.right-panel-active .sign-up-container {
-            transform: translateX(100%);
-            opacity: 1;
-            z-index: 5;
-            animation: show 0.6s;
-        }
-
-        @keyframes show {
-            0%, 49.99% {
-                opacity: 0;
-                z-index: 1;
-            }
-
-            50%, 100% {
-                opacity: 1;
-                z-index: 5;
-            }
-        }
-
-        .overlay-container {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            width: 50%;
-            height: 100%;
-            overflow: hidden;
-            transition: transform 0.6s ease-in-out;
-            z-index: 100;
-        }
-
-        .container.right-panel-active .overlay-container {
-            transform: translateX(-100%);
-        }
-
-        .overlay {
-			background: #FFFFFF; /* Arka planı beyaz yapar */
-			color: #000000; /* Metin rengini siyah yapar */
-			border: 2px solid #000000; /* Siyah sınır ekler */
+		button.ghost {
+			background-color: transparent;
+			border-color: #FFFFFF;
+		}
+		
+		form {
+			background-color: #FFFFFF;
+			border: 2px solid #000000; /* Black border around the form containers */
+			border-radius: 10px;
+			box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+			padding: 30px;
+			width: 100%;
+			height: auto;
+			text-align: center;
+		}
+		
+		input {
+			background-color: #eee;
+			border: none;
+			padding: 8px 10px;
+			margin: 6px 0;
+			width: 100%;
+		}
+		
+		.container {
+			background-color: #fff;
+			border: 2px solid #000000; /* Black border around the entire container */
+			border-radius: 10px;
+			box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+			position: relative;
+			overflow: hidden;
+			width: 560px;
+			max-width: 100%;
+			min-height: 440px;
+			z-index: 1;
+		}
+		
+		.form-container {
+			position: absolute;
+			top: 0;
+			height: 100%;
+			transition: all 0.6s ease-in-out;
+		}
+		
+		.sign-in-container {
+			left: 0;
+			width: 50%;
+			z-index: 2;
+		}
+		
+		.container.right-panel-active .sign-in-container {
+			transform: translateX(100%);
+		}
+		
+		.sign-up-container {
+			left: 0;
+			width: 50%;
+			opacity: 0;
+			z-index: 1;
+		}
+		
+		.container.right-panel-active .sign-up-container {
+			transform: translateX(100%);
+			opacity: 1;
+			z-index: 5;
+			animation: show 0.6s;
+		}
+		
+		@keyframes show {
+			0%, 49.99% {
+				opacity: 0;
+				z-index: 1;
+			}
+		
+			50%, 100% {
+				opacity: 1;
+				z-index: 5;
+			}
+		}
+		
+		.overlay-container {
+			position: absolute;
+			top: 0;
+			left: 50%;
+			width: 50%;
+			height: 100%;
+			overflow: hidden;
+			transition: transform 0.6s ease-in-out;
+			z-index: 100;
+		}
+		
+		.container.right-panel-active .overlay-container {
+			transform: translateX(-100%);
+		}
+		
+		.overlay {
+			background: #FFFFFF;
+			color: #000000;
+			border: 2px solid #000000; /* Black border around the overlay */
 			position: relative;
 			left: -100%;
 			height: 100%;
 			width: 200%;
 			transform: translateX(0);
 			transition: transform 0.6s ease-in-out;
-			box-sizing: border-box; /* Border'ın içerik boyutuna dahil edilmesini sağlar */
-		}		
-
-        .container.right-panel-active .overlay {
-            transform: translateX(50%);
-        }
-
-        .overlay-panel {
-            position: absolute;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            padding: 0 40px;
-            text-align: center;
-            top: 0;
-            height: 100%;
-            width: 50%;
-            transform: translateX(0);
-            transition: transform 0.6s ease-in-out;
-        }
-
-        .overlay-left {
-            transform: translateX(-20%);
-        }
-
-        .container.right-panel-active .overlay-left {
-            transform: translateX(0);
-        }
-
-        .overlay-right {
-            right: 0;
-            transform: translateX(0);
-        }
-
-        .container.right-panel-active .overlay-right {
-            transform: translateX(20%);
-        }
-
-        .social-container {
-            margin: 10px 0;
-        }
-
-        .role-selector {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .role-selector button {
+			box-sizing: border-box;
+		}
+		
+		.container.right-panel-active .overlay {
+			transform: translateX(50%);
+		}
+		
+		.overlay-panel {
+			position: absolute;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-direction: column;
+			padding: 0 40px;
+			text-align: center;
+			top: 0;
+			height: 100%;
+			width: 50%;
+			transform: translateX(0);
+			transition: transform 0.6s ease-in-out;
+		}
+		
+		.overlay-left {
+			transform: translateX(-20%);
+		}
+		
+		.container.right-panel-active .overlay-left {
+			transform: translateX(0);
+		}
+		
+		.overlay-right {
+			right: 0;
+			transform: translateX(0);
+		}
+		
+		.container.right-panel-active .overlay-right {
+			transform: translateX(20%);
+		}
+		
+		.social-container {
+			margin: 10px 0;
+		}
+		
+		.role-selector {
+			display: flex;
+			justify-content: center;
+			gap: 10px;
+			margin-bottom: 15px;
+		}
+		
+		.role-selector button {
 			flex: 1;
 			padding: 0.4rem 0.8rem;
 			font-weight: bold;
 			text-transform: uppercase;
 			border-radius: 8px;
-			border: 1px solid #007BFF; /* Mavi tonlarında bir sınır rengi */
-			background-color: #FFFFFF; /* Beyaz arka plan */
-			color: #007BFF; /* Mavi metin rengi */
+			border: 1px solid #007BFF;
+			background-color: #FFFFFF;
+			color: #007BFF;
 			cursor: pointer;
 			transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 		}
 		
 		.role-selector button.active {
-			background-color: #E0F3FF; /* Açık mavi tonlarında arka plan */
-			color: #0056b3; /* Daha koyu mavi metin rengi */
-			border-color: #0056b3; /* Daha koyu mavi sınır rengi */
+			background-color: #E0F3FF;
+			color: #0056b3;
+			border-color: #0056b3;
 		}
 		
     </style>
