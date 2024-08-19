@@ -169,7 +169,6 @@ def sign():
 
 @app.route('/autocomplete_airport')
 def autocomplete_airport():
-    
     url = current_app.config['ODOO_URL']
     db = current_app.config['ODOO_DB']
     admin_username = current_app.config['ODOO_USERNAME']
@@ -180,11 +179,17 @@ def autocomplete_airport():
 
     models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object', allow_none=True)
 
-    flights = models.execute_kw(db, uid, admin_password, 'flight.management', 'search_read', [[]], {'fields': ['flight_direction','flight_number', 'available_seats', 'departure_airport', 'arrival_airport', 'departure_time']})
-
-    outbound_flights = [flight for flight in flights if flight['flight_direction'] == 'outbound']
+    flights = models.execute_kw(db, uid, admin_password, 'flight.management', 'search_read', [[]], {'fields': ['flight_direction', 'flight_number', 'available_seats', 'departure_airport', 'arrival_airport', 'departure_time']})
 
     term = request.args.get('term')
+    direction = request.args.get('direction')
 
-    outbound_airports = [flight['departure_airport'] for flight in outbound_flights if term.lower() in flight['departure_airport'].lower()]
-    return jsonify(list(set(outbound_airports)))  # Remove duplicates
+    if direction == 'from':
+        airports = [flight['departure_airport'] for flight in flights if term.lower() in flight['departure_airport'].lower()]
+    elif direction == 'to':
+        airports = [flight['arrival_airport'] for flight in flights if term.lower() in flight['arrival_airport'].lower()]
+    else:
+        airports = []
+
+    return jsonify(list(set(airports)))  # Remove duplicates
+
