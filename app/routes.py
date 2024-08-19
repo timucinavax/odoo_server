@@ -17,10 +17,10 @@ def login():
     url = current_app.config['ODOO_URL']
     db = current_app.config['ODOO_DB']
 
-    common = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/common')
+    common = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/common', allow_none=True)
     uid = common.authenticate(db, current_app.config['ODOO_USERNAME'], current_app.config['ODOO_PASSWORD'], {})
 
-    models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object')
+    models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object', allow_none=True)
 
     user = models.execute_kw(db, uid, current_app.config['ODOO_PASSWORD'],
                              'custom.user', 'search_read', [[('username', '=', username), ('role', '=', role)]], {'limit': 1})
@@ -54,10 +54,10 @@ def register():
     admin_username = current_app.config['ODOO_USERNAME']
     admin_password = current_app.config['ODOO_PASSWORD']
 
-    common = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/common')
+    common = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/common', allow_none=True)
     uid = common.authenticate(db, admin_username, admin_password, {})
 
-    models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object')
+    models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object', allow_none=True)
 
     user_id = models.execute_kw(db, uid, admin_password, 'custom.user', 'create', [{
         'email': email,
@@ -88,10 +88,11 @@ def add_flight():
     admin_username = current_app.config['ODOO_USERNAME']
     admin_password = current_app.config['ODOO_PASSWORD']
 
-    common = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/common')
+    # allow_none=True parametresini ekleyin
+    common = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/common', allow_none=True)
     uid = common.authenticate(db, admin_username, admin_password, {})
 
-    models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object')
+    models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object', allow_none=True)
 
     flight_id = models.execute_kw(db, uid, admin_password, 'flight.management', 'create', [{
         'flight_number': flight_code,
@@ -118,10 +119,11 @@ def admin_panel():
     admin_username = current_app.config['ODOO_USERNAME']
     admin_password = current_app.config['ODOO_PASSWORD']
 
-    common = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/common')
+    # allow_none=True parametresini ekleyin
+    common = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/common', allow_none=True)
     uid = common.authenticate(db, admin_username, admin_password, {})
 
-    models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object')
+    models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object', allow_none=True)
 
     flights = models.execute_kw(db, uid, admin_password, 'flight.management', 'search_read', [[]], {'fields': ['flight_number', 'available_seats', 'departure_airport', 'arrival_airport', 'departure_time']})
 
