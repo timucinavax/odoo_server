@@ -14,14 +14,23 @@
 
         body {
             font-family: 'Raleway', sans-serif;
-            background: url("{{ url_for('static', filename='images/plane.png') }}") no-repeat center center fixed;
-            background-size: cover;
+            background: #f6f5f7;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
             border-color: #000;
+        }
+
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            z-index: -1;
         }
 
         .navbar {
@@ -262,7 +271,7 @@
             flex: 1;
             padding: 0.5rem 1rem;
             font-weight: bold;
-            font-size: 0.75rem;
+			font-size: 0.5rem;
             text-transform: uppercase;
             border-radius: 5px;
             border: 1px solid #000;
@@ -342,6 +351,8 @@
             </div>
         </div>
     </nav>
+
+    <video class="video-background" src="{{ url_for('static', filename='videos/login.mp4') }}" autoplay muted loop></video>
 
     <div class="container">
         <div class="form-container sign-in-container">
