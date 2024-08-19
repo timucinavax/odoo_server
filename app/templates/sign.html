@@ -261,12 +261,10 @@
         }
         
         .role-selector {
-
             display: flex;
             justify-content: center;
             gap: 10px;
-            margin-bottom: 20px;
-			margin-top: 20px;
+            margin: 20px 0;
         }
         
         .role-selector button {
@@ -352,36 +350,36 @@
             </div>
         </div>
     </nav>
-    <video class="video-background" autoplay muted loop>
-        <source src="{{ url_for('static', filename='videos/background.mp4') }}" type="video/mp4">
-    </video>
+    <div class="video-background">
+        <video src="{{ url_for('static', filename='videos/background.mp4') }}" autoplay muted loop></video>
+    </div>
     <div class="container" id="container">
         <div class="form-container sign-in-container">
-            <form action="/login" method="POST">
+            <form method="POST" action="{{ url_for('login') }}">
                 <h1>Sign In</h1>
 				<div class="role-selector">
-                    <button type="button" class="role-btn" data-role="agency">Agency</button>
                     <button type="button" class="role-btn" data-role="user">User</button>
+                    <button type="button" class="role-btn" data-role="agency">Agency</button>
 					<button type="button" class="role-btn" data-role="admin">Admin</button>
                 </div>
-                <input type="text" name="email" placeholder="Email" required />
+                <input type="text" name="username" placeholder="Username" required />
                 <input type="password" name="password" placeholder="Password" required />
                 <button type="submit">Sign In</button>
-                <p>Don't have an account? <a href="#" id="sign-up">Sign Up</a></p>
+                <p>Don't have an account? <a href="#" id="sign-up-link">Sign Up</a></p>
             </form>
         </div>
         <div class="form-container sign-up-container">
-            <form action="/register" method="POST">
+            <form method="POST" action="{{ url_for('register') }}">
                 <h1>Sign Up</h1>
 				<div class="role-selector">
-                    <button type="button" class="role-btn" data-role="agency">Agency</button>
                     <button type="button" class="role-btn" data-role="user">User</button>
+                    <button type="button" class="role-btn" data-role="agency">Agency</button>
                 </div>
                 <input type="text" name="username" placeholder="Username" required />
                 <input type="email" name="email" placeholder="Email" required />
                 <input type="password" name="password" placeholder="Password" required />
                 <button type="submit">Sign Up</button>
-                <p>Already have an account? <a href="#" id="sign-in">Sign In</a></p>
+                <p>Already have an account? <a href="#" id="sign-in-link">Sign In</a></p>
             </form>
         </div>
         <div class="overlay-container">
@@ -389,30 +387,32 @@
                 <div class="overlay-panel overlay-left">
                     <h1>Welcome Back!</h1>
                     <p>To keep connected with us please login with your personal info</p>
-                    <button class="ghost" id="sign-in-btn">Sign In</button>
+                    <button class="ghost" id="sign-in-button">Sign In</button>
                 </div>
                 <div class="overlay-panel overlay-right">
                     <h1>Hello, Friend!</h1>
                     <p>Enter your personal details and start journey with us</p>
-                    <button class="ghost" id="sign-up-btn">Sign Up</button>
+                    <button class="ghost" id="sign-up-button">Sign Up</button>
                 </div>
             </div>
         </div>
     </div>
-
     <script>
         const container = document.getElementById('container');
-        const signUpBtn = document.getElementById('sign-up-btn');
-        const signInBtn = document.getElementById('sign-in-btn');
-        const signInLink = document.getElementById('sign-in');
-        const signUpLink = document.getElementById('sign-up');
+        const signInButton = document.getElementById('sign-in-button');
+        const signUpButton = document.getElementById('sign-up-button');
+        const signInLink = document.getElementById('sign-in-link');
+        const signUpLink = document.getElementById('sign-up-link');
+        const roleBtns = document.querySelectorAll('.role-btn');
+        const formSignIn = document.querySelector('.sign-in-container form');
+        const formSignUp = document.querySelector('.sign-up-container form');
 
-        signUpBtn.addEventListener('click', () => {
-            container.classList.add('right-panel-active');
+        signInButton.addEventListener('click', () => {
+            container.classList.remove('right-panel-active');
         });
 
-        signInBtn.addEventListener('click', () => {
-            container.classList.remove('right-panel-active');
+        signUpButton.addEventListener('click', () => {
+            container.classList.add('right-panel-active');
         });
 
         signInLink.addEventListener('click', (e) => {
@@ -423,6 +423,20 @@
         signUpLink.addEventListener('click', (e) => {
             e.preventDefault();
             container.classList.add('right-panel-active');
+        });
+
+        roleBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                roleBtns.forEach(button => button.classList.remove('active'));
+                btn.classList.add('active');
+                const selectedRole = btn.dataset.role;
+                if (formSignIn) {
+                    formSignIn.querySelector('input[name="role"]').value = selectedRole;
+                }
+                if (formSignUp) {
+                    formSignUp.querySelector('input[name="role"]').value = selectedRole;
+                }
+            });
         });
     </script>
 </body>
