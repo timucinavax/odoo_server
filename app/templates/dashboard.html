@@ -194,6 +194,9 @@
     </style>
 </head>
 <body>
+
+    <video class="video-background" src="{{ url_for('static', filename='videos/background.mp4') }}" autoplay muted loop></video>
+
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
@@ -223,8 +226,6 @@
             </div>
         </div>
     </nav>
-
-    <video class="video-background" src="{{ url_for('static', filename='videos/background.mp4') }}" autoplay muted loop></video>
 
     <section class="hero">
         <div class="container">   
