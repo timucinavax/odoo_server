@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for, current_app, flash
+from flask import jsonify, render_template, request, redirect, url_for, current_app, flash
 import xmlrpc.client
 from werkzeug.security import generate_password_hash, check_password_hash
 from app import app
@@ -166,3 +166,25 @@ def plane_rev():
 @app.route('/sign')
 def sign():
     return render_template('sign.html')
+
+@app.route('/autocomplete_airport')
+def autocomplete_airport():
+    
+    url = current_app.config['ODOO_URL']
+    db = current_app.config['ODOO_DB']
+    admin_username = current_app.config['ODOO_USERNAME']
+    admin_password = current_app.config['ODOO_PASSWORD']
+
+    common = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/common', allow_none=True)
+    uid = common.authenticate(db, admin_username, admin_password, {})
+
+    models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object', allow_none=True)
+
+    flights = models.execute_kw(db, uid, admin_password, 'flight.management', 'search_read', [[]], {'fields': ['flight_direction','flight_number', 'available_seats', 'departure_airport', 'arrival_airport', 'departure_time']})
+
+    outbound_flights = [flight for flight in flights if flight['flight_direction'] == 'outbound']
+
+    term = request.args.get('term')
+
+    outbound_airports = [flight['departure_airport'] for flight in outbound_flights if term.lower() in flight['departure_airport'].lower()]
+    return jsonify(list(set(outbound_airports)))  # Remove duplicates

@@ -99,6 +99,24 @@
             font-weight: bold;
         }
 
+        .autocomplete-suggestions {
+            position: absolute;
+            z-index: 9999;
+            max-height: 200px;
+            overflow-y: auto;
+            background-color: #fff;
+            border: 1px solid #ddd;
+        }
+
+        .autocomplete-suggestion {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .autocomplete-suggestion:hover {
+            background-color: #f0f0f0;
+        }
+
         .radio-group {
             display: flex;
             justify-content: center;
@@ -167,7 +185,7 @@
             .navbar-collapse {
                 text-align: center;
             }
-        }        
+        }
     </style>
 </head>
 <body>
@@ -205,7 +223,7 @@
     </nav>
 
     <section class="hero">
-        <div class="container">   
+        <div class="container">
             <h1>SEHLEN TOURISM</h1>
             <h1>Hello, Where Do You Want to Go?</h1>
             <div class="search-box mt-5">
@@ -217,19 +235,13 @@
                         <label for="return">Return</label>
                     </div>
                     <div class="row">
-                        <div class="col-md-3">
-                            <select name="from_where" class="form-control">
-                                {% for flight in outbound_flights %}
-                                    <option value="{{ flight.departure_airport }}">{{ flight.departure_airport }}</option>
-                                {% endfor %}
-                            </select>
+                        <div class="col-md-3 position-relative">
+                            <input id="from_where" type="text" class="form-control" placeholder="From where" name="from_where" autocomplete="off">
+                            <div id="from-suggestions" class="autocomplete-suggestions"></div>
                         </div>
-                        <div class="col-md-3">
-                            <select name="to_where" class="form-control">
-                                {% for flight in return_flights %}
-                                    <option value="{{ flight.arrival_airport }}">{{ flight.arrival_airport }}</option>
-                                {% endfor %}
-                            </select>
+                        <div class="col-md-3 position-relative">
+                            <input id="to_where" type="text" class="form-control" placeholder="To where" name="to_where" autocomplete="off">
+                            <div id="to-suggestions" class="autocomplete-suggestions"></div>
                         </div>
                         <div class="col-md-3">
                             <input type="text" class="form-control" placeholder="Date" name="flight_date">
@@ -245,9 +257,57 @@
             </div>
         </div>
     </section>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <script>
+        $(document).ready(function () {
+            $('#from_where').on('input', function () {
+                const query = $(this).val();
+                if (query.length >= 3) {
+                    $.ajax({
+                        url: '{{ url_for("autocomplete_airport") }}',
+                        data: { term: query },
+                        success: function (data) {
+                            $('#from-suggestions').empty();
+                            data.forEach(function (item) {
+                                $('#from-suggestions').append(`<div class="autocomplete-suggestion">${item}</div>`);
+                            });
+                        }
+                    });
+                } else {
+                    $('#from-suggestions').empty();
+                }
+            });
+
+            // Autocomplete for To where
+            $('#to_where').on('input', function () {
+                const query = $(this).val();
+                if (query.length >= 3) {
+                    $.ajax({
+                        url: '{{ url_for("autocomplete_airport") }}',
+                        data: { term: query },
+                        success: function (data) {
+                            $('#to-suggestions').empty();
+                            data.forEach(function (item) {
+                                $('#to-suggestions').append(`<div class="autocomplete-suggestion">${item}</div>`);
+                            });
+                        }
+                    });
+                } else {
+                    $('#to-suggestions').empty();
+                }
+            });
+
+            // Handle click on autocomplete suggestions
+            $(document).on('click', '.autocomplete-suggestion', function () {
+                const text = $(this).text();
+                $(this).closest('.position-relative').find('input').val(text);
+                $('.autocomplete-suggestions').empty();
+            });
+        });
+
         function goToLogin() {
             window.location.href = "{{ url_for('sign') }}";
         }
