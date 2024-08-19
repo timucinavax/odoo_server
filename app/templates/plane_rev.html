@@ -340,7 +340,7 @@
           </div>
           <div class="exit exit--front fuselage"></div>
           <ol class="cabin fuselage">
-              {% for row in seats|batch(8) %}
+              {% for row in seats|batch(3) %}
               <li class="row row--{{ loop.index }}">
                   <ol class="seats" type="A">
                       {% for seat in row %}
