@@ -378,7 +378,7 @@
                 <input type="text" name="username" id="usernameRegister" placeholder="Username">
                 <input type="email" name="email" id="emailRegister" placeholder="Email">
                 <input type="password" name="password" id="passwordRegister" placeholder="Password">
-                <button type="submit">Sign up</button>
+                <button type="registerButton">Sign up</button>
             </form>
         </div>
         <div class="form-container sign-in-container">
@@ -392,7 +392,7 @@
                 <input type="text" name="username" id="usernameLogin" placeholder="Username">
                 <input type="password" name="password" id="passwordLogin" placeholder="Password">
                 <a href="#">Forgot your password?</a>
-                <button type="submit">Sign in</button>
+                <button type="loginButton">Sign in</button>
             </form>
         </div>
         <div class="overlay-container">
@@ -415,6 +415,17 @@
         const signUpButton = document.getElementById('signUp');
         const signInButton = document.getElementById('signIn');
         const container = document.getElementById('container');
+
+		document.addEventListener('click', function(event) {
+            var loginForm = document.getElementById('loginForm');
+            var registerForm = document.getElementById('registerForm');
+            var loginButton = document.getElementById('loginButton');
+            var registerButton = document.getElementById('registerButton');
+            if (!loginForm.contains(event.target) && !registerForm.contains(event.target) && event.target !== loginButton && event.target !== registerButton) {
+                loginForm.style.display = 'none';
+                registerForm.style.display = 'none';
+            }
+        });
 
         signUpButton.addEventListener('click', () => {
             container.classList.add("right-panel-active");

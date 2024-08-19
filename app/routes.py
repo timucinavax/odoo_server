@@ -140,6 +140,7 @@ def agency_panel():
 @app.route('/plane_rev')
 def plane_rev():
     return render_template('plane_rev.html')
+
 @app.route('/sign')
 def sign():
     return render_template('sign.html')
