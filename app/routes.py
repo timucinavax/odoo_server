@@ -138,8 +138,8 @@ def admin_panel():
 
     return render_template('admin_panel.html', outbound_flights=outbound_flights, return_flights=return_flights, users=users)
 
-@role_required(['admin'])
 @app.route('/add_flight', methods=['POST'])
+@role_required(['admin'])
 def add_flight():
     flight_code = request.form.get('flight_code')
     passenger_count = request.form.get('passenger_count')
@@ -221,13 +221,11 @@ def autocomplete_airport():
 
 @app.route('/search_flights', methods=['POST'])
 def search_flights():
-    # Get form data
     flight_direction = request.form.get('flight_direction')
     from_where = request.form.get('from_where')
     to_where = request.form.get('to_where')
     flight_date = request.form.get('flight_date')
 
-    # Connect to Odoo
     url = current_app.config['ODOO_URL']
     db = current_app.config['ODOO_DB']
     admin_username = current_app.config['ODOO_USERNAME']
@@ -238,7 +236,6 @@ def search_flights():
 
     models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object', allow_none=True)
 
-    # Build the domain for the search based on form input
     domain = [
         ('departure_airport', '=', from_where),
         ('arrival_airport', '=', to_where),
@@ -246,7 +243,6 @@ def search_flights():
         ('departure_time', '<=', f'{flight_date} 23:59:59')
     ]
 
-    # Separate search for outbound and return flights
     if flight_direction == 'outbound':
         domain.append(('flight_direction', '=', 'outbound'))
         outbound_flights = models.execute_kw(db, uid, admin_password, 'flight.management', 'search_read', [domain], 
@@ -259,6 +255,3 @@ def search_flights():
         outbound_flights = []
 
     return render_template('index.html', outbound_flights=outbound_flights, return_flights=return_flights)
-
-
-
