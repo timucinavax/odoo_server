@@ -358,7 +358,7 @@
             <form id="sign-in-form">
                 <h1>Sign In</h1>
                 <div class="role-selector">
-                    <button type="button" id="role-customer" class="active">Customer</button>
+                    <button type="button" id="role-user" class="active">Customer</button>
                     <button type="button" id="role-agency">Agency</button>
                     <button type="button" id="role-admin">Admin</button>
                 </div>
@@ -374,7 +374,7 @@
             <form id="sign-up-form">
                 <h1>Sign Up</h1>
                 <div class="role-selector">
-                    <button type="button" id="role-customer-signup" class="active">Customer</button>
+                    <button type="button" id="role-user-signup" class="active">Customer</button>
                     <button type="button" id="role-agency-signup">Agency</button>
                 </div>
                 <input type="text" name="username" placeholder="Username" required>
@@ -410,8 +410,8 @@
             const signUpLink = document.getElementById('sign-up-link');
             const container = document.querySelector('.container');
 
-            const roleButtonsSignIn = document.querySelectorAll('#role-customer, #role-agency, #role-admin');
-            const roleButtonsSignUp = document.querySelectorAll('#role-customer-signup, #role-agency-signup');
+            const roleButtonsSignIn = document.querySelectorAll('#role-user, #role-agency, #role-admin');
+            const roleButtonsSignUp = document.querySelectorAll('#role-user-signup, #role-agency-signup');
             const signInRoleInput = document.getElementById('sign-in-role');
             const signUpRoleInput = document.getElementById('sign-up-role');
 
