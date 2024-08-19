@@ -82,13 +82,13 @@ def add_flight():
     departure_time = request.form.get('departure_time')
     arrival_time = request.form.get('arrival_time')
     price = request.form.get('price')
+    flight_direction = request.form.get('flight_direction')  # Capture the flight direction
 
     url = current_app.config['ODOO_URL']
     db = current_app.config['ODOO_DB']
     admin_username = current_app.config['ODOO_USERNAME']
     admin_password = current_app.config['ODOO_PASSWORD']
 
-    # allow_none=True parametresini ekleyin
     common = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/common', allow_none=True)
     uid = common.authenticate(db, admin_username, admin_password, {})
 
@@ -102,13 +102,14 @@ def add_flight():
         'departure_time': departure_time,
         'arrival_time': arrival_time,
         'price': price,
-        'user_id': False,  
+        'flight_direction': flight_direction, 
+        'user_id': False,
     }])
 
     if flight_id:
-        flash('Uçuş başarıyla eklendi.')
+        flash('Flight added successfully.')
     else:
-        flash('Uçuş eklenirken bir hata oluştu.')
+        flash('An error occurred while adding the flight.')
 
     return redirect(url_for('admin_panel'))
 
