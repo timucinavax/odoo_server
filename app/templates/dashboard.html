@@ -217,7 +217,7 @@
                     {% if logged_in_user %}
                         {% if logged_in_user_role == 'admin' %}
                             <li class="nav-item">
-                                <a class="nav-link btn btn-outline-dark" href="{{ url_for('admin_panel') }}">Go to Admin Panel</a>
+                                <a class="nav-link" href="{{ url_for('admin_panel') }}">Go to Admin Panel</a>
                             </li>
                         {% endif %}
                         <li class="nav-item">
