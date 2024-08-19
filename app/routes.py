@@ -142,7 +142,6 @@ def admin_panel():
 @role_required(['admin'])
 def add_flight():
     flight_code = request.form.get('flight_code')
-    passenger_count = int(request.form.get('passenger_count'))
     departure = request.form.get('departure')
     arrival = request.form.get('arrival')
     departure_time = request.form.get('departure_time')
@@ -162,18 +161,19 @@ def add_flight():
     models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object', allow_none=True)
 
     # Uçak tipi adını kullanarak ID'yi bulalım
-    airplane_type = models.execute_kw(db, uid, admin_password, 'airplane.type.model', 'search_read', 
-                                      [[('name', '=', airplane_type_name)]], {'fields': ['id'], 'limit': 1})
+    airplane_type = models.execute_kw(db, uid, admin_password, 'airplane.type', 'search_read', 
+                                      [[('name', '=', airplane_type_name)]], {'fields': ['id', 'seat_count'], 'limit': 1})
 
     if not airplane_type:
         flash('Geçersiz uçak tipi.')
         return redirect(url_for('admin_panel'))
     
     airplane_type_id = airplane_type[0]['id']  # ID'yi alıyoruz
+    seat_count = airplane_type[0]['seat_count']  # Koltuk sayısını alıyoruz
 
     flight_id = models.execute_kw(db, uid, admin_password, 'flight.management', 'create', [{
         'flight_number': flight_code,
-        'available_seats': passenger_count,
+        'available_seats': seat_count,  # Koltuk sayısını buraya otomatik olarak ekliyoruz
         'departure_airport': departure,
         'arrival_airport': arrival,
         'departure_time': departure_time,
@@ -190,6 +190,7 @@ def add_flight():
         flash('An error occurred while adding the flight.')
 
     return redirect(url_for('admin_panel'))
+
 
 
 
