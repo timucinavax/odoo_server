@@ -149,6 +149,7 @@ def add_flight():
     arrival_time = request.form.get('arrival_time')
     price = request.form.get('price')
     flight_direction = request.form.get('flight_direction') 
+    airplane_type = request.form.get('airplane_type')
 
     url = current_app.config['ODOO_URL']
     db = current_app.config['ODOO_DB']
@@ -169,11 +170,13 @@ def add_flight():
         'arrival_time': arrival_time,
         'price': price,
         'flight_direction': flight_direction, 
+        'airplane_type_id': int(airplane_type),
         'user_id': False,
     }])
 
     if flight_id:
         flash('Flight added successfully.')
+        return redirect(url_for('plane_layout', flight_id=flight_id))
     else:
         flash('An error occurred while adding the flight.')
 
@@ -192,6 +195,34 @@ def agency_panel():
 @app.route('/sign')
 def sign():
     return render_template('sign.html')
+
+@app.route('/plane_layout/<int:flight_id>', methods=['GET', 'POST'])
+@role_required(['admin'])
+def plane_layout(flight_id):
+    url = current_app.config['ODOO_URL']
+    db = current_app.config['ODOO_DB']
+    admin_username = current_app.config['ODOO_USERNAME']
+    admin_password = current_app.config['ODOO_PASSWORD']
+
+    common = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/common', allow_none=True)
+    uid = common.authenticate(db, admin_username, admin_password, {})
+
+    models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object', allow_none=True)
+
+    flight = models.execute_kw(db, uid, admin_password, 'flight.management', 'read', [[flight_id]], {'fields': ['flight_number', 'airplane_type_id', 'seat_ids']})
+    
+    airplane_type = flight[0]['airplane_type_id'][0]  # Uçak tipi ID'sini al
+    seats = models.execute_kw(db, uid, admin_password, 'flight.seat', 'search_read', [[('flight_id', '=', flight_id)]], {'fields': ['name', 'user_id']})
+
+    if request.method == 'POST':
+        selected_seats = request.form.getlist('selected_seats')
+        for seat_id in selected_seats:
+            models.execute_kw(db, uid, admin_password, 'flight.seat', 'write', [[int(seat_id)], {'user_id': False}])  # Koltukları boş olarak ayarla
+
+        flash('Seats assigned successfully.')
+        return redirect(url_for('admin_panel'))
+
+    return render_template('plane_rev.html', airplane_type=airplane_type, seats=seats)
 
 @app.route('/autocomplete_airport')
 def autocomplete_airport():

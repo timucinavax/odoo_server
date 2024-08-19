@@ -198,6 +198,13 @@
                 <div class="card-body">
                     <form action="{{ url_for('add_flight') }}" method="post">
                         <input type="hidden" name="flight_direction" value="outbound">
+                        <label for="airplane_type" class="form-label">Airplane Type</label>
+                            <select class="form-control" id="airplane_type" name="airplane_type" required>
+                                <option value="TK121">TK121 - 30 Seats</option>
+                                <option value="TK122">TK122 - 40 Seats</option>
+                                <option value="TK123">TK123 - 50 Seats</option>
+                                <option value="TK124">TK124 - 70 Seats</option>
+                        </select>
                         <div class="mb-3">
                             <label for="flight_code" class="form-label">Flight Number</label>
                             <input type="text" class="form-control" id="flight_code" name="flight_code" required>
@@ -238,6 +245,13 @@
                 <div class="card-header">Add Return Flight</div>
                 <div class="card-body">
                     <form action="{{ url_for('add_flight') }}" method="post">
+                        <label for="airplane_type" class="form-label">Airplane Type</label>
+                            <select class="form-control" id="airplane_type" name="airplane_type" required>
+                                <option value="TK121">TK121 - 30 Seats</option>
+                                <option value="TK122">TK122 - 40 Seats</option>
+                                <option value="TK123">TK123 - 50 Seats</option>
+                                <option value="TK124">TK124 - 70 Seats</option>
+                        </select>
                         <input type="hidden" name="flight_direction" value="return">
                         <div class="mb-3">
                             <label for="flight_code_return" class="form-label">Flight Number</label>
