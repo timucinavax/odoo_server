@@ -185,6 +185,10 @@ def user_panel():
 def agency_panel():
     return render_template('agency_panel.html')
 
+@app.route('/sign')
+def sign():
+    return render_template('sign.html')
+
 @app.route('/autocomplete_airport')
 def autocomplete_airport():
     url = current_app.config['ODOO_URL']
