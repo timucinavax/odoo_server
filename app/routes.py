@@ -195,10 +195,13 @@ def autocomplete_airport():
 
 @app.route('/search_flights', methods=['POST'])
 def search_flights():
+    # Get form data
     flight_direction = request.form.get('flight_direction')
     from_where = request.form.get('from_where')
     to_where = request.form.get('to_where')
     flight_date = request.form.get('flight_date')
+
+    # Connect to Odoo
     url = current_app.config['ODOO_URL']
     db = current_app.config['ODOO_DB']
     admin_username = current_app.config['ODOO_USERNAME']
@@ -211,18 +214,26 @@ def search_flights():
 
     # Build the domain for the search based on form input
     domain = [
-        ('flight_direction', '=', flight_direction),
         ('departure_airport', '=', from_where),
         ('arrival_airport', '=', to_where),
         ('departure_time', '>=', f'{flight_date} 00:00:00'),
         ('departure_time', '<=', f'{flight_date} 23:59:59')
     ]
 
-    # Fetch flights from Odoo
-    flights = models.execute_kw(db, uid, admin_password, 'flight.management', 'search_read', [domain], 
-                                {'fields': ['flight_number', 'available_seats', 'departure_airport', 'arrival_airport', 'departure_time','price']})
+    # Separate search for outbound and return flights
+    if flight_direction == 'outbound':
+        domain.append(('flight_direction', '=', 'outbound'))
+        outbound_flights = models.execute_kw(db, uid, admin_password, 'flight.management', 'search_read', [domain], 
+                                {'fields': ['flight_number', 'available_seats', 'departure_airport', 'arrival_airport', 'departure_time']})
+        return_flights = []
+    else:
+        domain.append(('flight_direction', '=', 'return'))
+        return_flights = models.execute_kw(db, uid, admin_password, 'flight.management', 'search_read', [domain], 
+                                {'fields': ['flight_number', 'available_seats', 'departure_airport', 'arrival_airport', 'departure_time']})
+        outbound_flights = []
 
-    return render_template('index.html', flights=flights)
+    return render_template('index.html', outbound_flights=outbound_flights, return_flights=return_flights)
+
 
 
 
