@@ -19,7 +19,6 @@ def role_required(allowed_roles):
 @app.route('/')
 @app.route('/home')
 def dashboard():
-    # Kullanıcı oturumu var mı kontrol et
     logged_in_user = session.get('username')
     
     url = current_app.config['ODOO_URL']
@@ -37,7 +36,14 @@ def dashboard():
     outbound_flights = [flight for flight in flights if flight['flight_direction'] == 'outbound']
     return_flights = [flight for flight in flights if flight['flight_direction'] == 'return']
 
-    return render_template('dashboard.html', outbound_flights=outbound_flights, return_flights=return_flights, logged_in_user=logged_in_user)
+    logged_in_user = 'current_user_username' 
+    logged_in_user_role = 'current_user_role'
+
+    return render_template('dashboard.html', 
+                           outbound_flights=outbound_flights, 
+                           return_flights=return_flights,
+                           logged_in_user=logged_in_user,
+                           logged_in_user_role=logged_in_user_role)
 
 @app.route('/login', methods=['POST'])
 def login():
