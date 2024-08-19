@@ -165,8 +165,8 @@
     <div class="container">
         <!-- Side-by-Side Outbound and Return Flight Cards -->
         <div class="row">
-            <!-- Outbound Flight -->
-            <div class="col-md-6">
+            <!-- Outbound Flight Form -->
+            <div class="col-md-6 col-lg-3">
                 <div class="card">
                     <div class="card-header">Add Outbound Flight</div>
                     <div class="card-body">
@@ -205,8 +205,9 @@
                     </div>
                 </div>
             </div>
-            <!-- Return Flight -->
-            <div class="col-md-6">
+
+            <!-- Return Flight Form -->
+            <div class="col-md-6 col-lg-3">
                 <div class="card">
                     <div class="card-header">Add Return Flight</div>
                     <div class="card-body">
@@ -245,36 +246,67 @@
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Existing Flights Table -->
-        <div class="card">
-            <div class="card-header">Existing Flights</div>
-            <div class="card-body">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Flight Number</th>
-                            <th>Passenger Count</th>
-                            <th>Departure Airport</th>
-                            <th>Arrival Airport</th>
-                            <th>Departure Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for flight in flights %}
-                        <tr>
-                            <td>{{ loop.index }}</td>
-                            <td>{{ flight.flight_number }}</td>
-                            <td>{{ flight.available_seats }}</td>
-                            <td>{{ flight.departure_airport }}</td>
-                            <td>{{ flight.arrival_airport }}</td>
-                            <td>{{ flight.departure_time }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+            <!-- Outbound Flights List -->
+            <div class="col-md-6 col-lg-3">
+                <div class="card">
+                    <div class="card-header">Outbound Flights</div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Flight Number</th>
+                                    <th>Passenger Count</th>
+                                    <th>Departure</th>
+                                    <th>Arrival</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for flight in outbound_flights %}
+                                <tr>
+                                    <td>{{ flight.flight_number }}</td>
+                                    <td>{{ flight.available_seats }}</td>
+                                    <td>{{ flight.departure_airport }}</td>
+                                    <td>{{ flight.arrival_airport }}</td>
+                                    <td>{{ flight.departure_time }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Return Flights List -->
+            <div class="col-md-6 col-lg-3">
+                <div class="card">
+                    <div class="card-header">Return Flights</div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Flight Number</th>
+                                    <th>Passenger Count</th>
+                                    <th>Departure</th>
+                                    <th>Arrival</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for flight in return_flights %}
+                                <tr>
+                                    <td>{{ flight.flight_number }}</td>
+                                    <td>{{ flight.available_seats }}</td>
+                                    <td>{{ flight.departure_airport }}</td>
+                                    <td>{{ flight.arrival_airport }}</td>
+                                    <td>{{ flight.departure_time }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
 
