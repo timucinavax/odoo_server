@@ -170,7 +170,7 @@ def add_flight():
         'arrival_time': arrival_time,
         'price': price,
         'flight_direction': flight_direction, 
-        'airplane_type_id': airplane_type,
+        'airplane_type': airplane_type,
         'user_id': False,
     }])
 
@@ -209,24 +209,18 @@ def plane_layout(flight_id):
 
     models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object', allow_none=True)
 
-    # Uçuş bilgilerini alın
-    flight = models.execute_kw(db, uid, admin_password, 'flight.management', 'read', [[flight_id]], {'fields': ['flight_number', 'airplane_type_id', 'seat_ids']})
-    
-    # Uçak tipi ID yerine string olarak alınır
-    airplane_type_string = flight[0]['airplane_type_id'][1]  # İkinci eleman string değerini içerir
+    flight = models.execute_kw(db, uid, admin_password, 'flight.management', 'read', [[flight_id]], {'fields': ['flight_number', 'airplane_type', 'seat_ids']})
 
-    # Koltuk bilgilerini alın
     seats = models.execute_kw(db, uid, admin_password, 'flight.seat', 'search_read', [[('flight_id', '=', flight_id)]], {'fields': ['name', 'user_id']})
 
     if request.method == 'POST':
         selected_seats = request.form.getlist('selected_seats')
         for seat_id in selected_seats:
-            models.execute_kw(db, uid, admin_password, 'flight.seat', 'write', [[int(seat_id)], {'user_id': False}])  # Koltukları boş olarak ayarla
-
+            models.execute_kw(db, uid, admin_password, 'flight.seat', 'write', [[int(seat_id)], {'user_id': False}]) 
         flash('Seats assigned successfully.')
         return redirect(url_for('admin_panel'))
 
-    return render_template('plane_rev.html', airplane_type=airplane_type_string, seats=seats)
+    return render_template('plane_rev.html', airplane_type=airplane_type, seats=seats)
 
 
 @app.route('/autocomplete_airport')
