@@ -51,8 +51,11 @@
         }
 
         .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 70vh; /* Adjusted height */
+            height: 70vh;
             object-fit: cover;
             z-index: -1;
         }
@@ -60,29 +63,27 @@
         .hero {
             position: relative;
             width: 100%;
-            height: 70vh; /* Adjusted height */
-            color: black;
-            text-align: center;
+            height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: transparent;
+            z-index: 1;
             padding: 20px;
-            margin-bottom: 20px; /* Added margin to separate sections */
-        }
-
-        .hero h1 {
-            font-size: 2.5rem;
-            color: white;
         }
 
         .search-box {
-            background: white;
+            background: rgba(255, 255, 255, 0.9);
             padding: 20px;
             border-radius: 10px;
             border: 2px solid black;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             width: 100%;
+            max-width: 1200px;
+            position: absolute;
+            top: 60%; /* Arama kutusunun videonun ortasına taşınması */
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
         }
 
         .search-box .form-control {
@@ -93,24 +94,6 @@
             background-color: #dc3545;
             border-color: #dc3545;
             font-weight: bold;
-        }
-
-        .autocomplete-suggestions {
-            position: absolute;
-            z-index: 9999;
-            max-height: 200px;
-            overflow-y: auto;
-            background-color: #fff;
-            border: 1px solid #ddd;
-        }
-
-        .autocomplete-suggestion {
-            padding: 10px;
-            cursor: pointer;
-        }
-
-        .autocomplete-suggestion:hover {
-            background-color: #f0f0f0;
         }
 
         .radio-group {
@@ -148,31 +131,18 @@
             margin-bottom: 30px;
         }
 
-        /* Media queries for mobile responsiveness */
+        /* Mobil uyum için medya sorguları */
         @media (max-width: 768px) {
             .hero {
                 height: auto;
                 padding: 40px 20px;
             }
 
-            .hero h1 {
-                font-size: 2rem;
-            }
-
             .search-box {
-                margin-top: 0;
                 padding: 15px;
-                box-shadow: none;
-                border-radius: 5px;
-            }
-
-            .search-box .row > div {
-                margin-bottom: 10px;
-            }
-
-            .search-box .col-md-1 {
-                max-width: 100%;
-                margin-top: 10px;
+                width: 90%;
+                top: 70%;
+                transform: translate(-50%, -70%);
             }
 
             .search-box .btn-primary {
@@ -196,6 +166,8 @@
     </style>
 </head>
 <body>
+
+    <video class="video-background" src="{{ url_for('static', filename='videos/background.mp4') }}" autoplay muted loop></video>
 
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container-fluid">
@@ -229,7 +201,6 @@
 
     <section class="hero">
         <div class="container">
-            <video class="video-background" src="{{ url_for('static', filename='videos/background.mp4') }}" autoplay muted loop></video>
             <h1>SEHLEN TOURISM</h1>
             <h1>Hello, Where Do You Want to Go?</h1>
             <div class="search-box mt-5">
