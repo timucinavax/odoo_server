@@ -49,7 +49,7 @@
         }
         
         .video-background {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             height: 100%;
@@ -224,11 +224,10 @@
         </div>
     </nav>
 
+    <video class="video-background" src="{{ url_for('static', filename='videos/background.mp4') }}" autoplay muted loop></video>
+
     <section class="hero">
-        <div class="container">
-            <video class="video-background" autoplay loop muted>
-                <source src="{{ url_for('static', filename='videos/background.mp4') }}" type="video/mp4">
-            </video>        
+        <div class="container">   
             <h1>SEHLEN TOURISM</h1>
             <h1>Hello, Where Do You Want to Go?</h1>
             <div class="search-box mt-5">

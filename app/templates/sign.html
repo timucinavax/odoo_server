@@ -351,36 +351,36 @@
         </div>
     </nav>
 
-    <video class="video-background" src="{{ url_for('static', filename='videos/background.mp4') }}" autoplay muted loop></video>
+    <video class="video-background" src="{{ url_for('static', filename='videos/login.mp4') }}" autoplay muted loop></video>
 
     <div class="container">
         <div class="form-container sign-in-container">
-            <form id="sign-in-form">
+            <form id="sign-in-form" action="{{ url_for('login') }}" method="post">
                 <h1>Sign In</h1>
                 <div class="role-selector">
-                    <button type="button" id="role-user" class="active">Customer</button>
-                    <button type="button" id="role-agency">Agency</button>
-                    <button type="button" id="role-admin">Admin</button>
+                    <button type="button" class="role-btn" data-role="user">Customer</button>
+                    <button type="button" class="role-btn" data-role="agency">Agency</button>
+                    <button type="button" class="role-btn" data-role="admin">Admin</button>
                 </div>
+                <input type="hidden" name="role" id="selectedRoleLogin">
                 <input type="text" name="username" placeholder="Username" required>
                 <input type="password" name="password" placeholder="Password" required>
-                <input type="hidden" name="role" id="sign-in-role" value="customer">
                 <button type="submit">Sign In</button>
                 <p>Don't have an account? <a href="#" id="sign-up-link">Sign Up</a></p>
             </form>
         </div>
 
         <div class="form-container sign-up-container">
-            <form id="sign-up-form">
+            <form id="sign-up-form" action="{{ url_for('register') }}" method="post">
                 <h1>Sign Up</h1>
                 <div class="role-selector">
-                    <button type="button" id="role-user-signup" class="active">Customer</button>
-                    <button type="button" id="role-agency-signup">Agency</button>
+                    <button type="button" class="role-btn" data-role="user">Customer</button>
+                    <button type="button" class="role-btn" data-role="agency">Agency</button>
                 </div>
+                <input type="hidden" name="role" id="selectedRoleRegister">
                 <input type="text" name="username" placeholder="Username" required>
                 <input type="email" name="email" placeholder="Email" required>
                 <input type="password" name="password" placeholder="Password" required>
-                <input type="hidden" name="role" id="sign-up-role" value="customer">
                 <button type="submit">Sign Up</button>
                 <p>Already have an account? <a href="#" id="sign-in-link">Sign In</a></p>
             </form>
@@ -404,59 +404,41 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const signInBtn = document.getElementById('sign-in-btn');
-            const signUpBtn = document.getElementById('sign-up-btn');
-            const signInLink = document.getElementById('sign-in-link');
-            const signUpLink = document.getElementById('sign-up-link');
-            const container = document.querySelector('.container');
+            const roleButtons = document.querySelectorAll('.role-btn');
+            const signInRoleInput = document.getElementById('selectedRoleLogin');
+            const signUpRoleInput = document.getElementById('selectedRoleRegister');
 
-            const roleButtonsSignIn = document.querySelectorAll('#role-user, #role-agency, #role-admin');
-            const roleButtonsSignUp = document.querySelectorAll('#role-user-signup, #role-agency-signup');
-            const signInRoleInput = document.getElementById('sign-in-role');
-            const signUpRoleInput = document.getElementById('sign-up-role');
+            roleButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    roleButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
 
-            function updateRoleSelection(role, isSignIn) {
-                if (isSignIn) {
-                    roleButtonsSignIn.forEach(btn => btn.classList.remove('active'));
-                    document.getElementById(`role-${role}`).classList.add('active');
-                    signInRoleInput.value = role;
-                } else {
-                    roleButtonsSignUp.forEach(btn => btn.classList.remove('active'));
-                    document.getElementById(`role-${role}-signup`).classList.add('active');
-                    signUpRoleInput.value = role;
-                }
-            }
-
-            roleButtonsSignIn.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const role = btn.id.split('-')[1];
-                    updateRoleSelection(role, true);
+                    const selectedRole = this.getAttribute('data-role');
+                    if (this.closest('form').id === 'sign-in-form') {
+                        signInRoleInput.value = selectedRole;
+                    } else {
+                        signUpRoleInput.value = selectedRole;
+                    }
                 });
             });
 
-            roleButtonsSignUp.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const role = btn.id.split('-')[1];
-                    updateRoleSelection(role, false);
-                });
+            // Form visibility toggle events
+            document.getElementById('sign-in-btn').addEventListener('click', () => {
+                document.querySelector('.container').classList.remove('right-panel-active');
             });
 
-            signInBtn.addEventListener('click', () => {
-                container.classList.remove('right-panel-active');
+            document.getElementById('sign-up-btn').addEventListener('click', () => {
+                document.querySelector('.container').classList.add('right-panel-active');
             });
 
-            signUpBtn.addEventListener('click', () => {
-                container.classList.add('right-panel-active');
-            });
-
-            signInLink.addEventListener('click', (e) => {
+            document.getElementById('sign-in-link').addEventListener('click', (e) => {
                 e.preventDefault();
-                container.classList.remove('right-panel-active');
+                document.querySelector('.container').classList.remove('right-panel-active');
             });
 
-            signUpLink.addEventListener('click', (e) => {
+            document.getElementById('sign-up-link').addEventListener('click', (e) => {
                 e.preventDefault();
-                container.classList.add('right-panel-active');
+                document.querySelector('.container').classList.add('right-panel-active');
             });
         });
     </script>
