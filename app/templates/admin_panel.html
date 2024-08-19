@@ -43,6 +43,7 @@
             margin-right: 15px;
             text-transform: uppercase;
             transition: color 0.3s;
+            cursor: pointer;
         }
 
         .navbar-nav .nav-link:hover {
@@ -128,6 +129,10 @@
             color: white;
         }
 
+        .content-section {
+            display: none; /* İçerik bölümleri başlangıçta gizli olacak */
+        }
+
         @media (max-width: 768px) {
             .hero {
                 height: auto;
@@ -157,19 +162,19 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="#add-outbound">Add Outbound Flight</a>
+                        <a class="nav-link" onclick="showSection('add-outbound')">Add Outbound Flight</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#add-return">Add Return Flight</a>
+                        <a class="nav-link" onclick="showSection('add-return')">Add Return Flight</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#outbound-list">Outbound Flights</a>
+                        <a class="nav-link" onclick="showSection('outbound-list')">Outbound Flights</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#return-list">Return Flights</a>
+                        <a class="nav-link" onclick="showSection('return-list')">Return Flights</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#users-list">Users List</a>
+                        <a class="nav-link" onclick="showSection('users-list')">Users List</a>
                     </li>
                 </ul>
             </div>
@@ -183,193 +188,209 @@
     </section>
 
     <div class="container">
-        <!-- Row for Flight Forms and Listings -->
-        <div class="row">
-            <!-- Outbound Flight Form -->
-            <div class="col-md-6 col-lg-3" id="add-outbound">
-                <div class="card">
-                    <div class="card-header">Add Outbound Flight</div>
-                    <div class="card-body">
-                        <form action="{{ url_for('add_flight') }}" method="post">
-                            <input type="hidden" name="flight_direction" value="outbound">
-                            <div class="mb-3">
-                                <label for="flight_code" class="form-label">Flight Number</label>
-                                <input type="text" class="form-control" id="flight_code" name="flight_code" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="passenger_count" class="form-label">Passenger Count</label>
-                                <input type="number" class="form-control" id="passenger_count" name="passenger_count" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="departure" class="form-label">Departure Airport</label>
-                                <input type="text" class="form-control" id="departure" name="departure" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="arrival" class="form-label">Arrival Airport</label>
-                                <input type="text" class="form-control" id="arrival" name="arrival" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="departure_time" class="form-label">Departure Date</label>
-                                <input type="date" class="form-control" id="departure_time" name="departure_time" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="arrival_time" class="form-label">Arrival Date</label>
-                                <input type="date" class="form-control" id="arrival_time" name="arrival_time" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="price" class="form-label">Price</label>
-                                <input type="number" step="0.01" class="form-control" id="price" name="price" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Add Outbound Flight</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Return Flight Form -->
-            <div class="col-md-6 col-lg-3" id="add-return">
-                <div class="card">
-                    <div class="card-header">Add Return Flight</div>
-                    <div class="card-body">
-                        <form action="{{ url_for('add_flight') }}" method="post">
-                            <input type="hidden" name="flight_direction" value="return">
-                            <div class="mb-3">
-                                <label for="flight_code_return" class="form-label">Flight Number</label>
-                                <input type="text" class="form-control" id="flight_code_return" name="flight_code" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="passenger_count_return" class="form-label">Passenger Count</label>
-                                <input type="number" class="form-control" id="passenger_count_return" name="passenger_count" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="departure_return" class="form-label">Departure Airport</label>
-                                <input type="text" class="form-control" id="departure_return" name="departure" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="arrival_return" class="form-label">Arrival Airport</label>
-                                <input type="text" class="form-control" id="arrival_return" name="arrival" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="departure_time_return" class="form-label">Departure Date</label>
-                                <input type="date" class="form-control" id="departure_time_return" name="departure_time" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="arrival_time_return" class="form-label">Arrival Date</label>
-                                <input type="date" class="form-control" id="arrival_time_return" name="arrival_time" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="price_return" class="form-label">Price</label>
-                                <input type="number" step="0.01" class="form-control" id="price_return" name="price" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Add Return Flight</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Outbound Flights List -->
-            <div class="col-md-6 col-lg-3" id="outbound-list">
-                <div class="card">
-                    <div class="card-header">Outbound Flights</div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Flight Number</th>
-                                        <th>Passenger Count</th>
-                                        <th>Departure</th>
-                                        <th>Arrival</th>
-                                        <th>Date</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for flight in outbound_flights %}
-                                    <tr>
-                                        <td>{{ flight.flight_number }}</td>
-                                        <td>{{ flight.available_seats }}</td>
-                                        <td>{{ flight.departure_airport }}</td>
-                                        <td>{{ flight.arrival_airport }}</td>
-                                        <td>{{ flight.departure_time }}</td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
+        <!-- Outbound Flight Form -->
+        <div class="content-section" id="add-outbound">
+            <div class="card">
+                <div class="card-header">Add Outbound Flight</div>
+                <div class="card-body">
+                    <form action="{{ url_for('add_flight') }}" method="post">
+                        <input type="hidden" name="flight_direction" value="outbound">
+                        <div class="mb-3">
+                            <label for="flight_code" class="form-label">Flight Number</label>
+                            <input type="text" class="form-control" id="flight_code" name="flight_code" required>
                         </div>
+                        <div class="mb-3">
+                            <label for="passenger_count" class="form-label">Passenger Count</label>
+                            <input type="number" class="form-control" id="passenger_count" name="passenger_count" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="departure" class="form-label">Departure Airport</label>
+                            <input type="text" class="form-control" id="departure" name="departure" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="arrival" class="form-label">Arrival Airport</label>
+                            <input type="text" class="form-control" id="arrival" name="arrival" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="departure_time" class="form-label">Departure Date</label>
+                            <input type="date" class="form-control" id="departure_time" name="departure_time" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="arrival_time" class="form-label">Arrival Date</label>
+                            <input type="date" class="form-control" id="arrival_time" name="arrival_time" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="price" class="form-label">Price</label>
+                            <input type="number" step="0.01" class="form-control" id="price" name="price" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Outbound Flight</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Return Flight Form -->
+        <div class="content-section" id="add-return">
+            <div class="card">
+                <div class="card-header">Add Return Flight</div>
+                <div class="card-body">
+                    <form action="{{ url_for('add_flight') }}" method="post">
+                        <input type="hidden" name="flight_direction" value="return">
+                        <div class="mb-3">
+                            <label for="flight_code_return" class="form-label">Flight Number</label>
+                            <input type="text" class="form-control" id="flight_code_return" name="flight_code" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="passenger_count_return" class="form-label">Passenger Count</label>
+                            <input type="number" class="form-control" id="passenger_count_return" name="passenger_count" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="departure_return" class="form-label">Departure Airport</label>
+                            <input type="text" class="form-control" id="departure_return" name="departure" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="arrival_return" class="form-label">Arrival Airport</label>
+                            <input type="text" class="form-control" id="arrival_return" name="arrival" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="departure_time_return" class="form-label">Departure Date</label>
+                            <input type="date" class="form-control" id="departure_time_return" name="departure_time" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="arrival_time_return" class="form-label">Arrival Date</label>
+                            <input type="date" class="form-control" id="arrival_time_return" name="arrival_time" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="price_return" class="form-label">Price</label>
+                            <input type="number" step="0.01" class="form-control" id="price_return" name="price" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Return Flight</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Outbound Flights List -->
+        <div class="content-section" id="outbound-list">
+            <div class="card">
+                <div class="card-header">Outbound Flights</div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Flight Number</th>
+                                    <th>Passenger Count</th>
+                                    <th>Departure</th>
+                                    <th>Arrival</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for flight in outbound_flights %}
+                                <tr>
+                                    <td>{{ flight.flight_number }}</td>
+                                    <td>{{ flight.available_seats }}</td>
+                                    <td>{{ flight.departure_airport }}</td>
+                                    <td>{{ flight.arrival_airport }}</td>
+                                    <td>{{ flight.departure_time }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Return Flights List -->
-            <div class="col-md-6 col-lg-3" id="return-list">
-                <div class="card">
-                    <div class="card-header">Return Flights</div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Flight Number</th>
-                                        <th>Passenger Count</th>
-                                        <th>Departure</th>
-                                        <th>Arrival</th>
-                                        <th>Date</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for flight in return_flights %}
-                                    <tr>
-                                        <td>{{ flight.flight_number }}</td>
-                                        <td>{{ flight.available_seats }}</td>
-                                        <td>{{ flight.departure_airport }}</td>
-                                        <td>{{ flight.arrival_airport }}</td>
-                                        <td>{{ flight.departure_time }}</td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
+        <!-- Return Flights List -->
+        <div class="content-section" id="return-list">
+            <div class="card">
+                <div class="card-header">Return Flights</div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Flight Number</th>
+                                    <th>Passenger Count</th>
+                                    <th>Departure</th>
+                                    <th>Arrival</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for flight in return_flights %}
+                                <tr>
+                                    <td>{{ flight.flight_number }}</td>
+                                    <td>{{ flight.available_seats }}</td>
+                                    <td>{{ flight.departure_airport }}</td>
+                                    <td>{{ flight.arrival_airport }}</td>
+                                    <td>{{ flight.departure_time }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Users Table -->
-        <div class="card" id="users-list">
-            <div class="card-header">Users</div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Username</th>
-                                <th>Email</th>
-                                <th>Role</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for user in users %}
-                            {% if user.role != 'admin' %}
-                            <tr>
-                                <td>{{ user.username }}</td>
-                                <td>{{ user.email }}</td>
-                                <td>
-                                    {% if user.role == 'agency' %}
-                                    Agency
-                                    {% elif user.role == 'user' %}
-                                    Customer 
-                                    {% endif %}
-                                </td>
-                            </tr>
-                            {% endif %}
-                            {% endfor %}
-                        </tbody>
-                    </table>
+        <div class="content-section" id="users-list">
+            <div class="card">
+                <div class="card-header">Users</div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for user in users %}
+                                {% if user.role != 'admin' %}
+                                <tr>
+                                    <td>{{ user.username }}</td>
+                                    <td>{{ user.email }}</td>
+                                    <td>
+                                        {% if user.role == 'agency' %}
+                                        Agency
+                                        {% elif user.role == 'user' %}
+                                        Customer 
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function showSection(sectionId) {
+            // Tüm içerik bölümlerini gizle
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => section.style.display = 'none');
+        
+            // Tıklanan bölümü göster
+            const sectionToShow = document.getElementById(sectionId);
+            sectionToShow.style.display = 'block';
+        
+            // Sayfanın en yukarısına kaydır
+            window.scrollTo({
+                top: sectionToShow.offsetTop - document.querySelector('.navbar').offsetHeight,
+                behavior: 'smooth' // Yumuşak kaydırma etkisi
+            });
+        }        
+    </script>
 </body>
 </html>
