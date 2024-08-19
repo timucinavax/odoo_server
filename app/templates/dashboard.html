@@ -214,21 +214,30 @@
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Manage Tickets</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Travel Experience</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Offers</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Support</a>
-                    </li>
+                    {% if logged_in_user %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Welcome, {{ logged_in_user }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Manage Tickets</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Travel Experience</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Offers</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Support</a>
+                        </li>
+                        <button class="btn btn-outline-dark ms-3" onclick="goToLogin()" id="loginButton">Sign In</button>
+                        <button class="btn btn-outline-dark ms-3" onclick="goToLogin()" id="registerButton">Sign Up</button>
+                    {% endif %}
                 </ul>
-                <button class="btn btn-outline-dark ms-3" onclick="goToLogin()" id="loginButton">Sign In</button>
-                <button class="btn btn-outline-dark ms-3" onclick="goToLogin()" id="registerButton">Sign Up</button>
             </div>
         </div>
     </nav>
