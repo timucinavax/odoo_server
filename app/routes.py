@@ -193,3 +193,34 @@ def autocomplete_airport():
 
     return jsonify(list(set(airports)))  # Remove duplicates
 
+@app.route('/search_flights', methods=['POST'])
+def search_flights():
+    from_where = request.form.get('from_where')
+    to_where = request.form.get('to_where')
+    flight_date = request.form.get('flight_date')
+    flight_direction = request.form.get('flight_direction')
+    
+    url = current_app.config['ODOO_URL']
+    db = current_app.config['ODOO_DB']
+    admin_username = current_app.config['ODOO_USERNAME']
+    admin_password = current_app.config['ODOO_PASSWORD']
+
+    common = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/common', allow_none=True)
+    uid = common.authenticate(db, admin_username, admin_password, {})
+
+    models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object', allow_none=True)
+
+    # Search for flights matching the criteria
+    domain = [
+        ('departure_airport', '=', from_where),
+        ('arrival_airport', '=', to_where),
+        ('departure_time', '>=', flight_date),
+        ('flight_direction', '=', flight_direction)
+    ]
+    
+    flights = models.execute_kw(db, uid, admin_password, 'flight.management', 'search_read', [domain], 
+                                {'fields': ['flight_number', 'departure_airport', 'arrival_airport', 'departure_time', 'available_seats']})
+
+    return render_template('dashboard.html', flights=flights)
+
+

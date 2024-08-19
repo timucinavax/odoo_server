@@ -227,7 +227,7 @@
             <h1>SEHLEN TOURISM</h1>
             <h1>Hello, Where Do You Want to Go?</h1>
             <div class="search-box mt-5">
-                <form>
+                <form action="{{ url_for('search_flights') }}" method="POST">
                     <div class="radio-group">
                         <input type="radio" id="outbound" name="flight_direction" value="outbound" checked>
                         <label for="outbound">Outbound</label>
@@ -255,6 +255,33 @@
                     </div>
                 </form>
             </div>
+        </div>
+    </section>
+
+    <section class="flight-results">
+        <div class="container mt-5">
+            <h2>Search Results</h2>
+            {% if flights %}
+                <div class="row">
+                    {% for flight in flights %}
+                        <div class="col-md-4">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ flight.flight_number }}</h5>
+                                    <p class="card-text">
+                                        From: {{ flight.departure_airport }}<br>
+                                        To: {{ flight.arrival_airport }}<br>
+                                        Departure: {{ flight.departure_time }}<br>
+                                        Available Seats: {{ flight.available_seats }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>No flights found matching your criteria.</p>
+            {% endif %}
         </div>
     </section>
 
