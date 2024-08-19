@@ -148,7 +148,8 @@ def add_flight():
     arrival_time = request.form.get('arrival_time')
     price = request.form.get('price')
     flight_direction = request.form.get('flight_direction')
-    airplane_type_name = request.form.get('airplane_type')  # Formdan gelen uçak tipi string değeri al
+    airplane_type_name = request.form.get('airplane_type')
+    available_seats= request.form.get('available_seats')
 
     url = current_app.config['ODOO_URL']
     db = current_app.config['ODOO_DB']
@@ -160,7 +161,6 @@ def add_flight():
 
     models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object', allow_none=True)
 
-    # Uçak tipi adını kullanarak ID'yi bulalım
     airplane_type = models.execute_kw(db, uid, admin_password, 'airplane.type', 'search_read', 
                                       [[('name', '=', airplane_type_name)]], {'fields': ['id', 'seat_count'], 'limit': 1})
 
@@ -169,11 +169,10 @@ def add_flight():
         return redirect(url_for('admin_panel'))
     
     airplane_type_id = airplane_type[0]['id']  # ID'yi alıyoruz
-    seat_count = airplane_type[0]['seat_count']  # Koltuk sayısını alıyoruz
 
     flight_id = models.execute_kw(db, uid, admin_password, 'flight.management', 'create', [{
         'flight_number': flight_code,
-        'available_seats': seat_count,  # Koltuk sayısını buraya otomatik olarak ekliyoruz
+        'available_seats': available_seats,  # Koltuk sayısını buraya otomatik olarak ekliyoruz
         'departure_airport': departure,
         'arrival_airport': arrival,
         'departure_time': departure_time,
@@ -204,18 +203,18 @@ def plane_layout(flight_id):
 
     models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object', allow_none=True)
 
-    # Flight details and seat information
-    flight = models.execute_kw(db, uid, admin_password, 'flight.management', 'read', [[flight_id]], {'fields': ['flight_number', 'airplane_type_id', 'seat_ids']})
+    # Get flight and airplane type details
+    flight = models.execute_kw(db, uid, admin_password, 'flight.management', 'read', [[flight_id]], {'fields': ['flight_number', 'airplane_type_id']})
     
     if not flight:
         flash('Flight not found.')
         return redirect(url_for('admin_panel'))
-    
-    airplane_type_name = flight[0]['airplane_type_id'][1]
 
+    # Fetch all seats for this flight
     seats = models.execute_kw(db, uid, admin_password, 'flight.seat', 'search_read', [[('flight_id', '=', flight_id)]], {'fields': ['id', 'name', 'user_id']})
 
-    return render_template('plane_rev.html', airplane_type=airplane_type_name, seats=seats)
+    return render_template('plane_rev.html', seats=seats)
+
 
 @app.route('/user')
 @role_required(['user'])
