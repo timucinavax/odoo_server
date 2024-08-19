@@ -116,45 +116,89 @@
     </section>
 
     <div class="container">
-        <!-- Uçuş Ekleme Kartı -->
-        <div class="card mx-auto" style="max-width: 600px;">
-            <div class="card-header">Uçuş Ekle</div>
-            <div class="card-body">
-                <form action="{{ url_for('add_flight') }}" method="post">
-                    <div class="mb-3">
-                        <label for="flight_code" class="form-label">Uçuş Kodu</label>
-                        <input type="text" class="form-control" id="flight_code" name="flight_code" required>
+        <!-- Yan Yana Gidiş ve Dönüş Uçuşu Ekleme Kartları -->
+        <div class="row">
+            <!-- Gidiş Uçuşu -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">Gidiş Uçuşu Ekle</div>
+                    <div class="card-body">
+                        <form action="{{ url_for('add_flight') }}" method="post">
+                            <div class="mb-3">
+                                <label for="flight_code" class="form-label">Uçuş Kodu</label>
+                                <input type="text" class="form-control" id="flight_code" name="flight_code" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="passenger_count" class="form-label">Yolcu Sayısı</label>
+                                <input type="number" class="form-control" id="passenger_count" name="passenger_count" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="departure" class="form-label">Kalkış</label>
+                                <input type="text" class="form-control" id="departure" name="departure" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="arrival" class="form-label">Varış</label>
+                                <input type="text" class="form-control" id="arrival" name="arrival" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="departure_time" class="form-label">Kalkış Zamanı</label>
+                                <input type="datetime-local" class="form-control" id="departure_time" name="departure_time" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="arrival_time" class="form-label">Varış Zamanı</label>
+                                <input type="datetime-local" class="form-control" id="arrival_time" name="arrival_time" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="price" class="form-label">Fiyat</label>
+                                <input type="number" step="0.01" class="form-control" id="price" name="price" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Gidiş Uçuşu Ekle</button>
+                        </form>
                     </div>
-                    <div class="mb-3">
-                        <label for="passenger_count" class="form-label">Yolcu Sayısı</label>
-                        <input type="number" class="form-control" id="passenger_count" name="passenger_count" required>
+                </div>
+            </div>
+            <!-- Dönüş Uçuşu -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">Dönüş Uçuşu Ekle</div>
+                    <div class="card-body">
+                        <form action="{{ url_for('add_flight') }}" method="post">
+                            <div class="mb-3">
+                                <label for="flight_code_return" class="form-label">Uçuş Kodu</label>
+                                <input type="text" class="form-control" id="flight_code_return" name="flight_code" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="passenger_count_return" class="form-label">Yolcu Sayısı</label>
+                                <input type="number" class="form-control" id="passenger_count_return" name="passenger_count" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="departure_return" class="form-label">Kalkış</label>
+                                <input type="text" class="form-control" id="departure_return" name="departure" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="arrival_return" class="form-label">Varış</label>
+                                <input type="text" class="form-control" id="arrival_return" name="arrival" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="departure_time_return" class="form-label">Kalkış Zamanı</label>
+                                <input type="datetime-local" class="form-control" id="departure_time_return" name="departure_time" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="arrival_time_return" class="form-label">Varış Zamanı</label>
+                                <input type="datetime-local" class="form-control" id="arrival_time_return" name="arrival_time" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="price_return" class="form-label">Fiyat</label>
+                                <input type="number" step="0.01" class="form-control" id="price_return" name="price" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Dönüş Uçuşu Ekle</button>
+                        </form>
                     </div>
-                    <div class="mb-3">
-                        <label for="departure" class="form-label">Kalkış</label>
-                        <input type="text" class="form-control" id="departure" name="departure" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="arrival" class="form-label">Varış</label>
-                        <input type="text" class="form-control" id="arrival" name="arrival" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="departure_time" class="form-label">Kalkış Zamanı</label>
-                        <input type="datetime-local" class="form-control" id="departure_time" name="departure_time" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="arrival_time" class="form-label">Varış Zamanı</label>
-                        <input type="datetime-local" class="form-control" id="arrival_time" name="arrival_time" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="price" class="form-label">Fiyat</label>
-                        <input type="number" step="0.01" class="form-control" id="price" name="price" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Uçuş Ekle</button>
-                </form>
+                </div>
             </div>
         </div>
 
-        <!-- Uçuşları Listeleme Kartı -->
+        <!-- Mevcut Uçuşlar Kartı -->
         <div class="card">
             <div class="card-header">Mevcut Uçuşlar</div>
             <div class="card-body">
@@ -185,7 +229,7 @@
             </div>
         </div>
 
-        <!-- Kullanıcıları Listeleme Kartı -->
+        <!-- Kullanıcılar Kartı -->
         <div class="card">
             <div class="card-header">Kullanıcılar</div>
             <div class="card-body">
@@ -195,7 +239,6 @@
                             <th>Kullanıcı Adı</th>
                             <th>Email</th>
                             <th>Rol</th>
-                            <th>Atanan Uçuşlar</th>
                         </tr>
                     </thead>
                     <tbody>
