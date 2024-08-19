@@ -149,7 +149,7 @@ def add_flight():
     arrival_time = request.form.get('arrival_time')
     price = request.form.get('price')
     flight_direction = request.form.get('flight_direction') 
-    airplane_type = request.form.get('airplane_type')
+    airplane_type_id = request.form.get('airplane_type_id')
 
     url = current_app.config['ODOO_URL']
     db = current_app.config['ODOO_DB']
@@ -170,7 +170,7 @@ def add_flight():
         'arrival_time': arrival_time,
         'price': price,
         'flight_direction': flight_direction, 
-        'airplane_type': airplane_type,
+        'airplane_type_id': airplane_type_id,
         'user_id': False,
     }])
 
@@ -209,7 +209,8 @@ def plane_layout(flight_id):
 
     models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object', allow_none=True)
 
-    flight = models.execute_kw(db, uid, admin_password, 'flight.management', 'read', [[flight_id]], {'fields': ['flight_number', 'airplane_type', 'seat_ids']})
+    flight = models.execute_kw(db, uid, admin_password, 'flight.management', 'read', [[flight_id]], {'fields': ['flight_number', 'airplane_type_id', 'seat_ids']})
+    airplane_type_id = flight[1]
 
     seats = models.execute_kw(db, uid, admin_password, 'flight.seat', 'search_read', [[('flight_id', '=', flight_id)]], {'fields': ['name', 'user_id']})
 
@@ -220,7 +221,7 @@ def plane_layout(flight_id):
         flash('Seats assigned successfully.')
         return redirect(url_for('admin_panel'))
 
-    return render_template('plane_rev.html', airplane_type=airplane_type, seats=seats)
+    return render_template('plane_rev.html', airplane_type_id=airplane_type_id, seats=seats)
 
 
 @app.route('/autocomplete_airport')
