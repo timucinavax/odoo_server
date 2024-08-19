@@ -20,6 +20,7 @@ def role_required(allowed_roles):
 @app.route('/home')
 def dashboard():
     logged_in_user = session.get('username')
+    logged_in_user_role = session.get('role')
     
     url = current_app.config['ODOO_URL']
     db = current_app.config['ODOO_DB']
@@ -35,9 +36,6 @@ def dashboard():
 
     outbound_flights = [flight for flight in flights if flight['flight_direction'] == 'outbound']
     return_flights = [flight for flight in flights if flight['flight_direction'] == 'return']
-
-    logged_in_user = 'current_user_username' 
-    logged_in_user_role = 'current_user_role'
 
     return render_template('dashboard.html', 
                            outbound_flights=outbound_flights, 
