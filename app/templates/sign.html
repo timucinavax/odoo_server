@@ -360,6 +360,7 @@
                 <div class="role-selector">
                     <button type="button" id="role-customer" class="active">Customer</button>
                     <button type="button" id="role-agency">Agency</button>
+                    <button type="button" id="role-admin">Admin</button>
                 </div>
                 <input type="text" name="username" placeholder="Username" required>
                 <input type="password" name="password" placeholder="Password" required>
@@ -402,57 +403,61 @@
     </div>
 
     <script>
-        const signInBtn = document.getElementById('sign-in-btn');
-        const signUpBtn = document.getElementById('sign-up-btn');
-        const signInLink = document.getElementById('sign-in-link');
-        const signUpLink = document.getElementById('sign-up-link');
-        const container = document.querySelector('.container');
+        document.addEventListener('DOMContentLoaded', function () {
+            const signInBtn = document.getElementById('sign-in-btn');
+            const signUpBtn = document.getElementById('sign-up-btn');
+            const signInLink = document.getElementById('sign-in-link');
+            const signUpLink = document.getElementById('sign-up-link');
+            const container = document.querySelector('.container');
 
-        const roleButtonsSignIn = document.querySelectorAll('#role-customer, #role-agency');
-        const roleButtonsSignUp = document.querySelectorAll('#role-customer-signup, #role-agency-signup');
-        const signInRoleInput = document.getElementById('sign-in-role');
-        const signUpRoleInput = document.getElementById('sign-up-role');
+            const roleButtonsSignIn = document.querySelectorAll('#role-customer, #role-agency, #role-admin');
+            const roleButtonsSignUp = document.querySelectorAll('#role-customer-signup, #role-agency-signup');
+            const signInRoleInput = document.getElementById('sign-in-role');
+            const signUpRoleInput = document.getElementById('sign-up-role');
 
-        function updateRoleSelection(role, isSignIn) {
-            if (isSignIn) {
-                roleButtonsSignIn.forEach(btn => btn.classList.remove('active'));
-                document.getElementById(`role-${role}`).classList.add('active');
-                signInRoleInput.value = role;
-            } else {
-                roleButtonsSignUp.forEach(btn => btn.classList.remove('active'));
-                document.getElementById(`role-${role}-signup`).classList.add('active');
-                signUpRoleInput.value = role;
+            function updateRoleSelection(role, isSignIn) {
+                if (isSignIn) {
+                    roleButtonsSignIn.forEach(btn => btn.classList.remove('active'));
+                    document.getElementById(`role-${role}`).classList.add('active');
+                    signInRoleInput.value = role;
+                } else {
+                    roleButtonsSignUp.forEach(btn => btn.classList.remove('active'));
+                    document.getElementById(`role-${role}-signup`).classList.add('active');
+                    signUpRoleInput.value = role;
+                }
             }
-        }
 
-        roleButtonsSignIn.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const role = btn.id.split('-')[1];
-                updateRoleSelection(role, true);
+            roleButtonsSignIn.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const role = btn.id.split('-')[1];
+                    updateRoleSelection(role, true);
+                });
             });
-        });
 
-        roleButtonsSignUp.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const role = btn.id.split('-')[1];
-                updateRoleSelection(role, false);
+            roleButtonsSignUp.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const role = btn.id.split('-')[1];
+                    updateRoleSelection(role, false);
+                });
             });
-        });
 
-        signInBtn.addEventListener('click', () => {
-            container.classList.remove('right-panel-active');
-        });
+            signInBtn.addEventListener('click', () => {
+                container.classList.remove('right-panel-active');
+            });
 
-        signUpBtn.addEventListener('click', () => {
-            container.classList.add('right-panel-active');
-        });
+            signUpBtn.addEventListener('click', () => {
+                container.classList.add('right-panel-active');
+            });
 
-        signInLink.addEventListener('click', () => {
-            container.classList.remove('right-panel-active');
-        });
+            signInLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                container.classList.remove('right-panel-active');
+            });
 
-        signUpLink.addEventListener('click', () => {
-            container.classList.add('right-panel-active');
+            signUpLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                container.classList.add('right-panel-active');
+            });
         });
     </script>
 </body>
