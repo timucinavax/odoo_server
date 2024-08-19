@@ -343,7 +343,7 @@
                 <span>SEHLEN TOURISM</span>
             </a>
             <div class="navbar-nav">
-                <a class="nav-link active" onclick="goToHome()">Home</a>
+                <a class="nav-link"  href="{{ url_for('dashboard') }}">Home</a>
                 <a class="nav-link" href="#">About</a>
                 <a class="nav-link" href="#">Services</a>
                 <a class="nav-link" href="#">Contact</a>
@@ -403,9 +403,6 @@
     </div>
 
     <script>
-		function goToHome() {
-            window.location.href = "{{ url_for('dashboard') }}";
-        }
         document.addEventListener('DOMContentLoaded', function () {
             const roleButtons = document.querySelectorAll('.role-btn');
             const signInRoleInput = document.getElementById('selectedRoleLogin');
