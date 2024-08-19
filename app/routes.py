@@ -195,11 +195,13 @@ def autocomplete_airport():
 
 @app.route('/search_flights', methods=['POST'])
 def search_flights():
+    # Get form data
+    flight_direction = request.form.get('flight_direction')
     from_where = request.form.get('from_where')
     to_where = request.form.get('to_where')
     flight_date = request.form.get('flight_date')
-    flight_direction = request.form.get('flight_direction')
-    
+
+    # Connect to Odoo
     url = current_app.config['ODOO_URL']
     db = current_app.config['ODOO_DB']
     admin_username = current_app.config['ODOO_USERNAME']
@@ -210,16 +212,18 @@ def search_flights():
 
     models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object', allow_none=True)
 
-    # Search for flights matching the criteria
+    # Build the domain for the search based on form input
     domain = [
+        ('flight_direction', '=', flight_direction),
         ('departure_airport', '=', from_where),
         ('arrival_airport', '=', to_where),
-        ('flight_direction', '=', flight_direction)
+        ('departure_time', '>=', f'{flight_date} 00:00:00'),
+        ('departure_time', '<=', f'{flight_date} 23:59:59')
     ]
-    
-    flights = models.execute_kw(db, uid, admin_password, 'flight.management', 'search_read', [domain], 
-                                {'fields': ['flight_number', 'departure_airport', 'arrival_airport', 'departure_time', 'available_seats']})
 
-    return render_template('dashboard.html', flights=flights)
+    flights = models.execute_kw(db, uid, admin_password, 'flight.management', 'search_read', [domain], 
+                                {'fields': ['flight_number', 'available_seats', 'departure_airport', 'arrival_airport', 'departure_time','passenger_count']})
+
+    return render_template('index.html', flights=flights)
 
 
