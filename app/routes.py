@@ -8,78 +8,70 @@ from app import app
 def dashboard():
     return render_template('dashboard.html')
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/login', methods=['POST'])
 def login():
-    if request.method == 'POST':
-        # Giriş işlemi
-        username = request.form.get('username')
-        password = request.form.get('password')
-        role = request.form.get('role')
+    email = request.form.get('email')
+    username = request.form.get('username')
+    password = request.form.get('password')
+    role = request.form.get('role')
 
-        # Odoo bağlantı ve kullanıcı doğrulama
-        url = current_app.config['ODOO_URL']
-        db = current_app.config['ODOO_DB']
+    url = current_app.config['ODOO_URL']
+    db = current_app.config['ODOO_DB']
 
-        common = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/common')
-        uid = common.authenticate(db, current_app.config['ODOO_USERNAME'], current_app.config['ODOO_PASSWORD'], {})
+    common = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/common')
+    uid = common.authenticate(db, current_app.config['ODOO_USERNAME'], current_app.config['ODOO_PASSWORD'], {})
 
-        models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object')
+    models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object')
 
-        user = models.execute_kw(db, uid, current_app.config['ODOO_PASSWORD'], 'custom.user', 'search_read', [[('username', '=', username), ('role', '=', role)]], {'limit': 1})
+    user = models.execute_kw(db, uid, current_app.config['ODOO_PASSWORD'], 'custom.user', 'search_read', [[('email', '=', email), ('username', '=', username), ('role', '=', role)]], {'limit': 1})
 
-        if user:
-            stored_password_hash = user[0]['password']
-            if check_password_hash(stored_password_hash, password):
-                if role == 'admin':
-                    return redirect(url_for('admin_panel'))
-                elif role == 'user':
-                    return redirect(url_for('user_panel'))
-                elif role == 'agency':
-                    return redirect(url_for('agency_panel'))
-            else:
-                flash("Hatalı şifre, lütfen tekrar deneyin.")
+    if user:
+        stored_password_hash = user[0]['password']
+        if check_password_hash(stored_password_hash, password):
+            if role == 'admin':
+                return redirect(url_for('admin_panel'))
+            elif role == 'user':
+                return redirect(url_for('user_panel'))
+            elif role == 'agency':
+                return redirect(url_for('agency_panel'))
         else:
-            flash("Kullanıcı bulunamadı.")
-        return redirect(url_for('login'))
+            flash("Hatalı şifre, lütfen tekrar deneyin.")
+    else:
+        flash("Kullanıcı bulunamadı.")
+    return redirect(url_for('dashboard'))
 
-    return render_template('login.html', form_type='login')
-
-@app.route('/register', methods=['GET', 'POST'])
+@app.route('/register', methods=['POST'])
 def register():
-    if request.method == 'POST':
-        # Kayıt işlemi
-        email = request.form.get('email')
-        username = request.form.get('username')
-        password = request.form.get('password')
-        role = request.form.get('role')
+    email = request.form.get('email')
+    username = request.form.get('username')
+    password = request.form.get('password')
+    role = request.form.get('role')
 
-        # Odoo bağlantı ve kullanıcı oluşturma
-        hashed_password = generate_password_hash(password)
-        url = current_app.config['ODOO_URL']
-        db = current_app.config['ODOO_DB']
-        admin_username = current_app.config['ODOO_USERNAME']
-        admin_password = current_app.config['ODOO_PASSWORD']
+    hashed_password = generate_password_hash(password)
 
-        common = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/common')
-        uid = common.authenticate(db, admin_username, admin_password, {})
+    url = current_app.config['ODOO_URL']
+    db = current_app.config['ODOO_DB']
+    admin_username = current_app.config['ODOO_USERNAME']
+    admin_password = current_app.config['ODOO_PASSWORD']
 
-        models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object')
+    common = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/common')
+    uid = common.authenticate(db, admin_username, admin_password, {})
 
-        user_id = models.execute_kw(db, uid, admin_password, 'custom.user', 'create', [{
-            'email': email,
-            'username': username,
-            'password': hashed_password,
-            'role': role,
-        }])
+    models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object')
 
-        if user_id:
-            flash("Kayıt başarılı. Giriş yapabilirsiniz.")
-            return redirect(url_for('login'))
-        else:
-            flash("Kayıt sırasında bir hata oluştu.")
-            return redirect(url_for('register'))
+    user_id = models.execute_kw(db, uid, admin_password, 'custom.user', 'create', [{
+        'email': email,
+        'username': username,
+        'password': hashed_password,
+        'role': role,
+    }])
 
-    return render_template('login.html', form_type='register')
+    if user_id:
+        flash("Kayıt başarılı. Giriş yapabilirsiniz.")
+        return redirect(url_for('dashboard'))
+    else:
+        flash("Kayıt sırasında bir hata oluştu.")
+        return redirect(url_for('dashboard'))
 
 @app.route('/add_flight', methods=['POST'])
 def add_flight():
