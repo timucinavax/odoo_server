@@ -170,7 +170,7 @@ def add_flight():
         'arrival_time': arrival_time,
         'price': price,
         'flight_direction': flight_direction, 
-        'airplane_type_id': int(airplane_type),
+        'airplane_type_id': airplane_type,
         'user_id': False,
     }])
 
