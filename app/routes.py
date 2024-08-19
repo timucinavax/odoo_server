@@ -22,7 +22,7 @@ def dashboard():
     return_flights = [flight for flight in flights if flight['flight_direction'] == 'return']
 
 
-    return render_template('dashboard.html.html', outbound_flights=outbound_flights, return_flights=return_flights)
+    return render_template('dashboard.html', outbound_flights=outbound_flights, return_flights=return_flights)
 
 @app.route('/login', methods=['POST'])
 def login():
