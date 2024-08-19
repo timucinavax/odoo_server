@@ -148,7 +148,8 @@ def add_flight():
     departure_time = request.form.get('departure_time')
     arrival_time = request.form.get('arrival_time')
     price = request.form.get('price')
-    flight_direction = request.form.get('flight_direction') 
+    flight_direction = request.form.get('flight_direction')
+    airplane_type_name = request.form.get('airplane_type')  # Formdan gelen uçak tipi string değeri al
 
     url = current_app.config['ODOO_URL']
     db = current_app.config['ODOO_DB']
@@ -160,6 +161,16 @@ def add_flight():
 
     models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object', allow_none=True)
 
+    # Uçak tipi adını kullanarak ID'yi bulalım
+    airplane_type = models.execute_kw(db, uid, admin_password, 'airplane.type.model', 'search_read', 
+                                      [[('name', '=', airplane_type_name)]], {'fields': ['id'], 'limit': 1})
+
+    if not airplane_type:
+        flash('Geçersiz uçak tipi.')
+        return redirect(url_for('admin_panel'))
+    
+    airplane_type_id = airplane_type[0]['id']  # ID'yi alıyoruz
+
     flight_id = models.execute_kw(db, uid, admin_password, 'flight.management', 'create', [{
         'flight_number': flight_code,
         'available_seats': passenger_count,
@@ -169,6 +180,7 @@ def add_flight():
         'arrival_time': arrival_time,
         'price': price,
         'flight_direction': flight_direction, 
+        'airplane_type_id': airplane_type_id,  # Doğru ID'yi burada kullanıyoruz
         'user_id': False,
     }])
 
@@ -178,6 +190,7 @@ def add_flight():
         flash('An error occurred while adding the flight.')
 
     return redirect(url_for('admin_panel'))
+
 
 
 @app.route('/user')
