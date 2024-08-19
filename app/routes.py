@@ -203,18 +203,19 @@ def plane_layout(flight_id):
 
     models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object', allow_none=True)
 
-    # Get flight and airplane type details
-    flight = models.execute_kw(db, uid, admin_password, 'flight.management', 'read', [[flight_id]], {'fields': ['flight_number', 'airplane_type_id']})
-    
+    # Fetch flight details and seat information
+    flight = models.execute_kw(db, uid, admin_password, 'flight.management', 'read', [[flight_id]], {'fields': ['flight_number', 'airplane_type_id', 'seat_ids']})
+
     if not flight:
         flash('Flight not found.')
         return redirect(url_for('admin_panel'))
+    airplane_type_name = flight[0]['airplane_type_id'][1]
 
-    # Fetch all seats for this flight
+    # Fetch all seats
     seats = models.execute_kw(db, uid, admin_password, 'flight.seat', 'search_read', [[('flight_id', '=', flight_id)]], {'fields': ['id', 'name', 'user_id']})
 
-    return render_template('plane_rev.html', seats=seats)
-
+    # Render the plane layout template
+    return render_template('plane_rev.html', airplane_type=airplane_type_name, seats=seats)
 
 @app.route('/user')
 @role_required(['user'])
