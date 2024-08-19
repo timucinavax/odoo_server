@@ -149,7 +149,6 @@ def add_flight():
     arrival_time = request.form.get('arrival_time')
     price = request.form.get('price')
     flight_direction = request.form.get('flight_direction') 
-    airplane_type_id = request.form.get('airplane_type_id')
 
     url = current_app.config['ODOO_URL']
     db = current_app.config['ODOO_DB']
@@ -170,7 +169,6 @@ def add_flight():
         'arrival_time': arrival_time,
         'price': price,
         'flight_direction': flight_direction, 
-        'airplane_type_id': airplane_type_id,
         'user_id': False,
     }])
 
