@@ -191,8 +191,31 @@ def add_flight():
 
     return redirect(url_for('admin_panel'))
 
+@app.route('/plane_layout/<int:flight_id>', methods=['GET'])
+@role_required(['admin'])
+def plane_layout(flight_id):
+    url = current_app.config['ODOO_URL']
+    db = current_app.config['ODOO_DB']
+    admin_username = current_app.config['ODOO_USERNAME']
+    admin_password = current_app.config['ODOO_PASSWORD']
 
+    common = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/common', allow_none=True)
+    uid = common.authenticate(db, admin_username, admin_password, {})
 
+    models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object', allow_none=True)
+
+    # Flight details and seat information
+    flight = models.execute_kw(db, uid, admin_password, 'flight.management', 'read', [[flight_id]], {'fields': ['flight_number', 'airplane_type_id', 'seat_ids']})
+    
+    if not flight:
+        flash('Flight not found.')
+        return redirect(url_for('admin_panel'))
+    
+    airplane_type_name = flight[0]['airplane_type_id'][1]
+
+    seats = models.execute_kw(db, uid, admin_password, 'flight.seat', 'search_read', [[('flight_id', '=', flight_id)]], {'fields': ['id', 'name', 'user_id']})
+
+    return render_template('plane_rev.html', airplane_type=airplane_type_name, seats=seats)
 
 @app.route('/user')
 @role_required(['user'])

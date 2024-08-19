@@ -301,6 +301,7 @@
                                     <th>Departure</th>
                                     <th>Arrival</th>
                                     <th>Date</th>
+                                    <th>Plane</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -311,6 +312,9 @@
                                     <td>{{ flight.departure_airport }}</td>
                                     <td>{{ flight.arrival_airport }}</td>
                                     <td>{{ flight.departure_time }}</td>
+                                    <td>
+                                        <a href="{{ url_for('plane_layout', flight_id=flight.id) }}" class="btn btn-primary">Plane Chair</a>
+                                    </td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
