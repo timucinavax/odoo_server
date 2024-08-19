@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sehlen Tourism - Flight Search</title>
+    <title>Sehlen Turizm - Uçuş Ara</title>
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -15,41 +15,41 @@
             width: 100%;
             overflow-x: hidden;
         }
-
+        
         .navbar {
             background-color: white;
             padding: 15px;
             z-index: 2;
             position: relative;
         }
-
+        
         .navbar-brand {
             display: flex;
             align-items: center;
         }
-
+        
         .navbar-brand img {
             max-height: 50px;
             margin-right: 10px;
         }
-
+        
         .navbar-brand span {
             font-weight: bold;
             color: black;
             font-size: 1.5rem;
         }
-
+        
         .navbar-nav .nav-link {
             color: black;
             margin-right: 20px;
             text-transform: uppercase;
             transition: color 0.3s;
         }
-
+        
         .navbar-nav .nav-link:hover {
             color: #666666;
         }
-
+        
         .video-background {
             position: fixed;
             top: 0;
@@ -59,7 +59,7 @@
             object-fit: cover;
             z-index: -1;
         }
-
+        
         .hero {
             position: relative;
             width: 100%;
@@ -73,12 +73,12 @@
             background-color: transparent;
             padding: 20px;
         }
-
+        
         .hero h1 {
             font-size: 2.5rem;
             color: white;
         }
-
+        
         .search-box {
             background: white;
             padding: 20px;
@@ -88,62 +88,79 @@
             margin-top: -50px;
             width: 100%;
         }
-
+        
         .search-box .form-control {
             border-radius: 5px;
         }
-
+        
         .search-box .btn-primary {
             background-color: #dc3545;
             border-color: #dc3545;
             font-weight: bold;
         }
 
+        .flight-results {
+            margin-top: 30px;
+        }
+
+        .flight-results h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        .flight-results .flight-card {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+        
         /* Media queries for mobile responsiveness */
         @media (max-width: 768px) {
             .hero {
                 height: auto;
                 padding: 40px 20px;
             }
-
+        
             .hero h1 {
                 font-size: 2rem;
             }
-
+        
             .search-box {
                 margin-top: 0;
                 padding: 15px;
                 box-shadow: none;
                 border-radius: 5px;
             }
-
+        
             .search-box .row > div {
                 margin-bottom: 10px;
             }
-
+        
             .search-box .col-md-1 {
                 max-width: 100%;
                 margin-top: 10px;
             }
-
+        
             .search-box .btn-primary {
                 width: 100%;
                 font-size: 1rem;
             }
-
+        
             .navbar-nav {
                 text-align: center;
                 margin-top: 10px;
             }
-
+        
             .navbar-nav .nav-link {
                 margin-right: 10px;
             }
-
+        
             .navbar-collapse {
                 text-align: center;
             }
-        }
+        }        
     </style>
 </head>
 <body>
@@ -153,7 +170,7 @@
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
-                <img src="{{ url_for('static', filename='images/sehlen_logo.png') }}" alt="Sehlen Tourism">
+                <img src="{{ url_for('static', filename='images/sehlen_logo.png') }}" alt="Sehlen Turizm">
                 <span>SEHLEN TOURISM</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -181,87 +198,60 @@
     </nav>
 
     <section class="hero">
-        <div class="container">
+        <div class="container">   
             <h1>SEHLEN TOURISM</h1>
             <h1>Hello, Where Do You Want to Go?</h1>
             <div class="search-box mt-5">
-                <!-- Flight Search Section -->
-                <form>
-                    <div class="row mx-0">
-                        <div class="col-lg-12 searchRadios">
-                            <div class="custom-control custom-radio customRadio custom-control-inline">
-                                <input type="radio" id="rbOneway" name="rbFlightSearchType" class="custom-control-input" checked="" data-tab="oneway" value="oneway">
-                                <label class="custom-control-label" for="rbOneway">One Way</label>
-                            </div>
-                            <div class="custom-control custom-radio customRadio custom-control-inline">
-                                <input type="radio" id="rbRoundtrip" name="rbFlightSearchType" class="custom-control-input" data-tab="roundtrip" data-return-date="" value="roundtrip">
-                                <label class="custom-control-label" for="rbRoundtrip">Round Trip</label>
-                            </div>
+                <form method="GET" action="{{ url_for('dashboard') }}">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <select name="flight_direction" class="form-control">
+                                <option value="outbound">Departure</option>
+                                <option value="return">Return</option>
+                            </select>
                         </div>
-                    </div>
-                    <div id="traditionalSearch" class="row mx-0">
-                        <div class="input-wrapper col-lg-11 col-md-12 pr-1">
-                            <div class="col-lg-12">
-                                <div class="row">
-                                    <div class="col-lg-4  col-12 search-col from-city-group">
-                                        <label>From</label>
-                                        <input id="from_text" type="text" class="form-control searchBarInput autocomplete-flight" placeholder="Airport name/code, City" name="from" autocomplete="off">
-                                        <div class="exchangeIcon exchangeFlight"><svg aria-hidden="true" focusable="false" data-prefix="fal" data-icon="arrow-right-arrow-left" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M443.3 139.3c6.2-6.2 6.2-16.4 0-22.6l-96-96c-6.2-6.2-16.4-6.2-22.6 0s-6.2 16.4 0 22.6L393.4 112 16 112c-8.8 0-16 7.2-16 16s7.2 16 16 16l377.4 0-68.7 68.7c-6.2 6.2-6.2 16.4 0 22.6s16.4 6.2 22.6 0l96-96zm-342.6 352c6.2 6.2 16.4 6.2 22.6 0s6.2-16.4 0-22.6L54.6 400 432 400c8.8 0 16-7.2 16-16s-7.2-16-16-16L54.6 368l68.7-68.7c6.2-6.2 6.2-16.4 0-22.6s-16.4-6.2-22.6 0l-96 96c-6.2 6.2-6.2 16.4 0 22.6l96 96z"></path></svg></div>
-                                    </div>
-                                    <div class="col-lg-4  col-12 search-col">
-                                        <label>To</label>
-                                        <input id="to_text" type="text" class="form-control searchBarInput autocomplete-flight" placeholder="Airport name/code, City" name="to" autocomplete="off">
-                                    </div>
-                                    <div class="col-lg-4 col-sm-12 col-12 pl-3 pl-lg-0">
-                                        <div class="row">
-                                            <div class="col-lg-4 col-6 datepicker-box where-date-go search-col">
-                                                <div class="form-group">
-                                                    <label>Departure</label>
-                                                    <div class="datepicker-box-blank">
-                                                        <input type="hidden" id="whereDepartDate" name="ddate" data-search-parameter="true">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4 col-6 datepicker-box where-date-turn search-col">
-                                                <div class="form-group">
-                                                    <label>Return</label>
-                                                    <div class="datepicker-box-blank">
-                                                        <input type="hidden" id="whereBackDate" name="rdate" data-search-parameter="true">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4 col-12 passenger-select search-col">
-                                                <label>Passengers</label>
-                                                <div class="passenger-search-list">
-                                                    <a href="javascript:">
-                                                        <span class="totalPassengerLabel"><span class="totalPassengerCount">1</span>&nbsp;Passenger</span>
-                                                        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"></path></svg>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" placeholder="From where" name="from">
                         </div>
-                        <div class="col-lg-1 col-md-12 col-12  pl-0 searchForm-btn-balancer">
-                            <button type="button" id="searchFormSubmit" class="btn btn-primary btn-block search-button">
-                                <svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="magnifying-glass" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"></path></svg>
-                                <span>Search Flights</span>
-                            </button>
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" placeholder="To where" name="to">
+                        </div>
+                        <div class="col-md-2">
+                            <input type="date" class="form-control" name="date">
+                        </div>
+                        <div class="col-md-1">
+                            <button type="submit" class="btn btn-primary w-100">Search</button>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
     </section>
+
+    <div class="container flight-results">
+        {% if outbound_flights or return_flights %}
+            <h2>{{ 'Departure Flights' if request.args.get('flight_direction') == 'outbound' else 'Return Flights' }}</h2>
+            {% for flight in outbound_flights if request.args.get('flight_direction') == 'outbound' %}
+            <div class="flight-card">
+                <h4>{{ flight['flight_number'] }}: {{ flight['departure_airport'] }} to {{ flight['arrival_airport'] }}</h4>
+                <p>Departure: {{ flight['departure_time'] }}</p>
+                <p>Available Seats: {{ flight['available_seats'] }}</p>
+            </div>
+            {% endfor %}
+            
+            {% for flight in return_flights if request.args.get('flight_direction') == 'return' %}
+            <div class="flight-card">
+                <h4>{{ flight['flight_number'] }}: {{ flight['departure_airport'] }} to {{ flight['arrival_airport'] }}</h4>
+                <p>Departure: {{ flight['departure_time'] }}</p>
+                <p>Available Seats: {{ flight['available_seats'] }}</p>
+            </div>
+            {% endfor %}
+        {% else %}
+            <h2>No flights available for the selected criteria.</h2>
+        {% endif %}
+    </div>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script>
-        function goToLogin() {
-            window.location.href = "{{ url_for('sign') }}";
-        }
-    </script>
 </body>
 </html>

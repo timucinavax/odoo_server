@@ -6,7 +6,25 @@ from app import app
 @app.route('/')
 @app.route('/home')
 def dashboard():
-    return render_template('dashboard.html')
+    url = current_app.config['ODOO_URL']
+    db = current_app.config['ODOO_DB']
+    admin_username = current_app.config['ODOO_USERNAME']
+    admin_password = current_app.config['ODOO_PASSWORD']
+
+    # allow_none=True parametresini ekleyin
+    common = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/common', allow_none=True)
+    uid = common.authenticate(db, admin_username, admin_password, {})
+
+    models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object', allow_none=True)
+
+    flights = models.execute_kw(db, uid, admin_password, 'flight.management', 'search_read', [[]], {'fields': ['flight_direction','flight_number', 'available_seats', 'departure_airport', 'arrival_airport', 'departure_time']})
+
+    outbound_flights = [flight for flight in flights if flight['flight_direction'] == 'outbound']
+    return_flights = [flight for flight in flights if flight['flight_direction'] == 'return']
+
+    users = models.execute_kw(db, uid, admin_password, 'custom.user', 'search_read', [[]], {'fields': ['username', 'email', 'role']})
+
+    return render_template('dashboard.html.html', outbound_flights=outbound_flights, return_flights=return_flights, users=users)
 
 @app.route('/login', methods=['POST'])
 def login():
