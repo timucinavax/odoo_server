@@ -214,7 +214,6 @@ def search_flights():
     domain = [
         ('departure_airport', '=', from_where),
         ('arrival_airport', '=', to_where),
-        ('departure_time', '>=', flight_date),
         ('flight_direction', '=', flight_direction)
     ]
     
