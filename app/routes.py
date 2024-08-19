@@ -191,17 +191,14 @@ def autocomplete_airport():
     else:
         airports = []
 
-    return jsonify(list(set(airports)))  # Remove duplicates
+    return jsonify(list(set(airports))) 
 
 @app.route('/search_flights', methods=['POST'])
 def search_flights():
-    # Get form data
     flight_direction = request.form.get('flight_direction')
     from_where = request.form.get('from_where')
     to_where = request.form.get('to_where')
     flight_date = request.form.get('flight_date')
-
-    # Connect to Odoo
     url = current_app.config['ODOO_URL']
     db = current_app.config['ODOO_DB']
     admin_username = current_app.config['ODOO_USERNAME']
@@ -221,9 +218,11 @@ def search_flights():
         ('departure_time', '<=', f'{flight_date} 23:59:59')
     ]
 
+    # Fetch flights from Odoo
     flights = models.execute_kw(db, uid, admin_password, 'flight.management', 'search_read', [domain], 
-                                {'fields': ['flight_number', 'available_seats', 'departure_airport', 'arrival_airport', 'departure_time','passenger_count']})
+                                {'fields': ['flight_number', 'available_seats', 'departure_airport', 'arrival_airport', 'departure_time','price']})
 
     return render_template('index.html', flights=flights)
+
 
 
