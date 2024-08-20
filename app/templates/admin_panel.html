@@ -302,146 +302,116 @@
 </div>
 
         <!-- Outbound Flights List -->
-<!-- Outbound Flights List -->
-<div class="content-section" id="outbound-list">
-    <div class="card">
-        <div class="card-header">Outbound Flights</div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Flight Number</th>
-                            <th>Service Type</th>
-                            <th>Departure</th>
-                            <th>Arrival</th>
-                            <th>Departure Time</th>
-                            <th>Date</th>
-                            <th>Plane</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for flight in outbound_flights %}
-                        <tr>
-                            <td>{{ flight.flight_number }}</td>
-                            <td>{{ flight.svc_type }}</td>
-                            <td>{{ flight.departure_airport }}</td>
-                            <td>{{ flight.arrival_airport }}</td>
-                            <td>{{ flight.departure_time }}</td>
-                            <td>{{ flight.date }}</td>
-                            <td>
-                                <a href="{{ url_for('plane_layout', flight_id=flight.id) }}" class="btn btn-primary">Plane Chair</a>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+        <div class="content-section" id="outbound-list">
+            <div class="card">
+                <div class="card-header">Outbound Flights</div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Flight Number</th>
+                                    <th>Passenger Count</th>
+                                    <th>Departure</th>
+                                    <th>Arrival</th>
+                                    <th>Date</th>
+                                    <th>Plane</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for flight in outbound_flights %}
+                                <tr>
+                                    <td>{{ flight.flight_number }}</td>
+                                    <td>{{ flight.available_seats }}</td>
+                                    <td>{{ flight.departure_airport }}</td>
+                                    <td>{{ flight.arrival_airport }}</td>
+                                    <td>{{ flight.departure_time }}</td>
+                                    <td>
+                                        <a href="{{ url_for('plane_layout', flight_id=flight.id) }}" class="btn btn-primary">Plane Chair</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">Active Flights</div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Flight Number</th>
+                                    <th>Service Type</th>
+                                    <th>Departure</th>
+                                    <th>Arrival</th>
+                                    <th>Departure Time</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody id="active-flights-body">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Active Outbound Flights List -->
-    <div class="card">
-        <div class="card-header">Active Outbound Flights</div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Flight Number</th>
-                            <th>Service Type</th>
-                            <th>Departure</th>
-                            <th>Arrival</th>
-                            <th>Departure Time</th>
-                            <th>Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for flight in active_flights if flight.flight_direction == 'outbound' %}
-                        <tr>
-                            <td>{{ flight.flight_number }}</td>
-                            <td>{{ flight.svc_type }}</td>
-                            <td>{{ flight.departure_airport }}</td>
-                            <td>{{ flight.arrival_airport }}</td>
-                            <td>{{ flight.departure_time }}</td>
-                            <td>{{ flight.date }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+        <!-- Return Flights List -->
+        <div class="content-section" id="return-list">
+            <div class="card">
+                <div class="card-header">Return Flights</div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Flight Number</th>
+                                    <th>Passenger Count</th>
+                                    <th>Departure</th>
+                                    <th>Arrival</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for flight in return_flights %}
+                                <tr>
+                                    <td>{{ flight.flight_number }}</td>
+                                    <td>{{ flight.available_seats }}</td>
+                                    <td>{{ flight.departure_airport }}</td>
+                                    <td>{{ flight.arrival_airport }}</td>
+                                    <td>{{ flight.departure_time }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">Active Flights</div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Flight Number</th>
+                                    <th>Service Type</th>
+                                    <th>Departure</th>
+                                    <th>Arrival</th>
+                                    <th>Departure Time</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody id="active-flights-body">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-
-<!-- Return Flights List -->
-<div class="content-section" id="return-list">
-    <div class="card">
-        <div class="card-header">Return Flights</div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Flight Number</th>
-                            <th>Service Type</th>
-                            <th>Departure</th>
-                            <th>Arrival</th>
-                            <th>Departure Time</th>
-                            <th>Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for flight in return_flights %}
-                        <tr>
-                            <td>{{ flight.flight_number }}</td>
-                            <td>{{ flight.svc_type }}</td>
-                            <td>{{ flight.departure_airport }}</td>
-                            <td>{{ flight.arrival_airport }}</td>
-                            <td>{{ flight.departure_time }}</td>
-                            <td>{{ flight.date }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <!-- Active Return Flights List -->
-    <div class="card">
-        <div class="card-header">Active Return Flights</div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Flight Number</th>
-                            <th>Service Type</th>
-                            <th>Departure</th>
-                            <th>Arrival</th>
-                            <th>Departure Time</th>
-                            <th>Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for flight in active_flights if flight.flight_direction == 'return' %}
-                        <tr>
-                            <td>{{ flight.flight_number }}</td>
-                            <td>{{ flight.svc_type }}</td>
-                            <td>{{ flight.departure_airport }}</td>
-                            <td>{{ flight.arrival_airport }}</td>
-                            <td>{{ flight.departure_time }}</td>
-                            <td>{{ flight.date }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
-
 
         <!-- Users Table -->
         <div class="content-section" id="users-list">
@@ -494,7 +464,28 @@
                 top: sectionToShow.offsetTop - document.querySelector('.navbar').offsetHeight,
                 behavior: 'smooth' // Yumuşak kaydırma etkisi
             });
-        }        
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentDateTime = new Date();
+            const flights = {{ flights | tojson }};
+            const activeFlightsBody = document.getElementById('active-flights-body');
+    
+            flights.forEach(flight => {
+                const departureTime = new Date(flight.departure_time);
+                if (departureTime >= currentDateTime) {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${flight.flight_number}</td>
+                        <td>${flight.svc_type}</td>
+                        <td>${flight.departure_airport}</td>
+                        <td>${flight.arrival_airport}</td>
+                        <td>${flight.departure_time}</td>
+                        <td>${flight.date}</td>
+                    `;
+                    activeFlightsBody.appendChild(row);
+                }
+            });
+        });       
     </script>
 </body>
 </html>
