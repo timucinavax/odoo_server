@@ -133,25 +133,83 @@
         }
 
         .cards-section {
-            margin: 50px auto;
             text-align: center;
+            margin: 50px auto;
             max-width: 1200px;
         }
-
-        .cards-section h2 {
+        
+        .best-deals__header__title {
+            font-family: 'Raleway', sans-serif;
+            font-weight: 700;
             font-size: 2.5rem;
             color: #333;
             margin-bottom: 30px;
         }
-
-        .card-container {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            gap: 20px;
-            margin: 20px auto;
+        
+        .best-deals__header__title .highlight {
+            color: #FF5733;
         }
-
+        
+        .swiper-wrapper {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 20px 0;
+        }
+        
+        .best-deals__swiper__item {
+            width: 30%;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .best-deals__swiper__item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .best-deals-card__figure {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .best-deals-card__figure__img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .best-deals-card__article {
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .best-deals-card__article__title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .best-deals-card__article__date {
+            color: #666;
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+        
+        .best-deals-card-price {
+            background-color: #FF5733;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        
+        .best-deals-card-price__amount {
+            font-size: 1.5rem;
+        }
+        
         .section-title {
             margin-top: 50px;
             font-size: 2rem;
@@ -359,33 +417,52 @@
 
     <div class="cards-section">
         <h2 class="best-deals__header__title"><span class="highlight">Our Best</span> Fares!</h2>
-        <div class="card-container">
-            <div class="card">
-                <img src="{{ url_for('static', filename='images/istanbul.jpeg') }}" alt="Istanbul">
-                <div class="card-body">
-                    <h5 class="card-title">Istanbul</h5>
-                    <p class="card-text">August 2024</p>
-                    <p class="price">45 £</p>
+        <div class="swiper-wrapper">
+            <div class="swiper-slide best-deals__swiper__item">
+                <div class="best-deals-card">
+                    <figure class="best-deals-card__figure">
+                        <img class="best-deals-card__figure__img" src="{{ url_for('static', filename='images/istanbul.jpeg') }}" alt="Istanbul">
+                    </figure>
+                    <article class="best-deals-card__article">
+                        <h3 class="best-deals-card__article__title">Istanbul</h3>
+                        <span class="best-deals-card__article__date">August 2024</span>
+                        <div class="best-deals-card__article__price best-deals-card-price">
+                            <span class="best-deals-card-price__amount">45</span> £<br> Prices starting from
+                        </div>
+                    </article>
                 </div>
             </div>
-            <div class="card">
-                <img src="{{ url_for('static', filename='images/dubai.jpeg') }}" alt="Dubai">
-                <div class="card-body">
-                    <h5 class="card-title">Dubai</h5>
-                    <p class="card-text">August 2024</p>
-                    <p class="price">590 £</p>
+            <div class="swiper-slide best-deals__swiper__item">
+                <div class="best-deals-card">
+                    <figure class="best-deals-card__figure">
+                        <img class="best-deals-card__figure__img" src="{{ url_for('static', filename='images/dubai.jpeg') }}" alt="Dubai">
+                    </figure>
+                    <article class="best-deals-card__article">
+                        <h3 class="best-deals-card__article__title">Dubai</h3>
+                        <span class="best-deals-card__article__date">August 2024</span>
+                        <div class="best-deals-card__article__price best-deals-card-price">
+                            <span class="best-deals-card-price__amount">590</span> £<br> Prices starting from
+                        </div>
+                    </article>
                 </div>
             </div>
-            <div class="card">
-                <img src="{{ url_for('static', filename='images/berlin.jpeg') }}" alt="Berlin">
-                <div class="card-body">
-                    <h5 class="card-title">Berlin</h5>
-                    <p class="card-text">August 2024</p>
-                    <p class="price">80 £</p>
+            <div class="swiper-slide best-deals__swiper__item">
+                <div class="best-deals-card">
+                    <figure class="best-deals-card__figure">
+                        <img class="best-deals-card__figure__img" src="{{ url_for('static', filename='images/berlin.jpeg') }}" alt="Berlin">
+                    </figure>
+                    <article class="best-deals-card__article">
+                        <h3 class="best-deals-card__article__title">Berlin</h3>
+                        <span class="best-deals-card__article__date">August 2024</span>
+                        <div class="best-deals-card__article__price best-deals-card-price">
+                            <span class="best-deals-card-price__amount">80</span> £<br> Prices starting from
+                        </div>
+                    </article>
                 </div>
             </div>
         </div>
     </div>
+    
 
     <div class="section-title">Fly to 130 destinations in 49 countries with Sehlen Tourism</div>
     <div class="container mt-5">
