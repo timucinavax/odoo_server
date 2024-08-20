@@ -366,15 +366,39 @@
     }
     
     .search-box-container {
-        top: 90%; /* Arama kutusunu mobilde biraz daha alta taşı */
-        width: 95%; /* Daha dar ekranlar için kutunun genişliğini azalt */
-        padding: 15px;
+        top: 85%; /* Arama kutusunu biraz daha yukarı taşı */
+        width: 80%; /* Arama kutusunun genişliğini daralt */
+        padding: 10px; /* İç boşlukları azalt */
+    }
+
+    .search-tabs {
+        justify-content: space-between; /* Butonlar arasındaki boşluğu aç */
+        margin-bottom: 10px; /* Alt boşluğu azalt */
+    }
+
+    .tab-button {
+        padding: 8px 12px; /* Butonların boyutlarını küçült */
+        font-size: 0.9rem; /* Yazı boyutunu küçült */
     }
 
     .search-form {
-        flex-direction: column; /* Arama formunu dikey olarak hizala */
-        gap: 5px; /* Arama alanları arasındaki boşluk */
+        gap: 5px; /* Arama alanları arasındaki boşluğu azalt */
     }
+
+    .form-group label {
+        font-size: 0.85rem; /* Etiketlerin yazı boyutunu küçült */
+    }
+
+    .form-group input, .form-group select {
+        padding: 8px; /* Giriş alanlarının iç boşluklarını azalt */
+        font-size: 0.85rem; /* Giriş alanlarının yazı boyutunu küçült */
+    }
+
+    .search-button {
+        padding: 10px; /* Butonun iç boşluğunu azalt */
+        font-size: 0.95rem; /* Buton yazı boyutunu küçült */
+    }
+}
 
     .form-group {
         width: 100%; /* Tüm form alanlarını tam genişlikte yap */
