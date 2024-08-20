@@ -183,6 +183,19 @@
             color: #333;
             margin-right: 10px;
         }
+
+        .card .price {
+            background-color: #FF5733;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        
+        .card .price {
+            font-size: 1.5rem;
+        }
+        
         
         .nav-tabs .nav-link.active {
             background-color: #f8f9fa;
@@ -336,7 +349,7 @@
     </div>
 
     <div class="cards-section">
-        <h2>Our Best Fares!</h2>
+        <h2><span style="color: #FF5733;">Our Best</span> Fares!</h2>
         <div class="card-container">
             <div class="card">
                 <img src="{{ url_for('static', filename='images/istanbul.jpeg') }}" alt="Istanbul">
