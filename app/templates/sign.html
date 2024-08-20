@@ -332,6 +332,43 @@
                 flex-direction: column;
             }
         }
+
+		@media (max-width: 768px) {
+			.container {
+				width: 100%;
+				height: auto;
+				min-height: 600px;
+			}
+		
+			.sign-in-container,
+			.sign-up-container,
+			.overlay-container {
+				width: 100%;
+				left: 0;
+				transition: none;
+				transform: translateX(0);
+			}
+		
+			.container.right-panel-active .sign-up-container {
+				transform: translateY(0);
+				opacity: 1;
+				z-index: 5;
+			}
+		
+			.overlay {
+				display: none; /* Hide the overlay panels */
+			}
+		
+			.sign-in-container, 
+			.sign-up-container {
+				width: 100%; /* Take full width */
+			}
+		
+			.container.right-panel-active .overlay-container {
+				transform: none; /* Disable any transform effects */
+			}
+		}
+		
         
     </style>
 </head>
