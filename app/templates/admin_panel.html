@@ -160,7 +160,7 @@
   <body>
     <nav class="navbar navbar-expand-lg navbar-light">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="{{ url_for('dashboard')}}">
           <img
             src="{{ url_for('static', filename='images/sehlen_logo.png') }}"
             alt="Sehlen Tourism"
@@ -184,15 +184,15 @@
         >
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link" onclick="showSection('add-outbound')"
-                >Add Outbound Flight</a
-              >
-            </li>
-            <li class="nav-item">
               <a class="nav-link" onclick="showSection('all-flights')"
                 >All Flights</a
               >
             </li>
+            <li class="nav-item">
+                <a class="nav-link" onclick="showSection('add-outbound')"
+                  >Add Outbound Flight</a
+                >
+              </li>
             <li class="nav-item">
               <a class="nav-link" onclick="showSection('add-return')"
                 >Add Return Flight</a
