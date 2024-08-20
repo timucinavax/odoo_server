@@ -141,6 +141,63 @@
         display: none; /* İçerik bölümleri başlangıçta gizli olacak */
       }
 
+      .footer {
+        background-color: #f8f9fa;
+        padding: 40px 0;
+      }
+
+      .footer h5 {
+        font-size: 16px;
+        margin-bottom: 20px;
+        font-weight: bold;
+      }
+
+      .footer ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      .footer ul li {
+        margin-bottom: 10px;
+      }
+
+      .footer ul li strong {
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      .footer ul.list-inline {
+        margin-top: 10px;
+      }
+
+      .footer ul.list-inline li {
+        margin-right: 10px;
+      }
+
+      .footer .tursab-link {
+        display: block;
+        margin-top: 20px;
+      }
+
+      .footer .tursab-img {
+        width: 100%;
+        height: auto;
+      }
+
+      .footer .logo-section {
+        margin-top: 30px;
+      }
+
+      .footer .logo-section img {
+        margin: 10px;
+        max-height: 50px;
+      }
+
+      .footer .text-muted {
+        font-size: 14px;
+        color: #6c757d;
+      }
+
       @media (max-width: 768px) {
         .hero {
           height: auto;
@@ -934,7 +991,7 @@
       </div>
     </div>
 
-    <footer style="background-color: #f8f9fa; padding: 40px 0">
+    <footer class="footer">
       <div class="container">
         <div class="row">
           <div class="col-md-3">
@@ -1057,12 +1114,12 @@
             <a
               href="https://www.tursab.org.tr/tr/ddsv"
               target="_blank"
-              style="position: relative; overflow: hidden; display: block"
+              class="tursab-link"
             >
               <img
                 src="https://www.sehlentur.com/wp-content/uploads/2022/02/tursab-dds-7952.png"
                 alt="TURSAB Belge"
-                style="width: 100%; height: auto"
+                class="tursab-img"
               />
             </a>
           </div>
@@ -1070,7 +1127,7 @@
 
         <hr />
 
-        <div class="text-center">
+        <div class="text-center logo-section">
           <img
             src="https://www.sehlentur.com/wp-content/uploads/2018/10/islamgroup-logo.jpg"
             alt="Islam Group"
