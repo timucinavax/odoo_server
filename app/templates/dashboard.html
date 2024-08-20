@@ -161,13 +161,6 @@
             color: #FF5733;
         }
         
-        .swiper-wrapper {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            padding: 20px 0;
-        }
-        
         .best-deals__swiper__item {
             width: 30%;
             overflow: hidden;
@@ -350,82 +343,100 @@
             font-weight: bold;
         }        
 
-        /* Genel mobil düzen */
-@media (max-width: 768px) {
-    .navbar-brand span {
-        font-size: 1.2rem;
-    }
+        .swiper-wrapper {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .best-deals__swiper__item {
+            flex: 0 0 calc(33.333% - 20px); /* Kartların üç sütunda yer almasını sağlar */
+            box-sizing: border-box;
+            margin-bottom: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        /* Kartların üst üste yığılmasını önlemek için hover durumu */
+        .best-deals__swiper__item:hover {
+            transform: translateY(-5px);
+        }
+        
+        @media (max-width: 768px) {
+        .best-deals__swiper__item {
+            flex: 0 0 100%; /* Kartların tam genişlikte olmasını sağlar */
+            margin-bottom: 15px;
+        }
     
-    .navbar-nav .nav-link {
-        margin-right: 10px;
-        font-size: 0.85rem;
-    }
+        .navbar-nav .nav-link {
+            margin-right: 10px;
+            font-size: 0.85rem;
+            }
     
-    .carousel-item {
-        height: auto; /* Yüksekliği otomatik yaparak resimlerin tam görünmesini sağlar */
-    }
+        .carousel-item {
+            height: auto; /* Yüksekliği otomatik yaparak resimlerin tam görünmesini sağlar */
+        }
     
-    .search-box-container {
-        display: none; /* Arama kutusunu mobilde gizler */
-    }
+        .search-box-container {
+            display: none; /* Arama kutusunu mobilde gizler */
+        }
 
-    .tab-button {
-        padding: 8px 12px; /* Butonların boyutlarını küçült */
-        font-size: 0.9rem; /* Yazı boyutunu küçült */
-    }
+        .tab-button {
+            padding: 8px 12px; /* Butonların boyutlarını küçült */
+            font-size: 0.9rem; /* Yazı boyutunu küçült */
+        }
 
-    .search-form {
-        gap: 5px; /* Arama alanları arasındaki boşluğu azalt */
-    }
+        .search-form {
+            gap: 5px; /* Arama alanları arasındaki boşluğu azalt */
+        }
 
-    .form-group label {
-        font-size: 0.85rem; /* Etiketlerin yazı boyutunu küçült */
-    }
+        .form-group label {
+            font-size: 0.85rem; /* Etiketlerin yazı boyutunu küçült */
+        }
 
-    .form-group input, .form-group select {
-        padding: 8px; /* Giriş alanlarının iç boşluklarını azalt */
-        font-size: 0.85rem; /* Giriş alanlarının yazı boyutunu küçült */
-    }
+        .form-group input, .form-group select {
+            padding: 8px; /* Giriş alanlarının iç boşluklarını azalt */
+            font-size: 0.85rem; /* Giriş alanlarının yazı boyutunu küçült */
+        }
 
-    .search-button {
-        padding: 10px; /* Butonun iç boşluğunu azalt */
-        font-size: 0.95rem; /* Buton yazı boyutunu küçült */
-    }
-}
+        .search-button {
+            padding: 10px; /* Butonun iç boşluğunu azalt */
+            font-size: 0.95rem; /* Buton yazı boyutunu küçült */
+        }
 
-    .form-group {
-        width: 100%; /* Tüm form alanlarını tam genişlikte yap */
-    }
+        .form-group {
+            width: 100%; /* Tüm form alanlarını tam genişlikte yap */
+        }
     
-    .cards-section {
-        margin: 30px auto; /* Kartlar bölümünün üst ve alt boşluklarını azalt */
-        max-width: 100%; /* Kartlar bölümünü tam genişlikte yap */
-    }
+        .cards-section {
+            margin: 30px auto; /* Kartlar bölümünün üst ve alt boşluklarını azalt */
+            max-width: 100%; /* Kartlar bölümünü tam genişlikte yap */
+        }
 
-    .swiper-wrapper {
-        flex-direction: column; /* Kartların yatay yerine dikey olarak hizalanmasını sağlar */
-        gap: 15px;
-    }
+        .swiper-wrapper {
+            flex-direction: column; /* Kartların yatay yerine dikey olarak hizalanmasını sağlar */
+            gap: 15px;
+        }
 
-    .best-deals__swiper__item {
-        width: 90%; /* Kartların genişliğini mobilde azalt */
-        margin: 0 auto; /* Kartları merkezle */
-    }
+        .best-deals__swiper__item {
+            width: 90%; /* Kartların genişliğini mobilde azalt */
+            margin: 0 auto; /* Kartları merkezle */
+        }
 
-    .card {
-        width: 100%; /* Kartların genişliğini tam yap */
-    }
+        .card {
+            width: 100%; /* Kartların genişliğini tam yap */
+        }
 
-    .tab-content .row {
+        .tab-content .row {
         flex-direction: column; /* Şehirler bölümü sütun olarak hizalanır */
-    }
+        }
 
-    .row .col-md-3 {
-        width: 100%; /* Şehirlerin tam genişlikte görünmesini sağlar */
-        text-align: center;
+        .row .col-md-3 {
+            width: 100%; /* Şehirlerin tam genişlikte görünmesini sağlar */
+            text-align: center;
+        }
     }
-}
-
     </style>
 </head>
 <body>
