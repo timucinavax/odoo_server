@@ -290,54 +290,40 @@
 
 		@media (max-width: 768px) {
 			.overlay-container {
-				width: 100%;
-				left: 0;
-				z-index: 5; /* Overlay'in formun üzerinde kalmasını sağlar */
-				transform: none; /* Mobilde overlay'i gizleme */
+				display: none; /* Hide the overlay on mobile devices */
 			}
 		
-			.overlay-panel {
+			.container {
 				width: 100%;
-				height: 50%;
-				position: absolute;
-				top: 0;
-				left: 0;
-				padding: 20px;
-				z-index: 10; /* Overlay panelinin diğer içeriklerin üzerinde olmasını sağlar */
-				transform: none;
-				transition: none; /* Mobilde geçiş animasyonunu kaldır */
-			}
-		
-			.overlay-left, .overlay-right {
-				position: absolute;
-				width: 100%;
-				height: 50%;
-				top: 50%;
-				transform: translateY(-50%);
-				text-align: center;
-				z-index: 10;
+				height: auto;
+				min-height: 600px;
 			}
 		
 			.sign-in-container,
 			.sign-up-container {
 				width: 100%;
-				height: 100%;
 				left: 0;
-				z-index: 2; /* Overlay panelinin altında olacak şekilde ayarlanır */
 				transition: none;
-				transform: none; /* Mobilde overlay'i gizlememe */
-			}
-		
-			.container.right-panel-active .sign-in-container {
-				transform: none;
+				transform: translateX(0);
 			}
 		
 			.container.right-panel-active .sign-up-container {
-				transform: none;
+				transform: translateY(0);
 				opacity: 1;
-				z-index: 2;
+				z-index: 5;
 			}
-		}		
+		
+			.container.right-panel-active .sign-in-container {
+				transform: translateY(0);
+				opacity: 1;
+				z-index: 5;
+			}
+		
+			.role-selector {
+				flex-direction: column;
+			}
+		}
+		
         
     </style>
 </head>
