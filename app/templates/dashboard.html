@@ -263,14 +263,19 @@
         }
         
         .best-deals__header {
-            font-family: 'Raleway', sans-serif; /* Yazı tipi */
-            font-weight: 700; /* Kalın yazı */
-            font-size: 3rem; /* Yazı boyutu */
-            text-align: center; /* Ortala */
-            margin-bottom: 30px; /* Alt boşluk */
+            font-family: 'Raleway', sans-serif;
+            font-weight: 700;
+            font-size: 3rem; /* Yazı boyutu küçültüldü */
+            text-align: center; /* Ortalandı */
+            margin-bottom: 10px; /* Alt boşluk küçültüldü */
             position: absolute;
+            top: 30%; /* Search buttonun üstüne taşındı */
+            left: 50%;
+            transform: translate(-50%, -50%);
             z-index: 10;
+            color: #2C3E50; /* Lacivert renk */
         }
+        
         
         .best-deals__header .highlight {
             color: #FF5733; /* Kırmızıdan çalan turuncu renk */
@@ -407,7 +412,7 @@
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
         </button>
-        <h2 class="best-deals__header"><span class="highlight">Sehlen Tourism</span>Hello, Where Do You Want to Go?</h2>
+        <h2 class="best-deals__header"><span class="highlight">Sehlen Tourism</span><br>Hello, Where Do You Want to Go?</h2>
         <div class="search-box-container">
             <div class="search-tabs">
                 <button class="tab-button active">One way</button>
