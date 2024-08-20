@@ -144,7 +144,8 @@ def add_flight():
     price = request.form.get('price')
     flight_direction = request.form.get('flight_direction')
     airplane_type_name = request.form.get('airplane_type')
-    available_seats= request.form.get('available_seats')
+    svc_type = request.form.get('svc_type')  # Yeni svc_type alanı
+    date = request.form.get('date')  # Yeni date alanı
 
     url = current_app.config['ODOO_URL']
     db = current_app.config['ODOO_DB']
@@ -163,18 +164,20 @@ def add_flight():
         flash('Geçersiz uçak tipi.')
         return redirect(url_for('admin_panel'))
     
-    airplane_type_id = airplane_type[0]['id']  # ID'yi alıyoruz
+    airplane_type_id = airplane_type[0]['id']
 
     flight_id = models.execute_kw(db, uid, admin_password, 'flight.management', 'create', [{
         'flight_number': flight_code,
-        'available_seats': available_seats,  # Koltuk sayısını buraya otomatik olarak ekliyoruz
+        'available_seats': airplane_type[0]['seat_count'],
         'departure_airport': departure,
         'arrival_airport': arrival,
         'departure_time': departure_time,
         'arrival_time': arrival_time,
         'price': price,
         'flight_direction': flight_direction, 
-        'airplane_type_id': airplane_type_id,  # Doğru ID'yi burada kullanıyoruz
+        'airplane_type_id': airplane_type_id,
+        'svc_type': svc_type,  # Yeni svc_type alanı
+        'date': date,  # Yeni date alanı
         'user_id': False,
     }])
 
