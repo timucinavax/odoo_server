@@ -226,18 +226,24 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('travel') }}">Travel Experience</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('offer') }}">Offers</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('support') }}">Support</a>
+                        </li>
                     {% else %}
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Manage Tickets</a>
+                            <a class="nav-link" href="{{ url_for('travel') }}">Travel Experience</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Travel Experience</a>
+                            <a class="nav-link" href="{{ url_for('offer') }}">Offers</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Offers</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Support</a>
+                            <a class="nav-link" href="{{ url_for('support') }}">Support</a>
                         </li>
                         <button class="btn btn-outline-dark ms-3" onclick="goToLogin()" id="loginButton">Sign In</button>
                         <button class="btn btn-outline-dark ms-3" onclick="goToLogin()" id="registerButton">Sign Up</button>

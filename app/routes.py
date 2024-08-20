@@ -78,11 +78,6 @@ def login():
         flash("Kullanıcı bulunamadı.")
     return redirect(url_for('dashboard'))
 
-@app.route('/logout')
-def logout():
-    session.clear()
-    return redirect(url_for('dashboard'))
-
 @app.route('/register', methods=['POST'])
 def register():
     email = request.form.get('email')
@@ -217,20 +212,6 @@ def plane_layout(flight_id):
     # Render the plane layout template
     return render_template('plane_rev.html', airplane_type=airplane_type_name, seats=seats)
 
-@app.route('/user')
-@role_required(['user'])
-def user_panel():
-    return render_template('user_panel.html')
-
-@app.route('/agency')
-@role_required(['agency'])
-def agency_panel():
-    return render_template('agency_panel.html')
-
-@app.route('/sign')
-def sign():
-    return render_template('sign.html')
-
 @app.route('/autocomplete_airport')
 def autocomplete_airport():
     url = current_app.config['ODOO_URL']
@@ -293,3 +274,37 @@ def search_flights():
         outbound_flights = []
 
     return render_template('index.html', outbound_flights=outbound_flights, return_flights=return_flights)
+
+@app.route('/user')
+@role_required(['user'])
+def user_panel():
+    return render_template('user_panel.html')
+
+@app.route('/agency')
+@role_required(['agency'])
+def agency_panel():
+    return render_template('agency_panel.html')
+
+@app.route('/sign')
+def sign():
+    return render_template('sign.html')
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('dashboard'))
+
+@app.route('/support')
+def logout():
+    session.clear()
+    return redirect(url_for('support.html'))
+
+@app.route('/offer')
+def logout():
+    session.clear()
+    return redirect(url_for('offer.html'))
+
+@app.route('/travel')
+def logout():
+    session.clear()
+    return redirect(url_for('travel_experience.html'))
