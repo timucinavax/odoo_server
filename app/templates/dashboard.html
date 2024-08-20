@@ -1083,10 +1083,8 @@
             </div>
         `;
 
-        // Sayfa sonuna ekle
         document.body.appendChild(cookieConsent);
 
-        // Tamam butonuna tıklanınca bildirimi gizle
         document
           .querySelector(".btn-consent")
           .addEventListener("click", function (e) {
@@ -1095,7 +1093,6 @@
           });
       });
 
-      // Stil ekle
       var style = document.createElement("style");
       style.innerHTML = `
         .cookie-consent {
