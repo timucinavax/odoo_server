@@ -295,16 +295,16 @@ def logout():
     return redirect(url_for('dashboard'))
 
 @app.route('/support')
-def logout():
+def support():
     session.clear()
     return redirect(url_for('support.html'))
 
 @app.route('/offer')
-def logout():
+def offer():
     session.clear()
     return redirect(url_for('offer.html'))
 
 @app.route('/travel')
-def logout():
+def travel_experience():
     session.clear()
     return redirect(url_for('travel_experience.html'))
