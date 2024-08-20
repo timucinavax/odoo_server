@@ -289,41 +289,55 @@
         }
 
 		@media (max-width: 768px) {
-			.container {
-				width: 100%;
-				height: auto;
-				min-height: 600px;
-			}
-		
-			.sign-in-container,
-			.sign-up-container,
 			.overlay-container {
 				width: 100%;
 				left: 0;
+				z-index: 5; /* Overlay'in formun üzerinde kalmasını sağlar */
+				transform: none; /* Mobilde overlay'i gizleme */
+			}
+		
+			.overlay-panel {
+				width: 100%;
+				height: 50%;
+				position: absolute;
+				top: 0;
+				left: 0;
+				padding: 20px;
+				z-index: 10; /* Overlay panelinin diğer içeriklerin üzerinde olmasını sağlar */
+				transform: none;
+				transition: none; /* Mobilde geçiş animasyonunu kaldır */
+			}
+		
+			.overlay-left, .overlay-right {
+				position: absolute;
+				width: 100%;
+				height: 50%;
+				top: 50%;
+				transform: translateY(-50%);
+				text-align: center;
+				z-index: 10;
+			}
+		
+			.sign-in-container,
+			.sign-up-container {
+				width: 100%;
+				height: 100%;
+				left: 0;
+				z-index: 2; /* Overlay panelinin altında olacak şekilde ayarlanır */
 				transition: none;
-				transform: translateX(0);
+				transform: none; /* Mobilde overlay'i gizlememe */
+			}
+		
+			.container.right-panel-active .sign-in-container {
+				transform: none;
 			}
 		
 			.container.right-panel-active .sign-up-container {
-				transform: translateY(0);
+				transform: none;
 				opacity: 1;
-				z-index: 5;
+				z-index: 2;
 			}
-		
-			.overlay {
-				display: none; /* Hide the overlay panels */
-			}
-		
-			.sign-in-container, 
-			.sign-up-container {
-				width: 100%; /* Take full width */
-			}
-		
-			.container.right-panel-active .overlay-container {
-				transform: none; /* Disable any transform effects */
-			}
-		}
-		
+		}		
         
     </style>
 </head>
@@ -447,6 +461,60 @@
                 document.querySelector('.container').classList.add('right-panel-active');
             });
         });
+
+		document.addEventListener('DOMContentLoaded', function () {
+			const roleButtons = document.querySelectorAll('.role-btn');
+			const signInRoleInput = document.getElementById('selectedRoleLogin');
+			const signUpRoleInput = document.getElementById('selectedRoleRegister');
+		
+			roleButtons.forEach(button => {
+				button.addEventListener('click', function () {
+					roleButtons.forEach(btn => btn.classList.remove('active'));
+					this.classList.add('active');
+		
+					const selectedRole = this.getAttribute('data-role');
+					if (this.closest('form').id === 'sign-in-form') {
+						signInRoleInput.value = selectedRole;
+					} else {
+						signUpRoleInput.value = selectedRole;
+					}
+				});
+			});
+		
+			document.getElementById('sign-in-btn').addEventListener('click', () => {
+				document.querySelector('.container').classList.remove('right-panel-active');
+				if (window.innerWidth <= 768) {
+					document.querySelector('.overlay-container').style.zIndex = '5';
+					document.querySelector('.sign-in-container').style.zIndex = '10';
+				}
+			});
+		
+			document.getElementById('sign-up-btn').addEventListener('click', () => {
+				document.querySelector('.container').classList.add('right-panel-active');
+				if (window.innerWidth <= 768) {
+					document.querySelector('.overlay-container').style.zIndex = '5';
+					document.querySelector('.sign-up-container').style.zIndex = '10';
+				}
+			});
+		
+			document.getElementById('sign-in-link').addEventListener('click', (e) => {
+				e.preventDefault();
+				document.querySelector('.container').classList.remove('right-panel-active');
+				if (window.innerWidth <= 768) {
+					document.querySelector('.overlay-container').style.zIndex = '5';
+					document.querySelector('.sign-in-container').style.zIndex = '10';
+				}
+			});
+		
+			document.getElementById('sign-up-link').addEventListener('click', (e) => {
+				e.preventDefault();
+				document.querySelector('.container').classList.add('right-panel-active');
+				if (window.innerWidth <= 768) {
+					document.querySelector('.overlay-container').style.zIndex = '5';
+					document.querySelector('.sign-up-container').style.zIndex = '10';
+				}
+			});
+		});
     </script>
 	<!-- Bootstrap JavaScript ve jQuery -->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
