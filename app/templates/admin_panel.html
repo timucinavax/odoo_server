@@ -165,6 +165,9 @@
                         <a class="nav-link" onclick="showSection('add-outbound')">Add Outbound Flight</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" onclick="showSection('all-flights')">All Flights</a>
+                    </li>                    
+                    <li class="nav-item">
                         <a class="nav-link" onclick="showSection('add-return')">Add Return Flight</a>
                     </li>
                     <li class="nav-item">
@@ -352,6 +355,50 @@
                                 </tr>
                             </thead>
                             <tbody id="active-flights-body">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section" id="all-flights">
+            <div class="card">
+                <div class="card-header">All Flights</div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Flight Number</th>
+                                    <th>Service Type</th>
+                                    <th>Departure</th>
+                                    <th>Arrival</th>
+                                    <th>Departure Time</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for flight in outbound_flights %}
+                                <tr>
+                                    <td>{{ flight.flight_number }}</td>
+                                    <td>{{ flight.svc_type }}</td>
+                                    <td>{{ flight.departure_airport }}</td>
+                                    <td>{{ flight.arrival_airport }}</td>
+                                    <td>{{ flight.departure_time }}</td>
+                                    <td>{{ flight.date }}</td>
+                                </tr>
+                                {% endfor %}
+                                {% for flight in return_flights %}
+                                <tr>
+                                    <td>{{ flight.flight_number }}</td>
+                                    <td>{{ flight.svc_type }}</td>
+                                    <td>{{ flight.departure_airport }}</td>
+                                    <td>{{ flight.arrival_airport }}</td>
+                                    <td>{{ flight.departure_time }}</td>
+                                    <td>{{ flight.date }}</td>
+                                </tr>
+                                {% endfor %}
                             </tbody>
                         </table>
                     </div>
