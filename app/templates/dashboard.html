@@ -184,17 +184,26 @@
             margin-right: 10px;
         }
 
-        .card .price {
-            background-color: #FF5733;
-            color: white;
-            padding: 10px;
-            border-radius: 5px;
-            font-weight: bold;
+        .best-deals__header__title {
+            font-family: 'Raleway', sans-serif; /* Yazı tipi */
+            font-weight: 700; /* Kalın yazı */
+            font-size: 2.5rem; /* Yazı boyutu */
+            text-align: center; /* Ortala */
+            margin-bottom: 30px; /* Alt boşluk */
         }
         
-        .card .price {
-            font-size: 1.5rem;
+        .best-deals__header__title .highlight {
+            color: #FF5733; /* Kırmızıdan çalan turuncu renk */
         }
+        
+        .best-deals__header__title span {
+            color: #F39C12; /* Orta turuncu renk */
+        }
+        
+        .best-deals__header__title {
+            color: #2C3E50; /* Lacivert renk */
+        }
+        
         
         
         .nav-tabs .nav-link.active {
@@ -349,7 +358,7 @@
     </div>
 
     <div class="cards-section">
-        <h2><span style="color: #FF5733;">Our Best</span> Fares!</h2>
+        <h2 class="best-deals__header__title"><span class="highlight">Our Best</span> Fares!</h2>
         <div class="card-container">
             <div class="card">
                 <img src="{{ url_for('static', filename='images/istanbul.jpeg') }}" alt="Istanbul">
