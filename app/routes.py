@@ -308,4 +308,4 @@ def offer():
 
 @app.route('/travel')
 def travel():
-    return render_template('travel_experience.html')
+    return render_template('travel.html')
