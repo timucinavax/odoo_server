@@ -349,6 +349,66 @@
             color: #dc3545;
             font-weight: bold;
         }        
+
+        /* Genel mobil düzen */
+@media (max-width: 768px) {
+    .navbar-brand span {
+        font-size: 1.2rem;
+    }
+    
+    .navbar-nav .nav-link {
+        margin-right: 10px;
+        font-size: 0.85rem;
+    }
+    
+    .carousel-item {
+        height: auto; /* Yüksekliği otomatik yaparak resimlerin tam görünmesini sağlar */
+    }
+    
+    .search-box-container {
+        top: 90%; /* Arama kutusunu mobilde biraz daha alta taşı */
+        width: 95%; /* Daha dar ekranlar için kutunun genişliğini azalt */
+        padding: 15px;
+    }
+
+    .search-form {
+        flex-direction: column; /* Arama formunu dikey olarak hizala */
+        gap: 5px; /* Arama alanları arasındaki boşluk */
+    }
+
+    .form-group {
+        width: 100%; /* Tüm form alanlarını tam genişlikte yap */
+    }
+    
+    .cards-section {
+        margin: 30px auto; /* Kartlar bölümünün üst ve alt boşluklarını azalt */
+        max-width: 100%; /* Kartlar bölümünü tam genişlikte yap */
+    }
+
+    .swiper-wrapper {
+        flex-direction: column; /* Kartların yatay yerine dikey olarak hizalanmasını sağlar */
+        gap: 15px;
+    }
+
+    .best-deals__swiper__item {
+        width: 90%; /* Kartların genişliğini mobilde azalt */
+        margin: 0 auto; /* Kartları merkezle */
+    }
+
+    .card {
+        width: 100%; /* Kartların genişliğini tam yap */
+    }
+
+    .tab-content .row {
+        flex-direction: column; /* Şehirler bölümü sütun olarak hizalanır */
+    }
+
+    .row .col-md-3 {
+        width: 100%; /* Şehirlerin tam genişlikte görünmesini sağlar */
+        text-align: center;
+    }
+}
+
     </style>
 </head>
 <body>
