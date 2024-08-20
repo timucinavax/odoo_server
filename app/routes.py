@@ -125,7 +125,7 @@ def admin_panel():
 
     models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object', allow_none=True)
 
-    flights = models.execute_kw(db, uid, admin_password, 'flight.management', 'search_read', [[]], {'fields': ['flight_direction','flight_number', 'available_seats', 'departure_airport', 'arrival_airport', 'departure_time']})
+    flights = models.execute_kw(db, uid, admin_password, 'flight.management', 'search_read', [[]], {'fields': ['flight_direction','flight_number','svc_type','date', 'available_seats', 'departure_airport', 'arrival_airport', 'departure_time']})
     
     outbound_flights = [flight for flight in flights if flight['flight_direction'] == 'outbound']
     return_flights = [flight for flight in flights if flight['flight_direction'] == 'return']
