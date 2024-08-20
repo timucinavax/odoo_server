@@ -300,15 +300,12 @@ def logout():
 
 @app.route('/support')
 def support():
-    session.clear()
-    return redirect(url_for('support.html'))
+    return render_template('support.html')
 
 @app.route('/offer')
 def offer():
-    session.clear()
-    return redirect(url_for('offer.html'))
+    return render_template('offer.html')
 
 @app.route('/travel')
 def travel():
-    session.clear()
-    return redirect(url_for('travel_experience.html'))
+    return render_template('travel_experience.html')
