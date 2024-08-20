@@ -467,7 +467,12 @@
         }
         document.addEventListener('DOMContentLoaded', function() {
             const currentDateTime = new Date();
+            {% if flights is defined and flights %}
             const flights = {{ flights | tojson }};
+            {% else %}
+            const flights = [];
+            {% endif %}
+
             const activeFlightsBody = document.getElementById('active-flights-body');
     
             flights.forEach(flight => {
