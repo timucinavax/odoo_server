@@ -153,12 +153,36 @@
         }
 
         .section-title {
-            margin-top: 50px; /* Kartlar ile başlık arasında boşluk bırakıyor */
+            margin-top: 50px;
             font-size: 2rem;
             font-weight: bold;
             text-align: center;
             color: #333;
+            margin-bottom: 30px;
         }
+        
+        .row {
+            text-align: left;
+            font-size: 1.1rem;
+            padding: 20px;
+        }
+        
+        .row .col-md-3 {
+            padding: 10px;
+            font-weight: 600;
+        }
+        
+        .nav-tabs .nav-link {
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #333;
+            margin-right: 10px;
+        }
+        
+        .nav-tabs .nav-link.active {
+            background-color: #f8f9fa;
+            border-color: #ddd;
+        }        
 
         .card {
             width: 30%;
@@ -337,11 +361,45 @@
     </div>
 
     <div class="section-title">Fly to 130 destinations in 49 countries with Sehlen Tourism</div>
-        <div class="container">
-            <div class="row" id="cities-container">
+    <div class="container mt-5">
+        <ul class="nav nav-tabs justify-content-center" id="categoryTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="turkey-tab" data-bs-toggle="tab" data-bs-target="#turkey" type="button" role="tab" aria-controls="turkey" aria-selected="true">TÜRKİYE</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="europe-tab" data-bs-toggle="tab" data-bs-target="#europe" type="button" role="tab" aria-controls="europe" aria-selected="false">EUROPE</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="asia-tab" data-bs-toggle="tab" data-bs-target="#asia" type="button" role="tab" aria-controls="asia" aria-selected="false">ASIA</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="africa-tab" data-bs-toggle="tab" data-bs-target="#africa" type="button" role="tab" aria-controls="africa" aria-selected="false">AFRICA</button>
+            </li>
+        </ul>
+        <div class="tab-content" id="categoryTabsContent">
+            <div class="tab-pane fade show active" id="turkey" role="tabpanel" aria-labelledby="turkey-tab">
+                <div class="row">
+                    <!-- Türkiye şehirleri burada listelenecek -->
+                </div>
+            </div>
+            <div class="tab-pane fade" id="europe" role="tabpanel" aria-labelledby="europe-tab">
+                <div class="row">
+                    <!-- Avrupa şehirleri burada listelenecek -->
+            </div>
+            </div>
+            <div class="tab-pane fade" id="asia" role="tabpanel" aria-labelledby="asia-tab">
+                <div class="row">
+                    <!-- Asya şehirleri burada listelenecek -->
+                </div>
+            </div>
+            <div class="tab-pane fade" id="africa" role="tabpanel" aria-labelledby="africa-tab">
+                <div class="row">
+                    <!-- Afrika şehirleri burada listelenecek -->
+                </div>
             </div>
         </div>
     </div>
+
         
 
 
@@ -354,16 +412,41 @@
         }
 
         fetch("{{ url_for('static', filename='js/cities.json') }}")
-            .then(response => response.json())
-            .then(data => {
-                const container = document.getElementById('cities-container');
-                data.cities.forEach(city => {
-                    const cityElement = document.createElement('div');
-                    cityElement.classList.add('col-md-3');
-                    cityElement.innerHTML = `<i class="bi bi-geo-alt-fill"></i> ${city}`;
-                    container.appendChild(cityElement);
-                });
+        .then(response => response.json())
+        .then(data => {
+            const turkeyContainer = document.querySelector('#turkey .row');
+            const europeContainer = document.querySelector('#europe .row');
+            const asiaContainer = document.querySelector('#asia .row');
+            const africaContainer = document.querySelector('#africa .row');
+
+            data.turkey.forEach(city => {
+                const cityElement = document.createElement('div');
+                cityElement.classList.add('col-md-3');
+                cityElement.innerHTML = `<i class="bi bi-geo-alt-fill"></i> ${city}`;
+                turkeyContainer.appendChild(cityElement);
             });
+
+            data.europe.forEach(city => {
+                const cityElement = document.createElement('div');
+                cityElement.classList.add('col-md-3');
+                cityElement.innerHTML = `<i class="bi bi-geo-alt-fill"></i> ${city}`;
+                europeContainer.appendChild(cityElement);
+            });
+
+            data.asia.forEach(city => {
+                const cityElement = document.createElement('div');
+                cityElement.classList.add('col-md-3');
+                cityElement.innerHTML = `<i class="bi bi-geo-alt-fill"></i> ${city}`;
+                asiaContainer.appendChild(cityElement);
+            });
+
+            data.africa.forEach(city => {
+                const cityElement = document.createElement('div');
+                cityElement.classList.add('col-md-3');
+                cityElement.innerHTML = `<i class="bi bi-geo-alt-fill"></i> ${city}`;
+                africaContainer.appendChild(cityElement);
+            });
+        });
 
     </script>
 </body>
