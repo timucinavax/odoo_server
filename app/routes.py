@@ -305,6 +305,6 @@ def offer():
     return redirect(url_for('offer.html'))
 
 @app.route('/travel')
-def travel_experience():
+def travel():
     session.clear()
     return redirect(url_for('travel_experience.html'))
