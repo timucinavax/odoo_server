@@ -220,6 +220,12 @@
             font-size: 1.5rem;
         }
         
+        .container {
+            max-width: 1200px; /* Maksimum genişliği ayarla */
+            margin: 0 auto; /* Sağ ve sol kenar boşluklarını otomatik yaparak ortala */
+            text-align: center;
+        }
+        
         .section-title {
             margin-top: 50px;
             font-size: 2rem;
@@ -230,20 +236,19 @@
         }
         
         .row {
-            text-align: center;
+            display: flex; /* Flexbox kullan */
+            justify-content: center; /* Yatay olarak ortala */
+            align-items: center; /* Dikey olarak ortala */
             font-size: 1.1rem;
             padding: 20px;
-        }
-        
-        .container {
-            text-align: center;
+            flex-wrap: wrap; /* İçerik taşarsa alta geç */
         }
         
         .row .col-md-3 {
             padding: 10px;
             font-weight: 600;
-            text-align: right;
-        }
+            text-align: left;
+        }        
         
         .nav-tabs .nav-link {
             font-weight: 600;
