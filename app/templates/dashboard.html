@@ -437,10 +437,10 @@
       }
       .ticket-container {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
+        justify-content: center;
+        gap: 20px; /* Aralarındaki boşluk */
       }
-    
+
       @media (max-width: 768px) {
         .best-deals__swiper__item {
           flex: 0 0 100%; /* Kartların tam genişlikte olmasını sağlar */
@@ -842,6 +842,7 @@
         </div>
       </div>
     </div>
+
     <div class="container">
       <h2 class="best-deals__header__title">
         <span class="highlight">It Could Be Your </span> Ticket?
@@ -849,19 +850,19 @@
       <div class="ticket-container">
         <iframe
           src="{{ url_for('static', filename='js/ticket.html') }}"
-          width="49%"
-          height="300px"
+          width="30%"
+          height="200px"
           frameborder="0"
         ></iframe>
         <iframe
           src="{{ url_for('static', filename='js/ticket1.html') }}"
-          width="49%"
-          height="300px"
+          width="30%"
+          height="200px"
           frameborder="0"
         ></iframe>
       </div>
     </div>
-
+    
     <footer class="footer">
       <div class="container">
         <div class="row">
