@@ -93,6 +93,9 @@
           margin-bottom: 30px;
           transition: transform 0.3s ease;
           border-radius: 8px;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
         }
 
         .offer-card:hover {
@@ -102,18 +105,20 @@
         .offer-card img {
           border-top-left-radius: 8px;
           border-top-right-radius: 8px;
-          max-height: 200px;
           object-fit: cover;
+          height: 180px;
         }
 
         .offer-card-body {
           padding: 20px;
           text-align: center;
+          flex-grow: 1;
         }
 
         .offer-card-title {
           font-size: 1.5rem;
           font-weight: 600;
+          margin-bottom: 10px;
         }
 
         .offer-card-text {
@@ -178,7 +183,7 @@
     <section class="container content-section">
         <h2>Special Promotions</h2>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-4 d-flex">
                 <div class="offer-card">
                     <img src="{{ url_for('static', filename='images/offer_1.jpg') }}" alt="Offer 1">
                     <div class="offer-card-body">
@@ -188,7 +193,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 d-flex">
                 <div class="offer-card">
                     <img src="{{ url_for('static', filename='images/offer_2.jpg') }}" alt="Offer 2">
                     <div class="offer-card-body">
@@ -198,7 +203,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 d-flex">
                 <div class="offer-card">
                     <img src="{{ url_for('static', filename='images/offer_3.jpg') }}" alt="Offer 3">
                     <div class="offer-card-body">
