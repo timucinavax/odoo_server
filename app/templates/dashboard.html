@@ -435,7 +435,12 @@
         font-size: 14px;
         color: #6c757d;
       }
-
+      .ticket-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+    
       @media (max-width: 768px) {
         .best-deals__swiper__item {
           flex: 0 0 100%; /* Kartların tam genişlikte olmasını sağlar */
@@ -841,19 +846,22 @@
       <h2 class="best-deals__header__title">
         <span class="highlight">It Could Be Your </span> Ticket?
       </h2>
-      <iframe
-        src="{{ url_for('static', filename='js/ticket.html') }}"
-        width="100%"
-        height="300px"
-        frameborder="0"
-      ></iframe>
-      <iframe
-        src="{{ url_for('static', filename='js/ticket1.html') }}"
-        width="100%"
-        height="300px"
-        frameborder="0"
-      ></iframe>
+      <div class="ticket-container">
+        <iframe
+          src="{{ url_for('static', filename='js/ticket.html') }}"
+          width="49%"
+          height="300px"
+          frameborder="0"
+        ></iframe>
+        <iframe
+          src="{{ url_for('static', filename='js/ticket1.html') }}"
+          width="49%"
+          height="300px"
+          frameborder="0"
+        ></iframe>
+      </div>
     </div>
+
     <footer class="footer">
       <div class="container">
         <div class="row">
