@@ -545,9 +545,6 @@
               <a class="nav-link" href="#">Welcome, {{ logged_in_user }}</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
-            </li>
-            <li class="nav-item">
               <a class="nav-link" href="{{ url_for('travel') }}"
                 >Travel Experience</a
               >
@@ -557,6 +554,9 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{{ url_for('support') }}">Support</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
             </li>
             {% else %}
             <li class="nav-item">
