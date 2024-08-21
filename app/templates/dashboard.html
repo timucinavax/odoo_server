@@ -444,14 +444,13 @@
       }
 
       .tickets-section {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        margin-bottom: 20px; /* Footer'ın üstünde biraz boşluk bırakır */
+        margin-top: 40px;   /* Adjust this value if needed */
       }
 
       .box {
-        margin: 10px; /* Biletler arasında boşluk bırakır */
+        position: relative; /* Change from absolute to relative */
+        margin: 20px auto;  /* Centers the box */
+        max-width: 600px;   /* Ensures it stays centered and does not overflow */
       }
       .ticket {
         width: 600px;
