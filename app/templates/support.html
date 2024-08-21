@@ -67,7 +67,7 @@
       }
 
       .hero-section {
-        background-image: url("{{ url_for('static', filename='images/hero_image.jpg') }}");
+        background-image: url("{{ url_for('static', filename='images/support_hero.jpg') }}");
         background-size: cover;
         background-position: center;
         height: 60vh;
@@ -104,6 +104,9 @@
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         border: none;
         margin-bottom: 30px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
         transition: transform 0.3s ease;
       }
 
@@ -236,50 +239,78 @@
     </section>
 
     <section class="container mt-5">
-        <div class="map-section">
-          <h2>Our Offices</h2>
-          <div class="row">
-            <div class="col-md-4">
-              <div class="card">
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10717.978817429577!2d28.936586484376113!3d41.01670023421114!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14caba4f20f0e071%3A0x2b21e85f1f4a61!2sAkdeniz%20Cd.%2C%20Ak%C5%9Femsettin%20Mahallesi%2C%20Fatih%2C%20%C4%B0stanbul!5e0!3m2!1sen!2str!4v1630495234284!5m2!1sen!2str"
-                ></iframe>
-                <div class="card-body">
-                  <h5 class="card-title">Istanbul Office</h5>
-                  <p>
-                    Akşemsettin Mh. Akdeniz Cd. Hakperest Sk. No:32 D:5 Fatih,
-                    Istanbul
-                  </p>
-                </div>
+      <h2 class="text-center">Contact Us</h2>
+      <form>
+        <div class="mb-3">
+          <label for="name" class="form-label">Name</label>
+          <input type="text" class="form-control" id="name" required />
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email address</label>
+          <input type="email" class="form-control" id="email" required />
+        </div>
+        <div class="mb-3">
+          <label for="phone" class="form-label">Phone Number</label>
+          <input type="text" class="form-control" id="phone" required />
+        </div>
+        <div class="mb-3">
+          <label for="message" class="form-label">Message</label>
+          <textarea
+            class="form-control"
+            id="message"
+            rows="4"
+            required
+          ></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </section>
+
+    <section class="container mt-5">
+      <div class="map-section">
+        <h2>Our Offices</h2>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="card">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10717.978817429577!2d28.936586484376113!3d41.01670023421114!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14caba4f20f0e071%3A0x2b21e85f1f4a61!2sAkdeniz%20Cd.%2C%20Ak%C5%9Femsettin%20Mahallesi%2C%20Fatih%2C%20%C4%B0stanbul!5e0!3m2!1sen!2str!4v1630495234284!5m2!1sen!2str"
+              ></iframe>
+              <div class="card-body">
+                <h5 class="card-title">Istanbul Office</h5>
+                <p>
+                  Akşemsettin Mh. Akdeniz Cd. Hakperest Sk. No:32 D:5 Fatih,
+                  Istanbul
+                </p>
               </div>
             </div>
-  
-            <div class="col-md-4">
-              <div class="card">
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d48272.38936000643!2d32.48154545537461!3d37.87210741660952!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14d082c48e6bff29%3A0x85a7a15df4b8a79!2sFeritpa%C5%9Fa%20Mahallesi%2C%20Akcanlar%20Sok.%2C%20Sel%C3%A7uklu%2FKonya!5e0!3m2!1sen!2str!4v1630495262553!5m2!1sen!2str"
-                ></iframe>
-                <div class="card-body">
-                  <h5 class="card-title">Konya Office</h5>
-                  <p>Feritpaşa Mah. Akcanlar Sok. No:35 Selçuklu, Konya</p>
-                </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="card">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d48272.38936000643!2d32.48154545537461!3d37.87210741660952!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14d082c48e6bff29%3A0x85a7a15df4b8a79!2sFeritpa%C5%9Fa%20Mahallesi%2C%20Akcanlar%20Sok.%2C%20Sel%C3%A7uklu%2FKonya!5e0!3m2!1sen!2str!4v1630495262553!5m2!1sen!2str"
+              ></iframe>
+              <div class="card-body">
+                <h5 class="card-title">Konya Office</h5>
+                <p>Feritpaşa Mah. Akcanlar Sok. No:35 Selçuklu, Konya</p>
               </div>
             </div>
-  
-            <div class="col-md-4">
-              <div class="card">
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2381.6609561229765!2d13.373987416329108!3d52.50401957981186!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47a851c8b85cdb33%3A0x4a755d57efb9e8b!2sSch%C3%B6neberger%20Str.%2C%2010963%20Berlin%2C%20Germany!5e0!3m2!1sen!2str!4v1630495287084!5m2!1sen!2str"
-                ></iframe>
-                <div class="card-body">
-                  <h5 class="card-title">Berlin Office</h5>
-                  <p>Schöneberger Str. 11 10963, Berlin</p>
-                </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="card">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2381.6609561229765!2d13.373987416329108!3d52.50401957981186!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47a851c8b85cdb33%3A0x4a755d57efb9e8b!2sSch%C3%B6neberger%20Str.%2C%2010963%20Berlin%2C%20Germany!5e0!3m2!1sen!2str!4v1630495287084!5m2!1sen!2str"
+              ></iframe>
+              <div class="card-body">
+                <h5 class="card-title">Berlin Office</h5>
+                <p>Schöneberger Str. 11 10963, Berlin</p>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
     <footer class="footer">
       <div class="container">
