@@ -436,6 +436,38 @@
         color: #6c757d;
       }
 
+      .tickets-section {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 50px;
+      }
+
+      .ticket {
+        width: 45%;
+        background: #ff0083;
+        color: white;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        margin: 10px;
+      }
+
+      .ticket-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .ticket-destination {
+        font-size: 24px;
+        font-weight: bold;
+      }
+
+      .ticket-details {
+        text-align: right;
+        font-size: 14px;
+      }
+
       @media (max-width: 768px) {
         .best-deals__swiper__item {
           flex: 0 0 100%; /* Kartların tam genişlikte olmasını sağlar */
@@ -838,26 +870,59 @@
       </div>
     </div>
 
-    <div class="flight-info-section container mt-5">
-      <h2 class="section-title">Flight Routes Information</h2>
-      <ul class="list-unstyled">
-        <li>
-          <strong>JED (Cidde) → GZT (Gaziantep):</strong> Direct flight with a
-          duration of approximately 2 hours and 30 minutes.
-        </li>
-        <li>
-          <strong>GZT (Gaziantep) → JED (Cidde):</strong> Evening flights
-          available with competitive pricing.
-        </li>
-        <li>
-          <strong>MED (Medine) → GZT (Gaziantep):</strong> Smooth flight
-          experience with top amenities.
-        </li>
-        <li>
-          <strong>GZT (Gaziantep) → MED (Medine):</strong> Morning and afternoon
-          flights available.
-        </li>
-      </ul>
+    <div class="tickets-section">
+      <div class="ticket">
+        <div class="ticket-info">
+          <div class="ticket-destination">
+            <span class="from">JED (Cidde)</span>
+            <span class="to">GZT (Gaziantep)</span>
+          </div>
+          <div class="ticket-details">
+            <span class="flight-number">Uçuş No: TK123</span>
+            <span class="departure-time">Kalkış: 10:00 AM</span>
+            <span class="arrival-time">Varış: 12:00 PM</span>
+          </div>
+        </div>
+      </div>
+      <div class="ticket">
+        <div class="ticket-info">
+          <div class="ticket-destination">
+            <span class="from">GZT (Gaziantep)</span>
+            <span class="to">JED (Cidde)</span>
+          </div>
+          <div class="ticket-details">
+            <span class="flight-number">Uçuş No: TK124</span>
+            <span class="departure-time">Kalkış: 02:00 PM</span>
+            <span class="arrival-time">Varış: 04:00 PM</span>
+          </div>
+        </div>
+      </div>
+      <div class="ticket">
+        <div class="ticket-info">
+          <div class="ticket-destination">
+            <span class="from">MED (Medine)</span>
+            <span class="to">GZT (Gaziantep)</span>
+          </div>
+          <div class="ticket-details">
+            <span class="flight-number">Uçuş No: TK123</span>
+            <span class="departure-time">Kalkış: 10:00 AM</span>
+            <span class="arrival-time">Varış: 12:00 PM</span>
+          </div>
+        </div>
+      </div>
+      <div class="ticket">
+        <div class="ticket-info">
+          <div class="ticket-destination">
+            <span class="from">GZT (Gaziantep)</span>
+            <span class="to">MED (Medine)</span>
+          </div>
+          <div class="ticket-details">
+            <span class="flight-number">Uçuş No: TK124</span>
+            <span class="departure-time">Kalkış: 02:00 PM</span>
+            <span class="arrival-time">Varış: 04:00 PM</span>
+          </div>
+        </div>
+      </div>
     </div>
 
     <footer class="footer">
