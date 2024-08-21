@@ -20,6 +20,7 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
+
     <style>
       body,
       html {
@@ -30,6 +31,7 @@
         width: 100%;
         overflow-x: hidden;
       }
+
       .navbar {
         background-color: white;
         padding: 10px 20px;
@@ -63,82 +65,125 @@
       .navbar-nav .nav-link:hover {
         color: #666666;
       }
-      .container {
-        max-width: 1200px;
-        margin: 50px auto;
-        padding: 20px;
-        background-color: #ffffff;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        border-radius: 10px;
-      }
-      h1,
-      p {
+
+      .hero-section {
+        background-image: url("{{ url_for('static', filename='images/hero_image.jpg') }}");
+        background-size: cover;
+        background-position: center;
+        height: 60vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
         text-align: center;
-        margin-bottom: 30px;
       }
+
+      .hero-section h1 {
+        font-size: 3rem;
+        font-weight: 600;
+        margin-bottom: 10px;
+      }
+
+      .hero-section p {
+        font-size: 1.2rem;
+        margin-bottom: 0;
+      }
+
+      .content-section {
+        padding: 50px 0;
+      }
+
+      .content-section h2 {
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 30px;
+        text-align: center;
+      }
+
       .card {
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        height: 100%;
-        border-radius: 10px;
-        overflow: hidden;
-        transition: transform 0.3s, box-shadow 0.3s;
-        display: flex;
-        flex-direction: column;
+        border: none;
+        margin-bottom: 30px;
+        transition: transform 0.3s ease;
       }
+
       .card:hover {
         transform: translateY(-5px);
       }
-      .card img,
-      .card iframe {
-        border-radius: 10px 10px 0 0;
-        height: 200px;
-        width: 100%;
+
+      .card img {
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        max-height: 200px;
         object-fit: cover;
       }
+
       .card-body {
-        flex-grow: 1;
+        padding: 20px;
       }
-      .map-section {
-        margin-top: 50px;
+
+      .card-title {
+        font-size: 1.5rem;
+        font-weight: 600;
       }
-      .row {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
+
+      .card-text {
+        font-size: 1rem;
+        color: #666666;
       }
-      .col-md-4 {
-        flex: 0 0 32%;
-        max-width: 32%;
-        margin-bottom: 20px;
-      }
+
       .footer {
         background-color: #f8f9fa;
         padding: 40px 0;
-        border-radius: 0;
-        box-shadow: none;
       }
+
       .footer h5 {
         font-size: 16px;
         margin-bottom: 20px;
         font-weight: bold;
       }
+
       .footer ul {
         list-style: none;
         padding: 0;
       }
+
       .footer ul li {
         margin-bottom: 10px;
       }
+
+      .footer ul li strong {
+        display: block;
+        margin-bottom: 5px;
+      }
+
       .footer ul.list-inline {
         margin-top: 10px;
       }
+
+      .footer ul.list-inline li {
+        margin-right: 10px;
+      }
+
+      .footer .tursab-link {
+        display: block;
+        margin-top: 20px;
+      }
+
+      .footer .tursab-img {
+        width: 100%;
+        height: auto;
+      }
+
       .footer .logo-section {
         margin-top: 30px;
       }
+
       .footer .logo-section img {
         margin: 10px;
         max-height: 50px;
       }
+
       .footer .text-muted {
         font-size: 14px;
         color: #6c757d;
@@ -181,104 +226,60 @@
       </div>
     </nav>
 
-    <section class="container mt-5">
-      <h1>Customer Support</h1>
-      <p>
-        Need help? Reach out to our support team using the form below or contact
-        us directly.
-      </p>
-
-      <form action="#" method="post">
-        <div class="form-group">
-          <label for="name">Name</label>
-          <input
-            type="text"
-            class="form-control"
-            id="name"
-            name="name"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input
-            type="email"
-            class="form-control"
-            id="email"
-            name="email"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label for="subject">Subject</label>
-          <input
-            type="text"
-            class="form-control"
-            id="subject"
-            name="subject"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label for="message">Message</label>
-          <textarea
-            class="form-control"
-            id="message"
-            name="message"
-            rows="5"
-            required
-          ></textarea>
-        </div>
-        <button type="submit" class="btn-submit">Send Message</button>
-      </form>
-    </section>
-
-    <section class="container mt-5">
-      <div class="map-section">
-        <h2>Our Offices</h2>
-
-        <div class="row">
-          <div class="col-md-4">
-            <div class="card">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10717.978817429577!2d28.936586484376113!3d41.01670023421114!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14caba4f20f0e071%3A0x2b21e85f1f4a61!2sAkdeniz%20Cd.%2C%20Ak%C5%9Femsettin%20Mahallesi%2C%20Fatih%2C%20%C4%B0stanbul!5e0!3m2!1sen!2str!4v1630495234284!5m2!1sen!2str"
-              ></iframe>
-              <div class="card-body">
-                <h5 class="card-title">Istanbul Office</h5>
-                <p>
-                  Akşemsettin Mh. Akdeniz Cd. Hakperest Sk. No:32 D:5 Fatih,
-                  Istanbul
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-4">
-            <div class="card">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d48272.38936000643!2d32.48154545537461!3d37.87210741660952!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14d082c48e6bff29%3A0x85a7a15df4b8a79!2sFeritpa%C5%9Fa%20Mahallesi%2C%20Akcanlar%20Sok.%2C%20Sel%C3%A7uklu%2FKonya!5e0!3m2!1sen!2str!4v1630495262553!5m2!1sen!2str"
-              ></iframe>
-              <div class="card-body">
-                <h5 class="card-title">Konya Office</h5>
-                <p>Feritpaşa Mah. Akcanlar Sok. No:35 Selçuklu, Konya</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-4">
-            <div class="card">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2381.6609561229765!2d13.373987416329108!3d52.50401957981186!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47a851c8b85cdb33%3A0x4a755d57efb9e8b!2sSch%C3%B6neberger%20Str.%2C%2010963%20Berlin%2C%20Germany!5e0!3m2!1sen!2str!4v1630495287084!5m2!1sen!2str"
-              ></iframe>
-              <div class="card-body">
-                <h5 class="card-title">Berlin Office</h5>
-                <p>Schöneberger Str. 11 10963, Berlin</p>
-              </div>
-            </div>
-          </div>
-        </div>
+    <section class="hero-section">
+      <div>
+        <h1>Support</h1>
+        <p>
+          Discover our premium services and amenities for a memorable journey.
+        </p>
       </div>
     </section>
+
+    <section class="container mt-5">
+        <div class="map-section">
+          <h2>Our Offices</h2>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="card">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10717.978817429577!2d28.936586484376113!3d41.01670023421114!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14caba4f20f0e071%3A0x2b21e85f1f4a61!2sAkdeniz%20Cd.%2C%20Ak%C5%9Femsettin%20Mahallesi%2C%20Fatih%2C%20%C4%B0stanbul!5e0!3m2!1sen!2str!4v1630495234284!5m2!1sen!2str"
+                ></iframe>
+                <div class="card-body">
+                  <h5 class="card-title">Istanbul Office</h5>
+                  <p>
+                    Akşemsettin Mh. Akdeniz Cd. Hakperest Sk. No:32 D:5 Fatih,
+                    Istanbul
+                  </p>
+                </div>
+              </div>
+            </div>
+  
+            <div class="col-md-4">
+              <div class="card">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d48272.38936000643!2d32.48154545537461!3d37.87210741660952!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14d082c48e6bff29%3A0x85a7a15df4b8a79!2sFeritpa%C5%9Fa%20Mahallesi%2C%20Akcanlar%20Sok.%2C%20Sel%C3%A7uklu%2FKonya!5e0!3m2!1sen!2str!4v1630495262553!5m2!1sen!2str"
+                ></iframe>
+                <div class="card-body">
+                  <h5 class="card-title">Konya Office</h5>
+                  <p>Feritpaşa Mah. Akcanlar Sok. No:35 Selçuklu, Konya</p>
+                </div>
+              </div>
+            </div>
+  
+            <div class="col-md-4">
+              <div class="card">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2381.6609561229765!2d13.373987416329108!3d52.50401957981186!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47a851c8b85cdb33%3A0x4a755d57efb9e8b!2sSch%C3%B6neberger%20Str.%2C%2010963%20Berlin%2C%20Germany!5e0!3m2!1sen!2str!4v1630495287084!5m2!1sen!2str"
+                ></iframe>
+                <div class="card-body">
+                  <h5 class="card-title">Berlin Office</h5>
+                  <p>Schöneberger Str. 11 10963, Berlin</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
     <footer class="footer">
       <div class="container">
