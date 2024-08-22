@@ -1,11 +1,13 @@
 from functools import wraps
-from flask import jsonify, render_template, request, redirect, url_for, current_app, flash, session
+from flask import render_template, request, redirect, url_for, current_app, flash, session
 import xmlrpc.client
 from werkzeug.security import generate_password_hash, check_password_hash
 from app import app
 from datetime import datetime, timedelta
 
-# Tek bir fonksiyon ile Odoo bağlantısını ve kimlik doğrulamasını sağlıyoruz
+from babel.dates import format_datetime
+
+
 def odoo_connect():
     url = current_app.config['ODOO_URL']
     db = current_app.config['ODOO_DB']
@@ -35,7 +37,6 @@ def generate_dates_for_month(year, month):
 
     return dates
 
-# Özel bir dekoratör oluşturuyoruz
 def role_required(allowed_roles):
     def decorator(f):
         @wraps(f)
@@ -44,7 +45,7 @@ def role_required(allowed_roles):
                 flash("Bu sayfaya erişim izniniz yok.")
                 return redirect(url_for('dashboard'))
             return f(*args, **kwargs)
-        return decorator
+        return decorated_function
     return decorator
 
 @app.route('/')
@@ -203,11 +204,18 @@ def ticketbuy():
     if not uid:
         return redirect(url_for('dashboard'))
 
-    flights = models.execute_kw(current_app.config['ODOO_DB'], uid, current_app.config['ODOO_PASSWORD'], 
-                                'flight.management', 'search_read', [[]], 
-                                {'fields': ['flight_direction','flight_number', 'available_seats', 'departure_airport', 'arrival_airport', 'departure_time', 'price']})
+    current_date = datetime.now()
+    year = current_date.year
+    month = current_date.month
 
-    return render_template('ticketbuy.html', flights=flights)
+    flights = models.execute_kw(
+        current_app.config['ODOO_DB'], uid, current_app.config['ODOO_PASSWORD'], 
+        'flight.management', 'search_read', [[]], 
+        {'fields': ['flight_direction','flight_number', 'available_seats', 'departure_airport', 'arrival_airport', 'departure_time', 'price']}
+    )
+
+    return render_template('ticketbuy.html', flights=flights, year=year, month=month)
+
 
 @app.route('/ticketbuy/<int:year>/<int:month>')
 def ticketbuy_by_month(year, month):
@@ -228,6 +236,59 @@ def ticketbuy_by_month(year, month):
 
     return render_template('ticketbuy.html', flights=flights, dates=dates, selected_date=selected_date, year=year, month=month)
 
+@app.route('/plane_layout/<int:flight_id>', methods=['GET'])
+@role_required(['admin'])
+def plane_layout(flight_id):
+    
+    uid, models = odoo_connect()
+    if not uid:
+        return redirect(url_for('dashboard'))
+
+    flight = models.execute_kw(current_app.config['ODOO_DB'], uid, current_app.config['ODOO_PASSWORD'] , 'flight.management', 'read', [[flight_id]], {'fields': ['flight_number', 'airplane_type_id', 'seat_ids']})
+
+    if not flight:
+        flash('Flight not found.')
+        return redirect(url_for('admin_panel'))
+    airplane_type_name = flight[0]['airplane_type_id'][1]
+
+    # Fetch all seats
+    seats = models.execute_kw(current_app.config['ODOO_DB'], uid, current_app.config['ODOO_PASSWORD'] , 'flight.seat', 'search_read', [[('flight_id', '=', flight_id)]], {'fields': ['id', 'name', 'user_id']})
+
+    # Render the plane layout template
+    return render_template('plane_rev.html', airplane_type=airplane_type_name, seats=seats)
+
+@app.route('/search_flights', methods=['POST'])
+def search_flights():
+    flight_direction = request.form.get('flight_direction')
+    from_where = request.form.get('from_where')
+    to_where = request.form.get('to_where')
+    flight_date = request.form.get('flight_date')
+
+    uid, models = odoo_connect()
+    if not uid:
+        return redirect(url_for('dashboard'))
+    
+    domain = [
+        ('departure_airport', '=', from_where),
+        ('arrival_airport', '=', to_where),
+        ('departure_time', '>=', f'{flight_date} 00:00:00'),
+        ('departure_time', '<=', f'{flight_date} 23:59:59')
+    ]
+
+    if flight_direction == 'outbound':
+        domain.append(('flight_direction', '=', 'outbound'))
+        outbound_flights = models.execute_kw(current_app.config['ODOO_DB'], uid, current_app.config['ODOO_PASSWORD'] ,'flight.management', 'search_read', [domain], 
+                                {'fields': ['flight_number', 'available_seats', 'departure_airport', 'arrival_airport', 'departure_time']})
+        return_flights = []
+    else:
+        domain.append(('flight_direction', '=', 'return'))
+        return_flights = models.execute_kw(current_app.config['ODOO_DB'], uid, current_app.config['ODOO_PASSWORD'] ,'flight.management', 'search_read', [domain], 
+                                {'fields': ['flight_number', 'available_seats', 'departure_airport', 'arrival_airport', 'departure_time']})
+        outbound_flights = []
+
+    return render_template('index.html', outbound_flights=outbound_flights, return_flights=return_flights)
+
+
 @app.route('/logout')
 def logout():
     session.clear()
@@ -244,3 +305,12 @@ def offer():
 @app.route('/travel')
 def travel():
     return render_template('travel.html')
+
+@app.route('/agency')
+@role_required(['agency'])
+def agency_panel():
+    return render_template('agency_panel.html')
+
+@app.route('/sign')
+def sign():
+    return render_template('sign.html')
