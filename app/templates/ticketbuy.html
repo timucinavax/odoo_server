@@ -104,30 +104,30 @@
         width: 1000px;
         margin: 20px auto;
       }
-      
+
       .card-left {
         display: flex;
         align-items: center;
         flex: 1;
       }
-      
+
       .time-info {
         text-align: center;
         margin-right: 20px;
       }
-      
+
       .time-info p {
         margin: 5px 0;
         font-weight: bold;
         font-size: 1.2rem;
       }
-      
+
       .route {
         display: flex;
         align-items: center;
         flex: 2;
       }
-      
+
       .route-line {
         width: 100px;
         height: 1px;
@@ -135,7 +135,7 @@
         position: relative;
         margin: 0 10px;
       }
-      
+
       .route-line::before {
         content: "";
         position: absolute;
@@ -146,7 +146,7 @@
         background-color: #004080;
         border-radius: 50%;
       }
-      
+
       .route-line::after {
         content: "";
         position: absolute;
@@ -157,21 +157,21 @@
         background-color: #004080;
         border-radius: 50%;
       }
-      
+
       .route-logo {
         width: 20px;
         height: 20px;
         background-color: red;
         border-radius: 50%;
       }
-      
+
       .card-right {
         flex: 1;
         font-size: 1rem;
         font-weight: bold;
         color: #004080;
       }
-      
+
       .details-button {
         background-color: transparent;
         border: 1px solid #004080;
@@ -182,12 +182,11 @@
         padding: 10px;
         border-radius: 5px;
       }
-      
+
       .details-button:hover {
         background-color: #004080;
         color: white;
       }
-      
     </style>
   </head>
   <body>
@@ -288,66 +287,74 @@
     <div class="flights-container" id="flights-container"></div>
 
     <script>
-        const flightsData = {{ flights|tojson }};
+      const flightsData = {{ flights|tojson }};
 
-        function showFlights(date) {
-            document.querySelectorAll('.date-box').forEach(box => box.classList.remove('active'));
-            document.querySelector(`.date-box[onclick="showFlights('${date}')"]`).classList.add('active');
+      function showFlights(date) {
+          document.querySelectorAll('.date-box').forEach(box => box.classList.remove('active'));
+          document.querySelector(`.date-box[onclick="showFlights('${date}')"]`).classList.add('active');
 
-            const flightsContainer = document.getElementById('flights-container');
-            flightsContainer.innerHTML = '';
+          const flightsContainer = document.getElementById('flights-container');
+          flightsContainer.innerHTML = '';
 
-            const flights = flightsData.filter(flight => flight.departure_time.startsWith(date));
-            if (flights.length > 0) {
-                flights.forEach(flight => {
-                  const flightCard = `
-                    <div class="card">
-                      <div class="card-left"><p>
-                        <div class="time-info">
-                            <span class="heading">Uçuş Numarası:</span> ${flight.flight_number}</p>
-                        </div>
-                        <div class="time-info">
-                          <p>${flight.departure_time.split(" ")[1]}</p>
-                          <p>${flight.departure_airport}</p>
-                        </div>
-                        <div class="route">
-                          <div class="route-line"></div>
-                          <div class="route-logo"></div>
-                          <div class="route-line"></div>
-                        </div>
-                        <div class="time-info">
-                          <p>${flight.arrival_time.split(" ")[1]}</p>
-                          <p>${flight.arrival_airport}</p>
-                        </div>
-                        <div class="time-info">
-                            <p><span class="heading">Fiyat:</span> ${flight.price} TL</p>
-                        </div>
+          const flights = flightsData.filter(flight => flight.departure_time.startsWith(date));
+          if (flights.length > 0) {
+              flights.forEach(flight => {
+                const flightDuration = calculateFlightDuration(flight.departure_time, flight.arrival_time);
+
+                const flightCard = `
+                  <div class="card">
+                    <div class="card-left">
+                      <div class="time-info">
+                          <p><span class="heading">Uçuş Numarası:</span> ${flight.flight_number}</p>
                       </div>
-                      <div class="card-right">
-                        <button class="details-button" onclick="toggleDetails(this)">Seyahat Detayları</button>
-                        <div class="details-content">
-                            <p><span class="heading">Uçuş Numarası:</span> ${flight.flight_number}</p>
-                            <p><span class="heading">Kalkış Zamanı:</span> ${flight.departure_time}</p>
-                            <p><span class="heading">Varış Zamanı:</span> ${flight.arrival_time}</p>
-                            <p><span class="heading">Fiyat:</span> ${flight.price} TL</p>
-                            <p><span class="heading">Uçuş Yönü:</span> ${flight.flight_direction}</p>
-                            <p><span class="heading">Koltuk Sayısı:</span> ${flight.available_seats}</p>
-                        </div>
+                      <div class="time-info">
+                        <p>${flight.departure_time.split(" ")[1]}</p>
+                        <p>${flight.departure_airport}</p>
+                      </div>
+                      <div class="route">
+                        <div class="route-line"></div>
+                        <div class="route-logo"></div>
+                        <div class="route-line"></div>
+                      </div>
+                      <div class="time-info">
+                        <p>${flight.arrival_time.split(" ")[1]}</p>
+                        <p>${flight.arrival_airport}</p>
+                      </div>
+                      <div class="time-info">
+                          <p><span class="heading">Fiyat:</span> ${flight.price} TL</p>
+                          <p><span class="heading">Süre:</span> ${flightDuration}</p>
                       </div>
                     </div>
-                  `;
-                  flightsContainer.innerHTML += flightCard;
-                });
-              } else {
-                flightsContainer.innerHTML = '<div class="no-flights">Bu tarihte uçuş bulunmamaktadır.</div>';
-              }              
-        }
+                    <div class="card-right">
+                      <button class="details-button" onclick="toggleDetails(this)">Seyahat Detayları</button>
+                      <div class="details-content">
+                          <p><span class="heading">Uçuş Numarası:</span> ${flight.flight_number}</p>
+                          <p><span class="heading">Kalkış Zamanı:</span> ${flight.departure_time}</p>
+                          <p><span class="heading">Varış Zamanı:</span> ${flight.arrival_time}</p>
+                          <p><span class="heading">Fiyat:</span> ${flight.price} TL</p>
+                          <p><span class="heading">Uçuş Yönü:</span> ${flight.flight_direction}</p>
+                          <p><span class="heading">Koltuk Sayısı:</span> ${flight.available_seats}</p>
+                      </div>
+                    </div>
+                  </div>
+                `;
+                flightsContainer.innerHTML += flightCard;
+              });
+          } else {
+              flightsContainer.innerHTML = '<div class="no-flights">Bu tarihte uçuş bulunmamaktadır.</div>';
+          }
+      }
 
-        function buyTicket(flightCode) {
-            alert(`Flight code: ${flightCode} için bilet alındı.`);
-        }
+      function toggleDetails(button) {
+          const detailsContent = button.nextElementSibling;
+          if (detailsContent.style.display === 'block') {
+              detailsContent.style.display = 'none';
+          } else {
+              detailsContent.style.display = 'block';
+          }
+      }
 
-        function calculateFlightDuration(departureTime, arrivalTime) {
+      function calculateFlightDuration(departureTime, arrivalTime) {
           const departure = new Date(departureTime);
           const arrival = new Date(arrivalTime);
           const duration = new Date(arrival - departure);
