@@ -351,7 +351,9 @@
                   class="hm__style_flight-segment__PKt73 hm__style_destination__gavgI"
                 >
                   <div class="hm__style_time__sYwLh">
-                    {{ flight.arrival_time.split(' ')[1] }}
+                    {% if 'arrival_time' in flight %} {{
+                    flight.arrival_time.split(' ')[1] }} {% else %} Bilgi Yok {%
+                    endif %}
                   </div>
                   <div class="hm__style_port__9GrxX">
                     {{ flight.arrival_airport }}
