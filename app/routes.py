@@ -6,7 +6,7 @@ from app import app
 from datetime import datetime, timedelta
 
 from babel.dates import format_datetime
-
+app.jinja_env.filters['format_datetime'] = format_datetime
 
 def odoo_connect():
     url = current_app.config['ODOO_URL']
