@@ -302,11 +302,13 @@
                 flights.forEach(flight => {
                   const flightCard = `
                     <div class="card">
-                      <div class="card-left">
+                      <div class="card-left"><p>
+                        <div class="time-info">
+                            <span class="heading">Uçuş Numarası:</span> ${flight.flight_number}</p>
+                        </div>
                         <div class="time-info">
                           <p>${flight.departure_time.split(" ")[1]}</p>
                           <p>${flight.departure_airport}</p>
-                          <p class="city">${flight.departure_city || 'Belirtilmemiş Şehir'}</p>
                         </div>
                         <div class="route">
                           <div class="route-line"></div>
@@ -316,20 +318,21 @@
                         <div class="time-info">
                           <p>${flight.arrival_time.split(" ")[1]}</p>
                           <p>${flight.arrival_airport}</p>
-                          <p class="city">${flight.arrival_city || 'Belirtilmemiş Şehir'}</p>
+                        </div>
+                        <div class="time-info">
+                            <p><span class="heading">Fiyat:</span> ${flight.price} TL</p>
                         </div>
                       </div>
                       <div class="card-right">
-                        <p><span class="heading">Uçuş Numarası:</span> ${flight.flight_number}</p>
-                        <p><span class="heading">Kalkış Zamanı:</span> ${flight.departure_time}</p>
-                        <p><span class="heading">Varış Zamanı:</span> ${flight.arrival_time}</p>
-                        <p><span class="heading">Fiyat:</span> ${flight.price} TL</p>
-                        <p><span class="heading">Uçuş Yönü:</span> ${flight.flight_direction}</p>
-                        <p><span class="heading">Koltuk Sayısı:</span> ${flight.available_seats}</p>
-                        <p><span class="heading">Uçak Tipi:</span> ${flight.airplane_type_id}</p>
-                        <p><span class="heading">Hizmet Tipi:</span> ${flight.svc_type}</p>
-                        <p><span class="heading">Tarih:</span> ${flight.date}</p>
-                        <button class="details-button">Seyahat Detayları</button>
+                        <button class="details-button" onclick="toggleDetails(this)">Seyahat Detayları</button>
+                        <div class="details-content">
+                            <p><span class="heading">Uçuş Numarası:</span> ${flight.flight_number}</p>
+                            <p><span class="heading">Kalkış Zamanı:</span> ${flight.departure_time}</p>
+                            <p><span class="heading">Varış Zamanı:</span> ${flight.arrival_time}</p>
+                            <p><span class="heading">Fiyat:</span> ${flight.price} TL</p>
+                            <p><span class="heading">Uçuş Yönü:</span> ${flight.flight_direction}</p>
+                            <p><span class="heading">Koltuk Sayısı:</span> ${flight.available_seats}</p>
+                        </div>
                       </div>
                     </div>
                   `;
