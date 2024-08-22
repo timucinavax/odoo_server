@@ -208,48 +208,37 @@ def add_flight():
     return redirect(url_for('admin_panel'))
 
 @app.route('/ticketbuy')
-@role_required(['user', 'agency'])
 def ticketbuy():
     uid, models = odoo_connect()
     if not uid:
         return redirect(url_for('dashboard'))
 
-    current_date = datetime.now()
-    year = current_date.year
-    month = current_date.month
-
+    # Tüm aylar için uçuş bilgilerini çekiyoruz
     flights = models.execute_kw(
         current_app.config['ODOO_DB'], uid, current_app.config['ODOO_PASSWORD'], 
         'flight.management', 'search_read', [[]], 
-        {'fields': ['flight_direction','flight_number', 'available_seats', 'departure_airport', 'arrival_airport', 'departure_time', 'price']}
+        {'fields': ['departure_time', 'departure_airport', 'arrival_airport', 'price']}
     )
 
-    return render_template('ticketbuy.html', flights=flights, year=year, month=month)
+    # Tarih ve fiyat bilgilerini organize ediyoruz
+    date_flight_map = {}
+    for flight in flights:
+        flight_date = flight['departure_time'].split(' ')[0]  # 'YYYY-MM-DD' formatında tarih alınıyor
+        if flight_date not in date_flight_map:
+            date_flight_map[flight_date] = []
+        date_flight_map[flight_date].append(flight)
+    
+    # Tarihlere göre ilk uçuşun fiyatını belirliyoruz
+    date_prices = {
+        date: min(flight['price'] for flight in flights) for date, flights in date_flight_map.items()
+    }
 
-
-@app.route('/ticketbuy/<int:year>/<int:month>/<int:day>')
-def ticketbuy_by_day(year, month, day):
-    selected_date = datetime(year, month, day)
-
-    uid, models = odoo_connect()
-    if not uid:
-        return redirect(url_for('dashboard'))
-
-    domain = [
-        ('date', '=', f'{selected_date.strftime("%Y-%m-%d")}')
-    ]
-    flights = models.execute_kw(
-        current_app.config['ODOO_DB'], uid, current_app.config['ODOO_PASSWORD'],
-        'flight.management', 'search_read', [domain], 
-        {'fields': ['flight_direction', 'flight_number', 'available_seats', 'departure_airport', 'arrival_airport', 'departure_time', 'price', 'flight_duration', 'airplane_type']}
+    return render_template(
+        'ticketbuy.html',
+        dates=list(date_prices.keys()),
+        date_prices=date_prices,
+        flights=flights
     )
-
-    no_flights = len(flights) == 0
-    dates = generate_dates_for_month(year, month)
-    formatted_dates = format_dates(dates)
-
-    return render_template('ticketbuy.html', flights=flights, dates=formatted_dates, selected_date=selected_date, year=year, month=month, no_flights=no_flights)
-
 
 @app.route('/plane_layout/<int:flight_id>', methods=['GET'])
 @role_required(['admin'])

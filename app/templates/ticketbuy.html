@@ -3,83 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tarih ve Fiyat Seçici</title>
+    <title>Uçuş Seçimi</title>
     <style>
+        /* Temel CSS kuralları */
         body {
             font-family: Arial, sans-serif;
             background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background-color: #004080;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 1.5rem;
+        }
+        .date-selector {
+            display: flex;
+            justify-content: center;
+            padding: 15px;
+            background-color: #fff;
+            overflow-x: auto;
         }
         .date-box {
-            display: inline-block;
             text-align: center;
-            padding: 15px;
-            margin: 10px;
+            padding: 10px;
+            margin: 5px;
             border-radius: 8px;
             border: 1px solid #ddd;
-            background-color: #fff;
-            width: 100px;
-            position: relative;
+            background-color: #f9f9f9;
+            min-width: 100px;
             cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
         }
         .date-box.active {
             background-color: #dc3545;
             color: white;
         }
-        .date-box .day-number {
-            font-size: 1.8rem;
+        .day-number {
+            font-size: 1.5rem;
             font-weight: bold;
-            color: #333;
         }
-        .date-box .day-name {
+        .day-name, .month-name {
             font-size: 1rem;
-            color: #777;
-        }
-        .date-box .month-name {
-            font-size: 0.9rem;
-            color: #aaa;
+            color: #555;
         }
         .price {
-            font-size: 1rem;
+            margin-top: 5px;
+            font-size: 1.2rem;
+            color: #28a745;
             font-weight: bold;
-            color: #007bff;
-            margin-top: 5px;
         }
-        .marker-wrapper {
+        .flights-container {
+            padding: 15px;
+        }
+        .flight-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin: 10px 0;
+            padding: 15px;
+            background-color: white;
+        }
+        .flight-info {
             display: flex;
-            justify-content: center;
-            margin-top: 5px;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
         }
-        .marker {
-            width: 6px;
-            height: 6px;
-            background-color: #ccc;
-            border-radius: 50%;
-            margin: 0 2px;
-        }
-        .star {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            width: 14px;
-            height: 14px;
-            background-image: url('https://www.turkishairlines.com/theme/img/icons/star.svg');
-            background-size: cover;
+        .no-flights {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #999;
+            padding: 20px;
         }
     </style>
 </head>
 <body>
 
-<div class="date-box">
-    <div class="day-number">22</div>
-    <div class="day-name">Perşembe</div>
-    <div class="month-name">Ağustos</div>
-    <div class="price">TRY 1.508</div>
-    <div class="marker-wrapper">
-        <div class="marker"></div>
-        <div class="marker"></div>
+<div class="navbar">SEHLEN TURİZM</div>
+
+<!-- Tarih Seçici -->
+<div class="date-selector">
+    {% for date in dates %}
+    <div class="date-box" onclick="showFlights('{{ date }}')">
+        <div class="day-number">{{ date.split('-')[2] }}</div>
+        <div class="day-name">{{ date | dayname }}</div>
+        <div class="month-name">{{ date | monthname }}</div>
+        <div class="price">TRY {{ date_prices[date] }}</div>
     </div>
-    <div class="star"></div>
+    {% endfor %}
 </div>
+
+<!-- Uçuş Bilgileri -->
+<div class="flights-container" id="flights-container">
+    <div class="no-flights">Bir tarih seçin.</div>
+</div>
+
+<script>
+    const flightsData = {{ flights|tojson }};
+
+    function showFlights(date) {
+        document.querySelectorAll('.date-box').forEach(box => box.classList.remove('active'));
+        document.querySelector(`.date-box[onclick="showFlights('${date}')"]`).classList.add('active');
+
+        const flightsContainer = document.getElementById('flights-container');
+        flightsContainer.innerHTML = '';
+
+        const flights = flightsData.filter(flight => flight.departure_time.startsWith(date));
+
+        if (flights.length > 0) {
+            flights.forEach(flight => {
+                const flightCard = `
+                    <div class="flight-card">
+                        <div class="flight-info">
+                            <div><strong>${flight.departure_time.split(' ')[1]}</strong><br>${flight.departure_airport} → ${flight.arrival_airport}</div>
+                            <div class="price">TRY ${flight.price}</div>
+                        </div>
+                    </div>
+                `;
+                flightsContainer.innerHTML += flightCard;
+            });
+        } else {
+            flightsContainer.innerHTML = '<div class="no-flights">Bu tarihte uçuş bulunmamaktadır.</div>';
+        }
+    }
+</script>
 
 </body>
 </html>
