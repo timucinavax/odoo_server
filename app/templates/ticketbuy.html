@@ -1,131 +1,163 @@
 <!DOCTYPE html>
 <html lang="tr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Flight Availability</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uçuş Seçimi</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-      /* General Styles */
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #f7f7f7;
-      }
-      .navbar {
-        background-color: #fff;
-        padding: 15px;
-        border-bottom: 1px solid #ddd;
-      }
-      .date-selector {
-        display: flex;
-        justify-content: center;
-        padding: 15px;
-        background-color: #fff;
-      }
-      .date-selector .date-box {
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        padding: 10px;
-        text-align: center;
-        margin-right: 10px;
-        flex: 1;
-        background-color: white;
-        cursor: pointer;
-      }
-      .date-selector .selected {
-        background-color: #dc3545;
-        color: white;
-      }
-      .flight-card {
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        margin: 15px 0;
-        padding: 15px;
-        background-color: white;
-      }
-      .flight-info {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 10px;
-      }
-      .flight-details {
-        font-size: 0.9rem;
-        color: #777;
-      }
-      .price-options {
-        display: flex;
-        justify-content: flex-end;
-      }
-      .price-options div {
-        margin-left: 15px;
-        text-align: center;
-      }
-      .price-options .price {
-        font-size: 1.2rem;
-        font-weight: bold;
-      }
-      .no-flights {
-        text-align: center;
-        padding: 20px;
-        font-size: 1.5rem;
-        color: #777;
-      }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+        .navbar {
+            background-color: #003580;
+            padding: 20px;
+            color: white;
+        }
+        .navbar .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .date-selector {
+            display: flex;
+            justify-content: center;
+            padding: 20px 0;
+            background-color: white;
+        }
+        .date-box {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+            margin: 0 5px;
+            flex: 1;
+            cursor: pointer;
+            background-color: white;
+        }
+        .date-box.selected {
+            background-color: #dc3545;
+            color: white;
+        }
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            padding: 10px 0;
+            background-color: white;
+        }
+        .filter-buttons button {
+            margin-right: 10px;
+            border-radius: 20px;
+        }
+        .flight-card {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            margin: 15px 0;
+            padding: 15px;
+            background-color: white;
+        }
+        .flight-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .flight-info .flight-time {
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        .flight-info .flight-route {
+            font-size: 1rem;
+            color: #555;
+        }
+        .price-options {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+        .price-options div {
+            margin-left: 15px;
+            text-align: center;
+        }
+        .price-options .price {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        .price-options .sold-out {
+            color: red;
+            font-size: 0.9rem;
+        }
+        .no-flights {
+            text-align: center;
+            padding: 20px;
+            font-size: 1.5rem;
+            color: #777;
+        }
+        .flight-details {
+            font-size: 0.9rem;
+            color: #777;
+            margin-top: 10px;
+        }
     </style>
-  </head>
-  <body>
-    <nav class="navbar">
-      <span class="navbar-brand">SEHLEN TURİZM</span>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">SEHLEN TURİZM</a>
+        </div>
     </nav>
 
     <div class="container">
-      <!-- Date Selector -->
-      <div class="date-selector">
-        {% for item in dates %}
-        <div
-          class="date-box {% if selected_date == item.date %}selected{% endif %}"
-        >
-          <a
-            href="{{ url_for('ticketbuy_by_day', year=item.date.year, month=item.date.month, day=item.date.day) }}"
-            style="text-decoration: none; color: inherit"
-          >
-            {{ item.day }} <br />
-            {{ item.weekday }}
-          </a>
-        </div>
-        {% endfor %}
-      </div>
-
-      <!-- Flight List -->
-      {% if flights %} {% for flight in flights %}
-      <div class="flight-card">
-        <div class="flight-info">
-          <div>
-            <strong>{{ flight.departure_time }}</strong> - {{
-            flight.arrival_time }} <br />
-            <span
-              >{{ flight.departure_airport }} → {{ flight.arrival_airport
-              }}</span
-            >
-          </div>
-          <div class="price-options">
-            <div>
-              <span>Economy</span><br />
-              <span class="price">TRY {{ flight.price }}</span>
+        <!-- Date Selector -->
+        <div class="date-selector">
+            {% for item in dates %}
+            <div class="date-box {% if selected_date == item.date %}selected{% endif %}">
+                <a href="{{ url_for('ticketbuy_by_day', year=item.date.year, month=item.date.month, day=item.date.day) }}" style="text-decoration: none; color: inherit">
+                    {{ item.day }} <br />
+                    {{ item.weekday }} <br />
+                    TRY {{ item.price }}
+                </a>
             </div>
-          </div>
+            {% endfor %}
         </div>
-        <div class="flight-details">
-          Uçuş süresi: {{ flight.flight_duration }} - Uçak tipi: {{
-          flight.airplane_type }} - {{ flight.flight_direction }}
+
+        <!-- Filter and Sort Buttons -->
+        <div class="filter-buttons">
+            <button class="btn btn-outline-secondary">Havayolu firması</button>
+            <button class="btn btn-outline-secondary">Uçuş doluluğu</button>
+            <button class="btn btn-primary">Sıralama: Önerilen</button>
         </div>
-      </div>
-      {% endfor %} {% else %}
-      <div class="no-flights">Bu tarihte uçuş bulunmamaktadır.</div>
-      {% endif %}
+
+        <!-- Flight List -->
+        {% if flights %}
+            {% for flight in flights %}
+            <div class="flight-card">
+                <div class="flight-info">
+                    <div>
+                        <div class="flight-time">{{ flight.departure_time }} - {{ flight.arrival_time }}</div>
+                        <div class="flight-route">{{ flight.departure_airport }} → {{ flight.arrival_airport }}</div>
+                    </div>
+                    <div class="price-options">
+                        <div>
+                            <span>ECONOMY</span><br />
+                            <span class="price">TRY {{ flight.price }}</span>
+                        </div>
+                        <div class="sold-out">
+                            {% if flight.available_seats == 0 %}
+                            Bu fiyatta son koltuk
+                            {% else %}
+                            TRY {{ flight.price }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="flight-details">
+                    Uçuş süresi: {{ flight.flight_duration }} - Uçak tipi: {{ flight.airplane_type }} - {{ flight.flight_direction }}
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+        <div class="no-flights">Bu tarihte uçuş bulunmamaktadır.</div>
+        {% endif %}
     </div>
-  </body>
+</body>
 </html>
