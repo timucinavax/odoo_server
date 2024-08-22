@@ -102,7 +102,7 @@
         border-radius: 8px; /* Kartın köşelerini yuvarlar */
         background-color: #fff; /* Kartın arka plan rengi */
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Hafif gölge efekti */
-        width: 800px; /* Kartın genişliği */
+        width: 1200px; /* Kartın genişliği */
         margin: 10px auto; /* Kartın etrafındaki boşluk */
       }
 
@@ -366,8 +366,10 @@
                           <p><span class="heading">Fiyat:</span> ${flight.price} TL</p>
                           <p><span class="heading">Uçuş Yönü:</span> ${flight.flight_direction}</p>
                           <p><span class="heading">Koltuk Sayısı:</span> ${flight.available_seats}</p>
-                          <button class="buy-ticket-button" onclick="buyTicket('${flight.flight_number}')">Bileti Al</button>
                       </div>
+                    </div>
+                    <div class="time-info">
+                        <button class="buy-ticket-button" onclick="buyTicket('${flight.flight_number}')">Bileti Al</button>
                     </div>
                   </div>
                 `;
