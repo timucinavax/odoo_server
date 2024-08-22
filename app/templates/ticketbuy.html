@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Uçuş Seçimi</title>
     <style>
-      /* Temel CSS kuralları */
+      /* Genel Stil */
       body {
         font-family: Arial, sans-serif;
         background-color: #fff;
         margin: 0;
         padding: 0;
       }
+
       .navbar {
         background-color: #004080;
         color: white;
@@ -20,6 +21,7 @@
         font-size: 1.5rem;
       }
 
+      /* Breadcrumb Navigation */
       .breadcrumb-container {
         display: flex;
         justify-content: space-between;
@@ -39,17 +41,6 @@
         background-color: #e9ecef;
         border-radius: 5px;
         transition: background-color 0.3s, color 0.3s;
-      }
-
-      .breadcrumb-item em {
-        display: block;
-        margin-bottom: 5px;
-        font-size: 1.5rem;
-      }
-
-      .breadcrumb-item b {
-        font-size: 1rem;
-        font-weight: normal;
       }
 
       .breadcrumb-item.active {
@@ -85,6 +76,7 @@
         border-left-color: #dc3545;
       }
 
+      /* Tarih Seçici */
       .date-selector {
         display: flex;
         justify-content: center;
@@ -93,6 +85,7 @@
         overflow-x: auto;
         border-bottom: 1px solid #ddd;
       }
+
       .date-box {
         text-align: center;
         padding: 10px;
@@ -104,28 +97,35 @@
         cursor: pointer;
         transition: background-color 0.3s, color 0.3s;
       }
+
       .date-box.active {
         background-color: #dc3545;
         color: white;
       }
+
       .day-number {
         font-size: 1.5rem;
         font-weight: bold;
       }
+
       .day-name,
       .month-name {
         font-size: 1rem;
         color: #555;
       }
+
       .price {
         margin-top: 5px;
         font-size: 1.2rem;
         color: #28a745;
         font-weight: bold;
       }
+
+      /* Uçuş Kartları */
       .flights-container {
         padding: 15px;
       }
+
       .flight-card {
         border: 1px solid #ddd;
         border-radius: 8px;
@@ -137,25 +137,85 @@
         align-items: center;
         transition: box-shadow 0.3s;
       }
+
       .flight-card:hover {
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       }
+
       .flight-info {
-        margin-right: 20px;
-        flex: 3;
+        display: flex;
+        align-items: center;
       }
-      .price {
-        flex: 1;
-        text-align: right;
+
+      .hm__style_flight-canvas-row__G2UwI {
+        display: flex;
+        flex-direction: row;
+      }
+
+      .hm__style_flight-canvas__IGagI {
+        display: flex;
+        align-items: center;
+      }
+
+      .hm__style_port-segment__n8S_j {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .hm__style_flight-segment__PKt73 {
+        padding: 5px 10px;
+      }
+
+      .hm__style_time__sYwLh {
         font-size: 1.2rem;
-        color: #28a745;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+
+      .hm__style_port__9GrxX {
+        font-size: 1.1rem;
         font-weight: bold;
       }
-      .no-flights {
-        text-align: center;
-        font-size: 1.2rem;
-        color: #999;
-        padding: 20px;
+
+      .hm__style_name__DZtrL {
+        font-size: 0.9rem;
+        color: #666;
+      }
+
+      .hm__style_flight-canvas-content__TYV30 {
+        display: flex;
+        align-items: center;
+        padding: 0 15px;
+      }
+
+      .hm__style_flight-canvas-line__whuIp {
+        width: 100px;
+        height: 1px;
+        background-color: #000;
+        margin: 0 10px;
+      }
+
+      .hm__style_port-transfers__UXs8y {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .hm__style_transfer-port__zZ7ea {
+        font-size: 0.9rem;
+        font-weight: bold;
+      }
+
+      .hm__style_airline-image__dW0BE {
+        margin-left: 10px;
+      }
+
+      .price {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #28a745;
+        text-align: right;
       }
     </style>
   </head>
@@ -261,54 +321,60 @@
       {% for flight in flights %}
       <div class="flight-card">
         <div class="flight-info">
-          <div class="flight-canvas-row">
-            <div class="flight-canvas">
-              <div class="port-segment origin">
-                <div class="time">
-                  {{ flight.departure_time.split(' ')[1] }}
+          <div class="hm__style_flight-canvas-row__G2UwI">
+            <div class="hm__style_flight-canvas__IGagI">
+              <div class="hm__style_port-segment__n8S_j">
+                <div
+                  class="hm__style_flight-segment__PKt73 hm__style_origin__0iAN8"
+                >
+                  <div class="hm__style_time__sYwLh">
+                    {{ flight.departure_time.split(' ')[1] }}
+                  </div>
+                  <div class="hm__style_port__9GrxX">
+                    {{ flight.departure_airport }}
+                  </div>
+                  <div class="hm__style_name__DZtrL">Kalkış Yeri</div>
                 </div>
-                <div class="port">{{ flight.departure_airport }}</div>
-                <div class="name">Kalkış Yeri</div>
               </div>
-              <div class="flight-canvas-content">
-                <span class="flight-canvas-line"></span>
-                <div class="port-transfers">
-                  <div class="port-segment transfer">
-                    <span class="transfer-port">Direkt</span>
+              <div class="hm__style_flight-canvas-content__TYV30">
+                <span class="hm__style_flight-canvas-line__whuIp"></span>
+                <div class="hm__style_port-transfers__UXs8y">
+                  <div
+                    class="hm__style_port-segment__n8S_j hm__style_port-segment-transfer__orfpo"
+                  >
+                    <span class="hm__style_transfer-port__zZ7ea">Direkt</span>
                   </div>
                 </div>
-                <div class="airline-image">
-                  <span class="airline-image-wrapper">
-                    <img
-                      src="https://cdn.turkishairlines.com/m/3afd46cf114f6d07/original/carriercode_22x22-thy-png.png"
-                      alt="Airline Logo"
-                    />
-                  </span>
-                </div>
               </div>
-              <div class="port-segment destination">
-                <div class="time">
-                  {% if 'arrival_time' in flight %} {{
-                  flight.arrival_time.split(' ')[1] }} {% else %} Bilgi Yok {%
-                  endif %}
+              <div class="hm__style_port-segment__n8S_j">
+                <div
+                  class="hm__style_flight-segment__PKt73 hm__style_destination__gavgI"
+                >
+                  <div class="hm__style_time__sYwLh">
+                    {{ flight.arrival_time.split(' ')[1] }}
+                  </div>
+                  <div class="hm__style_port__9GrxX">
+                    {{ flight.arrival_airport }}
+                  </div>
+                  <div class="hm__style_name__DZtrL">Varış Yeri</div>
                 </div>
-                <div class="port">{{ flight.arrival_airport }}</div>
-                <div class="name">Varış Yeri</div>
               </div>
             </div>
-          </div>
-          <div class="flight-subdetail">
-            <div class="flight-subdetail-duration">
-              <span>Uçuş süresi</span>
-              <span class="flight-subdetail-duration-text"
-                >{{ flight.flight_duration }}</span
-              >
-              <span class="flight-subdetail-plane-type">
-                <span>Uçak tipi:</span>
-                <span class="flight-subdetail-duration-text"
-                  >Airbus A320 - Dar gövde</span
+            <div
+              class="hm__style_flight-subdetail__E3kCf hm__style_flight-subdetail-large-screen__Xpp7i"
+            >
+              <div class="hm__style_flight-subdetail-duration__xECBS">
+                <span>Uçuş süresi</span>
+                <span class="hm__style_flight-subdetail-duration-text__FlKka"
+                  >{{ flight.flight_duration }}</span
                 >
-              </span>
+                <span class="hm__style_flight-subdetail-plane-type__563FC">
+                  <span>Uçak tipi:</span>
+                  <span class="hm__style_flight-subdetail-duration-text__FlKka"
+                    >{{ flight.airplane_type }}</span
+                  >
+                </span>
+              </div>
             </div>
           </div>
         </div>
