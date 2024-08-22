@@ -321,21 +321,7 @@
     </div>
 
     <script>
-        const flightsData = [
-            {
-                flight_code: "{{ flight_code }}",
-                departure: "{{ departure }}",
-                arrival: "{{ arrival }}",
-                departure_time: "{{ departure_time }}",
-                arrival_time: "{{ arrival_time }}",
-                price: "{{ price }}",
-                flight_direction: "{{ flight_direction }}",
-                airplane_type: "{{ airplane_type_name }}",
-                svc_type: "{{ svc_type }}",
-                date: "{{ date }}"
-            },
-            // Diğer uçuşlar buraya eklenebilir
-        ];
+        const flightsData = {{ flights|tojson }};
     
         function showFlights(date) {
             document.querySelectorAll('.date-box').forEach(box => box.classList.remove('active'));
@@ -344,7 +330,7 @@
             const flightsContainer = document.getElementById('flights-container');
             flightsContainer.innerHTML = '';
     
-            const flights = flightsData.filter(flight => flight.date === date);
+            const flights = flightsData.filter(flight => flight.departure_time.startsWith(date));
     
             if (flights.length > 0) {
                 flights.forEach(flight => {
@@ -359,7 +345,7 @@
                                                     ${flight.departure_time.split(' ')[1]}
                                                 </div>
                                                 <div class="hm__style_port__9GrxX">
-                                                    ${flight.departure}
+                                                    ${flight.departure_airport}
                                                 </div>
                                                 <div class="hm__style_name__DZtrL">Kalkış Yeri</div>
                                             </div>
@@ -375,10 +361,10 @@
                                         <div class="hm__style_port-segment__n8S_j">
                                             <div class="hm__style_flight-segment__PKt73 hm__style_destination__gavgI">
                                                 <div class="hm__style_time__sYwLh">
-                                                    ${flight.arrival_time ? flight.arrival_time.split(' ')[1] : 'Bilgi Yok'}
+                                                    ${flight.arrival_time}
                                                 </div>
                                                 <div class="hm__style_port__9GrxX">
-                                                    ${flight.arrival}
+                                                    ${flight.arrival_airport}
                                                 </div>
                                                 <div class="hm__style_name__DZtrL">Varış Yeri</div>
                                             </div>
@@ -387,16 +373,21 @@
                                     <div class="hm__style_flight-subdetail__E3kCf hm__style_flight-subdetail-large-screen__Xpp7i">
                                         <div class="hm__style_flight-subdetail-duration__xECBS">
                                             <span>Uçuş süresi</span>
-                                            <span class="hm__style_flight-subdetail-duration-text__FlKka">${calculateFlightDuration(flight.departure_time, flight.arrival_time)}</span>
+                                            <span class="hm__style_flight-subdetail-duration-text__FlKka">${flight.arrival_time - flight.departure_time}</span>
                                             <span class="hm__style_flight-subdetail-plane-type__563FC">
                                                 <span>Uçak tipi:</span>
                                                 <span class="hm__style_flight-subdetail-duration-text__FlKka">${flight.airplane_type}</span>
+                                            </span>
+                                            <span class="hm__style_flight-subdetail-available-seats">
+                                                <span>Mevcut Koltuklar:</span>
+                                                <span>${flight.available_seats}</span>
                                             </span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="price">TRY ${flight.price}</div>
+                            <button class="buy-ticket-button" onclick="buyTicket('${flight.flight_code}')">Bileti Al</button>
                         </div>
                     `;
                     flightsContainer.innerHTML += flightCard;
@@ -406,17 +397,8 @@
             }
         }
     
-        function calculateFlightDuration(departureTime, arrivalTime) {
-            if (!departureTime || !arrivalTime) return 'Bilinmiyor';
-            
-            const departure = new Date(departureTime);
-            const arrival = new Date(arrivalTime);
-            const duration = new Date(arrival - departure);
-    
-            const hours = duration.getUTCHours();
-            const minutes = duration.getUTCMinutes();
-    
-            return `${hours}h ${minutes}m`;
+        function buyTicket(flightCode) {
+            alert(`Flight code: ${flightCode} için bilet alındı.`);
         }
     </script>
     

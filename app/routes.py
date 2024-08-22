@@ -223,22 +223,18 @@ def ticketbuy():
     if not uid:
         return redirect(url_for('dashboard'))
 
-    # Tüm aylar için uçuş bilgilerini çekiyoruz
     flights = models.execute_kw(
         current_app.config['ODOO_DB'], uid, current_app.config['ODOO_PASSWORD'], 
         'flight.management', 'search_read', [[]], 
-        {'fields': ['departure_time', 'departure_airport', 'arrival_airport', 'price']}
+        {'fields': ['departure_time','arrival_time', 'flight_direction','departure_airport','available_seats','departure_airport', 'arrival_airport', 'price']}
     )
-
-    # Tarih ve fiyat bilgilerini organize ediyoruz
     date_flight_map = {}
     for flight in flights:
-        flight_date = flight['departure_time'].split(' ')[0]  # 'YYYY-MM-DD' formatında tarih alınıyor
+        flight_date = flight['departure_time'].split(' ')[0]
         if flight_date not in date_flight_map:
             date_flight_map[flight_date] = []
         date_flight_map[flight_date].append(flight)
     
-    # Tarihlere göre ilk uçuşun fiyatını belirliyoruz
     date_prices = {
         date: min(flight['price'] for flight in flights) for date, flights in date_flight_map.items()
     }
