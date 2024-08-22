@@ -92,14 +92,6 @@
         font-weight: bold;
       }
 
-      .flights-container {
-        padding: 15px;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 15px;
-        justify-content: center;
-      }
-      
       .card {
         display: flex;
         align-items: center;
@@ -109,13 +101,14 @@
         border-radius: 8px;
         background-color: #fff;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        width: 800px;
-        margin: 10px auto;
+        width: 1000px;
+        margin: 20px auto;
       }
       
       .card-left {
         display: flex;
         align-items: center;
+        flex: 1;
       }
       
       .time-info {
@@ -132,6 +125,7 @@
       .route {
         display: flex;
         align-items: center;
+        flex: 2;
       }
       
       .route-line {
@@ -171,12 +165,8 @@
         border-radius: 50%;
       }
       
-      .flight-details {
-        font-size: 0.9rem;
-        color: #555;
-      }
-      
       .card-right {
+        flex: 1;
         font-size: 1rem;
         font-weight: bold;
         color: #004080;
@@ -184,11 +174,18 @@
       
       .details-button {
         background-color: transparent;
-        border: none;
+        border: 1px solid #004080;
         color: #004080;
         cursor: pointer;
         font-weight: bold;
         font-size: 1rem;
+        padding: 10px;
+        border-radius: 5px;
+      }
+      
+      .details-button:hover {
+        background-color: #004080;
+        color: white;
       }
       
     </style>
@@ -309,6 +306,7 @@
                         <div class="time-info">
                           <p>${flight.departure_time.split(" ")[1]}</p>
                           <p>${flight.departure_airport}</p>
+                          <p class="city">${flight.departure_city || 'Belirtilmemiş Şehir'}</p>
                         </div>
                         <div class="route">
                           <div class="route-line"></div>
@@ -318,9 +316,19 @@
                         <div class="time-info">
                           <p>${flight.arrival_time.split(" ")[1]}</p>
                           <p>${flight.arrival_airport}</p>
+                          <p class="city">${flight.arrival_city || 'Belirtilmemiş Şehir'}</p>
                         </div>
                       </div>
                       <div class="card-right">
+                        <p><span class="heading">Uçuş Numarası:</span> ${flight.flight_number}</p>
+                        <p><span class="heading">Kalkış Zamanı:</span> ${flight.departure_time}</p>
+                        <p><span class="heading">Varış Zamanı:</span> ${flight.arrival_time}</p>
+                        <p><span class="heading">Fiyat:</span> ${flight.price} TL</p>
+                        <p><span class="heading">Uçuş Yönü:</span> ${flight.flight_direction}</p>
+                        <p><span class="heading">Koltuk Sayısı:</span> ${flight.available_seats}</p>
+                        <p><span class="heading">Uçak Tipi:</span> ${flight.airplane_type_id}</p>
+                        <p><span class="heading">Hizmet Tipi:</span> ${flight.svc_type}</p>
+                        <p><span class="heading">Tarih:</span> ${flight.date}</p>
                         <button class="details-button">Seyahat Detayları</button>
                       </div>
                     </div>
@@ -329,8 +337,7 @@
                 });
               } else {
                 flightsContainer.innerHTML = '<div class="no-flights">Bu tarihte uçuş bulunmamaktadır.</div>';
-              }
-              
+              }              
         }
 
         function buyTicket(flightCode) {
