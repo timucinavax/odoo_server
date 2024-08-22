@@ -1,162 +1,282 @@
 <!DOCTYPE html>
 <html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Uçuş Seçimi</title>
     <style>
-        /* Temel CSS kuralları */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #fff;
-            margin: 0;
-            padding: 0;
-        }
-        .navbar {
-            background-color: #004080;
-            color: white;
-            padding: 15px;
-            text-align: center;
-            font-size: 1.5rem;
-        }
-        .progress-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #fff;
-            padding: 15px;
-            border-bottom: 1px solid #ddd;
-        }
-        .progress-step {
-            text-align: center;
-            width: 24%;
-            padding: 10px;
-            border-radius: 4px;
-            background-color: #e9ecef;
-        }
-        .progress-step.active {
-            background-color: #dc3545;
-            color: white;
-        }
-        .date-selector {
-            display: flex;
-            justify-content: center;
-            padding: 15px;
-            background-color: #fff;
-            overflow-x: auto;
-            border-bottom: 1px solid #ddd;
-        }
-        .date-box {
-            text-align: center;
-            padding: 10px;
-            margin: 5px;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-            background-color: #f9f9f9;
-            min-width: 100px;
-            cursor: pointer;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        .date-box.active {
-            background-color: #dc3545;
-            color: white;
-        }
-        .day-number {
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-        .day-name, .month-name {
-            font-size: 1rem;
-            color: #555;
-        }
-        .price {
-            margin-top: 5px;
-            font-size: 1.2rem;
-            color: #28a745;
-            font-weight: bold;
-        }
-        .flights-container {
-            padding: 15px;
-        }
-        .flight-card {
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            margin: 10px 0;
-            padding: 15px;
-            background-color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .flight-info {
-            margin-right: 20px;
-        }
-        .no-flights {
-            text-align: center;
-            font-size: 1.2rem;
-            color: #999;
-            padding: 20px;
-        }
+      /* Temel CSS kuralları */
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #fff;
+        margin: 0;
+        padding: 0;
+      }
+      .navbar {
+        background-color: #004080;
+        color: white;
+        padding: 15px;
+        text-align: center;
+        font-size: 1.5rem;
+      }
+
+      .breadcrumb-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #fff;
+        padding: 15px;
+        border-bottom: 1px solid #ddd;
+      }
+
+      .breadcrumb-item {
+        position: relative;
+        text-align: center;
+        flex: 1;
+        cursor: pointer;
+        padding: 10px;
+        color: #004080;
+        background-color: #e9ecef;
+        border-radius: 5px;
+        transition: background-color 0.3s, color 0.3s;
+      }
+
+      .breadcrumb-item em {
+        display: block;
+        margin-bottom: 5px;
+        font-size: 1.5rem;
+      }
+
+      .breadcrumb-item b {
+        font-size: 1rem;
+        font-weight: normal;
+      }
+
+      .breadcrumb-item.active {
+        background-color: #dc3545;
+        color: white;
+      }
+
+      .arrow-before,
+      .arrow-after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        border-top: 10px solid transparent;
+        border-bottom: 10px solid transparent;
+      }
+
+      .arrow-before {
+        left: -10px;
+        border-right: 10px solid #e9ecef;
+      }
+
+      .arrow-after {
+        right: -10px;
+        border-left: 10px solid #e9ecef;
+      }
+
+      .breadcrumb-item.active .arrow-before {
+        border-right-color: #dc3545;
+      }
+
+      .breadcrumb-item.active .arrow-after {
+        border-left-color: #dc3545;
+      }
+
+      .date-selector {
+        display: flex;
+        justify-content: center;
+        padding: 15px;
+        background-color: #fff;
+        overflow-x: auto;
+        border-bottom: 1px solid #ddd;
+      }
+      .date-box {
+        text-align: center;
+        padding: 10px;
+        margin: 5px;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        background-color: #f9f9f9;
+        min-width: 100px;
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s;
+      }
+      .date-box.active {
+        background-color: #dc3545;
+        color: white;
+      }
+      .day-number {
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+      .day-name,
+      .month-name {
+        font-size: 1rem;
+        color: #555;
+      }
+      .price {
+        margin-top: 5px;
+        font-size: 1.2rem;
+        color: #28a745;
+        font-weight: bold;
+      }
+      .flights-container {
+        padding: 15px;
+      }
+      .flight-card {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        margin: 10px 0;
+        padding: 15px;
+        background-color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .flight-info {
+        margin-right: 20px;
+      }
+      .no-flights {
+        text-align: center;
+        font-size: 1.2rem;
+        color: #999;
+        padding: 20px;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
+    <div class="navbar">SEHLEN TURİZM</div>
 
-<div class="navbar">SEHLEN TURİZM</div>
+    <!-- Adım İlerlemesi -->
+    <div class="breadcrumb-container">
+      <div class="breadcrumb-item active" data-number="0">
+        <div class="arrow-before"></div>
+        <div class="arrow-after"></div>
+        <em>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 30.731 13.566"
+            width="1em"
+            height="1em"
+            fill="currentColor"
+          >
+            <g fill="#fff">
+              <path d="m0 10.455 2.951 1.708-2.333.981L0 12.305v-1.85Z"></path>
+              <path
+                d="m.962 13.477 9.471-4.367-4.716-7.532c.33-.474.665-.93.974-1.407.186-.288.356-.147.552-.042 3.282 1.745 6.571 3.474 9.841 5.247a1.639 1.639 0 0 0 1.64.067c2.828-1.297 5.684-2.533 8.528-3.794a3.5 3.5 0 0 1 2.568-.093 1.19 1.19 0 0 1 .741 1.814 4.646 4.646 0 0 1-2.356 2.56c-5.713 2.53-11.44 5.023-17.163 7.527a1.072 1.072 0 0 1-.413.1q-4.829.009-9.659 0Z"
+              ></path>
+            </g>
+          </svg>
+        </em>
+        <b>Uçuş seçimi</b>
+      </div>
+      <div class="breadcrumb-item" data-number="1">
+        <div class="arrow-before"></div>
+        <div class="arrow-after"></div>
+        <em>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 13.512 19.87"
+            width="1em"
+            height="1em"
+            fill="currentColor"
+          >
+            <path
+              fill="#fff"
+              d="M13.51 10.507v4.933a4.334 4.334 0 0 1-4.221 4.43H.003v-5.8a3.381 3.381 0 0 1 .929-2.47 3.517 3.517 0 0 1 2.449-1.093Zm-6.509-1.4a4.51 4.51 0 0 1-4.465-4.553 4.466 4.466 0 1 1 8.931 0 4.51 4.51 0 0 1-4.465 4.554Z"
+            ></path>
+          </svg>
+        </em>
+        <b>Yolcu bilgileri</b>
+      </div>
+      <div class="breadcrumb-item" data-number="2">
+        <div class="arrow-before"></div>
+        <div class="arrow-after"></div>
+        <em>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 18.55 16.874"
+            width="1em"
+            height="1em"
+            fill="currentColor"
+          >
+            <path
+              fill="#fff"
+              d="M8.325 0a1.88 1.88 0 0 0-.685.135L1.1 2.85a1.771 1.771 0 0 0-.967 2.3l4.408 10.636a1.791 1.791 0 0 0 1.608 1.088 1.771 1.771 0 0 0 .7-.13l6.545-2.712a1.779 1.779 0 0 0 1.092-1.6 1.612 1.612 0 0 0-.134-.707L9.948 1.092A1.777 1.777 0 0 0 8.324.001Zm3.087 0 3.071 7.412V1.778A1.786 1.786 0 0 0 12.702.001h-1.289Zm4.849 1.371V9.39l2.16-5.2a1.79 1.79 0 0 0-.967-2.316l-1.192-.5Z"
+            ></path>
+          </svg>
+        </em>
+        <b>Ek hizmetler</b>
+      </div>
+      <div class="breadcrumb-item" data-number="3">
+        <div class="arrow-before"></div>
+        <div class="arrow-after"></div>
+        <em>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 26.702 18.653"
+            width="1em"
+            height="1em"
+            fill="currentColor"
+          >
+            <path
+              fill="#fff"
+              d="M26.658 3.51H.811A6.348 6.348 0 0 1 6.665 0h19.993Zm0 3.528.042 1.287V9.78a9.2 9.2 0 0 1-.067 1.166 9.7 9.7 0 0 1-.556 2.228 8.362 8.362 0 0 1-7.775 5.479H0V7.038Z"
+            ></path>
+          </svg>
+        </em>
+        <b>Ödeme</b>
+      </div>
+    </div>
 
-<!-- Adım İlerlemesi -->
-<div class="progress-bar">
-    <div class="progress-step active">Uçuş Seçimi</div>
-    <div class="progress-step">Yolcu Bilgileri</div>
-    <div class="progress-step">Ek Hizmetler</div>
-    <div class="progress-step">Ödeme</div>
-</div>
-
-<!-- Tarih Seçici -->
-<div class="date-selector">
-    {% for date in dates %}
-    <div class="date-box" onclick="showFlights('{{ date }}')">
+    <!-- Tarih Seçici -->
+    <div class="date-selector">
+      {% for date in dates %}
+      <div class="date-box" onclick="showFlights('{{ date }}')">
         <div class="day-number">{{ date.split('-')[2] }}</div>
         <div class="day-name">{{ date | dayname }}</div>
         <div class="month-name">{{ date | monthname }}</div>
         <div class="price">TRY {{ date_prices[date] }}</div>
+      </div>
+      {% endfor %}
     </div>
-    {% endfor %}
-</div>
 
-<!-- Uçuş Bilgileri -->
-<div class="flights-container" id="flights-container">
-    <div class="no-flights">Bir tarih seçin.</div>
-</div>
+    <!-- Uçuş Bilgileri -->
+    <div class="flights-container" id="flights-container">
+      <div class="no-flights">Bir tarih seçin.</div>
+    </div>
 
-<script>
-    const flightsData = {{ flights|tojson }};
+    <script>
+      const flightsData = {{ flights|tojson }};
 
-    function showFlights(date) {
-        document.querySelectorAll('.date-box').forEach(box => box.classList.remove('active'));
-        document.querySelector(`.date-box[onclick="showFlights('${date}')"]`).classList.add('active');
+      function showFlights(date) {
+          document.querySelectorAll('.date-box').forEach(box => box.classList.remove('active'));
+          document.querySelector(`.date-box[onclick="showFlights('${date}')"]`).classList.add('active');
 
-        const flightsContainer = document.getElementById('flights-container');
-        flightsContainer.innerHTML = '';
+          const flightsContainer = document.getElementById('flights-container');
+          flightsContainer.innerHTML = '';
 
-        const flights = flightsData.filter(flight => flight.departure_time.startsWith(date));
+          const flights = flightsData.filter(flight => flight.departure_time.startsWith(date));
 
-        if (flights.length > 0) {
-            flights.forEach(flight => {
-                const flightCard = `
-                    <div class="flight-card">
-                        <div class="flight-info">
-                            <strong>${flight.departure_time.split(' ')[1]}</strong><br>${flight.departure_airport} → ${flight.arrival_airport}
-                        </div>
-                        <div class="price">TRY ${flight.price}</div>
-                    </div>
-                `;
-                flightsContainer.innerHTML += flightCard;
-            });
-        } else {
-            flightsContainer.innerHTML = '<div class="no-flights">Bu tarihte uçuş bulunmamaktadır.</div>';
-        }
-    }
-</script>
-
-</body>
+          if (flights.length > 0) {
+              flights.forEach(flight => {
+                  const flightCard = `
+                      <div class="flight-card">
+                          <div class="flight-info">
+                              <strong>${flight.departure_time.split(' ')[1]}</strong><br>${flight.departure_airport} → ${flight.arrival_airport}
+                          </div>
+                          <div class="price">TRY ${flight.price}</div>
+                      </div>
+                  `;
+                  flightsContainer.innerHTML += flightCard;
+              });
+          } else {
+              flightsContainer.innerHTML = '<div class="no-flights">Bu tarihte uçuş bulunmamaktadır.</div>';
+          }
+      }
+    </script>
+  </body>
 </html>
