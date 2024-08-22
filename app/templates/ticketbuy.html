@@ -92,100 +92,99 @@
         font-weight: bold;
       }
 
+      /* Kartın genel stili */
       .card {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 20px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        background-color: #fff;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        width: 1000px;
-        margin: 20px auto;
+        display: flex; /* Kartın içerisindeki elemanların yan yana durmasını sağlar */
+        align-items: center; /* Elemanların dikeyde ortalanmasını sağlar */
+        justify-content: space-between; /* Elemanlar arasında boşluk bırakır */
+        padding: 20px; /* Kartın içindeki elemanlarla kenarlar arasındaki boşluk */
+        border: 1px solid #ddd; /* Kartın kenar çizgisi */
+        border-radius: 8px; /* Kartın köşelerini yuvarlar */
+        background-color: #fff; /* Kartın arka plan rengi */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Hafif gölge efekti */
+        width: 800px; /* Kartın genişliği */
+        margin: 10px auto; /* Kartın etrafındaki boşluk */
       }
 
+      /* Sol taraftaki bilgi bloğu */
       .card-left {
-        display: flex;
-        align-items: center;
-        flex: 1;
+        display: flex; /* Bilgilerin yatayda yan yana gelmesini sağlar */
+        align-items: center; /* Bilgileri dikeyde ortalar */
       }
 
+      /* Zaman ve havaalanı bilgilerini tutan blok */
       .time-info {
-        text-align: center;
-        margin-right: 20px;
+        text-align: center; /* Metinlerin ortalanmasını sağlar */
+        margin-right: 20px; /* Bilgiler arasında boşluk bırakır */
       }
 
       .time-info p {
-        margin: 5px 0;
-        font-weight: bold;
-        font-size: 1.2rem;
+        margin: 5px 0; /* Paragraflar arasında boşluk bırakır */
+        font-weight: bold; /* Metinleri kalın yapar */
+        font-size: 1.2rem; /* Metin boyutunu büyütür */
       }
 
+      /* Uçuş rotasını temsil eden çizgiler */
       .route {
-        display: flex;
-        align-items: center;
-        flex: 2;
+        display: flex; /* Çizgilerin ve logonun yatayda yan yana gelmesini sağlar */
+        align-items: center; /* Dikeyde ortalanmasını sağlar */
       }
 
       .route-line {
-        width: 100px;
-        height: 1px;
-        background-color: #000;
-        position: relative;
-        margin: 0 10px;
+        width: 100px; /* Çizginin genişliği */
+        height: 1px; /* Çizginin kalınlığı */
+        background-color: #000; /* Çizginin rengi */
+        position: relative; /* Noktaların çizgiye göre konumlanmasını sağlar */
+        margin: 0 10px; /* Çizgi ve logo arasındaki boşluk */
       }
 
-      .route-line::before {
-        content: "";
-        position: absolute;
-        left: 0;
-        top: -5px;
-        width: 10px;
-        height: 10px;
-        background-color: #004080;
-        border-radius: 50%;
-      }
-
+      /* Rota çizgisine noktalar ekleme */
+      .route-line::before,
       .route-line::after {
         content: "";
         position: absolute;
-        right: 0;
         top: -5px;
         width: 10px;
         height: 10px;
-        background-color: #004080;
-        border-radius: 50%;
+        background-color: #004080; /* Noktaların rengi */
+        border-radius: 50%; /* Noktaların daire şeklinde olmasını sağlar */
       }
 
+      .route-line::before {
+        left: 0; /* İlk noktanın konumu */
+      }
+
+      .route-line::after {
+        right: 0; /* İkinci noktanın konumu */
+      }
+
+      /* Rota logosu (örneğin, uçak ikonu gibi) */
       .route-logo {
-        width: 20px;
-        height: 20px;
-        background-color: red;
-        border-radius: 50%;
+        width: 20px; /* Logonun genişliği */
+        height: 20px; /* Logonun yüksekliği */
+        background-color: red; /* Logonun arka plan rengi */
+        border-radius: 50%; /* Logonun daire şeklinde olmasını sağlar */
       }
 
-      .card-right {
-        flex: 1;
-        font-size: 1rem;
-        font-weight: bold;
-        color: #004080;
-      }
-
+      /* Seyahat detayları düğmesi ve içerikleri */
       .details-button {
-        background-color: transparent;
-        border: 1px solid #004080;
-        color: #004080;
-        cursor: pointer;
-        font-weight: bold;
-        font-size: 1rem;
-        padding: 10px;
-        border-radius: 5px;
+        background-color: transparent; /* Düğmenin arka plan rengini kaldırır */
+        border: none; /* Düğmenin kenarlığını kaldırır */
+        color: #004080; /* Metin rengini ayarlar */
+        cursor: pointer; /* Fare üzerine geldiğinde tıklanabilir simgeyi gösterir */
+        font-weight: bold; /* Metni kalın yapar */
+        font-size: 1rem; /* Metin boyutunu ayarlar */
       }
 
-      .details-button:hover {
-        background-color: #004080;
-        color: white;
+      .details-content {
+        display: none; /* Detayların başlangıçta gizli olmasını sağlar */
+        margin-top: 10px; /* Düğme ile detaylar arasında boşluk bırakır */
+      }
+
+      .details-content p {
+        margin: 5px 0; /* Paragraflar arasında boşluk bırakır */
+        font-size: 0.9rem; /* Detay metinlerin boyutunu ayarlar */
+        color: #555; /* Detay metinlerin rengini ayarlar */
       }
     </style>
   </head>
@@ -299,46 +298,44 @@
           const flights = flightsData.filter(flight => flight.departure_time.startsWith(date));
           if (flights.length > 0) {
               flights.forEach(flight => {
-                const flightDuration = calculateFlightDuration(flight.departure_time, flight.arrival_time);
+                  const flightDuration = calculateFlightDuration(flight.departure_time, flight.arrival_time);
 
-                const flightCard = `
-                  <div class="card">
-                    <div class="card-left">
-                      <div class="time-info">
-                          <p><span class="heading">Uçuş Numarası:</span> ${flight.flight_number}</p>
+                  const flightCard = `
+                      <div class="card">
+                          <div class="card-left">
+                              <div class="time-info">
+                                  <p>${flight.departure_time.split(" ")[1]}</p>
+                                  <p>${flight.departure_airport}</p>
+                              </div>
+                              <div class="route">
+                                  <div class="route-line"></div>
+                                  <div class="route-logo"></div>
+                                  <div class="route-line"></div>
+                              </div>
+                              <div class="time-info">
+                                  <p>${flight.arrival_time.split(" ")[1]}</p>
+                                  <p>${flight.arrival_airport}</p>
+                              </div>
+                              <div class="additional-info">
+                                  <p><span class="heading">Süre:</span> ${flightDuration}</p>
+                                  <p><span class="heading">Fiyat:</span> ${flight.price} TL</p>
+                              </div>
+                          </div>
+                          <div class="card-right">
+                              <button class="details-button" onclick="toggleDetails(this)">Seyahat Detayları</button>
+                              <div class="details-content" style="display: none;">
+                                  <p><span class="heading">Uçuş Numarası:</span> ${flight.flight_number}</p>
+                                  <p><span class="heading">Kalkış Zamanı:</span> ${flight.departure_time}</p>
+                                  <p><span class="heading">Varış Zamanı:</span> ${flight.arrival_time}</p>
+                                  <p><span class="heading">Uçuş Yönü:</span> ${flight.flight_direction}</p>
+                                  <p><span class="heading">Koltuk Sayısı:</span> ${flight.available_seats}</p>
+                                  <p><span class="heading">Uçak Tipi:</span> ${flight.airplane_type_id}</p>
+                                  <p><span class="heading">Servis Tipi:</span> ${flight.svc_type}</p>
+                              </div>
+                          </div>
                       </div>
-                      <div class="time-info">
-                        <p>${flight.departure_time.split(" ")[1]}</p>
-                        <p>${flight.departure_airport}</p>
-                      </div>
-                      <div class="route">
-                        <div class="route-line"></div>
-                        <div class="route-logo"></div>
-                        <div class="route-line"></div>
-                      </div>
-                      <div class="time-info">
-                        <p>${flight.arrival_time.split(" ")[1]}</p>
-                        <p>${flight.arrival_airport}</p>
-                      </div>
-                      <div class="time-info">
-                          <p><span class="heading">Fiyat:</span> ${flight.price} TL</p>
-                          <p><span class="heading">Süre:</span> ${flightDuration}</p>
-                      </div>
-                    </div>
-                    <div class="card-right">
-                      <button class="details-button" onclick="toggleDetails(this)">Seyahat Detayları</button>
-                      <div class="details-content">
-                          <p><span class="heading">Uçuş Numarası:</span> ${flight.flight_number}</p>
-                          <p><span class="heading">Kalkış Zamanı:</span> ${flight.departure_time}</p>
-                          <p><span class="heading">Varış Zamanı:</span> ${flight.arrival_time}</p>
-                          <p><span class="heading">Fiyat:</span> ${flight.price} TL</p>
-                          <p><span class="heading">Uçuş Yönü:</span> ${flight.flight_direction}</p>
-                          <p><span class="heading">Koltuk Sayısı:</span> ${flight.available_seats}</p>
-                      </div>
-                    </div>
-                  </div>
-                `;
-                flightsContainer.innerHTML += flightCard;
+                  `;
+                  flightsContainer.innerHTML += flightCard;
               });
           } else {
               flightsContainer.innerHTML = '<div class="no-flights">Bu tarihte uçuş bulunmamaktadır.</div>';
@@ -347,11 +344,7 @@
 
       function toggleDetails(button) {
           const detailsContent = button.nextElementSibling;
-          if (detailsContent.style.display === 'block') {
-              detailsContent.style.display = 'none';
-          } else {
-              detailsContent.style.display = 'block';
-          }
+          detailsContent.style.display = detailsContent.style.display === 'block' ? 'none' : 'block';
       }
 
       function calculateFlightDuration(departureTime, arrivalTime) {
