@@ -318,71 +318,6 @@
 
     <!-- Uçuş Bilgileri -->
     <div class="flights-container" id="flights-container">
-      {% for flight in flights %}
-      <div class="flight-card">
-        <div class="flight-info">
-          <div class="hm__style_flight-canvas-row__G2UwI">
-            <div class="hm__style_flight-canvas__IGagI">
-              <div class="hm__style_port-segment__n8S_j">
-                <div
-                  class="hm__style_flight-segment__PKt73 hm__style_origin__0iAN8"
-                >
-                  <div class="hm__style_time__sYwLh">
-                    {{ flight.departure_time.split(' ')[1] }}
-                  </div>
-                  <div class="hm__style_port__9GrxX">
-                    {{ flight.departure_airport }}
-                  </div>
-                  <div class="hm__style_name__DZtrL">Kalkış Yeri</div>
-                </div>
-              </div>
-              <div class="hm__style_flight-canvas-content__TYV30">
-                <span class="hm__style_flight-canvas-line__whuIp"></span>
-                <div class="hm__style_port-transfers__UXs8y">
-                  <div
-                    class="hm__style_port-segment__n8S_j hm__style_port-segment-transfer__orfpo"
-                  >
-                    <span class="hm__style_transfer-port__zZ7ea">Direkt</span>
-                  </div>
-                </div>
-              </div>
-              <div class="hm__style_port-segment__n8S_j">
-                <div
-                  class="hm__style_flight-segment__PKt73 hm__style_destination__gavgI"
-                >
-                  <div class="hm__style_time__sYwLh">
-                    {% if 'arrival_time' in flight %} {{
-                    flight.arrival_time.split(' ')[1] }} {% else %} Bilgi Yok {%
-                    endif %}
-                  </div>
-                  <div class="hm__style_port__9GrxX">
-                    {{ flight.arrival_airport }}
-                  </div>
-                  <div class="hm__style_name__DZtrL">Varış Yeri</div>
-                </div>
-              </div>
-            </div>
-            <div
-              class="hm__style_flight-subdetail__E3kCf hm__style_flight-subdetail-large-screen__Xpp7i"
-            >
-              <div class="hm__style_flight-subdetail-duration__xECBS">
-                <span>Uçuş süresi</span>
-                <span class="hm__style_flight-subdetail-duration-text__FlKka"
-                  >{{ flight.flight_duration }}</span
-                >
-                <span class="hm__style_flight-subdetail-plane-type__563FC">
-                  <span>Uçak tipi:</span>
-                  <span class="hm__style_flight-subdetail-duration-text__FlKka"
-                    >{{ flight.airplane_type }}</span
-                  >
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="price">TRY {{ flight.price }}</div>
-      </div>
-      {% endfor %}
     </div>
 
     <script>
@@ -402,7 +337,50 @@
                   const flightCard = `
                       <div class="flight-card">
                           <div class="flight-info">
-                              <strong>${flight.departure_time.split(' ')[1]}</strong><br>${flight.departure_airport} → ${flight.arrival_airport}
+                              <div class="hm__style_flight-canvas-row__G2UwI">
+                                  <div class="hm__style_flight-canvas__IGagI">
+                                      <div class="hm__style_port-segment__n8S_j">
+                                          <div class="hm__style_flight-segment__PKt73 hm__style_origin__0iAN8">
+                                              <div class="hm__style_time__sYwLh">
+                                                  ${flight.departure_time.split(' ')[1]}
+                                              </div>
+                                              <div class="hm__style_port__9GrxX">
+                                                  ${flight.departure_airport}
+                                              </div>
+                                              <div class="hm__style_name__DZtrL">Kalkış Yeri</div>
+                                          </div>
+                                      </div>
+                                      <div class="hm__style_flight-canvas-content__TYV30">
+                                          <span class="hm__style_flight-canvas-line__whuIp"></span>
+                                          <div class="hm__style_port-transfers__UXs8y">
+                                              <div class="hm__style_port-segment__n8S_j hm__style_port-segment-transfer__orfpo">
+                                                  <span class="hm__style_transfer-port__zZ7ea">Direkt</span>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="hm__style_port-segment__n8S_j">
+                                          <div class="hm__style_flight-segment__PKt73 hm__style_destination__gavgI">
+                                              <div class="hm__style_time__sYwLh">
+                                                  ${flight.arrival_time ? flight.arrival_time.split(' ')[1] : 'Bilgi Yok'}
+                                              </div>
+                                              <div class="hm__style_port__9GrxX">
+                                                  ${flight.arrival_airport}
+                                              </div>
+                                              <div class="hm__style_name__DZtrL">Varış Yeri</div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="hm__style_flight-subdetail__E3kCf hm__style_flight-subdetail-large-screen__Xpp7i">
+                                      <div class="hm__style_flight-subdetail-duration__xECBS">
+                                          <span>Uçuş süresi</span>
+                                          <span class="hm__style_flight-subdetail-duration-text__FlKka">${flight.flight_duration}</span>
+                                          <span class="hm__style_flight-subdetail-plane-type__563FC">
+                                              <span>Uçak tipi:</span>
+                                              <span class="hm__style_flight-subdetail-duration-text__FlKka">${flight.airplane_type}</span>
+                                          </span>
+                                      </div>
+                                  </div>
+                              </div>
                           </div>
                           <div class="price">TRY ${flight.price}</div>
                       </div>
