@@ -1,9 +1,24 @@
-import datetime
 from functools import wraps
 from flask import jsonify, render_template, request, redirect, url_for, current_app, flash, session
 import xmlrpc.client
 from werkzeug.security import generate_password_hash, check_password_hash
 from app import app
+
+from datetime import datetime, timedelta
+
+def generate_dates_for_month(year, month):
+    start_date = datetime(year, month, 1)
+    next_month = start_date.replace(day=28) + timedelta(days=4)  # Sonraki aya geçiş
+    end_date = next_month - timedelta(days=next_month.day)  # Bu ayın son günü
+    current_date = start_date
+    dates = []
+
+    while current_date <= end_date:
+        dates.append(current_date.strftime('%Y-%m-%d'))
+        current_date += timedelta(days=1)
+
+    return dates
+
 
 # Özel bir dekoratör oluşturuyoruz
 def role_required(allowed_roles):
@@ -279,10 +294,49 @@ def search_flights():
 
     return render_template('index.html', outbound_flights=outbound_flights, return_flights=return_flights)
 
-@app.route('/user')
 @role_required(['user'])
-def user_panel():
-    return render_template('user_panel.html')
+@app.route('/ticketbuy')
+def ticketbuy():
+    url = current_app.config['ODOO_URL']
+    db = current_app.config['ODOO_DB']
+    admin_username = current_app.config['ODOO_USERNAME']
+    admin_password = current_app.config['ODOO_PASSWORD']
+
+    common = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/common', allow_none=True)
+    uid = common.authenticate(db, admin_username, admin_password, {})
+
+    models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object', allow_none=True)
+
+    flights = models.execute_kw(db, uid, admin_password, 'flight.management', 'search_read', [[]], {'fields': ['flight_direction','flight_number', 'available_seats', 'departure_airport', 'arrival_airport', 'departure_time', 'price']})
+
+    return render_template('ticketbuy.html', flights=flights)
+
+@app.route('/ticketbuy/<int:year>/<int:month>')
+def ticketbuy_by_month(year, month):
+    dates = generate_dates_for_month(year, month)
+    selected_date = dates[0]
+
+    url = current_app.config['ODOO_URL']
+    db = current_app.config['ODOO_DB']
+    admin_username = current_app.config['ODOO_USERNAME']
+    admin_password = current_app.config['ODOO_PASSWORD']
+
+    common = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/common', allow_none=True)
+    uid = common.authenticate(db, admin_username, admin_password, {})
+
+    models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object', allow_none=True)
+
+    # Seçilen tarihe göre uçuşları filtrele
+    domain = [
+        ('departure_time', '>=', f'{selected_date} 00:00:00'),
+        ('departure_time', '<=', f'{selected_date} 23:59:59')
+    ]
+    flights = models.execute_kw(db, uid, admin_password, 'flight.management', 'search_read', [domain], 
+                                {'fields': ['flight_direction', 'flight_number', 'available_seats', 'departure_airport', 'arrival_airport', 'departure_time', 'price']})
+
+    return render_template('ticketbuy.html', flights=flights, dates=dates, selected_date=selected_date, year=year, month=month)
+
+
 
 @app.route('/agency')
 @role_required(['agency'])
