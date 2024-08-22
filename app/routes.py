@@ -85,9 +85,9 @@ def login():
             if role == 'admin':
                 return redirect(url_for('admin_panel'))
             elif role == 'user':
-                return redirect(url_for('user_panel'))
+                return redirect(url_for('ticketbuy'))
             elif role == 'agency':
-                return redirect(url_for('agency_panel'))
+                return redirect(url_for('ticketbuy'))
         else:
             flash("Hatalı şifre, lütfen tekrar deneyin.")
     else:
