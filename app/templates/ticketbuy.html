@@ -135,9 +135,21 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        transition: box-shadow 0.3s;
+      }
+      .flight-card:hover {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       }
       .flight-info {
         margin-right: 20px;
+        flex: 3;
+      }
+      .price {
+        flex: 1;
+        text-align: right;
+        font-size: 1.2rem;
+        color: #28a745;
+        font-weight: bold;
       }
       .no-flights {
         text-align: center;
@@ -246,7 +258,56 @@
 
     <!-- Uçuş Bilgileri -->
     <div class="flights-container" id="flights-container">
-      <div class="no-flights">Bir tarih seçin.</div>
+      {% for flight in flights %}
+      <div class="flight-card">
+        <div class="flight-info">
+          <div class="flight-canvas-row">
+            <div class="flight-canvas">
+              <div class="port-segment origin">
+                <div class="time">
+                  {{ flight.departure_time.split(' ')[1] }}
+                </div>
+                <div class="port">{{ flight.departure_airport }}</div>
+                <div class="name">Kalkış Yeri</div>
+              </div>
+              <div class="flight-canvas-content">
+                <span class="flight-canvas-line"></span>
+                <div class="port-transfers">
+                  <div class="port-segment transfer">
+                    <span class="transfer-port">Direkt</span>
+                  </div>
+                </div>
+                <div class="airline-image">
+                  <span class="airline-image-wrapper">
+                    <img src="https://cdn.turkishairlines.com/m/3afd46cf114f6d07/original/carriercode_22x22-thy-png.png">
+                  </span>
+                </div>
+              </div>
+              <div class="port-segment destination">
+                <div class="time">{{ flight.arrival_time.split(' ')[1] }}</div>
+                <div class="port">{{ flight.arrival_airport }}</div>
+                <div class="name">Varış Yeri</div>
+              </div>
+            </div>
+          </div>
+          <div class="flight-subdetail">
+            <div class="flight-subdetail-duration">
+              <span>Uçuş süresi</span>
+              <span class="flight-subdetail-duration-text"
+                >{{ flight.flight_duration }}</span
+              >
+              <span class="flight-subdetail-plane-type">
+                <span>Uçak tipi:</span>
+                <span class="flight-subdetail-duration-text"
+                  >Airbus A320 - Dar gövde</span
+                >
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="price">TRY {{ flight.price }}</div>
+      </div>
+      {% endfor %}
     </div>
 
     <script>
