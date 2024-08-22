@@ -166,25 +166,58 @@
         border-radius: 50%; /* Logonun daire şeklinde olmasını sağlar */
       }
 
-      /* Seyahat detayları düğmesi ve içerikleri */
       .details-button {
-        background-color: transparent; /* Düğmenin arka plan rengini kaldırır */
-        border: none; /* Düğmenin kenarlığını kaldırır */
-        color: #004080; /* Metin rengini ayarlar */
-        cursor: pointer; /* Fare üzerine geldiğinde tıklanabilir simgeyi gösterir */
-        font-weight: bold; /* Metni kalın yapar */
-        font-size: 1rem; /* Metin boyutunu ayarlar */
+        background-color: transparent;
+        border: none;
+        color: #004080;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        position: relative;
+      }
+
+      .details-button:hover {
+        color: #002050; /* Hover üzerinde renk koyulaşır */
+      }
+
+      .details-button::after {
+        content: "▼"; /* Başlangıçta ok işareti aşağıyı gösterir */
+        margin-left: 10px;
+        font-size: 0.8rem;
+        transition: transform 0.3s ease;
+      }
+
+      .details-button.collapsed::after {
+        transform: rotate(-90deg); /* Tıklandığında oku yana döndür */
       }
 
       .details-content {
-        display: none; /* Detayların başlangıçta gizli olmasını sağlar */
-        margin-top: 10px; /* Düğme ile detaylar arasında boşluk bırakır */
+        display: none;
+        margin-top: 10px;
       }
 
       .details-content p {
-        margin: 5px 0; /* Paragraflar arasında boşluk bırakır */
-        font-size: 0.9rem; /* Detay metinlerin boyutunu ayarlar */
-        color: #555; /* Detay metinlerin rengini ayarlar */
+        margin: 5px 0;
+        font-size: 0.9rem;
+        color: #555;
+      }
+
+      /* Bileti Al düğmesi */
+      .buy-ticket-button {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        margin-top: 10px;
+      }
+
+      .buy-ticket-button:hover {
+        background-color: #218838;
       }
     </style>
   </head>
@@ -298,44 +331,47 @@
           const flights = flightsData.filter(flight => flight.departure_time.startsWith(date));
           if (flights.length > 0) {
               flights.forEach(flight => {
-                  const flightDuration = calculateFlightDuration(flight.departure_time, flight.arrival_time);
+                const flightDuration = calculateFlightDuration(flight.departure_time, flight.arrival_time);
 
-                  const flightCard = `
-                      <div class="card">
-                          <div class="card-left">
-                              <div class="time-info">
-                                  <p>${flight.departure_time.split(" ")[1]}</p>
-                                  <p>${flight.departure_airport}</p>
-                              </div>
-                              <div class="route">
-                                  <div class="route-line"></div>
-                                  <div class="route-logo"></div>
-                                  <div class="route-line"></div>
-                              </div>
-                              <div class="time-info">
-                                  <p>${flight.arrival_time.split(" ")[1]}</p>
-                                  <p>${flight.arrival_airport}</p>
-                              </div>
-                              <div class="additional-info">
-                                  <p><span class="heading">Süre:</span> ${flightDuration}</p>
-                                  <p><span class="heading">Fiyat:</span> ${flight.price} TL</p>
-                              </div>
-                          </div>
-                          <div class="card-right">
-                              <button class="details-button" onclick="toggleDetails(this)">Seyahat Detayları</button>
-                              <div class="details-content" style="display: none;">
-                                  <p><span class="heading">Uçuş Numarası:</span> ${flight.flight_number}</p>
-                                  <p><span class="heading">Kalkış Zamanı:</span> ${flight.departure_time}</p>
-                                  <p><span class="heading">Varış Zamanı:</span> ${flight.arrival_time}</p>
-                                  <p><span class="heading">Uçuş Yönü:</span> ${flight.flight_direction}</p>
-                                  <p><span class="heading">Koltuk Sayısı:</span> ${flight.available_seats}</p>
-                                  <p><span class="heading">Uçak Tipi:</span> ${flight.airplane_type_id}</p>
-                                  <p><span class="heading">Servis Tipi:</span> ${flight.svc_type}</p>
-                              </div>
-                          </div>
+                const flightCard = `
+                  <div class="card">
+                    <div class="card-left">
+                      <div class="time-info">
+                          <p><span class="heading">Uçuş Numarası:</span> ${flight.flight_number}</p>
                       </div>
-                  `;
-                  flightsContainer.innerHTML += flightCard;
+                      <div class="time-info">
+                        <p>${flight.departure_time.split(" ")[1]}</p>
+                        <p>${flight.departure_airport}</p>
+                      </div>
+                      <div class="route">
+                        <div class="route-line"></div>
+                        <div class="route-logo"></div>
+                        <div class="route-line"></div>
+                      </div>
+                      <div class="time-info">
+                        <p>${flight.arrival_time.split(" ")[1]}</p>
+                        <p>${flight.arrival_airport}</p>
+                      </div>
+                      <div class="time-info">
+                          <p><span class="heading">Fiyat:</span> ${flight.price} TL</p>
+                          <p><span class="heading">Süre:</span> ${flightDuration}</p>
+                      </div>
+                    </div>
+                    <div class="card-right">
+                      <button class="details-button" onclick="toggleDetails(this)">Seyahat Detayları</button>
+                      <div class="details-content">
+                          <p><span class="heading">Uçuş Numarası:</span> ${flight.flight_number}</p>
+                          <p><span class="heading">Kalkış Zamanı:</span> ${flight.departure_time}</p>
+                          <p><span class="heading">Varış Zamanı:</span> ${flight.arrival_time}</p>
+                          <p><span class="heading">Fiyat:</span> ${flight.price} TL</p>
+                          <p><span class="heading">Uçuş Yönü:</span> ${flight.flight_direction}</p>
+                          <p><span class="heading">Koltuk Sayısı:</span> ${flight.available_seats}</p>
+                          <button class="buy-ticket-button" onclick="buyTicket('${flight.flight_number}')">Bileti Al</button>
+                      </div>
+                    </div>
+                  </div>
+                `;
+                flightsContainer.innerHTML += flightCard;
               });
           } else {
               flightsContainer.innerHTML = '<div class="no-flights">Bu tarihte uçuş bulunmamaktadır.</div>';
@@ -344,7 +380,17 @@
 
       function toggleDetails(button) {
           const detailsContent = button.nextElementSibling;
-          detailsContent.style.display = detailsContent.style.display === 'block' ? 'none' : 'block';
+          if (detailsContent.style.display === 'block') {
+              detailsContent.style.display = 'none';
+              button.classList.remove('collapsed');
+          } else {
+              detailsContent.style.display = 'block';
+              button.classList.add('collapsed');
+          }
+      }
+
+      function buyTicket(flightNumber) {
+          alert(`Flight code: ${flightNumber} için bilet alındı.`);
       }
 
       function calculateFlightDuration(departureTime, arrivalTime) {
