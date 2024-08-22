@@ -279,12 +279,19 @@
                 </div>
                 <div class="airline-image">
                   <span class="airline-image-wrapper">
-                    <img src="https://cdn.turkishairlines.com/m/3afd46cf114f6d07/original/carriercode_22x22-thy-png.png">
+                    <img
+                      src="https://cdn.turkishairlines.com/m/3afd46cf114f6d07/original/carriercode_22x22-thy-png.png"
+                      alt="Airline Logo"
+                    />
                   </span>
                 </div>
               </div>
               <div class="port-segment destination">
-                <div class="time">{{ flight.arrival_time.split(' ')[1] }}</div>
+                <div class="time">
+                  {% if 'arrival_time' in flight %} {{
+                  flight.arrival_time.split(' ')[1] }} {% else %} Bilgi Yok {%
+                  endif %}
+                </div>
                 <div class="port">{{ flight.arrival_airport }}</div>
                 <div class="name">Varış Yeri</div>
               </div>
