@@ -321,76 +321,104 @@
     </div>
 
     <script>
-      const flightsData = {{ flights|tojson }};
-
-      function showFlights(date) {
-          document.querySelectorAll('.date-box').forEach(box => box.classList.remove('active'));
-          document.querySelector(`.date-box[onclick="showFlights('${date}')"]`).classList.add('active');
-
-          const flightsContainer = document.getElementById('flights-container');
-          flightsContainer.innerHTML = '';
-
-          const flights = flightsData.filter(flight => flight.departure_time.startsWith(date));
-
-          if (flights.length > 0) {
-              flights.forEach(flight => {
-                  const flightCard = `
-                      <div class="flight-card">
-                          <div class="flight-info">
-                              <div class="hm__style_flight-canvas-row__G2UwI">
-                                  <div class="hm__style_flight-canvas__IGagI">
-                                      <div class="hm__style_port-segment__n8S_j">
-                                          <div class="hm__style_flight-segment__PKt73 hm__style_origin__0iAN8">
-                                              <div class="hm__style_time__sYwLh">
-                                                  ${flight.departure_time.split(' ')[1]}
-                                              </div>
-                                              <div class="hm__style_port__9GrxX">
-                                                  ${flight.departure_airport}
-                                              </div>
-                                              <div class="hm__style_name__DZtrL">Kalkış Yeri</div>
-                                          </div>
-                                      </div>
-                                      <div class="hm__style_flight-canvas-content__TYV30">
-                                          <span class="hm__style_flight-canvas-line__whuIp"></span>
-                                          <div class="hm__style_port-transfers__UXs8y">
-                                              <div class="hm__style_port-segment__n8S_j hm__style_port-segment-transfer__orfpo">
-                                                  <span class="hm__style_transfer-port__zZ7ea">Direkt</span>
-                                              </div>
-                                          </div>
-                                      </div>
-                                      <div class="hm__style_port-segment__n8S_j">
-                                          <div class="hm__style_flight-segment__PKt73 hm__style_destination__gavgI">
-                                              <div class="hm__style_time__sYwLh">
-                                                  ${flight.arrival_time ? flight.arrival_time.split(' ')[1] : 'Bilgi Yok'}
-                                              </div>
-                                              <div class="hm__style_port__9GrxX">
-                                                  ${flight.arrival_airport}
-                                              </div>
-                                              <div class="hm__style_name__DZtrL">Varış Yeri</div>
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div class="hm__style_flight-subdetail__E3kCf hm__style_flight-subdetail-large-screen__Xpp7i">
-                                      <div class="hm__style_flight-subdetail-duration__xECBS">
-                                          <span>Uçuş süresi</span>
-                                          <span class="hm__style_flight-subdetail-duration-text__FlKka">${flight.flight_duration}</span>
-                                          <span class="hm__style_flight-subdetail-plane-type__563FC">
-                                              <span>Uçak tipi:</span>
-                                              <span class="hm__style_flight-subdetail-duration-text__FlKka">${flight.airplane_type}</span>
-                                          </span>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="price">TRY ${flight.price}</div>
-                      </div>
-                  `;
-                  flightsContainer.innerHTML += flightCard;
-              });
-          } else {
-              flightsContainer.innerHTML = '<div class="no-flights">Bu tarihte uçuş bulunmamaktadır.</div>';
-          }
-      }
+        const flightsData = [
+            {
+                flight_code: "{{ flight_code }}",
+                departure: "{{ departure }}",
+                arrival: "{{ arrival }}",
+                departure_time: "{{ departure_time }}",
+                arrival_time: "{{ arrival_time }}",
+                price: "{{ price }}",
+                flight_direction: "{{ flight_direction }}",
+                airplane_type: "{{ airplane_type_name }}",
+                svc_type: "{{ svc_type }}",
+                date: "{{ date }}"
+            },
+            // Diğer uçuşlar buraya eklenebilir
+        ];
+    
+        function showFlights(date) {
+            document.querySelectorAll('.date-box').forEach(box => box.classList.remove('active'));
+            document.querySelector(`.date-box[onclick="showFlights('${date}')"]`).classList.add('active');
+    
+            const flightsContainer = document.getElementById('flights-container');
+            flightsContainer.innerHTML = '';
+    
+            const flights = flightsData.filter(flight => flight.date === date);
+    
+            if (flights.length > 0) {
+                flights.forEach(flight => {
+                    const flightCard = `
+                        <div class="flight-card">
+                            <div class="flight-info">
+                                <div class="hm__style_flight-canvas-row__G2UwI">
+                                    <div class="hm__style_flight-canvas__IGagI">
+                                        <div class="hm__style_port-segment__n8S_j">
+                                            <div class="hm__style_flight-segment__PKt73 hm__style_origin__0iAN8">
+                                                <div class="hm__style_time__sYwLh">
+                                                    ${flight.departure_time.split(' ')[1]}
+                                                </div>
+                                                <div class="hm__style_port__9GrxX">
+                                                    ${flight.departure}
+                                                </div>
+                                                <div class="hm__style_name__DZtrL">Kalkış Yeri</div>
+                                            </div>
+                                        </div>
+                                        <div class="hm__style_flight-canvas-content__TYV30">
+                                            <span class="hm__style_flight-canvas-line__whuIp"></span>
+                                            <div class="hm__style_port-transfers__UXs8y">
+                                                <div class="hm__style_port-segment__n8S_j hm__style_port-segment-transfer__orfpo">
+                                                    <span class="hm__style_transfer-port__zZ7ea">${flight.flight_direction}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="hm__style_port-segment__n8S_j">
+                                            <div class="hm__style_flight-segment__PKt73 hm__style_destination__gavgI">
+                                                <div class="hm__style_time__sYwLh">
+                                                    ${flight.arrival_time ? flight.arrival_time.split(' ')[1] : 'Bilgi Yok'}
+                                                </div>
+                                                <div class="hm__style_port__9GrxX">
+                                                    ${flight.arrival}
+                                                </div>
+                                                <div class="hm__style_name__DZtrL">Varış Yeri</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="hm__style_flight-subdetail__E3kCf hm__style_flight-subdetail-large-screen__Xpp7i">
+                                        <div class="hm__style_flight-subdetail-duration__xECBS">
+                                            <span>Uçuş süresi</span>
+                                            <span class="hm__style_flight-subdetail-duration-text__FlKka">${calculateFlightDuration(flight.departure_time, flight.arrival_time)}</span>
+                                            <span class="hm__style_flight-subdetail-plane-type__563FC">
+                                                <span>Uçak tipi:</span>
+                                                <span class="hm__style_flight-subdetail-duration-text__FlKka">${flight.airplane_type}</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="price">TRY ${flight.price}</div>
+                        </div>
+                    `;
+                    flightsContainer.innerHTML += flightCard;
+                });
+            } else {
+                flightsContainer.innerHTML = '<div class="no-flights">Bu tarihte uçuş bulunmamaktadır.</div>';
+            }
+        }
+    
+        function calculateFlightDuration(departureTime, arrivalTime) {
+            if (!departureTime || !arrivalTime) return 'Bilinmiyor';
+            
+            const departure = new Date(departureTime);
+            const arrival = new Date(arrivalTime);
+            const duration = new Date(arrival - departure);
+    
+            const hours = duration.getUTCHours();
+            const minutes = duration.getUTCMinutes();
+    
+            return `${hours}h ${minutes}m`;
+        }
     </script>
+    
   </body>
 </html>
