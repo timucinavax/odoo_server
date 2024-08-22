@@ -21,7 +21,6 @@
         font-size: 1.5rem;
       }
 
-      /* Breadcrumb Navigation */
       .breadcrumb-container {
         display: flex;
         justify-content: space-between;
@@ -32,7 +31,6 @@
       }
 
       .breadcrumb-item {
-        position: relative;
         text-align: center;
         flex: 1;
         cursor: pointer;
@@ -126,96 +124,66 @@
         padding: 15px;
       }
 
-      .flight-card {
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        margin: 10px 0;
-        padding: 15px;
-        background-color: white;
+      .card {
+        display: flex;
+        margin-bottom: 20px;
+      }
+
+      .card-left, .card-right {
+        background-color: #ffffff;
+        border-radius: 10px;
+        padding: 20px;
+      }
+
+      .card-left {
+        width: 450px;
+      }
+
+      .card-right {
+        width: 200px;
+        border-left: 1px dashed #ccc;
+      }
+
+      .header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        transition: box-shadow 0.3s;
+        padding-bottom: 15px;
       }
 
-      .flight-card:hover {
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      }
-
-      .flight-info {
-        display: flex;
-        align-items: center;
-      }
-
-      .hm__style_flight-canvas-row__G2UwI {
-        display: flex;
-        flex-direction: row;
-      }
-
-      .hm__style_flight-canvas__IGagI {
-        display: flex;
-        align-items: center;
-      }
-
-      .hm__style_port-segment__n8S_j {
-        display: flex;
-        flex-direction: column;
-        text-align: center;
-      }
-
-      .hm__style_flight-segment__PKt73 {
-        padding: 5px 10px;
-      }
-
-      .hm__style_time__sYwLh {
-        font-size: 1.2rem;
-        font-weight: bold;
-        margin-bottom: 5px;
-      }
-
-      .hm__style_port__9GrxX {
-        font-size: 1.1rem;
-        font-weight: bold;
-      }
-
-      .hm__style_name__DZtrL {
-        font-size: 0.9rem;
-        color: #666;
-      }
-
-      .hm__style_flight-canvas-content__TYV30 {
-        display: flex;
-        align-items: center;
-        padding: 0 15px;
-      }
-
-      .hm__style_flight-canvas-line__whuIp {
+      .header img {
         width: 100px;
-        height: 1px;
-        background-color: #000;
+      }
+
+      .barcode img {
+        height: 50px;
+        width: 150px;
+        transform: rotate(90deg);
+      }
+
+      .main-details, .flight-details {
+        margin-top: 20px;
+      }
+
+      .centered {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+
+      .centered p {
         margin: 0 10px;
       }
 
-      .hm__style_port-transfers__UXs8y {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .hm__style_transfer-port__zZ7ea {
-        font-size: 0.9rem;
+      .flight-details p {
         font-weight: bold;
       }
 
-      .hm__style_airline-image__dW0BE {
-        margin-left: 10px;
-      }
-
-      .price {
-        font-size: 1.5rem;
-        font-weight: bold;
-        color: #28a745;
-        text-align: right;
+      .heading {
+        font-size: 12px;
+        color: #ACADAF;
+        text-transform: uppercase;
       }
     </style>
   </head>
@@ -304,7 +272,6 @@
       </div>
     </div>
 
-    <!-- Tarih Seçici -->
     <div class="date-selector">
       {% for date in dates %}
       <div class="date-box" onclick="showFlights('{{ date }}')">
@@ -316,101 +283,94 @@
       {% endfor %}
     </div>
 
-    <!-- Uçuş Bilgileri -->
     <div class="flights-container" id="flights-container"></div>
 
     <script>
-      const flightsData = {{ flights|tojson }};
+        const flightsData = {{ flights|tojson }};
 
-      function showFlights(date) {
-          document.querySelectorAll('.date-box').forEach(box => box.classList.remove('active'));
-          document.querySelector(`.date-box[onclick="showFlights('${date}')"]`).classList.add('active');
+        function showFlights(date) {
+            document.querySelectorAll('.date-box').forEach(box => box.classList.remove('active'));
+            document.querySelector(`.date-box[onclick="showFlights('${date}')"]`).classList.add('active');
 
-          const flightsContainer = document.getElementById('flights-container');
-          flightsContainer.innerHTML = '';
+            const flightsContainer = document.getElementById('flights-container');
+            flightsContainer.innerHTML = '';
 
-          const flights = flightsData.filter(flight => flight.departure_time.startsWith(date));
+            const flights = flightsData.filter(flight => flight.departure_time.startsWith(date));
 
-          if (flights.length > 0) {
-              flights.forEach(flight => {
-                  const flightCard = `
-                      <div class="flight-card">
-                          <div class="flight-info">
-                              <div class="hm__style_flight-canvas-row__G2UwI">
-                                  <div class="hm__style_flight-canvas__IGagI">
-                                      <div class="hm__style_port-segment__n8S_j">
-                                          <div class="hm__style_flight-segment__PKt73 hm__style_origin__0iAN8">
-                                              <div class="hm__style_time__sYwLh">
-                                                  ${flight.departure_time.split(' ')[1]}
-                                              </div>
-                                              <div class="hm__style_port__9GrxX">
-                                                  ${flight.departure_airport}
-                                              </div>
-                                              <div class="hm__style_name__DZtrL">Kalkış Yeri</div>
-                                          </div>
-                                      </div>
-                                      <div class="hm__style_flight-canvas-content__TYV30">
-                                          <span class="hm__style_flight-canvas-line__whuIp"></span>
-                                          <div class="hm__style_port-transfers__UXs8y">
-                                              <div class="hm__style_port-segment__n8S_j hm__style_port-segment-transfer__orfpo">
-                                                  <span class="hm__style_transfer-port__zZ7ea">${flight.flight_direction}</span>
-                                              </div>
-                                          </div>
-                                      </div>
-                                      <div class="hm__style_port-segment__n8S_j">
-                                          <div class="hm__style_flight-segment__PKt73 hm__style_destination__gavgI">
-                                              <div class="hm__style_time__sYwLh">
-                                                  ${flight.arrival_time.split(' ')[1]}
-                                              </div>
-                                              <div class="hm__style_port__9GrxX">
-                                                  ${flight.arrival_airport}
-                                              </div>
-                                              <div class="hm__style_name__DZtrL">Varış Yeri</div>
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div class="hm__style_flight-subdetail__E3kCf hm__style_flight-subdetail-large-screen__Xpp7i">
-                                      <div class="hm__style_flight-subdetail-duration__xECBS">
-                                          <span>Uçuş süresi</span>
-                                          <span class="hm__style_flight-subdetail-duration-text__FlKka">
-                                              ${calculateFlightDuration(flight.departure_time, flight.arrival_time)}
-                                          </span>
-                                          <span class="hm__style_flight-subdetail-plane-type__563FC">
-                                              <span>Uçak tipi:</span>
-                                              <span class="hm__style_flight-subdetail-duration-text__FlKka">${flight.airplane_type_id}</span>
-                                          </span>
-                                          <span class="hm__style_flight-subdetail-available-seats">
-                                              <span>Mevcut Koltuklar:</span>
-                                              <span>${flight.available_seats}</span>
-                                          </span>
-                                      </div>
-                                  </div>
+            if (flights.length > 0) {
+                flights.forEach(flight => {
+                    const flightCard = `
+                      <div class="card">
+                        <div class="card-left">
+                          <header class="header">
+                            <img src="airline_logo_url" alt="Airline Logo" />
+                            <h5>${flight.class}</h5>
+                          </header>
+                          <main>
+                            <div class="barcode">
+                              <img src="barcode_url" alt="Barcode" />
+                            </div>
+                            <section class="main-details">
+                              <p><span class="heading">Yolcu</span><br>${flight.passenger_name}</p>
+                              <div class="centered">
+                                <p><span class="heading">Nereden</span><br>${flight.departure_airport}</p> 
+                                &#8594;
+                                <p><span class="heading">Nereye</span><br>${flight.arrival_airport}</p>
+                                <p><span class="heading">Tarih</span><br>${flight.date}</p>
                               </div>
-                          </div>
-                          <div class="price">TRY ${flight.price}</div>
-                          <button class="buy-ticket-button" onclick="buyTicket('${flight.flight_code}')">Bileti Al</button>
+                              <div class="flight-details">
+                                <p><span class="heading">Uçuş</span><br>${flight.flight_code}</p> 
+                                <p><span class="heading">Kalkış</span><br>${flight.departure_time}</p>
+                                <p><span class="heading">Kapı</span><br>${flight.gate}</p>
+                                <p><span class="heading">Koltuk</span><br>${flight.seat}</p>
+                              </div>
+                              <h5>Kalkıştan 20 dakika önce kapılar kapanır.</h5>
+                            </section>
+                          </main>
+                        </div>
+                        <div class="card-right">
+                          <header class="header">
+                            <img src="airline_logo_url" alt="Airline Logo" />
+                          </header>
+                          <main>
+                            <div class="centered">
+                              <p><span class="heading">Yolcu</span><br>${flight.passenger_name}</p>
+                              <p><span class="heading">Koltuk</span><br>${flight.seat}</p>
+                            </div>
+                            <div class="centered">
+                              <p><span class="heading">Nereden</span><br>${flight.departure_city}</p> 
+                              &#8594;
+                              <p><span class="heading">Nereye</span><br>${flight.arrival_city}</p>
+                            </div>
+                            <div class="centered">
+                              <p><span class="heading">Uçuş</span><br>${flight.flight_code}</p> 
+                              <p><span class="heading">Tarih</span><br>${flight.date}</p>
+                            </div>
+                          </main>
+                        </div>
                       </div>
-                  `;
-                  flightsContainer.innerHTML += flightCard;
-              });
-          } else {
-              flightsContainer.innerHTML = '<div class="no-flights">Bu tarihte uçuş bulunmamaktadır.</div>';
-          }
+                    `;
+                    flightsContainer.innerHTML += flightCard;
+                });
+            } else {
+                flightsContainer.innerHTML = '<div class="no-flights">Bu tarihte uçuş bulunmamaktadır.</div>';
+            }
+        }
+
+        function buyTicket(flightCode) {
+            alert(`Flight code: ${flightCode} için bilet alındı.`);
+        }
+
+        function calculateFlightDuration(departureTime, arrivalTime) {
+          const departure = new Date(departureTime);
+          const arrival = new Date(arrivalTime);
+          const duration = new Date(arrival - departure);
+
+          const hours = Math.floor(duration / (1000 * 60 * 60));
+          const minutes = Math.floor((duration % (1000 * 60 * 60)) / (1000 * 60));
+
+          return `${hours}h ${minutes}m`;
       }
-
-      function buyTicket(flightCode) {
-          alert(`Flight code: ${flightCode} için bilet alındı.`);
-      }
-      function calculateFlightDuration(departureTime, arrivalTime) {
-        const departure = new Date(departureTime);
-        const arrival = new Date(arrivalTime);
-        const duration = new Date(arrival - departure); 
-
-        const hours = Math.floor(duration / (1000 * 60 * 60));
-        const minutes = Math.floor((duration % (1000 * 60 * 60)) / (1000 * 60));
-
-        return `${hours}h ${minutes}m`;
-    }
     </script>
   </body>
 </html>
