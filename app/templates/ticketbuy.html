@@ -142,15 +142,13 @@
       <div class="date-selector">
         {% for date in dates %}
         <div class="date-box {% if selected_date == date %}selected{% endif %}">
-          <a
-            href="{{ url_for('ticketbuy_by_month', year=date.year, month=date.month) }}"
-            style="text-decoration: none; color: inherit"
-          >
-            {{ format_datetime(date, 'dd', locale='tr_TR') }} <br />
-            {{ format_datetime(date, 'EEEE', locale='tr_TR') }} <br />
-            TRY 1.507
-          </a>
-        </div>
+            <a href="{{ url_for('ticketbuy_by_month', year=date.year, month=date.month) }}"
+               style="text-decoration: none; color: inherit">
+              {{ format_datetime(date, 'dd', locale='tr_TR') }} <br />
+              {{ format_datetime(date, 'EEEE', locale='tr_TR') }} <br />
+              TRY 1.507
+            </a>
+          </div>          
         {% endfor %}
       </div>
 
