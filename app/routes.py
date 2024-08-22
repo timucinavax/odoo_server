@@ -34,6 +34,19 @@ def generate_dates_for_month(year, month):
 
     return dates
 
+from datetime import datetime
+import calendar
+
+def format_dates(dates):
+    formatted_dates = []
+    for date in dates:
+        formatted_dates.append({
+            'day': date.day,
+            'weekday': calendar.day_name[date.weekday()],
+            'date': date
+        })
+    return formatted_dates
+
 def role_required(allowed_roles):
     def decorator(f):
         @wraps(f)
@@ -214,26 +227,29 @@ def ticketbuy():
     return render_template('ticketbuy.html', flights=flights, year=year, month=month)
 
 
-@app.route('/ticketbuy/<int:year>/<int:month>')
-def ticketbuy_by_month(year, month):
-    dates = generate_dates_for_month(year, month)
-    selected_date = dates[0]
+@app.route('/ticketbuy/<int:year>/<int:month>/<int:day>')
+def ticketbuy_by_day(year, month, day):
+    selected_date = datetime(year, month, day)
 
     uid, models = odoo_connect()
     if not uid:
         return redirect(url_for('dashboard'))
 
     domain = [
-        ('departure_time', '>=', f'{selected_date.strftime("%Y-%m-%d")} 00:00:00'),
-        ('departure_time', '<=', f'{selected_date.strftime("%Y-%m-%d")} 23:59:59')
+        ('date', '=', f'{selected_date.strftime("%Y-%m-%d")}')
     ]
-    flights = models.execute_kw(current_app.config['ODOO_DB'], uid, current_app.config['ODOO_PASSWORD'], 
-                                'flight.management', 'search_read', [domain], 
-                                {'fields': ['flight_direction', 'flight_number', 'available_seats', 'departure_airport', 'arrival_airport', 'departure_time', 'price']})
+    flights = models.execute_kw(
+        current_app.config['ODOO_DB'], uid, current_app.config['ODOO_PASSWORD'],
+        'flight.management', 'search_read', [domain], 
+        {'fields': ['flight_direction', 'flight_number', 'available_seats', 'departure_airport', 'arrival_airport', 'departure_time', 'price', 'flight_duration', 'airplane_type']}
+    )
 
     no_flights = len(flights) == 0
+    dates = generate_dates_for_month(year, month)
+    formatted_dates = format_dates(dates)
 
-    return render_template('ticketbuy.html', flights=flights, dates=dates, selected_date=selected_date, year=year, month=month, no_flights=no_flights)
+    return render_template('ticketbuy.html', flights=flights, dates=formatted_dates, selected_date=selected_date, year=year, month=month, no_flights=no_flights)
+
 
 @app.route('/plane_layout/<int:flight_id>', methods=['GET'])
 @role_required(['admin'])
