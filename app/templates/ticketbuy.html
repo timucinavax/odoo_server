@@ -99,61 +99,98 @@
         gap: 15px;
         justify-content: center;
       }
-
+      
       .card {
         display: flex;
-        flex-direction: row;
-        width: 1000px; /* Kart genişliği artırıldı */
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px;
         border: 1px solid #ddd;
         border-radius: 8px;
-        overflow: hidden;
         background-color: #fff;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s, box-shadow 0.3s;
+        width: 800px;
+        margin: 10px auto;
       }
-
-      .card:hover {
-        transform: scale(1.02);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-      }
-
-      .card-left,
-      .card-right {
-        padding: 20px;
+      
+      .card-left {
         display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        width: 50%; /* Her iki tarafı da eşit genişlikte yapmak için */
-      }
-
-      .header {
-        display: flex;
-        justify-content: space-between;
         align-items: center;
-        padding-bottom: 15px;
       }
-
-      .header img {
-        max-width: 120px;
-        height: auto;
+      
+      .time-info {
+        text-align: center;
+        margin-right: 20px;
       }
-
-      .main-details,
-      .flight-details {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 15px;
-      }
-
-      .flight-details p {
+      
+      .time-info p {
+        margin: 5px 0;
         font-weight: bold;
+        font-size: 1.2rem;
       }
-
-      .heading {
+      
+      .route {
+        display: flex;
+        align-items: center;
+      }
+      
+      .route-line {
+        width: 100px;
+        height: 1px;
+        background-color: #000;
+        position: relative;
+        margin: 0 10px;
+      }
+      
+      .route-line::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: -5px;
+        width: 10px;
+        height: 10px;
+        background-color: #004080;
+        border-radius: 50%;
+      }
+      
+      .route-line::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: -5px;
+        width: 10px;
+        height: 10px;
+        background-color: #004080;
+        border-radius: 50%;
+      }
+      
+      .route-logo {
+        width: 20px;
+        height: 20px;
+        background-color: red;
+        border-radius: 50%;
+      }
+      
+      .flight-details {
         font-size: 0.9rem;
-        color: #888;
-        text-transform: uppercase;
+        color: #555;
       }
+      
+      .card-right {
+        font-size: 1rem;
+        font-weight: bold;
+        color: #004080;
+      }
+      
+      .details-button {
+        background-color: transparent;
+        border: none;
+        color: #004080;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 1rem;
+      }
+      
     </style>
   </head>
   <body>
@@ -269,44 +306,22 @@
                   const flightCard = `
                     <div class="card">
                       <div class="card-left">
-                        <header class="header">
-                          <h5>${flight.flight_direction} Yönü</h5>
-                        </header>
-                        <section class="main-details">
-                          <p><span class="heading">Yolcu</span><br>${flight.user_id ? flight.user_id : 'Yolcu Bilgisi Yok'}</p>
-                          <div class="centered">
-                            <p><span class="heading">Nereden</span><br>${flight.departure_airport}</p>
-                            &#8594;
-                            <p><span class="heading">Nereye</span><br>${flight.arrival_airport}</p>
-                            <p><span class="heading">Tarih</span><br>${flight.date}</p>
-                          </div>
-                          <div class="flight-details">
-                            <p><span class="heading">Uçuş</span><br>${flight.flight_number}</p>
-                            <p><span class="heading">Kalkış</span><br>${flight.departure_time}</p>
-                            <p><span class="heading">Kapı</span><br>Belirtilmemiş</p>
-                            <p><span class="heading">Koltuk</span><br>Belirtilmemiş</p>
-                          </div>
-                          <h5>Kalkıştan 20 dakika önce kapılar kapanır.</h5>
-                        </section>
+                        <div class="time-info">
+                          <p>${flight.departure_time.split(" ")[1]}</p>
+                          <p>${flight.departure_airport}</p>
+                        </div>
+                        <div class="route">
+                          <div class="route-line"></div>
+                          <div class="route-logo"></div>
+                          <div class="route-line"></div>
+                        </div>
+                        <div class="time-info">
+                          <p>${flight.arrival_time.split(" ")[1]}</p>
+                          <p>${flight.arrival_airport}</p>
+                        </div>
                       </div>
                       <div class="card-right">
-                        <header class="header">
-                        </header>
-                        <section>
-                          <div class="centered">
-                            <p><span class="heading">Yolcu</span><br>${flight.user_id ? flight.user_id : 'Yolcu Bilgisi Yok'}</p>
-                            <p><span class="heading">Koltuk</span><br>Belirtilmemiş</p>
-                          </div>
-                          <div class="centered">
-                            <p><span class="heading">Nereden</span><br>${flight.departure_airport}</p>
-                            &#8594;
-                            <p><span class="heading">Nereye</span><br>${flight.arrival_airport}</p>
-                          </div>
-                          <div class="centered">
-                            <p><span class="heading">Uçuş</span><br>${flight.flight_number}</p>
-                            <p><span class="heading">Tarih</span><br>${flight.date}</p>
-                          </div>
-                        </section>
+                        <button class="details-button">Seyahat Detayları</button>
                       </div>
                     </div>
                   `;
@@ -315,6 +330,7 @@
               } else {
                 flightsContainer.innerHTML = '<div class="no-flights">Bu tarihte uçuş bulunmamaktadır.</div>';
               }
+              
         }
 
         function buyTicket(flightCode) {
