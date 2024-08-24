@@ -4,6 +4,7 @@ import xmlrpc.client
 from werkzeug.security import generate_password_hash, check_password_hash
 from app import app
 from datetime import datetime, timedelta
+import calendar
 
 @app.template_filter('dayname')
 def dayname_filter(date_str):
@@ -33,8 +34,8 @@ def odoo_connect():
 
 def generate_dates_for_month(year, month):
     start_date = datetime(year, month, 1)
-    next_month = start_date.replace(day=28) + timedelta(days=4)  # Sonraki aya geçiş
-    end_date = next_month - timedelta(days=next_month.day)  # Bu ayın son günü
+    next_month = start_date.replace(day=28) + timedelta(days=4) 
+    end_date = next_month - timedelta(days=next_month.day)
     current_date = start_date
     dates = []
 
@@ -43,9 +44,6 @@ def generate_dates_for_month(year, month):
         current_date += timedelta(days=1)
 
     return dates
-
-from datetime import datetime
-import calendar
 
 def format_dates(dates):
     formatted_dates = []
@@ -300,7 +298,6 @@ def search_flights():
     )
 
     return jsonify(flights)
-
 
 @app.route('/logout')
 def logout():

@@ -76,3 +76,12 @@ function calculateFlightDuration(departureTime, arrivalTime) {
     const minutes = Math.floor((duration % (1000 * 60 * 60)) / (1000 * 60));
     return `${hours}h ${minutes}m`;
 }
+
+function buyTicket(flightNumber) {
+    alert(`Flight code: ${flightNumber} için bilet alındı.`);
+    const passengerInfoStep = document.querySelector('.breadcrumb-item[data-number="1"]');
+    passengerInfoStep.classList.add('active');
+
+    passengerInfoStep.scrollIntoView({ behavior: 'smooth' });
+}
+
