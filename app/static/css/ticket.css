@@ -8,30 +8,50 @@ html {
 }
 
 .breadcrumb-container {
-    margin-bottom: 20px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    background-color: #fff;
-    padding: 15px;
-    border-bottom: 1px solid #ddd;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    margin-bottom: 20px;
 }
 
 .breadcrumb-item {
-    text-align: center;
     flex: 1;
-    cursor: pointer;
+    text-align: center;
     padding: 10px;
-    color: #004080;
+    position: relative;
+    cursor: pointer;
+    border-radius: 8px;
     background-color: #e9ecef;
-    border-radius: 5px;
     transition: background-color 0.3s, color 0.3s;
+}
+
+.breadcrumb-item:not(:last-child)::after {
+    content: ">";
+    position: absolute;
+    right: -15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.5em;
+    color: #6c757d;
 }
 
 .breadcrumb-item.active {
     background-color: #dc3545;
-    color: white;
+    color: #fff;
 }
+
+.breadcrumb-icon {
+    font-size: 1.5em;
+    margin-bottom: 5px;
+}
+
+.breadcrumb-label {
+    font-size: 0.9em;
+    font-weight: bold;
+}
+
 
 /* Tarih Seçici */
 .date-selector {
