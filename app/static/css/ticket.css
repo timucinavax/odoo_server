@@ -46,14 +46,19 @@ html {
 
 .date-box {
     text-align: center;
-    padding: 10px;
+    padding: 15px;
     margin: 5px;
     border-radius: 8px;
     border: 1px solid #ddd;
     background-color: #f9f9f9;
-    min-width: 100px;
+    width: 100px; /* Kare şekil için genişlik ve yükseklik aynı olmalı */
+    height: 100px;
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .date-box.active {

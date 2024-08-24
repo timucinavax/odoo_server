@@ -83,7 +83,8 @@ function buyTicket(flightNumber) {
         document.getElementById('price-summary').textContent = selectedFlight.price;
     }
 
-    proceedToPassengerInfo();
+    document.getElementById('confirmFlightNumber').textContent = flightNumber;
+    document.getElementById('confirmationModal').style.display = 'block';
 }
 
 function proceedToPassengerInfo() {
@@ -93,7 +94,12 @@ function proceedToPassengerInfo() {
     
     document.querySelector('.date-selector').style.display = 'none';
     document.querySelector('.flights-container').style.display = 'none';
-    document.querySelector('.passenger-info-container').style.display = 'block';
+    document.querySelector('#passenger-info-form').style.display = 'block';
+    document.getElementById('confirmationModal').style.display = 'none';
+}
+
+function closeModal() {
+    document.getElementById('confirmationModal').style.display = 'none';
 }
 
 function goBackToFlightSelection() {
@@ -103,5 +109,22 @@ function goBackToFlightSelection() {
 
     document.querySelector('.date-selector').style.display = 'block';
     document.querySelector('.flights-container').style.display = 'block';
-    document.querySelector('.passenger-info-container').style.display = 'none';
+    document.querySelector('#passenger-info-form').style.display = 'none';
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+    const modalHTML = `
+        <div id="confirmationModal" class="modal" style="display:none;">
+            <div class="modal-content">
+                <span class="close-button" onclick="closeModal()">&times;</span>
+                <h3>Uçuş Onayı</h3>
+                <p>Flight Number: <span id="confirmFlightNumber"></span> için bilet almak istediğinize emin misiniz?</p>
+                <button id="confirm-purchase-button" class="btn btn-primary">Evet</button>
+                <button class="btn btn-secondary" onclick="closeModal()">Hayır</button>
+            </div>
+        </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+    document.getElementById('confirm-purchase-button').addEventListener('click', proceedToPassengerInfo);
+});
