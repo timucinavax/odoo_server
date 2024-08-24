@@ -54,31 +54,21 @@ html {
 
 
 /* Tarih Seçici */
-.date-selector {
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: center;
-    padding: 15px;
-    background-color: #fff;
-    overflow-x: auto;
-    border-bottom: 1px solid #ddd;
-}
-
 .date-box {
     text-align: center;
-    padding: 15px;
+    padding: 10px;
     margin: 5px;
     border-radius: 8px;
     border: 1px solid #ddd;
     background-color: #f9f9f9;
-    width: 100px; /* Kare şekil için genişlik ve yükseklik aynı olmalı */
-    height: 100px;
+    min-width: 100px;
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+}
+
+.date-box.active {
+    background-color: #dc3545;
+    color: white;
 }
 
 .date-box.active {
