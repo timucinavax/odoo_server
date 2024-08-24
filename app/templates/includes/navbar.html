@@ -1,39 +1,37 @@
 <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{ url_for('index')}}">
-            <img src="{{ url_for('static', filename='images/sehlen_logo.png') }}" alt="Sehlen Tourism" />
-            <span>SEHLEN TOURISM</span>
+            <img src="{{ url_for('static', filename='images/sehlen_logo.png') }}" alt="Sehlen Turizm" />
+            <span>SEHLEN TURİZM</span>
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Menüyü Aç">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
                 {% if current_page == 'admin' %}
-                    <!-- Admin Paneli için Navbar -->
                     <li class="nav-item">
-                        <a class="nav-link" onclick="showSection('all-flights')">All Flights</a>
+                        <a class="nav-link" onclick="showSection('all-flights')">Tüm Uçuşlar</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" onclick="showSection('add-outbound')">Add Outbound Flight</a>
+                        <a class="nav-link" onclick="showSection('add-outbound')">Gidiş Uçuşu Ekle</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" onclick="showSection('add-return')">Add Return Flight</a>
+                        <a class="nav-link" onclick="showSection('add-return')">Dönüş Uçuşu Ekle</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" onclick="showSection('outbound-list')">Outbound Flights</a>
+                        <a class="nav-link" onclick="showSection('outbound-list')">Gidiş Uçuşları</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" onclick="showSection('return-list')">Return Flights</a>
+                        <a class="nav-link" onclick="showSection('return-list')">Dönüş Uçuşları</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" onclick="showSection('users-list')">Users List</a>
+                        <a class="nav-link" onclick="showSection('users-list')">Kullanıcı Listesi</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('index') }}">Main Menu</a>
+                        <a class="nav-link" href="{{ url_for('index') }}">Ana Menü</a>
                     </li>
                 {% elif current_page == 'flight-ticket' %}
-                    <!-- Flight Ticket Sayfası için Navbar -->
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('flight_ticket') }}">Hoş Geldiniz, {{ logged_in_user }}</a>
                     </li>
@@ -50,7 +48,6 @@
                         <a class="nav-link" href="{{ url_for('logout') }}">Çıkış Yap</a>
                     </li>
                 {% elif current_page == 'index' %}
-                    <!-- Anasayfa için Navbar -->
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('index') }}">Anasayfa</a>
                     </li>
