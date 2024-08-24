@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Giriş / Kayıt{% endblock %}</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/sign.css') }}" rel="stylesheet">
+    {% block head %}{% endblock %}
+</head>
+<body>
+    {% include 'includes/navbar.html' %}
+    <div class="main-content">
+        {% block content %}{% endblock %}
+    </div>
+    {% include 'includes/footer.html' %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/sign.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

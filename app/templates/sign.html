@@ -1,73 +1,52 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giriş / Kayıt Ol</title>
-    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="{{ url_for('static', filename='css/sign.css') }}" rel="stylesheet">
-</head>
-<body>
-    <!-- Navbar Başlangıcı -->
-    {% include 'includes/navbar.html' %}
-    <!-- Navbar Sonu -->
+{% extends "layoutsign.html" %}
 
-    <!-- Formlar için Ana Konteyner -->
-    <div class="container my-5">
-        <div class="form-container sign-in-container">
-            <form id="sign-in-form" action="{{ url_for('login') }}" method="post">
-                <h1>Giriş Yap</h1>
-                <div class="role-selector">
-                    <button type="button" class="role-btn" data-role="user">Müşteri</button>
-                    <button type="button" class="role-btn" data-role="agency">Acenta</button>
-                    <button type="button" class="role-btn" data-role="admin">Admin</button>
-                </div>
-                <input type="hidden" name="role" id="selectedRoleLogin">
-                <input type="text" name="username" placeholder="Kullanıcı Adı" required>
-                <input type="password" name="password" placeholder="Şifre" required>
-                <button type="submit">Giriş Yap</button>
-                <p>Hesabınız yok mu? <a href="#" id="sign-up-link">Kayıt Ol</a></p>
-            </form>
-        </div>
+{% block content %}
+<div class="container">
+    <div class="form-container sign-in-container">
+        <form id="sign-in-form" action="{{ url_for('login') }}" method="post">
+            <h1>Giriş Yap</h1>
+            <div class="role-selector">
+                <button type="button" class="role-btn" data-role="user">Müşteri</button>
+                <button type="button" class="role-btn" data-role="agency">Acenta</button>
+                <button type="button" class="role-btn" data-role="admin">Admin</button>
+            </div>
+            <input type="hidden" name="role" id="selectedRoleLogin">
+            <input type="text" name="username" placeholder="Kullanıcı Adı" required>
+            <input type="password" name="password" placeholder="Şifre" required>
+            <button type="submit">Giriş Yap</button>
+            <p>Hesabınız yok mu? <a href="#" id="sign-up-link">Kayıt Ol</a></p>
+        </form>
+    </div>
 
-        <div class="form-container sign-up-container">
-            <form id="sign-up-form" action="{{ url_for('register') }}" method="post">
-                <h1>Kayıt Ol</h1>
-                <div class="role-selector">
-                    <button type="button" class="role-btn" data-role="user">Müşteri</button>
-                    <button type="button" class="role-btn" data-role="agency">Acenta</button>
-                </div>
-                <input type="hidden" name="role" id="selectedRoleRegister">
-                <input type="text" name="username" placeholder="Kullanıcı Adı" required>
-                <input type="email" name="email" placeholder="Email" required>
-                <input type="password" name="password" placeholder="Şifre" required>
-                <button type="submit">Kayıt Ol</button>
-                <p>Zaten hesabınız var mı? <a href="#" id="sign-in-link">Giriş Yap</a></p>
-            </form>
-        </div>
+    <div class="form-container sign-up-container">
+        <form id="sign-up-form" action="{{ url_for('register') }}" method="post">
+            <h1>Kayıt Ol</h1>
+            <div class="role-selector">
+                <button type="button" class="role-btn" data-role="user">Müşteri</button>
+                <button type="button" class="role-btn" data-role="agency">Acenta</button>
+            </div>
+            <input type="hidden" name="role" id="selectedRoleRegister">
+            <input type="text" name="username" placeholder="Kullanıcı Adı" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Şifre" required>
+            <button type="submit">Kayıt Ol</button>
+            <p>Zaten hesabınız var mı? <a href="#" id="sign-in-link">Giriş Yap</a></p>
+        </form>
+    </div>
 
-        <div class="overlay-container">
-            <div class="overlay">
-                <div class="overlay-panel overlay-left">
-                    <h1>Tekrar Hoşgeldiniz!</h1>
-                    <p>Lütfen kişisel bilgilerinizi girerek hesabınıza giriş yapın</p>
-                    <button class="ghost" id="sign-in-btn">Giriş Yap</button>
-                </div>
-                <div class="overlay-panel overlay-right">
-                    <h1>Merhaba, Arkadaş!</h1>
-                    <p>Seyahate başlamak için kişisel bilgilerinizi girin</p>
-                    <button class="ghost" id="sign-up-btn">Kayıt Ol</button>
-                </div>
+    <div class="overlay-container">
+        <div class="overlay">
+            <div class="overlay-panel overlay-left">
+                <h1>Tekrar Hoşgeldiniz!</h1>
+                <p>Lütfen kişisel bilgilerinizi girerek hesabınıza giriş yapın</p>
+                <button class="ghost" id="sign-in-btn">Giriş Yap</button>
+            </div>
+            <div class="overlay-panel overlay-right">
+                <h1>Merhaba, Arkadaş!</h1>
+                <p>Seyahate başlamak için kişisel bilgilerinizi girin</p>
+                <button class="ghost" id="sign-up-btn">Kayıt Ol</button>
             </div>
         </div>
     </div>
-
-    <!-- Footer Başlangıcı -->
-    {% include 'includes/footer.html' %}
-    <!-- Footer Sonu -->
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ url_for('static', filename='js/sign.js') }}"></script>
-</body>
-</html>
+</div>
+{% endblock %}
