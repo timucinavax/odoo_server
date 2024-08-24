@@ -110,3 +110,7 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById('confirm-purchase-button').addEventListener('click', proceedToPassengerInfo);
 });
 
+function closeModal() {
+    document.getElementById('confirmationModal').style.display = 'none';
+}
+
