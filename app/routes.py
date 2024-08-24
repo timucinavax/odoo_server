@@ -89,7 +89,8 @@ def index():
                            outbound_flights=outbound_flights, 
                            return_flights=return_flights,
                            logged_in_user=logged_in_user,
-                           logged_in_user_role=logged_in_user_role)
+                           logged_in_user_role=logged_in_user_role
+                           current_page = 'index')
 
 
 @app.route('/login', methods=['POST'])
@@ -166,7 +167,7 @@ def admin_panel():
     users = models.execute_kw(current_app.config['ODOO_DB'], uid, current_app.config['ODOO_PASSWORD'], 
                               'custom.user', 'search_read', [[]], {'fields': ['username', 'email', 'role']})
 
-    return render_template('admin_panel.html', outbound_flights=outbound_flights, return_flights=return_flights, users=users)
+    return render_template('admin_panel.html', outbound_flights=outbound_flights, return_flights=return_flights, users=users,current_page='admin')
 
 @app.route('/add_flight', methods=['POST'])
 @role_required(['admin'])
@@ -245,7 +246,8 @@ def flight_ticket():
         'flight-ticket.html',
         dates=list(date_prices.keys()),
         date_prices=date_prices,
-        flights=flights
+        flights=flights,
+        current_page = 'flight-ticket'
     )
 
 @app.route('/plane_layout/<int:flight_id>', methods=['GET'])
