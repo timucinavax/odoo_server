@@ -225,27 +225,27 @@ def flight_ticket():
     if not uid:
         return redirect(url_for('index'))
 
-    flights = models.execute_kw(
-        current_app.config['ODOO_DB'], uid, current_app.config['ODOO_PASSWORD'], 
-        'flight.management', 'search_read', [[]], 
-        {'fields': ['departure_time','arrival_time', 'flight_direction','departure_airport','available_seats','departure_airport', 'arrival_airport', 'price']}
-    )
-    date_flight_map = {}
-    for flight in flights:
-        flight_date = flight['departure_time'].split(' ')[0]
-        if flight_date not in date_flight_map:
-            date_flight_map[flight_date] = []
-        date_flight_map[flight_date].append(flight)
+    # flights = models.execute_kw(
+    #     current_app.config['ODOO_DB'], uid, current_app.config['ODOO_PASSWORD'], 
+    #     'flight.management', 'search_read', [[]], 
+    #     {'fields': ['departure_time','arrival_time', 'flight_direction','departure_airport','available_seats','departure_airport', 'arrival_airport', 'price']}
+    # )
+    # date_flight_map = {}
+    # for flight in flights:
+    #     flight_date = flight['departure_time'].split(' ')[0]
+    #     if flight_date not in date_flight_map:
+    #         date_flight_map[flight_date] = []
+    #     date_flight_map[flight_date].append(flight)
     
-    date_prices = {
-        date: min(flight['price'] for flight in flights) for date, flights in date_flight_map.items()
-    }
+    # date_prices = {
+    #     date: min(flight['price'] for flight in flights) for date, flights in date_flight_map.items()
+    # }
 
     return render_template(
-        'flight-ticket.html',
-        dates=list(date_prices.keys()),
-        date_prices=date_prices,
-        flights=flights
+        'flight-ticket.html'
+        # dates=list(date_prices.keys()),
+        # date_prices=date_prices,
+        # flights=flights
     )
 
 @app.route('/plane_layout/<int:flight_id>', methods=['GET'])
