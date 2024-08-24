@@ -1,5 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
-    var cookieConsent = document.createElement("div");
+    createCookieConsent();
+    loadCities();
+    handleSearchForm();
+});
+
+function createCookieConsent() {
+    const cookieConsent = document.createElement("div");
     cookieConsent.className = "cookie-consent";
     cookieConsent.innerHTML = `
         <p>Sitemizde yasal düzenlemelere uygun çerezler (cookies) kullanıyoruz. Detaylı bilgiye 
@@ -10,32 +16,77 @@ document.addEventListener("DOMContentLoaded", function () {
             <a href="https://www.sehlentur.com/kisisel-verilerin-korunmasi-kanunu/" class="btn">Kişisel Verilerin Korunması Kanunu Aydınlatma Metni</a>
         </div>
     `;
-  
     document.body.appendChild(cookieConsent);
-  
+
     document.querySelector(".btn-consent").addEventListener("click", function (e) {
         e.preventDefault();
         cookieConsent.style.display = "none";
     });
-  });
-  
-  fetch("{{ url_for('static', filename='js/cities.json') }}")
-    .then((response) => response.json())
-    .then((data) => {
-        const turkeyContainer = document.querySelector("#turkey .row");
-        const africaContainer = document.querySelector("#africa .row");
-  
-        data.turkey.forEach((city) => {
-            const cityElement = document.createElement("div");
-            cityElement.classList.add("col-md-3");
-            cityElement.innerHTML = `<i class="bi bi-geo-alt-fill"></i> ${city}`;
-            turkeyContainer.appendChild(cityElement);
+}
+
+function loadCities() {
+    fetch("{{ url_for('static', filename='js/cities.json') }}")
+        .then((response) => response.json())
+        .then((data) => {
+            const turkeyContainer = document.querySelector("#turkey .row");
+            const africaContainer = document.querySelector("#africa .row");
+
+            data.turkey.forEach((city) => {
+                const cityElement = document.createElement("div");
+                cityElement.classList.add("col-md-3");
+                cityElement.innerHTML = `<i class="bi bi-geo-alt-fill"></i> ${city}`;
+                turkeyContainer.appendChild(cityElement);
+            });
+
+            data.africa.forEach((city) => {
+                const cityElement = document.createElement("div");
+                cityElement.classList.add("col-md-3");
+                cityElement.innerHTML = `<i class="bi bi-geo-alt-fill"></i> ${city}`;
+                africaContainer.appendChild(cityElement);
+            });
         });
-  
-        data.africa.forEach((city) => {
-            const cityElement = document.createElement("div");
-            cityElement.classList.add("col-md-3");
-            cityElement.innerHTML = `<i class="bi bi-geo-alt-fill"></i> ${city}`;
-            africaContainer.appendChild(cityElement);
-        });
+}
+
+function handleSearchForm() {
+    const oneWayTab = document.getElementById('one-way-tab');
+    const roundTripTab = document.getElementById('round-trip-tab');
+    const returnDateGroup = document.getElementById('return-date-group');
+    const fromSelect = document.getElementById('from');
+    const toSelect = document.getElementById('to');
+
+    oneWayTab.addEventListener('click', function () {
+        oneWayTab.classList.add('active');
+        roundTripTab.classList.remove('active');
+        returnDateGroup.style.display = 'none';
     });
+
+    roundTripTab.addEventListener('click', function () {
+        roundTripTab.classList.add('active');
+        oneWayTab.classList.remove('active');
+        returnDateGroup.style.display = 'block';
+    });
+
+    returnDateGroup.style.display = 'none';
+
+    fetch('/search_flights')
+        .then(response => response.json())
+        .then(data => {
+            const departureAirports = [...new Set(data.map(flight => flight.departure_airport))];
+            const arrivalAirports = [...new Set(data.map(flight => flight.arrival_airport))];
+
+            populateSelectOptions(fromSelect, departureAirports);
+            populateSelectOptions(toSelect, arrivalAirports);
+        })
+        .catch(error => {
+            console.error('Error fetching flights:', error);
+        });
+}
+
+function populateSelectOptions(selectElement, options) {
+    options.forEach(optionValue => {
+        const option = document.createElement('option');
+        option.value = optionValue;
+        option.textContent = optionValue;
+        selectElement.appendChild(option);
+    });
+}
