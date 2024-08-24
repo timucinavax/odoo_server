@@ -1,5 +1,19 @@
 let selectedFlight = null;
 
+function activateStep(stepNumber) {
+    // Tüm breadcrumb öğelerini devre dışı bırak
+    document.querySelectorAll('.breadcrumb-item').forEach(item => item.classList.remove('active'));
+    
+    // Geçerli breadcrumb öğesini aktif yap
+    document.querySelector(`.breadcrumb-item[data-number="${stepNumber}"]`).classList.add('active');
+    
+    // Tüm içerik alanlarını gizle
+    document.querySelectorAll('[data-number]').forEach(content => content.style.display = 'none');
+    
+    // Geçerli içerik alanını göster
+    document.querySelector(`[data-number="${stepNumber}"]`).style.display = 'block';
+}
+
 function showFlights(date) {
     document.querySelectorAll('.date-box').forEach(box => box.classList.remove('active'));
     document.querySelector(`.date-box[onclick="showFlights('${date}')"]`).classList.add('active');
@@ -40,19 +54,12 @@ function displayFlights(flights) {
                     <button class="buy-ticket-button" onclick="buyTicket('${flight.flight_number}')">Bileti Al</button>
                 </div>
             </div>`;
-        document.getElementById('flights-container').innerHTML += flightCard;
+        flightsContainer.innerHTML += flightCard;
     });
 }
 
 function showNoFlightsMessage() {
     document.getElementById('flights-container').innerHTML = '<div class="no-flights">Bu tarihte uçuş bulunmamaktadır.</div>';
-}
-
-function toggleDetails(button) {
-    const detailsContent = button.nextElementSibling;
-    const isVisible = detailsContent.style.display === 'block';
-    detailsContent.style.display = isVisible ? 'none' : 'block';
-    button.classList.toggle('collapsed', !isVisible);
 }
 
 function calculateFlightDuration(departureTime, arrivalTime) {
@@ -77,43 +84,20 @@ function buyTicket(flightNumber) {
 
 function proceedToPassengerInfo() {
     if (selectedFlight) {
-        document.querySelectorAll('.breadcrumb-item').forEach(item => item.classList.remove('active'));
-        document.querySelector('.breadcrumb-item[data-number="1"]').classList.add('active');
-
-        document.querySelector('.date-selector').style.display = 'none';
-        document.querySelector('.flights-container').style.display = 'none';
-        document.querySelector('.passenger-info-container').style.display = 'block';
+        activateStep(1);
     } else {
         alert("Lütfen önce bir uçuş seçin.");
     }
+}
+
+function goBackToFlightSelection() {
+    activateStep(0);
 }
 
 function closeModal() {
     document.getElementById('confirmationModal').style.display = 'none';
 }
 
-function goBackToFlightSelection() {
-    document.querySelectorAll('.breadcrumb-item').forEach(item => item.classList.remove('active'));
-    document.querySelector('.breadcrumb-item[data-number="0"]').classList.add('active');
-
-    document.querySelector('.date-selector').style.display = 'block';
-    document.querySelector('.flights-container').style.display = 'block';
-    document.querySelector('.passenger-info-container').style.display = 'none';
-}
-
 document.addEventListener("DOMContentLoaded", function() {
-    const modalHTML = `
-        <div id="confirmationModal" class="modal" style="display:none;">
-            <div class="modal-content">
-                <span class="close-button" onclick="closeModal()">&times;</span>
-                <h3>Uçuş Onayı</h3>
-                <p>Flight Number: <span id="confirmFlightNumber"></span> için bilet almak istediğinize emin misiniz?</p>
-                <button id="confirm-purchase-button" class="btn btn-primary">Evet</button>
-                <button class="btn btn-secondary" onclick="closeModal()">Hayır</button>
-            </div>
-        </div>
-    `;
-    document.body.insertAdjacentHTML('beforeend', modalHTML);
-
     document.getElementById('confirm-purchase-button').addEventListener('click', proceedToPassengerInfo);
 });

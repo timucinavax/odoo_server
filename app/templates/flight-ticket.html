@@ -2,87 +2,96 @@
 {% block title %}Sehlen Tourism - Uçuş Arama{% endblock %}
 {% block content %}
 <div class="breadcrumb-container">
-    <div class="breadcrumb-item active" data-number="0">
-        <div class="breadcrumb-icon">✈️</div>
-        <div class="breadcrumb-label">Uçuş Seçimi</div>
-    </div>
-    <div class="breadcrumb-item" data-number="1">
-        <div class="breadcrumb-icon">👤</div>
-        <div class="breadcrumb-label">Yolcu Bilgileri</div>
-    <div class="breadcrumb-item" data-number="2">
-        <div class="breadcrumb-icon">🛠️</div>
-        <div class="breadcrumb-label">Ek Hizmetler</div>
-    </div>
-    <div class="breadcrumb-item" data-number="3">
-        <div class="breadcrumb-icon">💳</div>
-        <div class="breadcrumb-label">Ödeme</div>
-    </div>
-</div>
-<div>
-  <div class="date-selector">
-    {% for date in dates %}
-    <div class="date-box" onclick="showFlights('{{ date }}')">
-        <div class="day-number">{{ date.split('-')[2] }}</div>
-        <div class="day-name">{{ date | dayname }}</div>
-        <div class="month-name">{{ date | monthname }}</div>
-        <div class="price">TRY {{ date_prices[date] }}</div>
-    </div>
-    {% endfor %}
+  <div class="breadcrumb-item active" data-number="0" onclick="activateStep(0)">
+      <div class="breadcrumb-icon">✈️</div>
+      <div class="breadcrumb-label">Uçuş Seçimi</div>
   </div>
-  <div class="flights-container" id="flights-container"></div>
+  <div class="breadcrumb-item" data-number="1" onclick="activateStep(1)">
+      <div class="breadcrumb-icon">👤</div>
+      <div class="breadcrumb-label">Yolcu Bilgileri</div>
+  </div>
+  <div class="breadcrumb-item" data-number="2" onclick="activateStep(2)">
+      <div class="breadcrumb-icon">🛠️</div>
+      <div class="breadcrumb-label">Ek Hizmetler</div>
+  </div>
+  <div class="breadcrumb-item" data-number="3" onclick="activateStep(3)">
+      <div class="breadcrumb-icon">💳</div>
+      <div class="breadcrumb-label">Ödeme</div>
+  </div>
 </div>
 
-<div class="passenger-info-container" style="display: none;">
-  <h3 class="section-title">Yolcu Bilgileri</h3>
-  <form id="passenger-info-form" class="passenger-info-form">
-      <div class="form-section">
-          <div class="form-group">
-              <label for="first-name">Ad / İkinci Adı</label>
-              <input type="text" id="first-name" name="first-name" required>
-          </div>
-          <div class="form-group">
-              <label for="last-name">Soyadı</label>
-              <input type="text" id="last-name" name="last-name" required>
-          </div>
-          <div class="form-group">
-              <label for="gender">Cinsiyet</label>
-              <select id="gender" name="gender" required>
-                  <option value="male">Bay</option>
-                  <option value="female">Bayan</option>
-              </select>
-          </div>
-          <div class="form-group">
-              <label for="birthdate">Doğum Tarihi</label>
-              <input type="date" id="birthdate" name="birthdate" required>
-          </div>
-      </div>
-
-      <h3 class="section-title">İletişim Bilgileri</h3>
-      <div class="form-section">
-          <div class="form-group">
-              <label for="email">E-posta</label>
-              <input type="email" id="email" name="email" required>
-          </div>
-          <div class="form-group">
-              <label for="phone">Telefon Numarası</label>
-              <input type="tel" id="phone" name="phone" required>
-          </div>
-      </div>
-
-      <div class="flight-summary">
-          <h4>Seçilen Uçuş Bilgileri</h4>
-          <div class="flight-details">
-              <p>Uçuş Numarası: <span id="flight-number-summary"></span></p>
-              <p>Kalkış: <span id="departure-summary"></span></p>
-              <p>Varış: <span id="arrival-summary"></span></p>
-              <p>Fiyat: <span id="price-summary"></span> TL</p>
-          </div>
-          <button type="submit" class="btn btn-primary">Devam Et</button>
-          <button type="button" class="btn btn-secondary" onclick="goBackToFlightSelection()">Geri Dön</button>
-      </div>
-  </form>
+<div class="flight-buy-container" data-number="0">
+<div class="date-selector">
+  {% for date in dates %}
+  <div class="date-box" onclick="showFlights('{{ date }}')">
+      <div class="day-number">{{ date.split('-')[2] }}</div>
+      <div class="day-name">{{ date | dayname }}</div>
+      <div class="month-name">{{ date | monthname }}</div>
+      <div class="price">TRY {{ date_prices[date] }}</div>
+  </div>
+  {% endfor %}
 </div>
+<div class="flights-container" id="flights-container"></div>
 </div>
 
+<div class="passenger-info-container" style="display: none;" data-number="1">
+<h3 class="section-title">Yolcu Bilgileri</h3>
+<form id="passenger-info-form" class="passenger-info-form">
+    <div class="form-section">
+        <div class="form-group">
+            <label for="first-name">Ad / İkinci Adı</label>
+            <input type="text" id="first-name" name="first-name" required>
+        </div>
+        <div class="form-group">
+            <label for="last-name">Soyadı</label>
+            <input type="text" id="last-name" name="last-name" required>
+        </div>
+        <div class="form-group">
+            <label for="gender">Cinsiyet</label>
+            <select id="gender" name="gender" required>
+                <option value="male">Bay</option>
+                <option value="female">Bayan</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="birthdate">Doğum Tarihi</label>
+            <input type="date" id="birthdate" name="birthdate" required>
+        </div>
+    </div>
 
+    <h3 class="section-title">İletişim Bilgileri</h3>
+    <div class="form-section">
+        <div class="form-group">
+            <label for="email">E-posta</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="phone">Telefon Numarası</label>
+            <input type="tel" id="phone" name="phone" required>
+        </div>
+    </div>
+
+    <div class="flight-summary">
+        <h4>Seçilen Uçuş Bilgileri</h4>
+        <div class="flight-details">
+            <p>Uçuş Numarası: <span id="flight-number-summary"></span></p>
+            <p>Kalkış: <span id="departure-summary"></span></p>
+            <p>Varış: <span id="arrival-summary"></span></p>
+            <p>Fiyat: <span id="price-summary"></span> TL</p>
+        </div>
+        <button type="submit" class="btn-primary">Devam Et</button>
+        <button type="button" class="btn-secondary" onclick="goBackToFlightSelection()">Geri Dön</button>
+    </div>
+</form>
+</div>
+
+<div id="confirmationModal" class="modal" style="display:none;">
+  <div class="modal-content">
+      <span class="close-button" onclick="closeModal()">&times;</span>
+      <h3>Uçuş Onayı</h3>
+      <p>Flight Number: <span id="confirmFlightNumber"></span> için bilet almak istediğinize emin misiniz?</p>
+      <button id="confirm-purchase-button" class="btn-primary">Evet</button>
+      <button class="btn-secondary" onclick="closeModal()">Hayır</button>
+  </div>
+</div>
 {% endblock %}
