@@ -1,5 +1,5 @@
 from functools import wraps
-from flask import render_template, request, redirect, url_for, current_app, flash, session
+from flask import jsonify, render_template, request, redirect, url_for, current_app, flash, session
 import xmlrpc.client
 from werkzeug.security import generate_password_hash, check_password_hash
 from app import app
@@ -269,36 +269,36 @@ def plane_layout(flight_id):
     # Render the plane layout template
     return render_template('plane_rev.html', airplane_type=airplane_type_name, seats=seats)
 
-@app.route('/search_flights', methods=['POST'])
+@app.route('/search_flights', methods=['GET'])
 def search_flights():
-    flight_direction = request.form.get('flight_direction')
-    from_where = request.form.get('from_where')
-    to_where = request.form.get('to_where')
-    flight_date = request.form.get('flight_date')
-
     uid, models = odoo_connect()
     if not uid:
-        return redirect(url_for('index'))
-    
-    domain = [
-        ('departure_airport', '=', from_where),
-        ('arrival_airport', '=', to_where),
-        ('departure_time', '>=', f'{flight_date} 00:00:00'),
-        ('departure_time', '<=', f'{flight_date} 23:59:59')
-    ]
+        return jsonify({'error': 'Odoo connection failed'}), 500
 
-    if flight_direction == 'outbound':
-        domain.append(('flight_direction', '=', 'outbound'))
-        outbound_flights = models.execute_kw(current_app.config['ODOO_DB'], uid, current_app.config['ODOO_PASSWORD'] ,'flight.management', 'search_read', [domain], 
-                                {'fields': ['flight_number', 'available_seats', 'departure_airport', 'arrival_airport', 'departure_time']})
-        return_flights = []
-    else:
-        domain.append(('flight_direction', '=', 'return'))
-        return_flights = models.execute_kw(current_app.config['ODOO_DB'], uid, current_app.config['ODOO_PASSWORD'] ,'flight.management', 'search_read', [domain], 
-                                {'fields': ['flight_number', 'available_seats', 'departure_airport', 'arrival_airport', 'departure_time']})
-        outbound_flights = []
+    from_airport = request.args.get('from')
+    to_airport = request.args.get('to')
+    departure_date = request.args.get('departure_date')
+    return_date = request.args.get('return_date')
 
-    return render_template('index.html', outbound_flights=outbound_flights, return_flights=return_flights)
+    domain = []
+    if from_airport:
+        domain.append(('departure_airport', '=', from_airport))
+    if to_airport:
+        domain.append(('arrival_airport', '=', to_airport))
+    if departure_date:
+        domain.append(('departure_time', '>=', departure_date + ' 00:00:00'))
+        domain.append(('departure_time', '<=', departure_date + ' 23:59:59'))
+    if return_date:
+        domain.append(('departure_time', '>=', return_date + ' 00:00:00'))
+        domain.append(('departure_time', '<=', return_date + ' 23:59:59'))
+
+    flights = models.execute_kw(
+        current_app.config['ODOO_DB'], uid, current_app.config['ODOO_PASSWORD'], 
+        'flight.management', 'search_read', [domain], 
+        {'fields': ['departure_time', 'arrival_time', 'flight_direction', 'departure_airport', 'arrival_airport', 'price']}
+    )
+
+    return jsonify(flights)
 
 
 @app.route('/logout')

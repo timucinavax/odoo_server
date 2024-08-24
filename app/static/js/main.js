@@ -39,3 +39,49 @@ fetch("{{ url_for('static', filename='js/cities.json') }}")
           africaContainer.appendChild(cityElement);
       });
   });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const oneWayTab = document.getElementById('one-way-tab');
+    const roundTripTab = document.getElementById('round-trip-tab');
+    const returnDateGroup = document.getElementById('return-date-group');
+    const fromSelect = document.getElementById('from');
+    const toSelect = document.getElementById('to');
+
+    oneWayTab.addEventListener('click', function() {
+        oneWayTab.classList.add('active');
+        roundTripTab.classList.remove('active');
+        returnDateGroup.style.display = 'none';
+    });
+
+    roundTripTab.addEventListener('click', function() {
+        roundTripTab.classList.add('active');
+        oneWayTab.classList.remove('active');
+        returnDateGroup.style.display = 'block';
+    });
+
+    returnDateGroup.style.display = 'none';
+
+    fetch('/search_flights')
+        .then(response => response.json())
+        .then(data => {
+            const departureAirports = [...new Set(data.map(flight => flight.departure_airport))];
+            const arrivalAirports = [...new Set(data.map(flight => flight.arrival_airport))];
+
+            departureAirports.forEach(airport => {
+                const option = document.createElement('option');
+                option.value = airport;
+                option.textContent = airport;
+                fromSelect.appendChild(option);
+            });
+
+            arrivalAirports.forEach(airport => {
+                const option = document.createElement('option');
+                option.value = airport;
+                option.textContent = airport;
+                toSelect.appendChild(option);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching flights:', error);
+        });
+    });
