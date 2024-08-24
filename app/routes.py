@@ -113,7 +113,7 @@ def login():
             if role == 'admin':
                 return redirect(url_for('admin_panel'))
             else:
-                return redirect(url_for('ticketbuy'))
+                return redirect(url_for('flight_ticket'))
         else:
             flash("Hatalı şifre, lütfen tekrar deneyin.")
     else:
@@ -219,8 +219,8 @@ def add_flight():
 
     return redirect(url_for('admin_panel'))
 
-@app.route('/ticketbuy')
-def ticketbuy():
+@app.route('/flight-ticket')
+def flight_ticket():
     uid, models = odoo_connect()
     if not uid:
         return redirect(url_for('index'))
@@ -242,7 +242,7 @@ def ticketbuy():
     }
 
     return render_template(
-        'ticketbuy.html',
+        'flight-ticket.html',
         dates=list(date_prices.keys()),
         date_prices=date_prices,
         flights=flights
@@ -263,10 +263,8 @@ def plane_layout(flight_id):
         return redirect(url_for('admin_panel'))
     airplane_type_name = flight[0]['airplane_type_id'][1]
 
-    # Fetch all seats
     seats = models.execute_kw(current_app.config['ODOO_DB'], uid, current_app.config['ODOO_PASSWORD'] , 'flight.seat', 'search_read', [[('flight_id', '=', flight_id)]], {'fields': ['id', 'name', 'user_id']})
 
-    # Render the plane layout template
     return render_template('plane_rev.html', airplane_type=airplane_type_name, seats=seats)
 
 @app.route('/search_flights', methods=['GET'])
