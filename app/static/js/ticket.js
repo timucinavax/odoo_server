@@ -74,9 +74,19 @@ function calculateFlightDuration(departureTime, arrivalTime) {
 }
 
 function buyTicket(flightNumber) {
+    const selectedFlight = flightsData.find(flight => flight.flight_number === flightNumber);
+
+    if (selectedFlight) {
+        document.getElementById('flight-number-summary').textContent = selectedFlight.flight_number;
+        document.getElementById('departure-summary').textContent = `${selectedFlight.departure_airport} - ${selectedFlight.departure_time}`;
+        document.getElementById('arrival-summary').textContent = `${selectedFlight.arrival_airport} - ${selectedFlight.arrival_time}`;
+        document.getElementById('price-summary').textContent = selectedFlight.price;
+    }
+
     document.getElementById('confirmFlightNumber').textContent = flightNumber;
     document.getElementById('confirmationModal').style.display = 'block';
 }
+
 
 function proceedToPassengerInfo() {
     document.querySelectorAll('.breadcrumb-item').forEach(item => item.classList.remove('active'));
