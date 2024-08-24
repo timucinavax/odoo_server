@@ -51,7 +51,7 @@ function displayFlights(flights) {
                     <button class="buy-ticket-button" onclick="buyTicket('${flight.flight_number}')">Bileti Al</button>
                 </div>
             </div>`;
-        document.getElementById('flights-container').innerHTML += flightCard;
+        flightsContainer.innerHTML += flightCard;
     });
 }
 
@@ -78,14 +78,22 @@ function buyTicket(flightNumber) {
     document.getElementById('confirmationModal').style.display = 'block';
 }
 
-function proceedToPassengerInfo() {
-    document.querySelectorAll('.breadcrumb-item').forEach(item => item.classList.remove('active'));
-    const passengerInfoStep = document.querySelector('.breadcrumb-item[data-number="1"]');
-    passengerInfoStep.classList.add('active');
+function activateStep(stepNumber) {
+    document.querySelectorAll('.step-container > div').forEach(div => {
+        div.style.display = 'none';
+    });
+    document.querySelector(`.step-container > div[data-number="${stepNumber}"]`).style.display = 'block';
     
-    document.querySelector('.date-selector').style.display = 'none';
-    document.querySelector('.flights-container').style.display = 'none';
-    document.querySelector('#passenger-info-form').style.display = 'block';
+    document.querySelectorAll('.breadcrumb-item').forEach(item => {
+        item.classList.remove('active');
+    });
+    document.querySelector(`.breadcrumb-item[data-number="${stepNumber}"]`).classList.add('active');
+}
+
+document.getElementById('confirm-purchase-button').addEventListener('click', () => activateStep(1));
+
+function proceedToPassengerInfo() {
+    activateStep(1);
     document.getElementById('confirmationModal').style.display = 'none';
 }
 
@@ -94,23 +102,5 @@ function closeModal() {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-    const modalHTML = `
-        <div id="confirmationModal" class="modal" style="display:none;">
-            <div class="modal-content">
-                <span class="close-button" onclick="closeModal()">&times;</span>
-                <h3>Uçuş Onayı</h3>
-                <p>Flight Number: <span id="confirmFlightNumber"></span> için bilet almak istediğinize emin misiniz?</p>
-                <button id="confirm-purchase-button" class="btn btn-primary">Evet</button>
-                <button class="btn btn-secondary" onclick="closeModal()">Hayır</button>
-            </div>
-        </div>
-    `;
-    document.body.insertAdjacentHTML('beforeend', modalHTML);
-
     document.getElementById('confirm-purchase-button').addEventListener('click', proceedToPassengerInfo);
 });
-
-function closeModal() {
-    document.getElementById('confirmationModal').style.display = 'none';
-}
-
