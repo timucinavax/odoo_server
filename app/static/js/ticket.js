@@ -79,9 +79,14 @@ function calculateFlightDuration(departureTime, arrivalTime) {
 
 function buyTicket(flightNumber) {
     alert(`Flight code: ${flightNumber} için bilet alındı.`);
+    document.querySelectorAll('.breadcrumb-item').forEach(item => {
+        item.classList.remove('active');
+    });
+
     const passengerInfoStep = document.querySelector('.breadcrumb-item[data-number="1"]');
     passengerInfoStep.classList.add('active');
 
-    passengerInfoStep.scrollIntoView({ behavior: 'smooth' });
+    const passengerForm = document.getElementById('passenger-info-form');
+    passengerForm.scrollIntoView({ behavior: 'smooth' });
+    passengerForm.style.display = 'block';
 }
-
