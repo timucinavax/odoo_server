@@ -345,6 +345,85 @@ select {
     transform: translateY(-5px);
 }
 
+.cookie-consent {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    /* Arka plan opaklığı artırıldı */
+    color: #fff;
+    padding: 15px 10px;
+    /* Mobil uyum için padding ayarlandı */
+    text-align: center;
+    z-index: 1000;
+    box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.3);
+    font-size: 0.875rem;
+    /* Yazı boyutu mobil için optimize edildi */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cookie-consent p {
+    margin: 0;
+    padding: 0;
+    flex: 1 1 auto;
+    /* Metnin esnekliğini artırır */
+    text-align: left;
+}
+
+.cookie-consent a {
+    color: #ffc107;
+    text-decoration: none;
+    margin: 0 5px;
+    font-weight: bold;
+}
+
+.cookie-buttons {
+    margin-top: 10px;
+    flex: 0 1 auto;
+    /* Butonların esnekliği */
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    /* Butonlar arasındaki boşluk */
+}
+
+.cookie-buttons .btn {
+    background-color: #fff;
+    /* Buton rengi beyaz */
+    color: #000;
+    padding: 8px 15px;
+    margin: 5px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-decoration: none;
+    border: 1px solid #ccc;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-size: 0.875rem;
+    /* Yazı boyutu mobil uyumu için küçültüldü */
+}
+
+.cookie-buttons .btn-consent {
+    background-color: #28a745;
+    /* Onay butonu için yeşil arka plan */
+    color: white;
+}
+
+.cookie-buttons .btn:hover {
+    background-color: #f1f1f1;
+    /* Hover durumu */
+    color: #000;
+}
+
+.cookie-buttons .btn-consent:hover {
+    background-color: #218838;
+    /* Onay butonu hover rengi */
+    color: #fff;
+}
+
 @media (max-width: 768px) {
     .best-deals__swiper__item {
         flex: 0 0 100%;
@@ -438,5 +517,32 @@ select {
         width: 100%;
         /* Şehirlerin tam genişlikte görünmesini sağlar */
         text-align: center;
+    }
+
+    .cookie-consent {
+        flex-direction: column;
+        padding: 10px;
+        font-size: 0.75rem;
+        /* Yazı boyutu mobil uyumu için küçültüldü */
+    }
+
+    .cookie-consent p {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .cookie-buttons {
+        justify-content: center;
+        width: 100%;
+        /* Butonları tam genişlikte yapar */
+        gap: 5px;
+        /* Butonlar arasındaki boşluk */
+    }
+
+    .cookie-buttons .btn {
+        padding: 8px 10px;
+        /* Mobil için padding ayarı */
+        font-size: 0.75rem;
+        /* Mobil uyumu için yazı boyutu küçültüldü */
     }
 }

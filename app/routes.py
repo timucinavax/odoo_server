@@ -91,6 +91,7 @@ def index():
                            logged_in_user=logged_in_user,
                            logged_in_user_role=logged_in_user_role)
 
+
 @app.route('/login', methods=['POST'])
 def login():
     username = request.form.get('username')
@@ -117,7 +118,7 @@ def login():
             flash("Hatalı şifre, lütfen tekrar deneyin.")
     else:
         flash("Kullanıcı bulunamadı.")
-    return redirect(url_for('index'))
+    return redirect(url_for('sign'))
 
 @app.route('/register', methods=['POST'])
 def register():
@@ -142,10 +143,11 @@ def register():
 
     if user_id:
         flash("Kayıt başarılı. Giriş yapabilirsiniz.")
-        return redirect(url_for('index'))
+        return redirect(url_for('sign'))
     else:
         flash("Kayıt sırasında bir hata oluştu.")
-        return redirect(url_for('index'))
+        return redirect(url_for('sign'))
+
 
 @app.route('/admin')
 @role_required(['admin'])
