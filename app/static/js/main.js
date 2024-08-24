@@ -1,8 +1,3 @@
-function goToLogin() {
-  window.location.href = "{{ url_for('sign') }}";
-}
-
-// Cookie Consent kodu
 document.addEventListener("DOMContentLoaded", function () {
   var cookieConsent = document.createElement("div");
   cookieConsent.className = "cookie-consent";
@@ -24,7 +19,6 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-// JSON veri işleme kodu
 fetch("{{ url_for('static', filename='js/cities.json') }}")
   .then((response) => response.json())
   .then((data) => {

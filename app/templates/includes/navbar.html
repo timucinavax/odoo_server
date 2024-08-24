@@ -51,8 +51,8 @@
                   <li class="nav-item">
                       <a class="nav-link" href="{{ url_for('support') }}">Destek</a>
                   </li>
-                  <button class="btn btn-outline-dark ms-3" onclick="goToLogin()" id="loginButton">Giriş Yap</button>
-                  <button class="btn btn-outline-dark ms-3" onclick="goToLogin()" id="registerButton">Kayıt Ol</button>
+                  <button class="btn btn-outline-dark ms-3" onclick="window.location.href='{{ url_for('sign') }}'">Giriş Yap</button>
+                  <button class="btn btn-outline-dark ms-3" onclick="window.location.href='{{ url_for('sign') }}'">Kayıt Ol</button>
               {% endif %}
           </ul>
       </div>
