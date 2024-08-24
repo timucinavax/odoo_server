@@ -228,7 +228,7 @@ def flight_ticket():
     flights = models.execute_kw(
         current_app.config['ODOO_DB'], uid, current_app.config['ODOO_PASSWORD'], 
         'flight.management', 'search_read', [[]], 
-        {'fields': ['departure_time','arrival_time', 'flight_direction','departure_airport','available_seats','departure_airport', 'arrival_airport', 'price']}
+        {'fields': ['departure_time','arrival_time','flight_number', 'flight_direction','departure_airport','available_seats','departure_airport', 'arrival_airport', 'price']}
     )
     date_flight_map = {}
     for flight in flights:
