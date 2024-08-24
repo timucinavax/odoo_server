@@ -96,19 +96,20 @@
   <div id="passenger-info-form" style="display: none;">
     <h3>Yolcu Bilgilerini Girin</h3>
     <form id="passenger-form">
-      <div class="form-group">
-        <label for="first-name">Ad:</label>
-        <input type="text" id="first-name" name="first-name" required>
-      </div>
-      <div class="form-group">
-        <label for="last-name">Soyad:</label>
-        <input type="text" id="last-name" name="last-name" required>
-      </div>
-      <div class="form-group">
-        <label for="passport-no">Pasaport No:</label>
-        <input type="text" id="passport-no" name="passport-no" required>
-      </div>
-      <button type="submit" class="btn btn-primary">Devam Et</button>
+        <div class="form-group">
+            <label for="first-name">Ad:</label>
+            <input type="text" id="first-name" name="first-name" required>
+        </div>
+        <div class="form-group">
+            <label for="last-name">Soyad:</label>
+            <input type="text" id="last-name" name="last-name" required>
+        </div>
+        <div class="form-group">
+            <label for="passport-no">Pasaport No:</label>
+            <input type="text" id="passport-no" name="passport-no" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Devam Et</button>
+        <button type="button" class="btn btn-secondary" onclick="goBackToFlightSelection()">Geri Git</button>
     </form>
   </div>
 

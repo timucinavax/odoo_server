@@ -114,3 +114,14 @@ function closeModal() {
     document.getElementById('confirmationModal').style.display = 'none';
 }
 
+function goBackToFlightSelection() {
+    document.querySelectorAll('.breadcrumb-item').forEach(item => item.classList.remove('active'));
+    const flightSelectionStep = document.querySelector('.breadcrumb-item[data-number="0"]');
+    flightSelectionStep.classList.add('active');
+
+    document.querySelector('.date-selector').style.display = 'block';
+    document.querySelector('.flights-container').style.display = 'block';
+    document.querySelector('#passenger-info-form').style.display = 'none';
+}
+
+
