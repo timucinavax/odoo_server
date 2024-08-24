@@ -1,0 +1,207 @@
+/* General Styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: "Raleway", sans-serif;
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+/* Breadcrumb Navigation */
+.breadcrumb-container {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.breadcrumb-item {
+    text-align: center;
+    flex: 1;
+    cursor: pointer;
+    padding: 10px;
+    color: #004080;
+    background-color: #e9ecef;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.breadcrumb-item.active {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Date Selector */
+.date-selector {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    padding: 15px;
+    background-color: #fff;
+    overflow-x: auto;
+    border-bottom: 1px solid #ddd;
+}
+
+.date-box {
+    text-align: center;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    min-width: 100px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.date-box.active {
+    background-color: #dc3545;
+    color: white;
+}
+
+.day-number {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.day-name, .month-name {
+    font-size: 1rem;
+    color: #555;
+}
+
+.price {
+    margin-top: 5px;
+    font-size: 1.2rem;
+    color: #28a745;
+    font-weight: bold;
+}
+
+/* Flight Card Styles */
+.card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 1200px;
+    margin: 10px auto;
+}
+
+.card-left {
+    display: flex;
+    align-items: center;
+}
+
+.time-info {
+    text-align: center;
+    margin-right: 20px;
+}
+
+.time-info p {
+    margin: 5px 0;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+/* Flight Route Styles */
+.route {
+    display: flex;
+    align-items: center;
+}
+
+.route-line {
+    width: 100px;
+    height: 1px;
+    background-color: #000;
+    position: relative;
+    margin: 0 10px;
+}
+
+.route-line::before, .route-line::after {
+    content: "";
+    position: absolute;
+    top: -5px;
+    width: 10px;
+    height: 10px;
+    background-color: #004080;
+    border-radius: 50%;
+}
+
+.route-line::before {
+    left: 0;
+}
+
+.route-line::after {
+    right: 0;
+}
+
+.route-logo {
+    width: 20px;
+    height: 20px;
+    background-image: url("{{ url_for('static', filename='images/sehlen_logo.png') }}");
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    background-color: transparent;
+}
+
+/* Button Styles */
+.details-button {
+    background-color: transparent;
+    border: none;
+    color: #004080;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.details-button:hover {
+    color: #002050;
+}
+
+.details-button::after {
+    content: "▼";
+    margin-left: 10px;
+    font-size: 0.8rem;
+    transition: transform 0.3s ease;
+}
+
+.details-button.collapsed::after {
+    transform: rotate(-90deg);
+}
+
+.details-content {
+    display: none;
+    margin-top: 10px;
+}
+
+.details-content p {
+    margin: 5px 0;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.buy-ticket-button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.buy-ticket-button:hover {
+    background-color: #218838;
+}
