@@ -20,7 +20,7 @@ html {
 
 .carousel img {
     width: 100%;
-    height: 80vh;
+    height: 60vh;
     object-fit: cover;
     clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);
 }
@@ -36,17 +36,17 @@ html {
 }
 
 .search-box-container {
-    position: absolute;
-    top: 75%;
+    top: 83%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: white;
+    background: rgba(255, 255, 255, 0.8);
     border-radius: 10px;
-    padding: 30px; /* Yastıklama boyutunu artırdım */
-    max-width: 80%; /* Genişliği artırdım */
-    width: 100%; /* Tam genişlikte olmasını sağladım */
+    padding: 20px;
+    max-width: 1100px; 
+    width: 97%; 
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    z-index: 10;
+    z-index: 100;
+    text-align: center;
 }
 
 .search-tabs {
