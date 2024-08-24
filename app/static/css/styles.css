@@ -1,4 +1,3 @@
-/* Genel Ayarlar */
 body,
 html {
     margin: 0;
@@ -9,10 +8,14 @@ html {
     overflow-x: hidden;
 }
 
-/* Carousel (Slayt Gösterisi) Ayarları */
 .carousel {
     margin-top: 20px;
     position: relative;
+}
+
+.a {
+    font-weight: bold;
+    font-size: 1rem;
 }
 
 .carousel img {
@@ -32,7 +35,6 @@ html {
     overflow: hidden;
 }
 
-/* Arama Kutusu (Search Box) Ayarları */
 .search-box-container {
     position: absolute;
     top: 83%;
@@ -104,7 +106,6 @@ select {
     flex: 1;
 }
 
-/* Kartlar Bölümü (Cards Section) */
 .cards-section {
     text-align: center;
     margin: 50px auto;
@@ -175,10 +176,11 @@ select {
     font-size: 1.5rem;
 }
 
-/* Konteyner Ayarları */
 .container {
     max-width: 1200px;
+    /* Maksimum genişliği ayarla */
     margin: 0 auto;
+    /* Sağ ve sol kenar boşluklarını otomatik yaparak ortala */
     text-align: center;
 }
 
@@ -193,11 +195,15 @@ select {
 
 .row {
     display: flex;
+    /* Flexbox kullan */
     justify-content: center;
+    /* Yatay olarak ortala */
     align-items: center;
+    /* Dikey olarak ortala */
     font-size: 1.1rem;
     padding: 20px;
     flex-wrap: wrap;
+    /* İçerik taşarsa alta geç */
 }
 
 .row .col-md-3 {
@@ -206,7 +212,6 @@ select {
     text-align: left;
 }
 
-/* Navigasyon (Tab) Ayarları */
 .nav-tabs .nav-link {
     font-weight: 600;
     text-transform: uppercase;
@@ -214,18 +219,75 @@ select {
     margin-right: 10px;
 }
 
+.best-deals__header__title {
+    font-family: "Raleway", sans-serif;
+    /* Yazı tipi */
+    font-weight: 700;
+    /* Kalın yazı */
+    font-size: 3.5rem;
+    /* Yazı boyutu */
+    text-align: left;
+    /* Ortala */
+    margin-top: 20px;
+    margin-bottom: 30px;
+    /* Alt boşluk */
+}
+
+.best-deals__header__title .highlight {
+    color: #ff5733;
+    /* Kırmızıdan çalan turuncu renk */
+}
+
+.best-deals__header__title span {
+    color: #f39c12;
+    /* Orta turuncu renk */
+}
+
+.best-deals__header__title {
+    color: #2c3e50;
+    /* Lacivert renk */
+}
+
+.best-deals__header {
+    text-align: center;
+    font-family: "Raleway", sans-serif;
+    font-weight: 700;
+    font-size: 3rem;
+    color: #2c3e50;
+    background-color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    /* Altına boşluk ekleyin */
+}
+
+.best-deals__header .highlight {
+    color: #ff5733;
+    /* Kırmızıdan çalan turuncu renk */
+}
+
+.best-deals__header span {
+    color: #f39c12;
+    /* Orta turuncu renk */
+}
+
+.best-deals__header {
+    color: #2c3e50;
+    /* Lacivert renk */
+}
+
 .nav-tabs .nav-link.active {
     background-color: #f8f9fa;
     border-color: #ddd;
 }
 
-/* Kart (Card) Ayarları */
 .card {
     width: 30%;
     aspect-ratio: 1 / 1;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     border: 2px solid #ddd;
+    border-color: #000;
     overflow: hidden;
     transition: transform 0.3s, box-shadow 0.3s;
 }
@@ -262,7 +324,6 @@ select {
     font-weight: bold;
 }
 
-/* Swiper Ayarları */
 .swiper-wrapper {
     display: flex;
     justify-content: center;
@@ -273,88 +334,21 @@ select {
 
 .best-deals__swiper__item {
     flex: 0 0 calc(33.333% - 20px);
+    /* Kartların üç sütunda yer almasını sağlar */
     box-sizing: border-box;
     margin-bottom: 20px;
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
+/* Kartların üst üste yığılmasını önlemek için hover durumu */
 .best-deals__swiper__item:hover {
     transform: translateY(-5px);
 }
 
-/* Çerez İzni (Cookie Consent) Ayarları */
-.cookie-consent {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.9);
-    color: #fff;
-    padding: 15px 10px;
-    text-align: center;
-    z-index: 1000;
-    box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.3);
-    font-size: 0.875rem;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.cookie-consent p {
-    margin: 0;
-    padding: 0;
-    flex: 1 1 auto;
-    text-align: left;
-}
-
-.cookie-consent a {
-    color: #ffc107;
-    text-decoration: none;
-    margin: 0 5px;
-    font-weight: bold;
-}
-
-.cookie-buttons {
-    margin-top: 10px;
-    flex: 0 1 auto;
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-}
-
-.cookie-buttons .btn {
-    background-color: #fff;
-    color: #000;
-    padding: 8px 15px;
-    margin: 5px;
-    border-radius: 5px;
-    font-weight: bold;
-    text-decoration: none;
-    border: 1px solid #ccc;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    font-size: 0.875rem;
-}
-
-.cookie-buttons .btn-consent {
-    background-color: #28a745;
-    color: white;
-}
-
-.cookie-buttons .btn:hover {
-    background-color: #f1f1f1;
-    color: #000;
-}
-
-.cookie-buttons .btn-consent:hover {
-    background-color: #218838;
-    color: #fff;
-}
-
-/* Medya Sorguları (Responsive Tasarım) */
 @media (max-width: 768px) {
     .best-deals__swiper__item {
         flex: 0 0 100%;
+        /* Kartların tam genişlikte olmasını sağlar */
         margin-bottom: 15px;
     }
 
@@ -365,87 +359,84 @@ select {
 
     .carousel-item {
         height: auto;
+        /* Yüksekliği otomatik yaparak resimlerin tam görünmesini sağlar */
     }
 
     .search-box-container {
         display: none;
+        /* Arama kutusunu mobilde gizler */
     }
 
     .tab-button {
         padding: 8px 12px;
+        /* Butonların boyutlarını küçült */
         font-size: 0.9rem;
+        /* Yazı boyutunu küçült */
     }
 
     .search-form {
         gap: 5px;
+        /* Arama alanları arasındaki boşluğu azalt */
     }
 
     .form-group label {
         font-size: 0.85rem;
+        /* Etiketlerin yazı boyutunu küçült */
     }
 
     .form-group input,
     .form-group select {
         padding: 8px;
+        /* Giriş alanlarının iç boşluklarını azalt */
         font-size: 0.85rem;
+        /* Giriş alanlarının yazı boyutunu küçült */
     }
 
     .search-button {
         padding: 10px;
+        /* Butonun iç boşluğunu azalt */
         font-size: 0.95rem;
+        /* Buton yazı boyutunu küçült */
     }
 
     .form-group {
         width: 100%;
+        /* Tüm form alanlarını tam genişlikte yap */
     }
 
     .cards-section {
         margin: 30px auto;
+        /* Kartlar bölümünün üst ve alt boşluklarını azalt */
         max-width: 100%;
+        /* Kartlar bölümünü tam genişlikte yap */
     }
 
     .swiper-wrapper {
         flex-direction: column;
+        /* Kartların yatay yerine dikey olarak hizalanmasını sağlar */
         gap: 15px;
     }
 
     .best-deals__swiper__item {
         width: 90%;
+        /* Kartların genişliğini mobilde azalt */
         margin: 0 auto;
+        /* Kartları merkezle */
     }
 
     .card {
         width: 100%;
+        /* Kartların genişliğini tam yap */
     }
 
     .tab-content .row {
         flex-direction: column;
+        /* Şehirler bölümü sütun olarak hizalanır */
     }
 
     .row .col-md-3 {
         width: 100%;
+        /* Şehirlerin tam genişlikte görünmesini sağlar */
         text-align: center;
-    }
-
-    .cookie-consent {
-        flex-direction: column;
-        padding: 10px;
-        font-size: 0.75rem;
-    }
-
-    .cookie-consent p {
-        text-align: center;
-        margin-bottom: 10px;
-    }
-
-    .cookie-buttons {
-        justify-content: center;
-        width: 100%;
-        gap: 5px;
-    }
-
-    .cookie-buttons .btn {
-        padding: 8px 10px;
-        font-size: 0.75rem;
     }
 }
