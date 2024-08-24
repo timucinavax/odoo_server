@@ -51,7 +51,7 @@ function displayFlights(flights) {
                     <button class="buy-ticket-button" onclick="buyTicket('${flight.flight_number}')">Bileti Al</button>
                 </div>
             </div>`;
-        flightsContainer.innerHTML += flightCard;
+            document.getElementById('flights-container').innerHTML += flightCard;
     });
 }
 

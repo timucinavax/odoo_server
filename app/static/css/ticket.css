@@ -8,8 +8,8 @@ html {
 }
 
 .breadcrumb-container {
-    display: flex;
-    justify-content: space-between;
+    display:flex;
+    justify-content:center;
     max-width: 800px; 
     padding: 20px;
     background-color: #f8f9fa;
@@ -54,7 +54,16 @@ html {
 }
 
 
-/* Tarih Seçici */
+.date-selector {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    padding: 15px;
+    background-color: #fff;
+    overflow-x: auto;
+    border-bottom: 1px solid #ddd;
+}
+
 .date-box {
     text-align: center;
     padding: 10px;
@@ -65,11 +74,6 @@ html {
     min-width: 100px;
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s;
-}
-
-.date-box.active {
-    background-color: #dc3545;
-    color: white;
 }
 
 .date-box.active {
