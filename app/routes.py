@@ -221,6 +221,7 @@ def add_flight():
     return redirect(url_for('admin_panel'))
 
 @app.route('/flight-ticket')
+@role_required(['user'])
 def flight_ticket():
     uid, models = odoo_connect()
     if not uid:
