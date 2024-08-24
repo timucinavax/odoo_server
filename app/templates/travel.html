@@ -4,7 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sehlen Tourism - Travel Experience</title>
-    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon" />
+    <link
+      rel="icon"
+      href="{{ url_for('static', filename='images/favicon.ico') }}"
+      type="image/x-icon"
+    />
     <link
       href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap"
       rel="stylesheet"
@@ -189,9 +193,9 @@
         <a class="navbar-brand" href="{{ url_for('index') }}">
           <img
             src="{{ url_for('static', filename='images/sehlen_logo.png') }}"
-            alt="Sehlen Tourism"
+            alt="Sehlen Turizm"
           />
-          <span>SEHLEN TOURISM</span>
+          <span>SEHLEN TURİZM</span>
         </a>
         <button
           class="navbar-toggler"
@@ -200,7 +204,7 @@
           data-bs-target="#navbarNav"
           aria-controls="navbarNav"
           aria-expanded="false"
-          aria-label="Toggle navigation"
+          aria-label="Menüyü Aç"
         >
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -210,17 +214,13 @@
         >
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('offer') }}"
-                >Offer</a
-              >
+              <a class="nav-link" href="{{ url_for('offer') }}">Teklifler</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('support') }}">Support</a>
+              <a class="nav-link" href="{{ url_for('support') }}">Destek</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('index') }}"
-                >Main Menu</a
-              >
+              <a class="nav-link" href="{{ url_for('index') }}">Anasayfa</a>
             </li>
           </ul>
         </div>
@@ -229,26 +229,28 @@
 
     <section class="hero-section">
       <div>
-        <h1>Enhance Your Travel Experience</h1>
+        <h1>Seyahat Deneyiminizi Geliştirin</h1>
         <p>
-          Discover our premium services and amenities for a memorable journey.
+          Unutulmaz bir yolculuk için premium hizmetlerimizi ve olanaklarımızı
+          keşfedin.
         </p>
       </div>
     </section>
 
     <section class="container content-section">
-      <h2>Our In-Flight Services</h2>
+      <h2>Uçuş Hizmetlerimiz</h2>
       <div class="row">
         <div class="col-md-4">
           <div class="card">
             <img
               src="{{ url_for('static', filename='images/service_1.jpg') }}"
-              alt="Service 1"
+              alt="Hizmet 1"
             />
             <div class="card-body">
-              <h5 class="card-title">Gourmet Meals</h5>
+              <h5 class="card-title">Gurme Yemekler</h5>
               <p class="card-text">
-                Enjoy a variety of exquisite dishes prepared by top chefs.
+                En iyi şefler tarafından hazırlanan çeşitli lezzetlerin tadını
+                çıkarın.
               </p>
             </div>
           </div>
@@ -257,12 +259,13 @@
           <div class="card">
             <img
               src="{{ url_for('static', filename='images/service_2.jpg') }}"
-              alt="Service 2"
+              alt="Hizmet 2"
             />
             <div class="card-body">
-              <h5 class="card-title">Comfortable Seating</h5>
+              <h5 class="card-title">Rahat Oturma</h5>
               <p class="card-text">
-                Relax in our ergonomically designed seats with ample legroom.
+                Geniş diz mesafesi ile ergonomik olarak tasarlanmış
+                koltuklarımızda rahatlayın.
               </p>
             </div>
           </div>
@@ -271,13 +274,12 @@
           <div class="card">
             <img
               src="{{ url_for('static', filename='images/service_3.jpg') }}"
-              alt="Service 3"
+              alt="Hizmet 3"
             />
             <div class="card-body">
-              <h5 class="card-title">In-Flight Entertainment</h5>
+              <h5 class="card-title">Uçuş İçi Eğlence</h5>
               <p class="card-text">
-                Stay entertained with a wide selection of movies, music, and
-                games.
+                Geniş film, müzik ve oyun seçenekleriyle eğlenin.
               </p>
             </div>
           </div>

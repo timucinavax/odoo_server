@@ -4,7 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sehlen Tourism - Support</title>
-    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon" />
+    <link
+      rel="icon"
+      href="{{ url_for('static', filename='images/favicon.ico') }}"
+      type="image/x-icon"
+    />
     <link
       href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap"
       rel="stylesheet"
@@ -200,9 +204,9 @@
         <a class="navbar-brand" href="{{ url_for('index') }}">
           <img
             src="{{ url_for('static', filename='images/sehlen_logo.png') }}"
-            alt="Sehlen Tourism"
+            alt="Sehlen Turizm"
           />
-          <span>SEHLEN TOURISM</span>
+          <span>SEHLEN TURİZM</span>
         </a>
         <button
           class="navbar-toggler"
@@ -211,7 +215,7 @@
           data-bs-target="#navbarNav"
           aria-controls="navbarNav"
           aria-expanded="false"
-          aria-label="Toggle navigation"
+          aria-label="Menüyü Aç"
         >
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -222,16 +226,14 @@
           <ul class="navbar-nav">
             <li class="nav-item">
               <a class="nav-link" href="{{ url_for('travel') }}"
-                >Travel Experience</a
+                >Seyahat Deneyimi</a
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('offer') }}">Offer</a>
+              <a class="nav-link" href="{{ url_for('offer') }}">Teklif</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('index') }}"
-                >Main Menu</a
-              >
+              <a class="nav-link" href="{{ url_for('index') }}">Anasayfa</a>
             </li>
           </ul>
         </div>
@@ -240,30 +242,31 @@
 
     <section class="hero-section">
       <div>
-        <h1>Support</h1>
+        <h1>Destek</h1>
         <p>
-          Discover our premium services and amenities for a memorable journey.
+          Unutulmaz bir yolculuk için premium hizmetlerimizi ve olanaklarımızı
+          keşfedin.
         </p>
       </div>
     </section>
 
     <section class="container mt-5">
-      <h2 class="text-center">Contact Us</h2>
+      <h2 class="text-center">Bize Ulaşın</h2>
       <form>
         <div class="mb-3">
-          <label for="name" class="form-label">Name</label>
+          <label for="name" class="form-label">Ad</label>
           <input type="text" class="form-control" id="name" required />
         </div>
         <div class="mb-3">
-          <label for="email" class="form-label">Email address</label>
+          <label for="email" class="form-label">E-posta adresi</label>
           <input type="email" class="form-control" id="email" required />
         </div>
         <div class="mb-3">
-          <label for="phone" class="form-label">Phone Number</label>
+          <label for="phone" class="form-label">Telefon Numarası</label>
           <input type="text" class="form-control" id="phone" required />
         </div>
         <div class="mb-3">
-          <label for="message" class="form-label">Message</label>
+          <label for="message" class="form-label">Mesaj</label>
           <textarea
             class="form-control"
             id="message"
@@ -271,13 +274,13 @@
             required
           ></textarea>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Gönder</button>
       </form>
     </section>
 
     <section class="container mt-5">
       <div class="map-section">
-        <h2>Our Offices</h2>
+        <h2>Ofislerimiz</h2>
         <div class="row">
           <div class="col-md-4">
             <div class="card">
@@ -285,10 +288,10 @@
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10717.978817429577!2d28.936586484376113!3d41.01670023421114!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14caba4f20f0e071%3A0x2b21e85f1f4a61!2sAkdeniz%20Cd.%2C%20Ak%C5%9Femsettin%20Mahallesi%2C%20Fatih%2C%20%C4%B0stanbul!5e0!3m2!1sen!2str!4v1630495234284!5m2!1sen!2str"
               ></iframe>
               <div class="card-body">
-                <h5 class="card-title">Istanbul Office</h5>
+                <h5 class="card-title">İstanbul Ofisi</h5>
                 <p>
                   Akşemsettin Mh. Akdeniz Cd. Hakperest Sk. No:32 D:5 Fatih,
-                  Istanbul
+                  İstanbul
                 </p>
               </div>
             </div>
@@ -300,7 +303,7 @@
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d48272.38936000643!2d32.48154545537461!3d37.87210741660952!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14d082c48e6bff29%3A0x85a7a15df4b8a79!2sFeritpa%C5%9Fa%20Mahallesi%2C%20Akcanlar%20Sok.%2C%20Sel%C3%A7uklu%2FKonya!5e0!3m2!1sen!2str!4v1630495262553!5m2!1sen!2str"
               ></iframe>
               <div class="card-body">
-                <h5 class="card-title">Konya Office</h5>
+                <h5 class="card-title">Konya Ofisi</h5>
                 <p>Feritpaşa Mah. Akcanlar Sok. No:35 Selçuklu, Konya</p>
               </div>
             </div>
@@ -312,7 +315,7 @@
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2381.6609561229765!2d13.373987416329108!3d52.50401957981186!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47a851c8b85cdb33%3A0x4a755d57efb9e8b!2sSch%C3%B6neberger%20Str.%2C%2010963%20Berlin%2C%20Germany!5e0!3m2!1sen!2str!4v1630495287084!5m2!1sen!2str"
               ></iframe>
               <div class="card-body">
-                <h5 class="card-title">Berlin Office</h5>
+                <h5 class="card-title">Berlin Ofisi</h5>
                 <p>Schöneberger Str. 11 10963, Berlin</p>
               </div>
             </div>
