@@ -36,17 +36,17 @@ html {
 }
 
 .search-box-container {
-    top: 83%;
+    position: absolute;
+    top: 75%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: rgba(255, 255, 255, 0.8); 
+    background: white;
     border-radius: 10px;
-    padding: 20px;
-    max-width: 800px;
-    width: 90%;
+    padding: 30px; /* Yastıklama boyutunu artırdım */
+    max-width: 80%; /* Genişliği artırdım */
+    width: 100%; /* Tam genişlikte olmasını sağladım */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    z-index: 100;
-    text-align: center;
+    z-index: 10;
 }
 
 .search-tabs {
