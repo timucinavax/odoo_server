@@ -89,7 +89,7 @@ def index():
                            outbound_flights=outbound_flights, 
                            return_flights=return_flights,
                            logged_in_user=logged_in_user,
-                           logged_in_user_role=logged_in_user_role
+                           logged_in_user_role=logged_in_user_role,
                            current_page = 'index')
 
 
