@@ -9,7 +9,7 @@
   <body>
     {% include 'includes/navbar.html' %}
 
-    <div class="date-selector">
+    {% comment %} <div class="date-selector">
       {% for date in dates %}
       <div class="date-box" onclick="showFlights('{{ date }}')">
         <div class="day-number">{{ date.split('-')[2] }}</div>
@@ -18,7 +18,11 @@
         <div class="price">TRY {{ date_prices[date] }}</div>
       </div>
       {% endfor %}
-    </div>
+    </div> {% endcomment %}
+
+    <h2 class="best-deals__header__title">
+      <span class="highlight">En İyi</span> Fiyatlarımız!
+    </h2>
 
     {% comment %} <div class="flights-container" id="flights-container"></div> {% endcomment %}
 
