@@ -75,24 +75,7 @@ function calculateFlightDuration(departureTime, arrivalTime) {
 
 function buyTicket(flightNumber) {
     document.getElementById('confirmFlightNumber').textContent = flightNumber;
-    const confirmButton = document.getElementById('confirm-purchase-button');
-    
-    confirmButton.onclick = function () {
-        proceedToPassengerInfo();
-        closeModal();
-    };
-
-    showModal();
-}
-
-function showModal() {
-    const modal = document.getElementById('confirmationModal');
-    modal.style.display = 'block';
-}
-
-function closeModal() {
-    const modal = document.getElementById('confirmationModal');
-    modal.style.display = 'none';
+    document.getElementById('confirmationModal').style.display = 'block';
 }
 
 function proceedToPassengerInfo() {
@@ -103,6 +86,11 @@ function proceedToPassengerInfo() {
     document.querySelector('.date-selector').style.display = 'none';
     document.querySelector('.flights-container').style.display = 'none';
     document.querySelector('#passenger-info-form').style.display = 'block';
+    document.getElementById('confirmationModal').style.display = 'none';
+}
+
+function closeModal() {
+    document.getElementById('confirmationModal').style.display = 'none';
 }
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -118,5 +106,7 @@ document.addEventListener("DOMContentLoaded", function() {
         </div>
     `;
     document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+    document.getElementById('confirm-purchase-button').addEventListener('click', proceedToPassengerInfo);
 });
 
