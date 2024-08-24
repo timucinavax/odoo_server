@@ -75,110 +75,110 @@ endblock %} {% block content %}
       İstiyorsunuz?
     </h2>
     <div class="search-tabs">
-      <button class="tab-button active" id="one-way-tab">Tek Yön</button>
-      <button class="tab-button" id="round-trip-tab">Gidiş-Dönüş</button>
+        <button class="tab-button active" id="one-way-tab">Tek Yön</button>
+        <button class="tab-button" id="round-trip-tab">Gidiş-Dönüş</button>
     </div>
     <form action="/ticketbuy" method="get" class="search-form">
-      <div class="form-group">
-        <label for="from">Nereden</label>
-        <select id="from" name="from" class="form-select" required>
-          <option value="" disabled selected>Nereden</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="to">Nereye</label>
-        <select id="to" name="to" class="form-select" required>
-          <option value="" disabled selected>Nereye</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="departure-date">Gidiş Tarihi</label>
-        <input type="date" id="departure-date" name="departure_date" required />
-      </div>
-      <div class="form-group" id="return-date-group">
-        <label for="return-date">Dönüş Tarihi</label>
-        <input type="date" id="return-date" name="return_date" />
-      </div>
-      <button type="submit" class="search-button">UCUZ UÇUŞLARI ARA</button>
+        <div class="form-group">
+            <label for="from">Nereden</label>
+            <select id="from" name="from" class="form-select" required>
+                <option value="" disabled selected>Nereden</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="to">Nereye</label>
+            <select id="to" name="to" class="form-select" required>
+                <option value="" disabled selected>Nereye</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="departure-date">Gidiş Tarihi</label>
+            <input type="date" id="departure-date" name="departure_date" required />
+        </div>
+        <div class="form-group" id="return-date-group">
+            <label for="return-date">Dönüş Tarihi</label>
+            <input type="date" id="return-date" name="return_date" />
+        </div>
+        <button type="submit" class="search-button">UCUZ UÇUŞLARI ARA</button>
     </form>
-  </div>
+</div>
 
-  <div class="cards-section">
-    <h2 class="best-deals__header__title">
-      <span class="highlight">En İyi</span> Fiyatlarımız!
-    </h2>
-    <div class="swiper-wrapper">
-      <div class="swiper-slide best-deals__swiper__item">
-        <div class="best-deals-card">
-          <figure class="best-deals-card__figure">
+<div class="cards-section">
+  <h2 class="best-deals__header__title">
+    <span class="highlight">En İyi</span> Fiyatlarımız!
+  </h2>
+  <div class="swiper-wrapper">
+    <div class="swiper-slide best-deals__swiper__item">
+      <div class="best-deals-card">
+        <figure class="best-deals-card__figure">
             <img
               class="best-deals-card__figure__img"
               src="{{ url_for('static', filename='images/gaziantep.jpeg') }}"
               alt="Gaziantep"
             />
-          </figure>
-          <article class="best-deals-card__article">
-            <h3 class="best-deals-card__article__title">Gaziantep</h3>
-            <span class="best-deals-card__article__date">Eylül 2024</span>
-            <div class="best-deals-card__article__price best-deals-card-price">
-              <span class="best-deals-card-price__amount">100</span> £<br />
-              Başlayan Fiyatlarla
-            </div>
-          </article>
-        </div>
+        </figure>
+        <article class="best-deals-card__article">
+          <h3 class="best-deals-card__article__title">Gaziantep</h3>
+          <span class="best-deals-card__article__date">Eylül 2024</span>
+          <div class="best-deals-card__article__price best-deals-card-price">
+            <span class="best-deals-card-price__amount">100</span> £<br />
+            Başlayan Fiyatlarla
+          </div>
+        </article>
       </div>
-      <div class="swiper-slide best-deals__swiper__item">
-        <div class="best-deals-card">
-          <figure class="best-deals-card__figure">
+    </div>
+    <div class="swiper-slide best-deals__swiper__item">
+      <div class="best-deals-card">
+        <figure class="best-deals-card__figure">
             <img
               class="best-deals-card__figure__img"
               src="{{ url_for('static', filename='images/cidde.jpeg') }}"
               alt="Cidde"
             />
-          </figure>
-          <article class="best-deals-card__article">
-            <h3 class="best-deals-card__article__title">Cidde</h3>
-            <span class="best-deals-card__article__date">Eylül 2024</span>
-            <div class="best-deals-card__article__price best-deals-card-price">
-              <span class="best-deals-card-price__amount">200</span> £<br />
-              Başlayan Fiyatlarla
-            </div>
-          </article>
-        </div>
+        </figure>
+        <article class="best-deals-card__article">
+          <h3 class="best-deals-card__article__title">Cidde</h3>
+          <span class="best-deals-card__article__date">Eylül 2024</span>
+          <div class="best-deals-card__article__price best-deals-card-price">
+            <span class="best-deals-card-price__amount">200</span> £<br />
+            Başlayan Fiyatlarla
+          </div>
+        </article>
       </div>
-      <div class="swiper-slide best-deals__swiper__item">
-        <div class="best-deals-card">
-          <figure class="best-deals-card__figure">
+    </div>
+    <div class="swiper-slide best-deals__swiper__item">
+      <div class="best-deals-card">
+        <figure class="best-deals-card__figure">
             <img
               class="best-deals-card__figure__img"
               src="{{ url_for('static', filename='images/medine.jpeg') }}"
               alt="Medine"
             />
-          </figure>
-          <article class="best-deals-card__article">
-            <h3 class="best-deals-card__article__title">Medine</h3>
-            <span class="best-deals-card__article__date">Ekim 2024</span>
-            <div class="best-deals-card__article__price best-deals-card-price">
-              <span class="best-deals-card-price__amount">250</span> £<br />
-              Başlayan Fiyatlarla
-            </div>
-          </article>
-        </div>
+        </figure>
+        <article class="best-deals-card__article">
+          <h3 class="best-deals-card__article__title">Medine</h3>
+          <span class="best-deals-card__article__date">Ekim 2024</span>
+          <div class="best-deals-card__article__price best-deals-card-price">
+            <span class="best-deals-card-price__amount">250</span> £<br />
+            Başlayan Fiyatlarla
+          </div>
+        </article>
       </div>
     </div>
   </div>
+</div>
 
-  <div class="section-title">
-    Sehlen Turizm ile 2 ülkede 5 destinasyona uçun.
-  </div>
+<div class="section-title">
+  Sehlen Turizm ile 2 ülkede 5 destinasyona uçun.
+</div>
 
-  <div class="container mt-5">
+<div class="container mt-5">
     <ul
       class="nav nav-tabs justify-content-center"
       id="categoryTabs"
       role="tablist"
     >
-      <li class="nav-item" role="presentation">
+    <li class="nav-item" role="presentation">
         <button
           class="nav-link active"
           id="turkey-tab"
@@ -191,8 +191,8 @@ endblock %} {% block content %}
         >
           TÜRKİYE
         </button>
-      </li>
-      <li class="nav-item" role="presentation">
+    </li>
+    <li class="nav-item" role="presentation">
         <button
           class="nav-link"
           id="africa-tab"
@@ -205,22 +205,22 @@ endblock %} {% block content %}
         >
           AFRİKA
         </button>
-      </li>
-    </ul>
-    <div class="tab-content" id="categoryTabsContent">
+    </li>
+  </ul>
+  <div class="tab-content" id="categoryTabsContent">
       <div
         class="tab-pane fade show active"
         id="turkey"
         role="tabpanel"
         aria-labelledby="turkey-tab"
       >
-        <div class="row">
-          <div class="col-md-3">
-            <i class="bi bi-geo-alt-fill"></i> Gaziantep
-          </div>
-          <div class="col-md-3">
-            <i class="bi bi-geo-alt-fill"></i> İstanbul
-          </div>
+      <div class="row">
+        <div class="col-md-3">
+          <i class="bi bi-geo-alt-fill"></i> Gaziantep
+        </div>
+        <div class="col-md-3">
+          <i class="bi bi-geo-alt-fill"></i> İstanbul
+        </div>
           <div class="col-md-3"><i class="bi bi-geo-alt-fill"></i> Ankara</div>
         </div>
       </div>
@@ -230,31 +230,31 @@ endblock %} {% block content %}
         role="tabpanel"
         aria-labelledby="africa-tab"
       >
-        <div class="row">
-          <div class="col-md-3"><i class="bi bi-geo-alt-fill"></i> Cidde</div>
-          <div class="col-md-3"><i class="bi bi-geo-alt-fill"></i> Medine</div>
-        </div>
+      <div class="row">
+        <div class="col-md-3"><i class="bi bi-geo-alt-fill"></i> Cidde</div>
+        <div class="col-md-3"><i class="bi bi-geo-alt-fill"></i> Medine</div>
       </div>
     </div>
   </div>
+</div>
 
-  <div class="container">
-    <h2 class="best-deals__header__title">
-      <span class="highlight">Bu Sizin</span> Biletiniz Olabilir!
-    </h2>
+<div class="container">
+  <h2 class="best-deals__header__title">
+    <span class="highlight">Bu Sizin</span> Biletiniz Olabilir!
+  </h2>
     <iframe
       src="{{ url_for('static', filename='js/ticket.html') }}"
       width="100%"
       height="300px"
       frameborder="0"
     ></iframe>
-    <p>
+  <p>
       Sehlen Turizm ile en iyi seyahat deneyimlerinin keyfini çıkarın. Kolay
       rezervasyonlardan konforlu uçuşlara kadar, yolculuğunuzu unutulmaz kılmak
       için buradayız. Özel fırsatlarımızı inceleyin ve bir sonraki maceranızı
       planlayın. İster hızlı bir kaçamak ister uzun zamandır beklenen bir tatil
       olsun, seyahat hayallerinizi gerçekleştirmek için buradayız.
-    </p>
-  </div>
-  {% endblock %}
+  </p>
+</div>
+{% endblock %}
 </div>
