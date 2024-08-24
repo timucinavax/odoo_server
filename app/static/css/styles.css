@@ -36,7 +36,7 @@ html {
 }
 
 .search-box-container {
-    top: 50%;
+    top: 83%;
     left: 50%;
     transform: translate(-50%, -50%);
     background: rgba(255, 255, 255, 0.8); 
@@ -48,7 +48,6 @@ html {
     z-index: 100;
     text-align: center;
 }
-
 
 .search-tabs {
     display: flex;
