@@ -5,20 +5,15 @@
 body {
     font-family: 'Raleway', sans-serif;
     background: #f6f5f7;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
     margin: 0;
-    border-color: #000;
+    padding: 0;
+    height: 100vh;
+    width: 100%;
 }
-
-/* video-background sınıfı kaldırıldı */
 
 h1 {
     font-weight: bold;
-    margin-bottom: 20px;
-    margin: 0;
+    margin: 20px 0;
 }
 
 p {
@@ -78,12 +73,10 @@ input {
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-    position: relative;
-    overflow: hidden;
     width: 600px;
     max-width: 100%;
     min-height: 480px;
-    z-index: 10;
+    margin: 20px auto;
 }
 
 .form-container {
