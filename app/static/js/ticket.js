@@ -66,10 +66,6 @@ function toggleDetails(button) {
     button.classList.toggle('collapsed', !isVisible);
 }
 
-function buyTicket(flightNumber) {
-    alert(`Flight code: ${flightNumber} için bilet alındı.`);
-}
-
 function calculateFlightDuration(departureTime, arrivalTime) {
     const duration = new Date(new Date(arrivalTime) - new Date(departureTime));
     const hours = Math.floor(duration / (1000 * 60 * 60));
@@ -78,15 +74,49 @@ function calculateFlightDuration(departureTime, arrivalTime) {
 }
 
 function buyTicket(flightNumber) {
-    alert(`Flight code: ${flightNumber} için bilet alındı.`);
-    document.querySelectorAll('.breadcrumb-item').forEach(item => {
-        item.classList.remove('active');
-    });
+    document.getElementById('confirmFlightNumber').textContent = flightNumber;
+    const confirmButton = document.getElementById('confirm-purchase-button');
+    
+    confirmButton.onclick = function () {
+        proceedToPassengerInfo();
+        closeModal();
+    };
 
+    showModal();
+}
+
+function showModal() {
+    const modal = document.getElementById('confirmationModal');
+    modal.style.display = 'block';
+}
+
+function closeModal() {
+    const modal = document.getElementById('confirmationModal');
+    modal.style.display = 'none';
+}
+
+function proceedToPassengerInfo() {
+    document.querySelectorAll('.breadcrumb-item').forEach(item => item.classList.remove('active'));
     const passengerInfoStep = document.querySelector('.breadcrumb-item[data-number="1"]');
     passengerInfoStep.classList.add('active');
-
-    const passengerForm = document.getElementById('passenger-info-form');
-    passengerForm.scrollIntoView({ behavior: 'smooth' });
-    passengerForm.style.display = 'block';
+    
+    document.querySelector('.date-selector').style.display = 'none';
+    document.querySelector('.flights-container').style.display = 'none';
+    document.querySelector('#passenger-info-form').style.display = 'block';
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+    const modalHTML = `
+        <div id="confirmationModal" class="modal" style="display:none;">
+            <div class="modal-content">
+                <span class="close-button" onclick="closeModal()">&times;</span>
+                <h3>Uçuş Onayı</h3>
+                <p>Flight Number: <span id="confirmFlightNumber"></span> için bilet almak istediğinize emin misiniz?</p>
+                <button id="confirm-purchase-button" class="btn btn-primary">Evet</button>
+                <button class="btn btn-secondary" onclick="closeModal()">Hayır</button>
+            </div>
+        </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+});
+
