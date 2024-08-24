@@ -1,0 +1,61 @@
+<nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{{ url_for('dashboard')}}">
+        <img
+          src="{{ url_for('static', filename='images/sehlen_logo.png') }}"
+          alt="Sehlen Tourism"
+        />
+        <span>SEHLEN TOURISM</span>
+      </a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          {% if logged_in_user %} 
+            {% if logged_in_user_role == 'admin' %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('admin_panel') }}">Go to Admin Panel</a>
+            </li>
+            {% endif %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('ticketbuy') }}">Welcome, {{ logged_in_user }}</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('travel') }}">Travel Experience</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('offer') }}">Offers</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('support') }}">Support</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+            </li>
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('travel') }}">Travel Experience</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('offer') }}">Offers</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('support') }}">Support</a>
+            </li>
+            <button class="btn btn-outline-dark ms-3" onclick="goToLogin()" id="loginButton">Sign In</button>
+            <button class="btn btn-outline-dark ms-3" onclick="goToLogin()" id="registerButton">Sign Up</button>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+  

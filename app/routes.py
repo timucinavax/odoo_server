@@ -63,20 +63,20 @@ def role_required(allowed_roles):
         def decorated_function(*args, **kwargs):
             if 'role' not in session or session['role'] not in allowed_roles:
                 flash("Bu sayfaya erişim izniniz yok.")
-                return redirect(url_for('dashboard'))
+                return redirect(url_for('index'))
             return f(*args, **kwargs)
         return decorated_function
     return decorator
 
 @app.route('/')
 @app.route('/home')
-def dashboard():
+def index():
     logged_in_user = session.get('username')
     logged_in_user_role = session.get('role')
     
     uid, models = odoo_connect()
     if not uid:
-        return redirect(url_for('dashboard'))
+        return redirect(url_for('index'))
 
     flights = models.execute_kw(current_app.config['ODOO_DB'], uid, current_app.config['ODOO_PASSWORD'],
                                 'flight.management', 'search_read', [[]], 
@@ -85,7 +85,7 @@ def dashboard():
     outbound_flights = [flight for flight in flights if flight['flight_direction'] == 'outbound']
     return_flights = [flight for flight in flights if flight['flight_direction'] == 'return']
 
-    return render_template('dashboard.html', 
+    return render_template('index.html', 
                            outbound_flights=outbound_flights, 
                            return_flights=return_flights,
                            logged_in_user=logged_in_user,
@@ -99,7 +99,7 @@ def login():
 
     uid, models = odoo_connect()
     if not uid:
-        return redirect(url_for('dashboard'))
+        return redirect(url_for('index'))
 
     user = models.execute_kw(current_app.config['ODOO_DB'], uid, current_app.config['ODOO_PASSWORD'],
                              'custom.user', 'search_read', [[('username', '=', username), ('role', '=', role)]], {'limit': 1})
@@ -117,7 +117,7 @@ def login():
             flash("Hatalı şifre, lütfen tekrar deneyin.")
     else:
         flash("Kullanıcı bulunamadı.")
-    return redirect(url_for('dashboard'))
+    return redirect(url_for('index'))
 
 @app.route('/register', methods=['POST'])
 def register():
@@ -130,7 +130,7 @@ def register():
 
     uid, models = odoo_connect()
     if not uid:
-        return redirect(url_for('dashboard'))
+        return redirect(url_for('index'))
 
     user_id = models.execute_kw(current_app.config['ODOO_DB'], uid, current_app.config['ODOO_PASSWORD'], 
                                 'custom.user', 'create', [{
@@ -142,17 +142,17 @@ def register():
 
     if user_id:
         flash("Kayıt başarılı. Giriş yapabilirsiniz.")
-        return redirect(url_for('dashboard'))
+        return redirect(url_for('index'))
     else:
         flash("Kayıt sırasında bir hata oluştu.")
-        return redirect(url_for('dashboard'))
+        return redirect(url_for('index'))
 
 @app.route('/admin')
 @role_required(['admin'])
 def admin_panel():
     uid, models = odoo_connect()
     if not uid:
-        return redirect(url_for('dashboard'))
+        return redirect(url_for('index'))
 
     flights = models.execute_kw(current_app.config['ODOO_DB'], uid, current_app.config['ODOO_PASSWORD'], 
                                 'flight.management', 'search_read', [[]], 
@@ -221,7 +221,7 @@ def add_flight():
 def ticketbuy():
     uid, models = odoo_connect()
     if not uid:
-        return redirect(url_for('dashboard'))
+        return redirect(url_for('index'))
 
     flights = models.execute_kw(
         current_app.config['ODOO_DB'], uid, current_app.config['ODOO_PASSWORD'], 
@@ -252,7 +252,7 @@ def plane_layout(flight_id):
     
     uid, models = odoo_connect()
     if not uid:
-        return redirect(url_for('dashboard'))
+        return redirect(url_for('index'))
 
     flight = models.execute_kw(current_app.config['ODOO_DB'], uid, current_app.config['ODOO_PASSWORD'] , 'flight.management', 'read', [[flight_id]], {'fields': ['flight_number', 'airplane_type_id', 'seat_ids']})
 
@@ -276,7 +276,7 @@ def search_flights():
 
     uid, models = odoo_connect()
     if not uid:
-        return redirect(url_for('dashboard'))
+        return redirect(url_for('index'))
     
     domain = [
         ('departure_airport', '=', from_where),
@@ -302,7 +302,7 @@ def search_flights():
 @app.route('/logout')
 def logout():
     session.clear()
-    return redirect(url_for('dashboard'))
+    return redirect(url_for('index'))
 
 @app.route('/support')
 def support():

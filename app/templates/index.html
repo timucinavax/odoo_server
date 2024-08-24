@@ -1,0 +1,159 @@
+{% extends "layout.html" %}
+
+{% block title %}Sehlen Tourism - Flight Search{% endblock %}
+
+{% block content %}
+<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="{{ url_for('static', filename='images/slide1.jpg') }}" class="d-block w-100" alt="Slide 1" />
+    </div>
+    <div class="carousel-item">
+      <img src="{{ url_for('static', filename='images/slide2.jpeg') }}" class="d-block w-100" alt="Slide 2" />
+    </div>
+    <div class="carousel-item">
+      <img src="{{ url_for('static', filename='images/slide3.jpg') }}" class="d-block w-100" alt="Slide 3" />
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+  <div class="search-box-container">
+    <h2 class="best-deals__header">
+      <span class="highlight">Sehlen Tourism</span><br />Hello, Where Do You Want to Go?
+    </h2>
+    <div class="search-tabs">
+      <button class="tab-button active">One way</button>
+      <button class="tab-button">Return</button>
+    </div>
+    <div class="search-form">
+      <div class="form-group">
+        <label for="from">From</label>
+        <input type="text" id="from" placeholder="From" />
+      </div>
+      <div class="form-group">
+        <label for="to">To</label>
+        <input type="text" id="to" placeholder="To" />
+      </div>
+      <div class="form-group">
+        <label for="departure-date">Departure date</label>
+        <input type="date" id="departure-date" />
+      </div>
+      <div class="form-group">
+        <label for="return-date">Return date</label>
+        <input type="date" id="return-date" />
+      </div>
+      <button class="search-button">SEARCH CHEAP FLIGHTS</button>
+    </div>
+  </div>
+</div>
+
+<div class="cards-section">
+  <h2 class="best-deals__header__title">
+    <span class="highlight">Our Best</span> Fares!
+  </h2>
+  <div class="swiper-wrapper">
+    <div class="swiper-slide best-deals__swiper__item">
+      <div class="best-deals-card">
+        <figure class="best-deals-card__figure">
+          <img class="best-deals-card__figure__img" src="{{ url_for('static', filename='images/gaziantep.jpeg') }}" alt="Gaziantep" />
+        </figure>
+        <article class="best-deals-card__article">
+          <h3 class="best-deals-card__article__title">Gaziantep</h3>
+          <span class="best-deals-card__article__date">September 2024</span>
+          <div class="best-deals-card__article__price best-deals-card-price">
+            <span class="best-deals-card-price__amount">100</span> £<br />
+            Prices starting from
+          </div>
+        </article>
+      </div>
+    </div>
+    <div class="swiper-slide best-deals__swiper__item">
+      <div class="best-deals-card">
+        <figure class="best-deals-card__figure">
+          <img class="best-deals-card__figure__img" src="{{ url_for('static', filename='images/cidde.jpeg') }}" alt="Cidde" />
+        </figure>
+        <article class="best-deals-card__article">
+          <h3 class="best-deals-card__article__title">Cidde</h3>
+          <span class="best-deals-card__article__date">September 2024</span>
+          <div class="best-deals-card__article__price best-deals-card-price">
+            <span class="best-deals-card-price__amount">200</span> £<br />
+            Prices starting from
+          </div>
+        </article>
+      </div>
+    </div>
+    <div class="swiper-slide best-deals__swiper__item">
+      <div class="best-deals-card">
+        <figure class="best-deals-card__figure">
+          <img class="best-deals-card__figure__img" src="{{ url_for('static', filename='images/medine.jpeg') }}" alt="Medine" />
+        </figure>
+        <article class="best-deals-card__article">
+          <h3 class="best-deals-card__article__title">Medine</h3>
+          <span class="best-deals-card__article__date">October 2024</span>
+          <div class="best-deals-card__article__price best-deals-card-price">
+            <span class="best-deals-card-price__amount">250</span> £<br />
+            Prices starting from
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-title">
+  Fly to 5 destinations in 2 countries with Sehlen Tourism.
+</div>
+
+<div class="container mt-5">
+  <ul class="nav nav-tabs justify-content-center" id="categoryTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="turkey-tab" data-bs-toggle="tab" data-bs-target="#turkey" type="button" role="tab" aria-controls="turkey" aria-selected="true">TÜRKİYE</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="africa-tab" data-bs-toggle="tab" data-bs-target="#africa" type="button" role="tab" aria-controls="africa" aria-selected="false">AFRICA</button>
+    </li>
+  </ul>
+  <div class="tab-content" id="categoryTabsContent">
+    <div class="tab-pane fade show active" id="turkey" role="tabpanel" aria-labelledby="turkey-tab">
+      <div class="row">
+        <div class="col-md-3">
+          <i class="bi bi-geo-alt-fill"></i> Gaziantep
+        </div>
+        <div class="col-md-3">
+          <i class="bi bi-geo-alt-fill"></i> İstanbul
+        </div>
+        <div class="col-md-3">
+          <i class="bi bi-geo-alt-fill"></i> Ankara
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="africa" role="tabpanel" aria-labelledby="africa-tab">
+      <div class="row">
+        <div class="col-md-3"><i class="bi bi-geo-alt-fill"></i> Cidde</div>
+        <div class="col-md-3"><i class="bi bi-geo-alt-fill"></i> Medine</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <h2 class="best-deals__header__title">
+    <span class="highlight">It Could Be Your</span> Ticket?
+  </h2>
+  <iframe src="{{ url_for('static', filename='js/ticket.html') }}" width="100%" height="300px" frameborder="0"></iframe>
+  <p>
+    Enjoy the best travel experiences with Sehlen Tourism. From seamless bookings to comfortable flights, we are committed to making your journey memorable. Check out our exclusive deals and plan your next adventure today. Whether it's a quick getaway or a long-awaited vacation, we're here to make your travel dreams come true.
+  </p>
+</div>
+{% endblock %}
