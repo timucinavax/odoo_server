@@ -158,7 +158,7 @@ def login():
             session["username"] = username
             session["role"] = role
             if role == "admin":
-                return redirect(url_for("admin_panel"))
+                return redirect(url_for("admin"))
             else:
                 return redirect(url_for("flight_ticket"))
         else:
@@ -207,7 +207,7 @@ def register():
 
 @app.route("/admin")
 @role_required(["admin"])
-def admin_panel():
+def admin():
     uid, models = odoo_connect()
     if not uid:
         return redirect(url_for("index"))
@@ -251,7 +251,7 @@ def admin_panel():
     )
 
     return render_template(
-        "admin_panel.html",
+        "admin.html",
         outbound_flights=outbound_flights,
         return_flights=return_flights,
         users=users,
@@ -275,7 +275,7 @@ def add_flight():
 
     uid, models = odoo_connect()
     if not uid:
-        return redirect(url_for("admin_panel"))
+        return redirect(url_for("admin"))
 
     airplane_type = models.execute_kw(
         current_app.config["ODOO_DB"],
@@ -289,7 +289,7 @@ def add_flight():
 
     if not airplane_type:
         flash("Geçersiz uçak tipi.")
-        return redirect(url_for("admin_panel"))
+        return redirect(url_for("admin"))
 
     airplane_type_id = airplane_type[0]["id"]
 
@@ -322,7 +322,7 @@ def add_flight():
     else:
         flash("An error occurred while adding the flight.")
 
-    return redirect(url_for("admin_panel"))
+    return redirect(url_for("admin"))
 
 
 @app.route("/flight-ticket")
@@ -396,7 +396,7 @@ def plane_layout(flight_id):
 
     if not flight:
         flash("Flight not found.")
-        return redirect(url_for("admin_panel"))
+        return redirect(url_for("admin"))
     airplane_type_name = flight[0]["airplane_type_id"][1]
 
     seats = models.execute_kw(

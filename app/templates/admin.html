@@ -1,0 +1,692 @@
+{% extends '/layout/layoutAdmin.html' %} {% block title %}Sehlen Tourism - Uçuş
+Arama{%endblock %} {% block content %}
+
+<section class="hero">
+  <div class="container">
+    <h1>Admin Panel</h1>
+  </div>
+</section>
+
+<div class="container">
+  <div class="content-section" id="add-outbound">
+    <div class="card">
+      <div class="card-header">Add Outbound Flight</div>
+      <div class="card-body">
+        <form action="{{ url_for('add_flight') }}" method="post">
+          <input type="hidden" name="flight_direction" value="outbound" />
+          <label for="airplane_type" class="form-label">Airplane Type</label>
+          <div class="mb-3">
+            <select
+              class="form-control"
+              id="airplane_type"
+              name="airplane_type"
+              required
+            >
+              <option value="TK121">TK121 - 30 Seats</option>
+              <option value="TK122">TK122 - 40 Seats</option>
+              <option value="TK123">TK123 - 50 Seats</option>
+              <option value="TK124">TK124 - 70 Seats</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="flight_code" class="form-label">Flight Number</label>
+            <input
+              type="text"
+              class="form-control"
+              id="flight_code"
+              name="flight_code"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="departure" class="form-label">Departure Airport</label>
+            <input
+              type="text"
+              class="form-control"
+              id="departure"
+              name="departure"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="arrival" class="form-label">Arrival Airport</label>
+            <input
+              type="text"
+              class="form-control"
+              id="arrival"
+              name="arrival"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="date" class="form-label">Date</label>
+            <input
+              type="date"
+              class="form-control"
+              id="date"
+              name="date"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="departure_time" class="form-label"
+              >Departure Date</label
+            >
+            <input
+              type="date"
+              class="form-control"
+              id="departure_time"
+              name="departure_time"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="arrival_time" class="form-label">Arrival Date</label>
+            <input
+              type="date"
+              class="form-control"
+              id="arrival_time"
+              name="arrival_time"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="svc_type" class="form-label">Service Type</label>
+            <select class="form-control" id="svc_type" name="svc_type" required>
+              <option value="LIVE">LIVE</option>
+              <option value="FRY">FRY</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="price" class="form-label">Price</label>
+            <input
+              type="number"
+              step="0.01"
+              class="form-control"
+              id="price"
+              name="price"
+              required
+            />
+          </div>
+          <button type="submit" class="btn btn-primary">
+            Add Outbound Flight
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="content-section" id="add-return">
+    <div class="card">
+      <div class="card-header">Add Return Flight</div>
+      <div class="card-body">
+        <form action="{{ url_for('add_flight') }}" method="post">
+          <input type="hidden" name="flight_direction" value="return" />
+          <label for="airplane_type_id" class="form-label">Airplane Type</label>
+          <select
+            class="form-control"
+            id="airplane_type_id"
+            name="airplane_type_id"
+            required
+          >
+            <option value="TK121">TK121 - 30 Seats</option>
+            <option value="TK122">TK122 - 40 Seats</option>
+            <option value="TK123">TK123 - 50 Seats</option>
+            <option value="TK124">TK124 - 70 Seats</option>
+          </select>
+          <div class="mb-3">
+            <label for="flight_code_return" class="form-label"
+              >Flight Number</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="flight_code_return"
+              name="flight_code"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="departure_return" class="form-label"
+              >Departure Airport</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="departure_return"
+              name="departure"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="arrival_return" class="form-label"
+              >Arrival Airport</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="arrival_return"
+              name="arrival"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="date_return" class="form-label">Date</label>
+            <input
+              type="date"
+              class="form-control"
+              id="date"
+              name="date"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="departure_time_return" class="form-label"
+              >Departure Date</label
+            >
+            <input
+              type="date"
+              class="form-control"
+              id="departure_time_return"
+              name="departure_time"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="arrival_time_return" class="form-label"
+              >Arrival Date</label
+            >
+            <input
+              type="date"
+              class="form-control"
+              id="arrival_time_return"
+              name="arrival_time"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="svc_type_return" class="form-label">Service Type</label>
+            <select
+              class="form-control"
+              id="svc_type_return"
+              name="svc_type"
+              required
+            >
+              <option value="LIVE">LIVE</option>
+              <option value="FRY">FRY</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="price_return" class="form-label">Price</label>
+            <input
+              type="number"
+              step="0.01"
+              class="form-control"
+              id="price_return"
+              name="price"
+              required
+            />
+          </div>
+          <button type="submit" class="btn btn-primary">
+            Add Return Flight
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Outbound Flights List -->
+  <div class="content-section" id="outbound-list">
+    <div class="card">
+      <div class="card-header">Outbound Flights</div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Flight Number</th>
+                <th>Passenger Count</th>
+                <th>Departure</th>
+                <th>Arrival</th>
+                <th>Date</th>
+                <th>Plane</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for flight in outbound_flights %}
+              <tr>
+                <td>{{ flight.flight_number }}</td>
+                <td>{{ flight.available_seats }}</td>
+                <td>{{ flight.departure_airport }}</td>
+                <td>{{ flight.arrival_airport }}</td>
+                <td>{{ flight.departure_time }}</td>
+                <td>
+                  <a
+                    href="{{ url_for('plane_layout', flight_id=flight.id) }}"
+                    class="btn btn-primary"
+                    >Plane Chair</a
+                  >
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">Active Flights</div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Flight Number</th>
+                <th>Service Type</th>
+                <th>Departure</th>
+                <th>Arrival</th>
+                <th>Departure Time</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody id="active-flights-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-section" id="all-flights">
+    <div class="card">
+      <div class="card-header">All Flights and Flight Management</div>
+      <div class="card-body">
+        <!-- Outbound and Return Flight Forms in a Row -->
+        <div class="row">
+          <!-- Outbound Flight Form -->
+          <div class="col-md-6">
+            <div class="card mb-4">
+              <div class="card-header">Add Outbound Flight</div>
+              <div class="card-body">
+                <form action="{{ url_for('add_flight') }}" method="post">
+                  <input
+                    type="hidden"
+                    name="flight_direction"
+                    value="outbound"
+                  />
+                  <label for="airplane_type" class="form-label"
+                    >Airplane Type</label
+                  >
+                  <div class="mb-3">
+                    <select
+                      class="form-control"
+                      id="airplane_type"
+                      name="airplane_type"
+                      required
+                    >
+                      <option value="TK121">TK121 - 30 Seats</option>
+                      <option value="TK122">TK122 - 40 Seats</option>
+                      <option value="TK123">TK123 - 50 Seats</option>
+                      <option value="TK124">TK124 - 70 Seats</option>
+                    </select>
+                  </div>
+                  <div class="mb-3">
+                    <label for="flight_code" class="form-label"
+                      >Flight Number</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="flight_code"
+                      name="flight_code"
+                      required
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="departure" class="form-label"
+                      >Departure Airport</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="departure"
+                      name="departure"
+                      required
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="arrival" class="form-label"
+                      >Arrival Airport</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="arrival"
+                      name="arrival"
+                      required
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="date" class="form-label">Date</label>
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="date"
+                      name="date"
+                      required
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="departure_time" class="form-label"
+                      >Departure Date</label
+                    >
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="departure_time"
+                      name="departure_time"
+                      required
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="arrival_time" class="form-label"
+                      >Arrival Date</label
+                    >
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="arrival_time"
+                      name="arrival_time"
+                      required
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="svc_type" class="form-label"
+                      >Service Type</label
+                    >
+                    <select
+                      class="form-control"
+                      id="svc_type"
+                      name="svc_type"
+                      required
+                    >
+                      <option value="LIVE">LIVE</option>
+                      <option value="FRY">FRY</option>
+                    </select>
+                  </div>
+                  <div class="mb-3">
+                    <label for="price" class="form-label">Price</label>
+                    <input
+                      type="number"
+                      step="0.01"
+                      class="form-control"
+                      id="price"
+                      name="price"
+                      required
+                    />
+                  </div>
+                  <button type="submit" class="btn btn-primary">
+                    Add Outbound Flight
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <!-- Return Flight Form -->
+          <div class="col-md-6">
+            <div class="card mb-4">
+              <div class="card-header">Add Return Flight</div>
+              <div class="card-body">
+                <form action="{{ url_for('add_flight') }}" method="post">
+                  <input type="hidden" name="flight_direction" value="return" />
+                  <label for="airplane_type_id" class="form-label"
+                    >Airplane Type</label
+                  >
+                  <select
+                    class="form-control"
+                    id="airplane_type_id"
+                    name="airplane_type_id"
+                    required
+                  >
+                    <option value="TK121">TK121 - 30 Seats</option>
+                    <option value="TK122">TK122 - 40 Seats</option>
+                    <option value="TK123">TK123 - 50 Seats</option>
+                    <option value="TK124">TK124 - 70 Seats</option>
+                  </select>
+                  <div class="mb-3">
+                    <label for="flight_code_return" class="form-label"
+                      >Flight Number</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="flight_code_return"
+                      name="flight_code"
+                      required
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="departure_return" class="form-label"
+                      >Departure Airport</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="departure_return"
+                      name="departure"
+                      required
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="arrival_return" class="form-label"
+                      >Arrival Airport</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="arrival_return"
+                      name="arrival"
+                      required
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="date_return" class="form-label">Date</label>
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="date"
+                      name="date"
+                      required
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="departure_time_return" class="form-label"
+                      >Departure Date</label
+                    >
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="departure_time_return"
+                      name="departure_time"
+                      required
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="arrival_time_return" class="form-label"
+                      >Arrival Date</label
+                    >
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="arrival_time_return"
+                      name="arrival_time"
+                      required
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="svc_type_return" class="form-label"
+                      >Service Type</label
+                    >
+                    <select
+                      class="form-control"
+                      id="svc_type_return"
+                      name="svc_type"
+                      required
+                    >
+                      <option value="LIVE">LIVE</option>
+                      <option value="FRY">FRY</option>
+                    </select>
+                  </div>
+                  <div class="mb-3">
+                    <label for="price_return" class="form-label">Price</label>
+                    <input
+                      type="number"
+                      step="0.01"
+                      class="form-control"
+                      id="price_return"
+                      name="price"
+                      required
+                    />
+                  </div>
+                  <button type="submit" class="btn btn-primary">
+                    Add Return Flight
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Flights List -->
+        <div class="table-responsive">
+          <div class="card-header">Flight List</div>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Flight Number</th>
+                <th>Service Type</th>
+                <th>Departure</th>
+                <th>Arrival</th>
+                <th>Departure Time</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for flight in outbound_flights %}
+              <tr>
+                <td>{{ flight.flight_number }}</td>
+                <td>{{ flight.svc_type }}</td>
+                <td>{{ flight.departure_airport }}</td>
+                <td>{{ flight.arrival_airport }}</td>
+                <td>{{ flight.date }}</td>
+              </tr>
+              {% endfor %} {% for flight in return_flights %}
+              <tr>
+                <td>{{ flight.flight_number }}</td>
+                <td>{{ flight.svc_type }}</td>
+                <td>{{ flight.departure_airport }}</td>
+                <td>{{ flight.arrival_airport }}</td>
+                <td>{{ flight.date }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Return Flights List -->
+  <div class="content-section" id="return-list">
+    <div class="card">
+      <div class="card-header">Return Flights</div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Flight Number</th>
+                <th>Passenger Count</th>
+                <th>Departure</th>
+                <th>Arrival</th>
+                <th>Date</th>
+                <th>Plane</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for flight in return_flights %}
+              <tr>
+                <td>{{ flight.flight_number }}</td>
+                <td>{{ flight.available_seats }}</td>
+                <td>{{ flight.departure_airport }}</td>
+                <td>{{ flight.arrival_airport }}</td>
+                <td>{{ flight.date }}</td>
+                <td>
+                  <a
+                    href="{{ url_for('plane_layout', flight_id=flight.id) }}"
+                    class="btn btn-primary"
+                    >Plane Chair</a
+                  >
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">Active Flights</div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Flight Number</th>
+                <th>Service Type</th>
+                <th>Departure</th>
+                <th>Arrival</th>
+                <th>Departure Time</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody id="active-flights-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Users Table -->
+  <div class="content-section" id="users-list">
+    <div class="card">
+      <div class="card-header">Users</div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Role</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for user in users %} {% if user.role != 'admin' %}
+              <tr>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>
+                  {% if user.role == 'agency' %} Agency {% elif user.role ==
+                  'user' %} Customer {% endif %}
+                </td>
+              </tr>
+              {% endif %} {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
