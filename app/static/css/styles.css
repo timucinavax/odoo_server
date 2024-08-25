@@ -10,8 +10,8 @@ html {
 
 .carousel {
     margin-top: 20px;
-    margin-left: 60px;
-    margin-right: 60px;
+    margin-left: 100px;
+    margin-right: 100px;
     position: relative;
 }
 
@@ -44,8 +44,8 @@ html {
     background: rgba(255, 255, 255, 0.8);
     border-radius: 10px;
     padding: 20px;
-    max-width: 1100px; 
-    width: 97%; 
+    max-width: 1100px;
+    width: 97%;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     z-index: 100;
     text-align: center;
@@ -353,7 +353,8 @@ select {
     bottom: 0;
     left: 0;
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.8); /* Şeffaf siyah arka plan */
+    background-color: rgba(0, 0, 0, 0.8);
+    /* Şeffaf siyah arka plan */
     color: #fff;
     padding: 20px;
     z-index: 1000;
@@ -367,7 +368,8 @@ select {
 }
 
 .cookie-consent a {
-    color: #ffffff; /* Beyaz metin rengi */
+    color: #ffffff;
+    /* Beyaz metin rengi */
     text-decoration: underline;
 }
 
@@ -378,8 +380,10 @@ select {
 }
 
 .cookie-consent .btn {
-    background-color: #ffffff; /* Beyaz butonlar */
-    color: #000; /* Siyah metin */
+    background-color: #ffffff;
+    /* Beyaz butonlar */
+    color: #000;
+    /* Siyah metin */
     padding: 10px 20px;
     border-radius: 4px;
     text-decoration: none;
@@ -387,16 +391,19 @@ select {
 }
 
 .cookie-consent .btn:hover {
-    background-color: #f0f0f0; /* Hover durumunda açık gri */
+    background-color: #f0f0f0;
+    /* Hover durumunda açık gri */
 }
 
 .cookie-consent .btn-consent {
-    background-color: #007bff; /* Mavi onay butonu */
+    background-color: #007bff;
+    /* Mavi onay butonu */
     color: #fff;
 }
 
 .cookie-consent .btn-consent:hover {
-    background-color: #0056b3; /* Hover durumunda koyu mavi */
+    background-color: #0056b3;
+    /* Hover durumunda koyu mavi */
 }
 
 
@@ -418,7 +425,7 @@ select {
     }
 
     .search-box-container {
-        display: none;
+        display: flex;
         /* Arama kutusunu mobilde gizler */
     }
 
