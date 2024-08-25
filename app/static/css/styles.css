@@ -10,8 +10,8 @@ html {
 
 .carousel {
     margin-top: 20px;
-    margin-left: 30px;
-    margin-right: 30px;
+    margin-left: 50px;
+    margin-right: 50px;
     position: relative;
 }
 
@@ -21,8 +21,8 @@ html {
 }
 
 .carousel img {
-    width: 70%;
-    height: 60vh;
+    width: 60%;
+    height: 40vh;
     object-fit: cover;
     clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);
 }
@@ -38,7 +38,7 @@ html {
 }
 
 .search-box-container {
-    top: 75%;
+    top: 70%;
     left: 50%;
     transform: translate(-50%, -50%);
     background: rgba(255, 255, 255, 0.8);
