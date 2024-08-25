@@ -10,6 +10,8 @@ html {
 
 .carousel {
     margin-top: 20px;
+    margin-left: 30px;
+    margin-right: 30px;
     position: relative;
 }
 
@@ -19,7 +21,7 @@ html {
 }
 
 .carousel img {
-    width: 100%;
+    width: 70%;
     height: 60vh;
     object-fit: cover;
     clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);
