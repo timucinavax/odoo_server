@@ -451,6 +451,7 @@ def search_flights():
                 "flight_direction",
                 "departure_airport",
                 "arrival_airport",
+                "date",
                 "price",
             ]
         },
