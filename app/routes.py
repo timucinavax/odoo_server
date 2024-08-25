@@ -111,6 +111,7 @@ def index():
                 "departure_airport",
                 "arrival_airport",
                 "departure_time",
+                "date",
             ]
         },
     )
@@ -229,6 +230,7 @@ def admin():
                 "departure_airport",
                 "arrival_airport",
                 "departure_time",
+                "date",
             ]
         },
     )
@@ -350,6 +352,7 @@ def flight_ticket():
                 "departure_airport",
                 "arrival_airport",
                 "price",
+                "date",
             ]
         },
     )
