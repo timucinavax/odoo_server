@@ -73,24 +73,34 @@ function handleSearchForm() {
 }
 
 function setupDateInput(dateInput, availableDates) {
+
+    availableDates.sort();
+    dateInput.setAttribute('min', availableDates[0]);
+    dateInput.setAttribute('max', availableDates[availableDates.length - 1]);
+
     dateInput.addEventListener('input', function () {
         const selectedDate = dateInput.value;
         if (!availableDates.includes(selectedDate)) {
             dateInput.setCustomValidity('Bu tarih seçilemez. Lütfen geçerli bir tarih seçin.');
-            dateInput.reportValidity();  // Uyarıyı kullanıcıya hemen göstermek için
         } else {
             dateInput.setCustomValidity('');
         }
     });
-
     dateInput.addEventListener('focus', function () {
-        // Tüm tarihler dışında kalanları disable et
-        const minDate = Math.min(...availableDates.map(date => new Date(date)));
-        const maxDate = Math.max(...availableDates.map(date => new Date(date)));
-        dateInput.min = minDate.toISOString().split('T')[0];
-        dateInput.max = maxDate.toISOString().split('T')[0];
+        const datePicker = dateInput.showPicker();
+        const calendar = datePicker.querySelector('.ui-datepicker-calendar');
+        const days = calendar.querySelectorAll('td');
+
+        days.forEach((day) => {
+            const date = day.getAttribute('data-date');
+            if (!availableDates.includes(date)) {
+                day.classList.add('disabled');
+                day.setAttribute('aria-disabled', 'true');
+            }
+        });
     });
 }
+
 
 function populateSelectOptions(selectElement, options) {
     options.forEach(optionValue => {
