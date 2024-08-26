@@ -423,10 +423,10 @@ def search_flights():
     if not uid:
         return jsonify({"error": "Odoo connection failed"}), 500
 
-    from_airport = request.args.get("from")
-    to_airport = request.args.get("to")
-    departure_date = request.args.get("departure_date")
-    return_date = request.args.get("return_date")
+    from_airport = request.args.get("departure_airport")
+    to_airport = request.args.get("arrival_airport")
+    departure_date = request.args.get("departure_time")
+    return_date = request.args.get("arrival_time")
 
     domain = []
     if from_airport:
