@@ -420,8 +420,6 @@ def plane_layout(flight_id):
 @app.route("/search_flights", methods=["GET"])
 def search_flights():
     uid, models = odoo_connect()
-    if not uid:
-        return jsonify({"error": "Odoo connection failed"}), 500
 
     from_airport = request.args.get("departure_airport")
     to_airport = request.args.get("arrival_airport")
@@ -434,11 +432,11 @@ def search_flights():
     if to_airport:
         domain.append(("arrival_airport", "=", to_airport))
     if departure_date:
-        domain.append(("departure_time", ">=", departure_date + " 00:00:00"))
-        domain.append(("departure_time", "<=", departure_date + " 23:59:59"))
+        domain.append(("departure_time", ">=", departure_date))
+        domain.append(("departure_time", "<=", departure_date))
     if return_date:
-        domain.append(("departure_time", ">=", return_date + " 00:00:00"))
-        domain.append(("departure_time", "<=", return_date + " 23:59:59"))
+        domain.append(("departure_time", ">=", return_date ))
+        domain.append(("departure_time", "<=", return_date ))
 
     flights = models.execute_kw(
         current_app.config["ODOO_DB"],
