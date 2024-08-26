@@ -1,8 +1,8 @@
-# odoo_sehlen
+# Odoo Sehlen Project
 
 ## Start Project 
 
--python3 run.py
+    python3 run.py
 
 ## Server Password
 
