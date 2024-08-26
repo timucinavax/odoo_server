@@ -61,6 +61,7 @@ function handleSearchForm() {
                 populateSelectOptions(fromSelect, departureAirports);
                 populateSelectOptions(toSelect, arrivalAirports);
 
+                // Flatpickr ile tarih seçiciyi ayarlayın
                 setupDateInput(departureSelect, availableDepartureDates);
                 setupDateInput(arrivalSelect, availableArrivalDates);
             } else {
@@ -75,10 +76,7 @@ function handleSearchForm() {
 function setupDateInput(dateInput, availableDates) {
     flatpickr(dateInput, {
         dateFormat: "Y-m-d",
-        enable: availableDates.map(date => new Date(date)), 
-        locale: {
-            firstDayOfWeek: 1 
-        }
+        enable: availableDates.map(date => new Date(date))
     });
 }
 
