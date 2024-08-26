@@ -32,9 +32,6 @@ function handleSearchForm() {
     const departureSelect = document.getElementById('departure_time');
     const arrivalSelect = document.getElementById('arrival_time');
 
-    let availableDepartureDates = [];
-    let availableArrivalDates = [];
-
     oneWayTab.addEventListener('click', function () {
         oneWayTab.classList.add('active');
         roundTripTab.classList.remove('active');
@@ -55,14 +52,19 @@ function handleSearchForm() {
             if (data.flights) {
                 const departureAirports = [...new Set(data.flights.map(flight => flight.departure_airport))];
                 const arrivalAirports = [...new Set(data.flights.map(flight => flight.arrival_airport))];
-                availableDepartureDates = [...new Set(data.flights.map(flight => flight.departure_time.split(' ')[0]))];
-                availableArrivalDates = [...new Set(data.flights.map(flight => flight.arrival_time.split(' ')[0]))];
+                const availableDepartureDates = data.flights.map(flight => flight.departure_time.split(' ')[0]);
+                const availableArrivalDates = data.flights.map(flight => flight.arrival_time.split(' ')[0]);
 
                 populateSelectOptions(fromSelect, departureAirports);
                 populateSelectOptions(toSelect, arrivalAirports);
 
                 setupDateInput(departureSelect, availableDepartureDates);
                 setupDateInput(arrivalSelect, availableArrivalDates);
+
+                departureSelect.addEventListener('change', function () {
+                    const selectedDepartureDate = departureSelect.value;
+                    filterReturnDates(selectedDepartureDate, availableArrivalDates, arrivalSelect);
+                });
             } else {
                 console.error("Flights data is missing in the response");
             }
@@ -76,13 +78,21 @@ function setupDateInput(inputElement, availableDates) {
     inputElement.addEventListener('input', function () {
         const selectedDate = inputElement.value;
         if (!availableDates.includes(selectedDate)) {
-            inputElement.value = '';  // Seçimi temizle
-            alert('Bu tarih seçilemez. Lütfen geçerli bir tarih seçin.');
+            inputElement.value = '';  
+            inputElement.setCustomValidity('Bu tarih seçilemez. Lütfen geçerli bir tarih seçin.');
+        } else {
+            inputElement.setCustomValidity('');
         }
     });
 }
 
+function filterReturnDates(selectedDepartureDate, availableArrivalDates, arrivalSelect) {
+    const filteredDates = availableArrivalDates.filter(date => new Date(date) > new Date(selectedDepartureDate));
+    setupDateInput(arrivalSelect, filteredDates);
+}
+
 function populateSelectOptions(selectElement, options) {
+    selectElement.innerHTML = '<option value="">Seçiniz</option>';
     options.forEach(optionValue => {
         const option = document.createElement('option');
         option.value = optionValue;
