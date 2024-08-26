@@ -24,10 +24,27 @@ function createCookieConsent() {
 }
 
 function handleSearchForm() {
+    const oneWayTab = document.getElementById('one-way-tab');
+    const roundTripTab = document.getElementById('round-trip-tab');
+    const returnDateGroup = document.getElementById('return-date-group');
     const fromSelect = document.getElementById('departure_airport');
     const toSelect = document.getElementById('arrival_airport');
     const departureDateInput = document.getElementById('departure_time');
     const arrivalDateInput = document.getElementById('arrival_time');
+
+    oneWayTab.addEventListener('click', function () {
+        oneWayTab.classList.add('active');
+        roundTripTab.classList.remove('active');
+        returnDateGroup.style.display = 'none';
+    });
+
+    roundTripTab.addEventListener('click', function () {
+        roundTripTab.classList.add('active');
+        oneWayTab.classList.remove('active');
+        returnDateGroup.style.display = 'block';
+    });
+
+    returnDateGroup.style.display = 'none';
 
     fetch('/search_flights')
         .then(response => response.json())
