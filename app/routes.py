@@ -499,21 +499,19 @@ def get_arrival_airports():
     uid, models = odoo_connect()
 
     domain = [("departure_airport", "=", from_airport)]
-
-    arrival_airports = models.execute_kw(
+    
+    flights = models.execute_kw(
         current_app.config["ODOO_DB"],
         uid,
         current_app.config["ODOO_PASSWORD"],
         "flight.management",
         "search_read",
         [domain],
-        {"fields": ["arrival_airport"]},
+        {"fields": ["arrival_airport"]}
     )
-
-    arrival_airports = list(
-        set([flight["arrival_airport"] for flight in arrival_airports])
-    )
-
+    
+    arrival_airports = list(set([flight["arrival_airport"] for flight in flights]))
+    
     return jsonify(arrival_airports=arrival_airports)
 
 
@@ -525,9 +523,9 @@ def get_available_dates():
 
     domain = [
         ("departure_airport", "=", from_airport),
-        ("arrival_airport", "=", to_airport),
+        ("arrival_airport", "=", to_airport)
     ]
-
+    
     flights = models.execute_kw(
         current_app.config["ODOO_DB"],
         uid,
@@ -535,16 +533,9 @@ def get_available_dates():
         "flight.management",
         "search_read",
         [domain],
-        {"fields": ["departure_time", "arrival_time"]},
+        {"fields": ["departure_time"]}
     )
 
-    departure_dates = list(
-        set([flight["departure_time"].split(" ")[0] for flight in flights])
-    )
-    arrival_dates = list(
-        set([flight["arrival_time"].split(" ")[0] for flight in flights])
-    )
-
-    return jsonify(
-        available_dates={"departure": departure_dates, "arrival": arrival_dates}
-    )
+    available_dates = list(set([flight["departure_time"].split(" ")[0] for flight in flights]))
+    
+    return jsonify(available_dates=available_dates)
