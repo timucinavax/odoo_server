@@ -31,10 +31,10 @@ function handleSearchForm() {
     const toSelect = document.getElementById('arrival_airport');
     const departureSelect = document.getElementById('departure_time');
     const arrivalSelect = document.getElementById('arrival_time');
-    
+
     let availableDepartureDates = [];
     let availableArrivalDates = [];
-    
+
     oneWayTab.addEventListener('click', function () {
         oneWayTab.classList.add('active');
         roundTripTab.classList.remove('active');
@@ -61,8 +61,8 @@ function handleSearchForm() {
                 populateSelectOptions(fromSelect, departureAirports);
                 populateSelectOptions(toSelect, arrivalAirports);
 
-                setupDateSelect(departureSelect, availableDepartureDates);
-                setupDateSelect(arrivalSelect, availableArrivalDates);
+                setupDateInput(departureSelect, availableDepartureDates);
+                setupDateInput(arrivalSelect, availableArrivalDates);
             } else {
                 console.error("Flights data is missing in the response");
             }
@@ -72,19 +72,16 @@ function handleSearchForm() {
         });
 }
 
-function setupDateSelect(dateSelect, availableDates) {
-    dateSelect.innerHTML = ''; // Seçenekleri temizle
-
-    availableDates.forEach(date => {
-        const option = document.createElement('option');
-        option.value = date;
-        option.textContent = date;
-        dateSelect.appendChild(option);
+function setupDateInput(dateInput, availableDates) {
+    dateInput.addEventListener('input', function () {
+        const selectedDate = dateInput.value;
+        if (!availableDates.includes(selectedDate)) {
+            dateInput.setCustomValidity('Bu tarih seçilemez. Lütfen geçerli bir tarih seçin.');
+        } else {
+            dateInput.setCustomValidity('');
+        }
     });
-
-    dateSelect.disabled = availableDates.length === 0; 
 }
-
 
 function populateSelectOptions(selectElement, options) {
     options.forEach(optionValue => {

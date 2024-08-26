@@ -37,15 +37,11 @@
         </div>
         <div class="form-group">
           <label for="departure_time">Gidiş Tarihi</label>
-          <select id="departure_time" name="departure_time" class="form-select" required>
-            <option value=""  >Gidiş Tarihi Seçin</option>
-          </select>
+          <input type="date" id="departure_time" name="departure_time" class="form-control" required>
         </div>
         <div class="form-group" id="return-date-group">
-          <label for="arrival_time">Dönüş Tarihi</label>
-          <select id="arrival_time" name="arrival_time" class="form-select">
-            <option value=""  >Dönüş Tarihi Seçin</option>
-          </select>
+            <label for="arrival_time">Dönüş Tarihi</label>
+            <input type="date" id="arrival_time" name="arrival_time" class="form-control">
         </div>
         <button type="submit" class="search-button">UCUZ UÇUŞLARI ARA</button>
       </form>
