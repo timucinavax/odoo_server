@@ -435,8 +435,8 @@ def search_flights():
         domain.append(("departure_time", ">=", departure_date))
         domain.append(("departure_time", "<=", departure_date))
     if return_date:
-        domain.append(("departure_time", ">=", return_date ))
-        domain.append(("departure_time", "<=", return_date ))
+        domain.append(("departure_time", ">=", return_date))
+        domain.append(("departure_time", "<=", return_date))
 
     flights = models.execute_kw(
         current_app.config["ODOO_DB"],
@@ -492,3 +492,59 @@ def agency_panel():
 def sign():
     return render_template("sign.html")
 
+
+@app.route("/get_arrival_airports")
+def get_arrival_airports():
+    from_airport = request.args.get("departure_airport")
+    uid, models = odoo_connect()
+
+    domain = [("departure_airport", "=", from_airport)]
+
+    arrival_airports = models.execute_kw(
+        current_app.config["ODOO_DB"],
+        uid,
+        current_app.config["ODOO_PASSWORD"],
+        "flight.management",
+        "search_read",
+        [domain],
+        {"fields": ["arrival_airport"]},
+    )
+
+    arrival_airports = list(
+        set([flight["arrival_airport"] for flight in arrival_airports])
+    )
+
+    return jsonify(arrival_airports=arrival_airports)
+
+
+@app.route("/get_available_dates")
+def get_available_dates():
+    from_airport = request.args.get("departure_airport")
+    to_airport = request.args.get("arrival_airport")
+    uid, models = odoo_connect()
+
+    domain = [
+        ("departure_airport", "=", from_airport),
+        ("arrival_airport", "=", to_airport),
+    ]
+
+    flights = models.execute_kw(
+        current_app.config["ODOO_DB"],
+        uid,
+        current_app.config["ODOO_PASSWORD"],
+        "flight.management",
+        "search_read",
+        [domain],
+        {"fields": ["departure_time", "arrival_time"]},
+    )
+
+    departure_dates = list(
+        set([flight["departure_time"].split(" ")[0] for flight in flights])
+    )
+    arrival_dates = list(
+        set([flight["arrival_time"].split(" ")[0] for flight in flights])
+    )
+
+    return jsonify(
+        available_dates={"departure": departure_dates, "arrival": arrival_dates}
+    )

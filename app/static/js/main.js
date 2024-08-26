@@ -32,9 +32,6 @@ function handleSearchForm() {
     const departureSelect = document.getElementById('departure_time');
     const arrivalSelect = document.getElementById('arrival_time');
 
-    let availableDepartureDates = [];
-    let availableArrivalDates = [];
-
     oneWayTab.addEventListener('click', function () {
         oneWayTab.classList.add('active');
         roundTripTab.classList.remove('active');
@@ -49,27 +46,44 @@ function handleSearchForm() {
 
     returnDateGroup.style.display = 'none';
 
-    fetch('/search_flights')
-        .then(response => response.json())
-        .then(data => {
-            if (data.flights) {
-                const departureAirports = [...new Set(data.flights.map(flight => flight.departure_airport))];
-                const arrivalAirports = [...new Set(data.flights.map(flight => flight.arrival_airport))];
-                availableDepartureDates = [...new Set(data.flights.map(flight => flight.departure_time.split(' ')[0]))];
-                availableArrivalDates = [...new Set(data.flights.map(flight => flight.arrival_time.split(' ')[0]))];
+    // İlk olarak, kalkış havaalanı seçildikten sonra ilgili varış havaalanlarını göster
+    fromSelect.addEventListener('change', function () {
+        const selectedDeparture = fromSelect.value;
+        fetch(`/get_arrival_airports?departure_airport=${selectedDeparture}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.arrival_airports) {
+                    populateSelectOptions(toSelect, data.arrival_airports);
+                    toSelect.disabled = false;
+                } else {
+                    console.error("Arrival airports data is missing");
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching arrival airports:', error);
+            });
+    });
 
-                populateSelectOptions(fromSelect, departureAirports);
-                populateSelectOptions(toSelect, arrivalAirports);
-
-                setupDateInput(departureSelect, availableDepartureDates);
-                setupDateInput(arrivalSelect, availableArrivalDates);
-            } else {
-                console.error("Flights data is missing in the response");
-            }
-        })
-        .catch(error => {
-            console.error('Error fetching flights:', error);
-        });
+    // Varış havaalanı seçildikten sonra tarihleri filtrele
+    toSelect.addEventListener('change', function () {
+        const selectedDeparture = fromSelect.value;
+        const selectedArrival = toSelect.value;
+        fetch(`/get_available_dates?departure_airport=${selectedDeparture}&arrival_airport=${selectedArrival}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.available_dates) {
+                    setupDateInput(departureSelect, data.available_dates.departure);
+                    setupDateInput(arrivalSelect, data.available_dates.arrival);
+                    departureSelect.disabled = false;
+                    arrivalSelect.disabled = false;
+                } else {
+                    console.error("Available dates data is missing");
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching available dates:', error);
+            });
+    });
 }
 
 function setupDateInput(inputElement, availableDates) {
@@ -83,10 +97,12 @@ function setupDateInput(inputElement, availableDates) {
 }
 
 function populateSelectOptions(selectElement, options) {
+    selectElement.innerHTML = '<option value="">Seçin...</option>';  // Mevcut seçenekleri temizle
     options.forEach(optionValue => {
         const option = document.createElement('option');
         option.value = optionValue;
         option.textContent = optionValue;
         selectElement.appendChild(option);
     });
+    selectElement.disabled = false;  // Seçimi aktif hale getir
 }
