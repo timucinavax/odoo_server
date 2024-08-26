@@ -2,18 +2,24 @@ document.addEventListener("DOMContentLoaded", function () {
     createCookieConsent();
     handleSearchForm();
     
-    // Gidiş Tarihi Takvimi Butonu
-    document.getElementById('calendar-button-departure').addEventListener('click', function () {
-        const inputElement = document.getElementById('departure_time');
-        inputElement.focus(); // Takvimi tetiklemek için input alanını odaklayın
-    });
+    const departureButton = document.getElementById('calendar-button-departure');
+    const arrivalButton = document.getElementById('calendar-button-arrival');
     
-    // Dönüş Tarihi Takvimi Butonu
-    document.getElementById('calendar-button-arrival').addEventListener('click', function () {
-        const inputElement = document.getElementById('arrival_time');
-        inputElement.focus(); // Takvimi tetiklemek için input alanını odaklayın
-    });
+    if (departureButton) {
+        departureButton.addEventListener('click', function () {
+            const inputElement = document.getElementById('departure_time');
+            inputElement.focus(); 
+        });
+    }
+    
+    if (arrivalButton) {
+        arrivalButton.addEventListener('click', function () {
+            const inputElement = document.getElementById('arrival_time');
+            inputElement.focus(); 
+        });
+    }
 });
+
 
 
 function createCookieConsent() {
