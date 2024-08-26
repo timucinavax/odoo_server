@@ -77,9 +77,18 @@ function setupDateInput(dateInput, availableDates) {
         const selectedDate = dateInput.value;
         if (!availableDates.includes(selectedDate)) {
             dateInput.setCustomValidity('Bu tarih seçilemez. Lütfen geçerli bir tarih seçin.');
+            dateInput.reportValidity();  // Uyarıyı kullanıcıya hemen göstermek için
         } else {
             dateInput.setCustomValidity('');
         }
+    });
+
+    dateInput.addEventListener('focus', function () {
+        // Tüm tarihler dışında kalanları disable et
+        const minDate = Math.min(...availableDates.map(date => new Date(date)));
+        const maxDate = Math.max(...availableDates.map(date => new Date(date)));
+        dateInput.min = minDate.toISOString().split('T')[0];
+        dateInput.max = maxDate.toISOString().split('T')[0];
     });
 }
 
@@ -91,4 +100,3 @@ function populateSelectOptions(selectElement, options) {
         selectElement.appendChild(option);
     });
 }
-
