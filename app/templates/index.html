@@ -197,20 +197,19 @@
   <h2 class="best-deals__header__title">
     <span class="highlight">Bu Sizin</span> Biletiniz Olabilir!
   </h2>
-  <iframe
-    src="{{ url_for('ticket') }}"
-    width="100%"
-    height="300px"
-    frameborder="0"
-  ></iframe>
+    <iframe
+      src="{{ url_for('static', filename='ticket/ticket.html') }}"
+      width="100%"
+      height="300px"
+      frameborder="0"
+    ></iframe>
   <p>
-    Sehlen Turizm ile en iyi seyahat deneyimlerinin keyfini çıkarın. Kolay
-    rezervasyonlardan konforlu uçuşlara kadar, yolculuğunuzu unutulmaz kılmak
-    için buradayız. Özel fırsatlarımızı inceleyin ve bir sonraki maceranızı
-    planlayın. İster hızlı bir kaçamak ister uzun zamandır beklenen bir tatil
-    olsun, seyahat hayallerinizi gerçekleştirmek için buradayız.
+      Sehlen Turizm ile en iyi seyahat deneyimlerinin keyfini çıkarın. Kolay
+      rezervasyonlardan konforlu uçuşlara kadar, yolculuğunuzu unutulmaz kılmak
+      için buradayız. Özel fırsatlarımızı inceleyin ve bir sonraki maceranızı
+      planlayın. İster hızlı bir kaçamak ister uzun zamandır beklenen bir tatil
+      olsun, seyahat hayallerinizi gerçekleştirmek için buradayız.
   </p>
 </div>
-
 {% endblock %}
 </div>
