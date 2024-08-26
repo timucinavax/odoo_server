@@ -73,6 +73,7 @@ function handleSearchForm() {
     fetch('/search_flights')
         .then(response => response.json())
         .then(data => {
+            console.log(data);
             const departureAirports = [...new Set(data.flights.map(flight => flight.departure_airport))];
             const arrivalAirports = [...new Set(data.flights.map(flight => flight.arrival_airport))];
             const departureDate = [...new Set(data.flights.map(flight => flight.departure_time.split(' ')[0]))];
