@@ -12,9 +12,11 @@
 
     X/f5*05<
 
-rm -rf odoo_sehlen
-git clone https://gitlab.com/yunusemreth/odoo_sehlen.git
-sudo systemctl daemon-reload
-sudo systemctl restart flask_app
+## Server Bilgileri  ve Çalıştırma Komutu
 
-sudo journalctl -u flask_app.service -f
+    rm -rf odoo_sehlen
+    git clone https://gitlab.com/yunusemreth/odoo_sehlen.git
+    sudo systemctl daemon-reload
+    sudo systemctl restart flask_app
+
+    sudo journalctl -u flask_app.service -f
