@@ -73,14 +73,9 @@ function handleSearchForm() {
 }
 
 function setupDatepicker(inputElement, availableDates) {
-    $(inputElement).datepicker({
-        format: 'yyyy-mm-dd',
-        beforeShowDay: function (date) {
-            const formattedDate = date.toISOString().split('T')[0];
-            return availableDates.includes(formattedDate) ? { enabled: true } : { enabled: false };
-        },
-        autoclose: true,
-        todayHighlight: true
+    flatpickr(inputElement, {
+        dateFormat: "Y-m-d",
+        enable: availableDates.map(date => new Date(date))
     });
 }
 
@@ -92,4 +87,3 @@ function populateSelectOptions(selectElement, options) {
         selectElement.appendChild(option);
     });
 }
-
