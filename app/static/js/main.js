@@ -32,7 +32,9 @@ function handleSearchForm() {
     const departureSelect = document.getElementById('departure_time');
     const arrivalSelect = document.getElementById('arrival_time');
     
-
+    let availableDepartureDates = [];
+    let availableArrivalDates = [];
+    
     oneWayTab.addEventListener('click', function () {
         oneWayTab.classList.add('active');
         roundTripTab.classList.remove('active');
@@ -50,7 +52,6 @@ function handleSearchForm() {
     fetch('/search_flights')
         .then(response => response.json())
         .then(data => {
-            console.log(data);
             if (data.flights) {
                 const departureAirports = [...new Set(data.flights.map(flight => flight.departure_airport))];
                 const arrivalAirports = [...new Set(data.flights.map(flight => flight.arrival_airport))];
@@ -60,22 +61,8 @@ function handleSearchForm() {
                 populateSelectOptions(fromSelect, departureAirports);
                 populateSelectOptions(toSelect, arrivalAirports);
 
-                // Tarih seçicileri initialize et
-                departureSelect.datepicker({
-                    beforeShowDay: function (date) {
-                        const dateString = $.datepicker.formatDate('yy-mm-dd', date);
-                        return [availableDepartureDates.includes(dateString), "", ""];
-                    },
-                    dateFormat: "yy-mm-dd"
-                });
-
-                arrivalSelect.datepicker({
-                    beforeShowDay: function (date) {
-                        const dateString = $.datepicker.formatDate('yy-mm-dd', date);
-                        return [availableArrivalDates.includes(dateString), "", ""];
-                    },
-                    dateFormat: "yy-mm-dd"
-                });
+                setupDateSelect(departureSelect, availableDepartureDates);
+                setupDateSelect(arrivalSelect, availableArrivalDates);
             } else {
                 console.error("Flights data is missing in the response");
             }
@@ -84,6 +71,20 @@ function handleSearchForm() {
             console.error('Error fetching flights:', error);
         });
 }
+
+function setupDateSelect(dateSelect, availableDates) {
+    dateSelect.innerHTML = ''; // Seçenekleri temizle
+
+    availableDates.forEach(date => {
+        const option = document.createElement('option');
+        option.value = date;
+        option.textContent = date;
+        dateSelect.appendChild(option);
+    });
+
+    dateSelect.disabled = availableDates.length === 0; 
+}
+
 
 function populateSelectOptions(selectElement, options) {
     options.forEach(optionValue => {
@@ -94,11 +95,3 @@ function populateSelectOptions(selectElement, options) {
     });
 }
 
-function populateDateOptions(dateInput, availableDates) {
-    availableDates.forEach(date => {
-        const option = document.createElement('option');
-        option.value = date;
-        option.textContent = date;
-        dateInput.appendChild(option);
-    });
-}
