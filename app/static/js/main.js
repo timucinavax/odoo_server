@@ -53,6 +53,8 @@ function handleSearchForm() {
     const returnDateGroup = document.getElementById('return-date-group');
     const fromSelect = document.getElementById('from');
     const toSelect = document.getElementById('to');
+    const departureDateInput = document.getElementById('departure-date');
+    const returnDateInput = document.getElementById('return-date');
 
     oneWayTab.addEventListener('click', function () {
         oneWayTab.classList.add('active');
@@ -71,22 +73,35 @@ function handleSearchForm() {
     fetch('/search_flights')
         .then(response => response.json())
         .then(data => {
-            const dateInput = document.getElementById('departure-date');
-            const returnDateInput = document.getElementById('return-date');
+            const departureAirports = [...new Set(data.flights.map(flight => flight.departure_airport))];
+            const arrivalAirports = [...new Set(data.flights.map(flight => flight.arrival_airport))];
 
-            populateDateOptions(dateInput, data.available_dates);
+            populateSelectOptions(fromSelect, departureAirports);
+            populateSelectOptions(toSelect, arrivalAirports);
+
+            // Uygun tarihleri giriş elemanlarına ekleme
+            populateDateOptions(departureDateInput, data.available_dates);
             populateDateOptions(returnDateInput, data.available_dates);
         })
         .catch(error => {
             console.error('Error fetching flights:', error);
         });
+}
 
-    function populateDateOptions(inputElement, availableDates) {
-        availableDates.forEach(date => {
-            const option = document.createElement('option');
-            option.value = date;
-            option.textContent = date;
-            inputElement.appendChild(option);
-        });
-    }
+function populateSelectOptions(selectElement, options) {
+    options.forEach(optionValue => {
+        const option = document.createElement('option');
+        option.value = optionValue;
+        option.textContent = optionValue;
+        selectElement.appendChild(option);
+    });
+}
+
+function populateDateOptions(dateInput, availableDates) {
+    availableDates.forEach(date => {
+        const option = document.createElement('option');
+        option.value = date;
+        option.textContent = date;
+        dateInput.appendChild(option);
+    });
 }
