@@ -61,8 +61,8 @@ function handleSearchForm() {
                 populateSelectOptions(fromSelect, departureAirports);
                 populateSelectOptions(toSelect, arrivalAirports);
 
-                setupDatepicker(departureSelect, availableDepartureDates);
-                setupDatepicker(arrivalSelect, availableArrivalDates);
+                setupDateInput(departureSelect, availableDepartureDates);
+                setupDateInput(arrivalSelect, availableArrivalDates);
             } else {
                 console.error("Flights data is missing in the response");
             }
@@ -72,10 +72,13 @@ function handleSearchForm() {
         });
 }
 
-function setupDatepicker(inputElement, availableDates) {
-    flatpickr(inputElement, {
-        dateFormat: "Y-m-d",
-        enable: availableDates.map(date => new Date(date))
+function setupDateInput(inputElement, availableDates) {
+    inputElement.addEventListener('input', function () {
+        const selectedDate = inputElement.value;
+        if (!availableDates.includes(selectedDate)) {
+            inputElement.value = '';  // Seçimi temizle
+            alert('Bu tarih seçilemez. Lütfen geçerli bir tarih seçin.');
+        }
     });
 }
 
