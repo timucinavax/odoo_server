@@ -460,7 +460,7 @@ def search_flights():
         },
     )
 
-    return jsonify(flights)
+    return jsonify(flights=flights)
 
 
 @app.route("/logout")
