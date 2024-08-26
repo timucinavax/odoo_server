@@ -2,15 +2,17 @@
 
 ## Start Project 
 
-    217.160.138.215:8450/
-
     python3 run.py
 
 ## Server Password
 
+    217.160.138.215:8450/
+
     cvEW8wvTVQ
 
 ## Admin Password
+
+    admin
 
     X/f5*05<
 
