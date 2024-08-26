@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
     createCookieConsent();
-    loadCities();
     handleSearchForm();
 });
 
@@ -22,29 +21,6 @@ function createCookieConsent() {
         e.preventDefault();
         cookieConsent.style.display = "none";
     });
-}
-
-function loadCities() {
-    fetch("{{ url_for('static', filename='js/cities.json') }}")
-        .then((response) => response.json())
-        .then((data) => {
-            const turkeyContainer = document.querySelector("#turkey .row");
-            const africaContainer = document.querySelector("#africa .row");
-
-            data.turkey.forEach((city) => {
-                const cityElement = document.createElement("div");
-                cityElement.classList.add("col-md-3");
-                cityElement.innerHTML = `<i class="bi bi-geo-alt-fill"></i> ${city}`;
-                turkeyContainer.appendChild(cityElement);
-            });
-
-            data.africa.forEach((city) => {
-                const cityElement = document.createElement("div");
-                cityElement.classList.add("col-md-3");
-                cityElement.innerHTML = `<i class="bi bi-geo-alt-fill"></i> ${city}`;
-                africaContainer.appendChild(cityElement);
-            });
-        });
 }
 
 function handleSearchForm() {
