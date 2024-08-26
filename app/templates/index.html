@@ -37,16 +37,21 @@
         </div>
         <div class="form-group">
           <label for="departure-date">Gidiş Tarihi</label>
-          <input type="date" id="departure-date" name="departure_date" required />
+          <select id="departure-date" name="departure_date" class="form-select" required>
+            <option value="" disabled selected>Gidiş Tarihi Seçin</option>
+          </select>
         </div>
         <div class="form-group" id="return-date-group">
           <label for="return-date">Dönüş Tarihi</label>
-          <input type="date" id="return-date" name="return_date" />
+          <select id="return-date" name="return_date" class="form-select">
+            <option value="" disabled selected>Dönüş Tarihi Seçin</option>
+          </select>
         </div>
         <button type="submit" class="search-button">UCUZ UÇUŞLARI ARA</button>
       </form>
     </div>
   </div>
+</div>
 
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>

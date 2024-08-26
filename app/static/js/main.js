@@ -53,8 +53,8 @@ function handleSearchForm() {
     const returnDateGroup = document.getElementById('return-date-group');
     const fromSelect = document.getElementById('from');
     const toSelect = document.getElementById('to');
-    const departureDateInput = document.getElementById('departure-date');
-    const returnDateInput = document.getElementById('return-date');
+    const departureSelect = document.getElementById('departure-date');
+    const arrivalSelect = document.getElementById('return-date');
 
     oneWayTab.addEventListener('click', function () {
         oneWayTab.classList.add('active');
@@ -75,13 +75,13 @@ function handleSearchForm() {
         .then(data => {
             const departureAirports = [...new Set(data.flights.map(flight => flight.departure_airport))];
             const arrivalAirports = [...new Set(data.flights.map(flight => flight.arrival_airport))];
+            const departureDate = [...new Set(data.flights.map(flight => flight.departure_time.split(' ')[0]))];
+            const arrivalDate = [...new Set(data.flights.map(flight => flight.arrival_time.split(' ')[0]))]
 
             populateSelectOptions(fromSelect, departureAirports);
             populateSelectOptions(toSelect, arrivalAirports);
-
-            // Uygun tarihleri giriş elemanlarına ekleme
-            populateDateOptions(departureDateInput, data.available_dates);
-            populateDateOptions(returnDateInput, data.available_dates);
+            populateDateOptions(departureSelect, departureDate);
+            populateDateOptions(arrivalSelect , arrivalDate)
         })
         .catch(error => {
             console.error('Error fetching flights:', error);
