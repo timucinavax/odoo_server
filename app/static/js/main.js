@@ -61,7 +61,6 @@ function handleSearchForm() {
                 populateSelectOptions(fromSelect, departureAirports);
                 populateSelectOptions(toSelect, arrivalAirports);
 
-                // Flatpickr ile tarih seçiciyi ayarlayın
                 setupDateInput(departureSelect, availableDepartureDates);
                 setupDateInput(arrivalSelect, availableArrivalDates);
             } else {
@@ -74,9 +73,54 @@ function handleSearchForm() {
 }
 
 function setupDateInput(dateInput, availableDates) {
-    flatpickr(dateInput, {
-        dateFormat: "Y-m-d",
-        enable: availableDates.map(date => new Date(date))
+    // Geçerli tarihleri seçilebilir hale getir
+    dateInput.addEventListener('focus', function () {
+        dateInput.value = "";
+    });
+
+    dateInput.addEventListener('input', function () {
+        const selectedDate = dateInput.value;
+        if (!availableDates.includes(selectedDate)) {
+            dateInput.setCustomValidity('Bu tarih seçilemez. Lütfen geçerli bir tarih seçin.');
+        } else {
+            dateInput.setCustomValidity('');
+        }
+    });
+
+    // Tarayıcı tarih picker'ını kapat
+    dateInput.addEventListener('keydown', function (e) {
+        e.preventDefault();
+    });
+
+    // Elle tarih seçimi yapma, sadece geçerli tarihler arasından seç
+    dateInput.addEventListener('click', function () {
+        const dropdown = document.createElement('ul');
+        dropdown.classList.add('date-dropdown');
+        dropdown.style.position = 'absolute';
+        dropdown.style.zIndex = 1000;
+        dropdown.style.background = 'white';
+        dropdown.style.border = '1px solid #ccc';
+
+        availableDates.forEach(date => {
+            const listItem = document.createElement('li');
+            listItem.textContent = date;
+            listItem.style.cursor = 'pointer';
+            listItem.style.padding = '5px';
+            listItem.style.listStyle = 'none';
+
+            listItem.addEventListener('click', function () {
+                dateInput.value = date;
+                dateInput.setCustomValidity('');
+                document.body.removeChild(dropdown);
+            });
+
+            dropdown.appendChild(listItem);
+        });
+
+        const rect = dateInput.getBoundingClientRect();
+        dropdown.style.left = `${rect.left}px`;
+        dropdown.style.top = `${rect.bottom}px`;
+        document.body.appendChild(dropdown);
     });
 }
 
