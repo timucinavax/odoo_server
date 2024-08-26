@@ -29,9 +29,11 @@ function handleSearchForm() {
     const returnDateGroup = document.getElementById('return-date-group');
     const fromSelect = document.getElementById('departure_airport');
     const toSelect = document.getElementById('arrival_airport');
-    const departureSelect = document.getElementById('departure_time');
-    const arrivalSelect = document.getElementById('arrival_time');
-
+    const departureSelect = $("#departure_time"); 
+    const arrivalSelect = $("#arrival_time"); 
+    
+    let availableDepartureDates = [];
+    let availableArrivalDates = [];
 
     oneWayTab.addEventListener('click', function () {
         oneWayTab.classList.add('active');
@@ -54,13 +56,28 @@ function handleSearchForm() {
             if (data.flights) {
                 const departureAirports = [...new Set(data.flights.map(flight => flight.departure_airport))];
                 const arrivalAirports = [...new Set(data.flights.map(flight => flight.arrival_airport))];
-                const departureDate = [...new Set(data.flights.map(flight => flight.departure_time.split(' ')[0]))];
-                const arrivalDate = [...new Set(data.flights.map(flight => flight.arrival_time.split(' ')[0]))];
+                availableDepartureDates = [...new Set(data.flights.map(flight => flight.departure_time.split(' ')[0]))];
+                availableArrivalDates = [...new Set(data.flights.map(flight => flight.arrival_time.split(' ')[0]))];
 
                 populateSelectOptions(fromSelect, departureAirports);
                 populateSelectOptions(toSelect, arrivalAirports);
-                populateDateOptions(departureSelect, departureDate);
-                populateDateOptions(arrivalSelect, arrivalDate);
+
+                // Tarih seçicileri initialize et
+                departureSelect.datepicker({
+                    beforeShowDay: function (date) {
+                        const dateString = $.datepicker.formatDate('yy-mm-dd', date);
+                        return [availableDepartureDates.includes(dateString), "", ""];
+                    },
+                    dateFormat: "yy-mm-dd"
+                });
+
+                arrivalSelect.datepicker({
+                    beforeShowDay: function (date) {
+                        const dateString = $.datepicker.formatDate('yy-mm-dd', date);
+                        return [availableArrivalDates.includes(dateString), "", ""];
+                    },
+                    dateFormat: "yy-mm-dd"
+                });
             } else {
                 console.error("Flights data is missing in the response");
             }
