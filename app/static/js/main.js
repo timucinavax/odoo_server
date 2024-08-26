@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     createCookieConsent();
     handleSearchForm();
+    
 });
 
 function createCookieConsent() {
@@ -24,10 +25,27 @@ function createCookieConsent() {
 }
 
 function handleSearchForm() {
+    const oneWayTab = document.getElementById('one-way-tab');
+    const roundTripTab = document.getElementById('round-trip-tab');
+    const returnDateGroup = document.getElementById('return-date-group');
     const fromSelect = document.getElementById('departure_airport');
     const toSelect = document.getElementById('arrival_airport');
     const departureDateInput = document.getElementById('departure_time');
-    const calendarContainer = document.getElementById('custom-calendar');
+    const arrivalDateInput = document.getElementById('arrival_time');
+
+    oneWayTab.addEventListener('click', function () {
+        oneWayTab.classList.add('active');
+        roundTripTab.classList.remove('active');
+        returnDateGroup.style.display = 'none';
+    });
+
+    roundTripTab.addEventListener('click', function () {
+        roundTripTab.classList.add('active');
+        oneWayTab.classList.remove('active');
+        returnDateGroup.style.display = 'block';
+    });
+
+    returnDateGroup.style.display = 'none';
 
     fetch('/search_flights')
         .then(response => response.json())
@@ -40,12 +58,18 @@ function handleSearchForm() {
                     const filteredFlights = data.flights.filter(flight => flight.departure_airport === selectedFrom);
                     populateSelectOptions(toSelect, [...new Set(filteredFlights.map(flight => flight.arrival_airport))]);
 
+                    toSelect.disabled = false;
+                    departureDateInput.disabled = true;
+                    arrivalDateInput.disabled = true;
+
                     toSelect.addEventListener('change', function () {
                         const selectedTo = toSelect.value;
                         const matchedFlights = filteredFlights.filter(flight => flight.arrival_airport === selectedTo);
                         const availableDates = [...new Set(matchedFlights.map(flight => flight.departure_time.split(' ')[0]))];
 
-                        setupDateInput(departureDateInput, availableDates, calendarContainer);
+                        setupDateInput(departureDateInput, availableDates);
+                        departureDateInput.disabled = false;
+                        arrivalDateInput.disabled = false;
                     });
                 });
             } else {
@@ -67,12 +91,15 @@ function populateSelectOptions(selectElement, options) {
     });
 }
 
-function setupDateInput(inputElement, availableDates, calendarContainer) {
-    const dateList = availableDates.map(date => new Date(date).getTime());
+function setupDateInput(inputElement, availableDates) {
+    const dateList = availableDates.map(date => new Date(date).getTime()); // Tarihleri milisaniye olarak al
 
     document.getElementById('calendar-button').addEventListener('click', function () {
-        calendarContainer.style.display = 'block';
+        inputElement.focus();  // Takvimi tetiklemek için input alanını odaklayın
 
+        const calendar = document.createElement('div');
+        calendar.className = 'custom-calendar';
+        
         const currentDate = new Date();
         const year = currentDate.getFullYear();
         const month = currentDate.getMonth();
@@ -84,7 +111,7 @@ function setupDateInput(inputElement, availableDates, calendarContainer) {
             calendarHTML += `<th>${day}</th>`;
         });
         calendarHTML += '</tr></thead><tbody><tr>';
-
+        
         for (let i = 1; i <= daysInMonth; i++) {
             const date = new Date(year, month, i);
             const isAvailable = dateList.includes(date.getTime());
@@ -102,14 +129,16 @@ function setupDateInput(inputElement, availableDates, calendarContainer) {
         }
         calendarHTML += '</tr></tbody></table>';
 
-        calendarContainer.innerHTML = calendarHTML;
+        calendar.innerHTML = calendarHTML;
+        document.body.appendChild(calendar);
 
-        calendarContainer.addEventListener('click', function (e) {
+        calendar.addEventListener('click', function (e) {
             const clickedDate = e.target.textContent;
             if (dateList.includes(new Date(year, month, clickedDate).getTime())) {
                 inputElement.value = `${year}-${String(month + 1).padStart(2, '0')}-${String(clickedDate).padStart(2, '0')}`;
-                calendarContainer.style.display = 'none';
+                document.body.removeChild(calendar);
             }
         });
     });
 }
+
