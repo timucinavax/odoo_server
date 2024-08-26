@@ -38,14 +38,14 @@
         <div class="form-group">
           <label for="departure_time">Gidiş Tarihi</label>
           <div class="input-group">
-            <input type="text" id="departure_time" name="departure_time" class="form-control" readonly>
+            <input type="text" id="departure_time" name="departure_time" class="form-control" placeholder="Gidiş Tarihi Seçin" readonly>
             <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="button" id="calendar-button-departure">
-                <i class="bi bi-calendar"></i>
-              </button>
+              <span class="input-group-text">
+                <i class="bi bi-calendar" id="calendar-button"></i>
+              </span>
             </div>
           </div>
-        </div>
+        </div>        
         
         <div class="form-group" id="return-date-group">
           <label for="arrival_time">Dönüş Tarihi</label>

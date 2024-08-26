@@ -2,25 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     createCookieConsent();
     handleSearchForm();
     
-    const departureButton = document.getElementById('calendar-button-departure');
-    const arrivalButton = document.getElementById('calendar-button-arrival');
-    
-    if (departureButton) {
-        departureButton.addEventListener('click', function () {
-            const inputElement = document.getElementById('departure_time');
-            inputElement.focus(); 
-        });
-    }
-    
-    if (arrivalButton) {
-        arrivalButton.addEventListener('click', function () {
-            const inputElement = document.getElementById('arrival_time');
-            inputElement.focus(); 
-        });
-    }
 });
-
-
 
 function createCookieConsent() {
     const cookieConsent = document.createElement("div");
@@ -112,7 +94,9 @@ function populateSelectOptions(selectElement, options) {
 function setupDateInput(inputElement, availableDates) {
     const dateList = availableDates.map(date => new Date(date).getTime()); // Tarihleri milisaniye olarak al
 
-    inputElement.addEventListener('focus', function () {
+    document.getElementById('calendar-button').addEventListener('click', function () {
+        inputElement.focus();  // Takvimi tetiklemek için input alanını odaklayın
+
         const calendar = document.createElement('div');
         calendar.className = 'custom-calendar';
         
@@ -157,3 +141,4 @@ function setupDateInput(inputElement, availableDates) {
         });
     });
 }
+
