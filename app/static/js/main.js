@@ -29,11 +29,9 @@ function handleSearchForm() {
     const returnDateGroup = document.getElementById('return-date-group');
     const fromSelect = document.getElementById('departure_airport');
     const toSelect = document.getElementById('arrival_airport');
-    const departureSelect = $("#departure_time"); 
-    const arrivalSelect = $("#arrival_time"); 
+    const departureSelect = document.getElementById('departure_time');
+    const arrivalSelect = document.getElementById('arrival_time');
     
-    let availableDepartureDates = [];
-    let availableArrivalDates = [];
 
     oneWayTab.addEventListener('click', function () {
         oneWayTab.classList.add('active');
