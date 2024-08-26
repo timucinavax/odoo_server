@@ -71,22 +71,22 @@ function handleSearchForm() {
     fetch('/search_flights')
         .then(response => response.json())
         .then(data => {
-            const departureAirports = [...new Set(data.map(flight => flight.departure_airport))];
-            const arrivalAirports = [...new Set(data.map(flight => flight.arrival_airport))];
+            const dateInput = document.getElementById('departure-date');
+            const returnDateInput = document.getElementById('return-date');
 
-            populateSelectOptions(fromSelect, departureAirports);
-            populateSelectOptions(toSelect, arrivalAirports);
+            populateDateOptions(dateInput, data.available_dates);
+            populateDateOptions(returnDateInput, data.available_dates);
         })
         .catch(error => {
             console.error('Error fetching flights:', error);
         });
-}
 
-function populateSelectOptions(selectElement, options) {
-    options.forEach(optionValue => {
-        const option = document.createElement('option');
-        option.value = optionValue;
-        option.textContent = optionValue;
-        selectElement.appendChild(option);
-    });
+    function populateDateOptions(inputElement, availableDates) {
+        availableDates.forEach(date => {
+            const option = document.createElement('option');
+            option.value = date;
+            option.textContent = date;
+            inputElement.appendChild(option);
+        });
+    }
 }
