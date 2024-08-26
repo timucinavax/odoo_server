@@ -1,7 +1,20 @@
 document.addEventListener("DOMContentLoaded", function () {
     createCookieConsent();
     handleSearchForm();
+    
+    // Gidiş Tarihi Takvimi Butonu
+    document.getElementById('calendar-button-departure').addEventListener('click', function () {
+        const inputElement = document.getElementById('departure_time');
+        inputElement.focus(); // Takvimi tetiklemek için input alanını odaklayın
+    });
+    
+    // Dönüş Tarihi Takvimi Butonu
+    document.getElementById('calendar-button-arrival').addEventListener('click', function () {
+        const inputElement = document.getElementById('arrival_time');
+        inputElement.focus(); // Takvimi tetiklemek için input alanını odaklayın
+    });
 });
+
 
 function createCookieConsent() {
     const cookieConsent = document.createElement("div");
@@ -91,11 +104,50 @@ function populateSelectOptions(selectElement, options) {
 }
 
 function setupDateInput(inputElement, availableDates) {
-    inputElement.addEventListener('input', function () {
-        const selectedDate = inputElement.value;
-        if (!availableDates.includes(selectedDate)) {
-            inputElement.value = '';  
-            alert('Bu tarih seçilemez. Lütfen geçerli bir tarih seçin.');
+    const dateList = availableDates.map(date => new Date(date).getTime()); // Tarihleri milisaniye olarak al
+
+    inputElement.addEventListener('focus', function () {
+        const calendar = document.createElement('div');
+        calendar.className = 'custom-calendar';
+        
+        const currentDate = new Date();
+        const year = currentDate.getFullYear();
+        const month = currentDate.getMonth();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+        let calendarHTML = '<table class="table table-bordered"><thead><tr>';
+        const daysOfWeek = ['Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'];
+        daysOfWeek.forEach(day => {
+            calendarHTML += `<th>${day}</th>`;
+        });
+        calendarHTML += '</tr></thead><tbody><tr>';
+        
+        for (let i = 1; i <= daysInMonth; i++) {
+            const date = new Date(year, month, i);
+            const isAvailable = dateList.includes(date.getTime());
+
+            calendarHTML += `<td>
+                <button class="btn ${isAvailable ? 'btn-primary' : 'btn-secondary'}" 
+                    ${isAvailable ? '' : 'disabled'}>
+                    ${i}
+                </button>
+            </td>`;
+
+            if (date.getDay() === 6) {
+                calendarHTML += '</tr><tr>';
+            }
         }
+        calendarHTML += '</tr></tbody></table>';
+
+        calendar.innerHTML = calendarHTML;
+        document.body.appendChild(calendar);
+
+        calendar.addEventListener('click', function (e) {
+            const clickedDate = e.target.textContent;
+            if (dateList.includes(new Date(year, month, clickedDate).getTime())) {
+                inputElement.value = `${year}-${String(month + 1).padStart(2, '0')}-${String(clickedDate).padStart(2, '0')}`;
+                document.body.removeChild(calendar);
+            }
+        });
     });
 }
