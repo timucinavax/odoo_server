@@ -493,3 +493,8 @@ def agency_panel():
 @app.route("/sign")
 def sign():
     return render_template("sign.html")
+
+@app.route('/ticket')
+def ticket():
+    return render_template('includes/ticket.html')
+
