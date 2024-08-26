@@ -32,6 +32,11 @@ function handleSearchForm() {
     const departureSelect = document.getElementById('departure_time');
     const arrivalSelect = document.getElementById('arrival_time');
 
+    if (!fromSelect || !toSelect || !departureSelect || !arrivalSelect) {
+        console.error("One or more select elements are missing from the DOM");
+        return;
+    }
+
     oneWayTab.addEventListener('click', function () {
         oneWayTab.classList.add('active');
         roundTripTab.classList.remove('active');
@@ -47,26 +52,26 @@ function handleSearchForm() {
     returnDateGroup.style.display = 'none';
 
     fetch('/search_flights')
-    .then(response => response.json())
-    .then(data => {
-        console.log(data);  
-        if (data.flights) {
-            const departureAirports = [...new Set(data.flights.map(flight => flight.departure_airport))];
-            const arrivalAirports = [...new Set(data.flights.map(flight => flight.arrival_airport))];
-            const departureDate = [...new Set(data.flights.map(flight => flight.departure_time.split(' ')[0]))];
-            const arrivalDate = [...new Set(data.flights.map(flight => flight.arrival_time.split(' ')[0]))];
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            if (data.flights) {
+                const departureAirports = [...new Set(data.flights.map(flight => flight.departure_airport))];
+                const arrivalAirports = [...new Set(data.flights.map(flight => flight.arrival_airport))];
+                const departureDate = [...new Set(data.flights.map(flight => flight.departure_time.split(' ')[0]))];
+                const arrivalDate = [...new Set(data.flights.map(flight => flight.arrival_time.split(' ')[0]))];
 
-            populateSelectOptions(fromSelect, departureAirports);
-            populateSelectOptions(toSelect, arrivalAirports);
-            populateDateOptions(departureSelect, departureDate);
-            populateDateOptions(arrivalSelect, arrivalDate);
-        } else {
-            console.error("Flights data is missing in the response");
-        }
-    })
-    .catch(error => {
-        console.error('Error fetching flights:', error);
-    });
+                populateSelectOptions(fromSelect, departureAirports);
+                populateSelectOptions(toSelect, arrivalAirports);
+                populateDateOptions(departureSelect, departureDate);
+                populateDateOptions(arrivalSelect, arrivalDate);
+            } else {
+                console.error("Flights data is missing in the response");
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching flights:', error);
+        });
 }
 
 function populateSelectOptions(selectElement, options) {
