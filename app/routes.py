@@ -161,7 +161,7 @@ def login():
             if role == "admin":
                 return redirect(url_for("admin"))
             else:
-                return redirect(url_for("flight_ticket"))
+                return redirect(url_for("index"))
         else:
             flash("Hatalı şifre, lütfen tekrar deneyin.")
     else:
