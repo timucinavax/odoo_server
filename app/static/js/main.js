@@ -11,11 +11,11 @@ function postFlightSearch() {
     const searchButton = document.querySelector('.search-button');
 
     searchButton.addEventListener('click', function (e) {
-        e.preventDefault();  // Formun varsayılan davranışını durdurur
+        e.preventDefault();  
 
         const formData = new FormData(form);
 
-        fetch('/flight_ticket', {
+        fetch('/flight-ticket', {
             method: 'POST',
             headers: {
                 'X-CSRFToken': formData.get('csrf_token')  // CSRF token eklenmesi
