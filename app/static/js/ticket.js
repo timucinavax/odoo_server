@@ -101,6 +101,21 @@ function closeModal() {
     document.getElementById('confirmationModal').style.display = 'none';
 }
 
+function selectedDate() {
+    const selectedDate = "{{ selected_date }}"; // Sunucudan gelen seçilen tarih
+    const dateBoxes = document.querySelectorAll('.date-box');
+
+    dateBoxes.forEach(box => {
+        if (box.getAttribute('data-date') === selectedDate) {
+            box.classList.add('active');
+            showFlights(selectedDate);
+        }
+    });
+}
+
+
 document.addEventListener("DOMContentLoaded", function() {
     document.getElementById('confirm-purchase-button').addEventListener('click', proceedToPassengerInfo);
+
+    selectedDate();
 });

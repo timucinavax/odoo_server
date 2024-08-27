@@ -2,9 +2,41 @@ document.addEventListener("DOMContentLoaded", function () {
 
     createCookieConsent();
     handleSearchForm();
+    postFlightSearch();
 
 });
 
+function postFlightSearch() {
+    const form = document.querySelector('.search-form');
+    const searchButton = document.querySelector('.search-button');
+
+    searchButton.addEventListener('click', function (e) {
+        e.preventDefault();  // Formun varsayılan davranışını durdurur
+
+        const formData = new FormData(form);
+
+        fetch('/flight_ticket', {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': formData.get('csrf_token')  // CSRF token eklenmesi
+            },
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // İşlem başarılı olduğunda yapılacak işlemler
+                    console.log("Form başarıyla gönderildi:", data);
+                } else {
+                    // Hata varsa hata mesajını göster
+                    console.error("Bir hata oluştu:", data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Bir hata oluştu:', error);
+            });
+    });
+}
 
 function createCookieConsent() {
     const cookieConsent = document.createElement("div");

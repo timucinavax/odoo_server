@@ -327,20 +327,25 @@ def add_flight():
     return redirect(url_for("admin"))
 
 
-@app.route("/flight-ticket")
+@app.route("/flight-ticket", methods=["POST"])
 @role_required(["user"])
 def flight_ticket():
     uid, models = odoo_connect()
     if not uid:
         return redirect(url_for("index"))
 
+    selected_date = request.form.get(
+        "selected_date"
+    )  # selected_date olarak düzeltilmiş
+
+    # Uçuşları belirli bir tarih için filtrelemek isteyebilirsiniz:
     flights = models.execute_kw(
         current_app.config["ODOO_DB"],
         uid,
         current_app.config["ODOO_PASSWORD"],
         "flight.management",
         "search_read",
-        [[]],
+        [[["date", "=", selected_date]]],  # Belirli bir tarihi filtreleyin
         {
             "fields": [
                 "departure_time",
@@ -356,6 +361,7 @@ def flight_ticket():
             ]
         },
     )
+
     date_flight_map = {}
     for flight in flights:
         flight_date = flight["departure_time"].split(" ")[0]
@@ -373,6 +379,7 @@ def flight_ticket():
         dates=list(date_prices.keys()),
         date_prices=date_prices,
         flights=flights,
+        selected_date=selected_date,  # Seçilen tarihi şablona geri gönderin
         logged_in_user=session.get("username"),
         logged_in_user_role=session.get("role"),
         current_page="flight-ticket",
@@ -435,8 +442,8 @@ def search_flights():
         domain.append(("departure_time", ">=", departure_date))
         domain.append(("departure_time", "<=", departure_date))
     if return_date:
-        domain.append(("departure_time", ">=", return_date ))
-        domain.append(("departure_time", "<=", return_date ))
+        domain.append(("departure_time", ">=", return_date))
+        domain.append(("departure_time", "<=", return_date))
 
     flights = models.execute_kw(
         current_app.config["ODOO_DB"],
@@ -491,4 +498,3 @@ def agency_panel():
 @app.route("/sign")
 def sign():
     return render_template("sign.html")
-
