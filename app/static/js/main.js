@@ -1,37 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Değişkenlerin tanımlanması
-    const departureDateInput = document.getElementById('departure_time');
-    const arrivalDateInput = document.getElementById('arrival_time');
 
     createCookieConsent();
     handleSearchForm();
 
-    // Calendar button click events
-    document.getElementById('calendar-button').addEventListener('click', function () {
-        showCalendar(departureDateInput);
-    });
-
-    document.getElementById('calendar-button-arrival').addEventListener('click', function () {
-        showCalendar(arrivalDateInput);
-    });
-
-    function showCalendar(inputElement) {
-        // Takvim elementini oluşturun
-        const calendar = document.createElement('div');
-        calendar.className = 'custom-calendar';
-
-        // Takvimi input alanının hemen altına yerleştirin
-        inputElement.parentNode.appendChild(calendar);
-
-        // Tarih seçimi işlemleri
-        calendar.addEventListener('click', function (e) {
-            const clickedDate = e.target.textContent;
-            if (clickedDate) {
-                inputElement.value = clickedDate;
-                calendar.remove();
-            }
-        });
-    }    
 });
 
 
@@ -110,6 +81,57 @@ function handleSearchForm() {
         .catch(error => {
             console.error('Error fetching flights:', error);
         });
+
+    function setupDateInput(inputElement, availableDates) {
+        const dateList = availableDates.map(date => new Date(date).getTime()); // Tarihleri milisaniye olarak al
+
+        document.getElementById('calendar-button').addEventListener('click', function () {
+            inputElement.focus();  // Takvimi tetiklemek için input alanını odaklayın
+
+            const calendar = document.createElement('div');
+            calendar.className = 'custom-calendar';
+
+            const currentDate = new Date();
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+            let calendarHTML = '<table class="table table-bordered"><thead><tr>';
+            const daysOfWeek = ['Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'];
+            daysOfWeek.forEach(day => {
+                calendarHTML += `<th>${day}</th>`;
+            });
+            calendarHTML += '</tr></thead><tbody><tr>';
+
+            for (let i = 1; i <= daysInMonth; i++) {
+                const date = new Date(year, month, i);
+                const isAvailable = dateList.includes(date.getTime());
+
+                calendarHTML += `<td>
+                        <button class="btn ${isAvailable ? 'btn-primary' : 'btn-secondary'}" 
+                            ${isAvailable ? '' : 'disabled'}>
+                            ${i}
+                        </button>
+                    </td>`;
+
+                if (date.getDay() === 6) {
+                    calendarHTML += '</tr><tr>';
+                }
+            }
+            calendarHTML += '</tr></tbody></table>';
+
+            calendar.innerHTML = calendarHTML;
+            document.body.appendChild(calendar);
+
+            calendar.addEventListener('click', function (e) {
+                const clickedDate = e.target.textContent;
+                if (dateList.includes(new Date(year, month, clickedDate).getTime())) {
+                    inputElement.value = `${year}-${String(month + 1).padStart(2, '0')}-${String(clickedDate).padStart(2, '0')}`;
+                    document.body.removeChild(calendar);
+                }
+            });
+        });
+    }
 }
 
 function populateSelectOptions(selectElement, options) {
@@ -119,57 +141,6 @@ function populateSelectOptions(selectElement, options) {
         option.value = optionValue;
         option.textContent = optionValue;
         selectElement.appendChild(option);
-    });
-}
-
-function setupDateInput(inputElement, availableDates) {
-    const dateList = availableDates.map(date => new Date(date).getTime()); // Tarihleri milisaniye olarak al
-
-    document.getElementById('calendar-button').addEventListener('click', function () {
-        inputElement.focus();  // Takvimi tetiklemek için input alanını odaklayın
-
-        const calendar = document.createElement('div');
-        calendar.className = 'custom-calendar';
-        
-        const currentDate = new Date();
-        const year = currentDate.getFullYear();
-        const month = currentDate.getMonth();
-        const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-        let calendarHTML = '<table class="table table-bordered"><thead><tr>';
-        const daysOfWeek = ['Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'];
-        daysOfWeek.forEach(day => {
-            calendarHTML += `<th>${day}</th>`;
-        });
-        calendarHTML += '</tr></thead><tbody><tr>';
-        
-        for (let i = 1; i <= daysInMonth; i++) {
-            const date = new Date(year, month, i);
-            const isAvailable = dateList.includes(date.getTime());
-
-            calendarHTML += `<td>
-                <button class="btn ${isAvailable ? 'btn-primary' : 'btn-secondary'}" 
-                    ${isAvailable ? '' : 'disabled'}>
-                    ${i}
-                </button>
-            </td>`;
-
-            if (date.getDay() === 6) {
-                calendarHTML += '</tr><tr>';
-            }
-        }
-        calendarHTML += '</tr></tbody></table>';
-
-        calendar.innerHTML = calendarHTML;
-        document.body.appendChild(calendar);
-
-        calendar.addEventListener('click', function (e) {
-            const clickedDate = e.target.textContent;
-            if (dateList.includes(new Date(year, month, clickedDate).getTime())) {
-                inputElement.value = `${year}-${String(month + 1).padStart(2, '0')}-${String(clickedDate).padStart(2, '0')}`;
-                document.body.removeChild(calendar);
-            }
-        });
     });
 }
 
