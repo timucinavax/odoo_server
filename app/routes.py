@@ -133,7 +133,7 @@ def index():
     )
 
 
-@app.route("/login", methods=["POST"])
+@app.route("/login", methods=["GET"])
 def login():
     username = request.form.get("username")
     password = request.form.get("password")
