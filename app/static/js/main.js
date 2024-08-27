@@ -11,22 +11,22 @@ function postFlightSearch() {
     const searchButton = document.querySelector('.search-button');
 
     searchButton.addEventListener('click', function (e) {
-        window.location.href('/flight-ticket') 
+        e.preventDefault(); // Varsayılan form gönderimini durdur
 
         const formData = new FormData(form);
 
         fetch('/flight-ticket', {
             method: 'POST',
             headers: {
-                'X-CSRFToken': formData.get('csrf_token') 
+                'X-CSRFToken': formData.get('csrf_token')
             },
             body: formData
         })
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    // İşlem başarılı olduğunda yapılacak işlemler
-                    console.log("Form başarıyla gönderildi:", data);
+                    // İşlem başarılı olduğunda yönlendirme yap
+                    window.location.href = '/flight-ticket';
                 } else {
                     // Hata varsa hata mesajını göster
                     console.error("Bir hata oluştu:", data.message);
