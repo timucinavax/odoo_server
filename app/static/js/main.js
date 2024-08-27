@@ -1,6 +1,32 @@
 document.addEventListener("DOMContentLoaded", function () {
     createCookieConsent();
     handleSearchForm();
+
+    document.getElementById('calendar-button').addEventListener('click', function () {
+        showCalendar(departureDateInput);
+    });
+    
+    document.getElementById('calendar-button-arrival').addEventListener('click', function () {
+        showCalendar(arrivalDateInput);
+    });
+    
+    function showCalendar(inputElement) {
+        // Takvim elementini oluşturun
+        const calendar = document.createElement('div');
+        calendar.className = 'custom-calendar';
+    
+        // Takvimi input alanının hemen altına yerleştirin
+        inputElement.parentNode.appendChild(calendar);
+    
+        // Tarih seçimi işlemleri
+        calendar.addEventListener('click', function (e) {
+            const clickedDate = e.target.textContent;
+            if (clickedDate) {
+                inputElement.value = clickedDate;
+                calendar.remove();
+            }
+        });
+    }    
     
 });
 
