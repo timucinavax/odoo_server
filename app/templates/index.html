@@ -1,4 +1,7 @@
-{% extends '/layout/layoutIndex.html' %}  {% block title %}Sehlen Tourism - Uçuş Arama{%endblock %} {% block content %}
+{% extends '/layout/layoutIndex.html' %}  
+{% block title %}Sehlen Tourism - Uçuş Arama{% endblock %} 
+
+{% block content %}
 <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-indicators">
     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slayt 1"></button>
@@ -26,34 +29,33 @@
         <div class="form-group">
           <label for="departure_airport">Nereden</label>
           <select id="departure_airport" name="departure_airport" class="form-select" required>
-            <option value="" >Nereden</option>
+            <option value="">Nereden</option>
           </select>
         </div>
         <div class="form-group">
           <label for="arrival_airport">Nereye</label>
           <select id="arrival_airport" name="arrival_airport" class="form-control" required>
-            <option value=""  >Nereye</option>
+            <option value="">Nereye</option>
           </select>
         </div>
         <div class="form-group">
           <label for="departure_time">Gidiş Tarihi</label>
           <select id="departure_time" name="departure_time" class="form-control" required>
-            <option value=""  >Gidiş Tarihi</option>
+            <option value="">Gidiş Tarihi</option>
           </select>
-          </div>
         </div>   
         <div class="form-group" id="return-date-group">
           <label for="arrival_time">Dönüş Tarihi</label>
-          <select id="arrival_time" name="arrivale_time" class="form-control" required>
-            <option value=""  >Dönüş Tarihi</option>
+          <select id="arrival_time" name="arrival_time" class="form-control">
+            <option value="">Dönüş Tarihi</option>
           </select>
         </div>        
-        
         <button type="submit" class="search-button">UCUZ UÇUŞLARI ARA</button>
       </form>
     </div>
   </div>
 </div>
+
 
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
