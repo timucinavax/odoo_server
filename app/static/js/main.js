@@ -1,23 +1,28 @@
 document.addEventListener("DOMContentLoaded", function () {
+    // Değişkenlerin tanımlanması
+    const departureDateInput = document.getElementById('departure_time');
+    const arrivalDateInput = document.getElementById('arrival_time');
+
     createCookieConsent();
     handleSearchForm();
 
+    // Calendar button click events
     document.getElementById('calendar-button').addEventListener('click', function () {
         showCalendar(departureDateInput);
     });
-    
+
     document.getElementById('calendar-button-arrival').addEventListener('click', function () {
         showCalendar(arrivalDateInput);
     });
-    
+
     function showCalendar(inputElement) {
         // Takvim elementini oluşturun
         const calendar = document.createElement('div');
         calendar.className = 'custom-calendar';
-    
+
         // Takvimi input alanının hemen altına yerleştirin
         inputElement.parentNode.appendChild(calendar);
-    
+
         // Tarih seçimi işlemleri
         calendar.addEventListener('click', function (e) {
             const clickedDate = e.target.textContent;
@@ -27,8 +32,8 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }    
-    
 });
+
 
 function createCookieConsent() {
     const cookieConsent = document.createElement("div");
