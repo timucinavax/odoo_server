@@ -83,10 +83,10 @@ function handleSearchForm() {
         });
 
     function setupDateInput(inputElement, availableDates) {
-        const dateList = availableDates.map(date => new Date(date).getTime()); // Tarihleri milisaniye olarak al
+        const dateList = availableDates.map(date => new Date(date).getTime());
 
         document.getElementById('calendar-button').addEventListener('click', function () {
-            inputElement.focus();  // Takvimi tetiklemek için input alanını odaklayın
+            inputElement.focus();
 
             const calendar = document.createElement('div');
             calendar.className = 'custom-calendar';

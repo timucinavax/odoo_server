@@ -41,7 +41,34 @@
             <input type="text" id="departure_time" name="departure_time" class="form-control" placeholder="Gidiş Tarihi Seçin" readonly>
             <div class="input-group-append">
               <span class="input-group-text">
-                <i class="bi bi-calendar" id="calendar-button"></i>
+                <i class="bi bi-calendar" id="calendar-button">
+                  <div class="container">
+                    <div class="calendar" id="custom-calendar" style="display: none;">
+                      <header>
+                        <pre class="left">◀</pre>
+                        <div class="header-display">
+                          <p class="display">""</p>
+                        </div>
+                        <pre class="right">▶</pre>
+                      </header>
+                  
+                      <div class="week">
+                        <div>Su</div>
+                        <div>Mo</div>
+                        <div>Tu</div>
+                        <div>We</div>
+                        <div>Th</div>
+                        <div>Fr</div>
+                        <div>Sa</div>
+                      </div>
+                      <div class="days"></div>
+                    </div>
+                    <div class="display-selected">
+                      <p class="selected"></p>
+                    </div>
+                  </div>
+                  
+                </i>
               </span>
             </div>
           </div>
