@@ -1,12 +1,19 @@
 function showFlights(date) {
     document.querySelectorAll('.date-box').forEach(box => box.classList.remove('active'));
-    document.querySelector(`.date-box[onclick="showFlights('${date}')"]`).classList.add('active');
+    document.querySelector(`.date-box[data-date="${date}"]`).classList.add('active');
 
     const flightsContainer = document.getElementById('flights-container');
     flightsContainer.innerHTML = '';
 
     const flights = flightsData.filter(flight => flight.departure_time.startsWith(date));
     flights.length > 0 ? displayFlights(flights) : showNoFlightsMessage();
+}
+
+function selectedDate() {
+    const selectedDate = "{{ selected_date }}"; 
+    if (selectedDate) {
+        showFlights(selectedDate);  
+    }
 }
 
 function displayFlights(flights) {
@@ -115,7 +122,8 @@ function selectedDate() {
 
 
 document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById('confirm-purchase-button').addEventListener('click', proceedToPassengerInfo);
 
     selectedDate();
+
+    document.getElementById('confirm-purchase-button').addEventListener('click', proceedToPassengerInfo);
 });

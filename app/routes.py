@@ -327,7 +327,7 @@ def add_flight():
     return redirect(url_for("admin"))
 
 
-@app.route("/flight-ticket")
+@app.route("/flight-ticket" , methods=['POST'])
 def flight_ticket():
     uid, models = odoo_connect()
     if not uid:
@@ -446,6 +446,7 @@ def search_flights():
         [domain],
         {
             "fields": [
+                "flight_number",
                 "departure_time",
                 "arrival_time",
                 "flight_direction",

@@ -1,6 +1,5 @@
-{% extends '/layout/layoutFlightTicket.html' %}
-{% block title %}Sehlen Tourism - Uçuş Arama{% endblock %}
-{% block content %}
+{% extends '/layout/layoutFlightTicket.html' %} {% block title %}Sehlen Tourism
+- Uçuş Arama{% endblock %} {% block content %}
 <div class="breadcrumb-container">
   <div class="breadcrumb-item active" data-number="0" onclick="activateStep(0)">
     <div class="breadcrumb-icon">✈️</div>
@@ -25,18 +24,22 @@
     <!-- Uçuş arama içeriği -->
     <div class="date-selector">
       {% for date in dates %}
-        <div class="date-box" onclick="showFlights('{{ date }}')">
+      <div
+        class="date-box"
+        data-date="{{ date }}"
+        onclick="showFlights('{{ date }}')">
         <div class="day-number">{{ date.split('-')[2] }}</div>
         <div class="day-name">{{ date | dayname }}</div>
         <div class="month-name">{{ date | monthname }}</div>
         <div class="price">TRY {{ date_prices[date] }}</div>
       </div>
+
       {% endfor %}
     </div>
     <div class="flights-container" id="flights-container"></div>
   </div>
 
-  <div class="passenger-info-container" data-number="1" style="display:none;">
+  <div class="passenger-info-container" data-number="1" style="display: none">
     <!-- Yolcu bilgileri içeriği -->
     <h3 class="section-title">Yolcu Bilgileri</h3>
     <form id="passenger-info-form" class="passenger-info-form">
