@@ -5,19 +5,17 @@ document.addEventListener("DOMContentLoaded", function () {
     postFlightSearch();
 
 });
-
 function postFlightSearch() {
     const form = document.querySelector('.search-form');
     const searchButton = document.querySelector('.search-button');
 
     searchButton.addEventListener('click', function (e) {
-        e.preventDefault(); // Varsayılan form gönderimini durdur
+        e.preventDefault(); 
 
         const formData = new FormData(form);
         const formDataObject = {};
-        formData.forEach((value, key) => formDataObject[key] = value); // Form verilerini nesneye çevirme
+        formData.forEach((value, key) => formDataObject[key] = value); 
 
-        // JSON formatında POST isteği gönderme
         fetch('/flight-ticket', {
             method: 'POST',
             headers: {
@@ -25,17 +23,20 @@ function postFlightSearch() {
             },
             body: JSON.stringify(formDataObject)
         })
-        .then(response => response.json()) // Yanıt JSON formatında bekleniyor
-        .then(data => {
-            // Burada uçuş arama sonuçlarını işleyebilirsiniz
-            console.log('Uçuş Arama Sonuçları:', data);
-            displayFlights(data.flights); // Örneğin, sonuçları göstermek için bir fonksiyon çağırabilirsiniz
+        .then(response => {
+            if (response.ok) {
+                // Başarılıysa yönlendirme yap
+                window.location.href = '/flight-results'; // Yönlendirmek istediğiniz sayfa
+            } else {
+                console.error('Failed to submit form:', response.statusText);
+            }
         })
         .catch(error => {
             console.error('Error:', error);
         });
     });
 }
+
 
 
 function createCookieConsent() {
