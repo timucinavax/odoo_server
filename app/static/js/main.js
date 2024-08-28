@@ -26,7 +26,7 @@ function postFlightSearch() {
         .then(response => {
             if (response.ok) {
                 // Başarılıysa yönlendirme yap
-                window.location.href = '/flight-results'; // Yönlendirmek istediğiniz sayfa
+                window.location.href = '/flight-ticket'; // Yönlendirmek istediğiniz sayfa
             } else {
                 console.error('Failed to submit form:', response.statusText);
             }
