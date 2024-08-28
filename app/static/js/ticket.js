@@ -28,7 +28,7 @@ function displayFlights(flights) {
                     <div class="route">
                         <div class="route-line"></div>
                         <div class="route-logo">
-                        <img class="route-logo" src="{{ url_for('static', filename='images/sehlen_logo.png') }}"/>
+                        <img class="route-logo" src="${logoUrl}" />
                         </div>
                         <div class="route-line"></div>
                     </div>

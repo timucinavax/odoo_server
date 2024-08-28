@@ -1,5 +1,6 @@
 {% extends '/layout/layoutFlightTicket.html' %} {% block title %}Sehlen Tourism
 - Uçuş Arama{% endblock %} {% block content %}
+
 <div class="breadcrumb-container">
   <div class="breadcrumb-item active" data-number="0" onclick="activateStep(0)">
     <div class="breadcrumb-icon">✈️</div>
@@ -108,3 +109,7 @@
   </div>
 </div>
 {% endblock %}
+
+<script>
+  const logoUrl = "{{ url_for('static', filename='images/sehlen_logo.png') }}";
+</script>
