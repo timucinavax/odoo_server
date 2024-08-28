@@ -27,7 +27,8 @@
       <div
         class="date-box"
         data-date="{{ date }}"
-        onclick="showFlights('{{ date }}')">
+        onclick="showFlights('{{ date }}')"
+      >
         <div class="day-number">{{ date.split('-')[2] }}</div>
         <div class="day-name">{{ date | dayname }}</div>
         <div class="month-name">{{ date | monthname }}</div>

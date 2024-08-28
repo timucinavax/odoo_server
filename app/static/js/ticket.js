@@ -1,6 +1,9 @@
 function showFlights(date) {
     document.querySelectorAll('.date-box').forEach(box => box.classList.remove('active'));
-    document.querySelector(`.date-box[data-date="${date}"]`).classList.add('active');
+    const selectedBox = document.querySelector(`.date-box[data-date="${date}"]`);
+    if (selectedBox) {
+        selectedBox.classList.add('active');
+    }
 
     const flightsContainer = document.getElementById('flights-container');
     flightsContainer.innerHTML = '';
@@ -10,9 +13,9 @@ function showFlights(date) {
 }
 
 function selectedDate() {
-    const selectedDate = "{{ selected_date }}"; 
+    const selectedDate = "{{ selected_date }}"; // Sunucudan gelen seçilen tarih
     if (selectedDate) {
-        showFlights(selectedDate);  
+        showFlights(selectedDate);  // Aranan tarih varsa ilgili uçuşları göster
     }
 }
 
