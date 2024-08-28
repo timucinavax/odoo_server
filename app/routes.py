@@ -327,23 +327,47 @@ def add_flight():
     return redirect(url_for("admin"))
 
 
-@app.route("/flight-ticket" , methods=['POST' , 'GET'])
+@app.route("/flight-ticket", methods=["POST", "GET"])
 def flight_ticket():
     uid, models = odoo_connect()
     if not uid:
         return redirect(url_for("index"))
 
-    search_criteria = request.get_json()
+    # JSON verilerini alıyoruz
+    search_criteria = request.get_json() if request.method == "POST" else None
 
-    departure_date = search_criteria.get('departure_time')
-    
+    if search_criteria:
+        # POST isteğiyle gelen veriler
+        from_airport = search_criteria.get('departure_airport')
+        to_airport = search_criteria.get('arrival_airport')
+        departure_date = search_criteria.get('departure_time')
+        return_date = search_criteria.get('arrival_time')
+    else:
+        # GET isteğiyle gelen veriler (kullanıcı URL'den direk geldiğinde)
+        from_airport = request.args.get("departure_airport")
+        to_airport = request.args.get("arrival_airport")
+        departure_date = request.args.get("departure_time")
+        return_date = request.args.get("arrival_time")
+
+    domain = []
+    if from_airport:
+        domain.append(("departure_airport", "=", from_airport))
+    if to_airport:
+        domain.append(("arrival_airport", "=", to_airport))
+    if departure_date:
+        domain.append(("departure_time", ">=", departure_date))
+        domain.append(("departure_time", "<=", departure_date))
+    if return_date:
+        domain.append(("departure_time", ">=", return_date))
+        domain.append(("departure_time", "<=", return_date))
+
     flights = models.execute_kw(
         current_app.config["ODOO_DB"],
         uid,
         current_app.config["ODOO_PASSWORD"],
         "flight.management",
         "search_read",
-        [[]],
+        [domain],
         {
             "fields": [
                 "departure_time",
@@ -359,6 +383,8 @@ def flight_ticket():
             ]
         },
     )
+
+    # Fiyatları güncelleme
     date_flight_map = {}
     for flight in flights:
         flight_date = flight["departure_time"].split(" ")[0]
@@ -376,7 +402,7 @@ def flight_ticket():
         dates=list(date_prices.keys()),
         date_prices=date_prices,
         flights=flights,
-        selected_date = departure_date,
+        selected_date=departure_date,
         logged_in_user=session.get("username"),
         logged_in_user_role=session.get("role"),
         current_page="flight-ticket",

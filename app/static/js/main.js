@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
     postFlightSearch();
 
 });
+
 function postFlightSearch() {
     const form = document.querySelector('.search-form');
     const searchButton = document.querySelector('.search-button');
@@ -14,7 +15,7 @@ function postFlightSearch() {
 
         const formData = new FormData(form);
         const formDataObject = {};
-        formData.forEach((value, key) => formDataObject[key] = value); 
+        formData.forEach((value, key) => formDataObject[key] = value);
 
         fetch('/flight-ticket', {
             method: 'POST',
@@ -24,12 +25,15 @@ function postFlightSearch() {
             body: JSON.stringify(formDataObject)
         })
         .then(response => {
-            if (response.ok) {
+            if (response.redirected) {
                 // Başarılıysa yönlendirme yap
-                window.location.href = '/flight-ticket'; // Yönlendirmek istediğiniz sayfa
+                window.location.href = response.url;
             } else {
-                console.error('Failed to submit form:', response.statusText);
+                return response.json(); // JSON veriyi döndür
             }
+        })
+        .then(data => {
+            console.log('Success:', data); // Gelen JSON veriyi işleyin
         })
         .catch(error => {
             console.error('Error:', error);
