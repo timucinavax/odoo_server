@@ -13,6 +13,9 @@ function showFlights(date) {
 }
 
 function displayFlights(flights) {
+
+    const logoUrl = "{{ url_for('static', filename='images/sehlen_logo.png') }}";
+
     flights.forEach(flight => {
         const flightDuration = calculateFlightDuration(flight.departure_time, flight.arrival_time);
         const flightCard = `

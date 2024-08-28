@@ -22,48 +22,34 @@
       <ul class="navbar-nav">
         {% if current_page == 'admin' %}
         <li class="nav-item">
-          <a class="nav-link" onclick="showSection('all-flights')"
-            >Tüm Uçuşlar</a
-          >
+          <a class="nav-link" onclick="showSection('all-flights')">Tüm Uçuşlar</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" onclick="showSection('add-outbound')"
-            >Gidiş Uçuşu Ekle</a
-          >
+          <a class="nav-link" onclick="showSection('add-outbound')">Gidiş Uçuşu Ekle</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" onclick="showSection('add-return')"
-            >Dönüş Uçuşu Ekle</a
-          >
+          <a class="nav-link" onclick="showSection('add-return')">Dönüş Uçuşu Ekle</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" onclick="showSection('outbound-list')"
-            >Gidiş Uçuşları</a
-          >
+          <a class="nav-link" onclick="showSection('outbound-list')">Gidiş Uçuşları</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" onclick="showSection('return-list')"
-            >Dönüş Uçuşları</a
-          >
+          <a class="nav-link" onclick="showSection('return-list')">Dönüş Uçuşları</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" onclick="showSection('users-list')"
-            >Kullanıcı Listesi</a
-          >
+          <a class="nav-link" onclick="showSection('users-list')">Kullanıcı Listesi</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{ url_for('index') }}">Anasayfa</a>
         </li>
         {% elif current_page == 'flight-ticket'%}
         <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('flight_ticket') }}"
-            >Hoş Geldiniz, {{ logged_in_user }}</a
-          >
+          <a class="nav-link" href="{{ url_for('flight_ticket') }}">
+            Hoş Geldiniz, {{ logged_in_user }}
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('travel') }}"
-            >Seyahat Deneyimi</a
-          >
+          <a class="nav-link" href="{{ url_for('travel') }}">Seyahat Deneyimi</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{ url_for('offer') }}">Teklifler</a>
@@ -75,11 +61,11 @@
           <a class="nav-link" href="{{ url_for('logout') }}">Çıkış Yap</a>
         </li>
         {% elif current_page == 'index' %}
+        {% if logged_in_user %}
         <li class="nav-item">
-          <a class="nav-link"
-            > if ({{ logged_in_user }} != None) Hoş Geldiniz, {{ logged_in_user }}</a
-          >
+          <a class="nav-link">Hoş Geldiniz, {{ logged_in_user }}</a>
         </li>
+        {% endif %}
         <li class="nav-item">
           <a class="nav-link" href="{{ url_for('index') }}">Anasayfa</a>
         </li>
@@ -89,9 +75,7 @@
           </a>
         </li>        
         <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('travel') }}"
-            >Seyahat Deneyimi</a
-          >
+          <a class="nav-link" href="{{ url_for('travel') }}">Seyahat Deneyimi</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{ url_for('offer') }}">Teklifler</a>
@@ -99,12 +83,14 @@
         <li class="nav-item">
           <a class="nav-link" href="{{ url_for('support') }}">Destek</a>
         </li>
+        {% if not logged_in_user %}
         <li class="nav-item">
           <a class="nav-link" href="{{ url_for('sign') }}">Giriş Yap</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{ url_for('sign') }}">Kayıt Ol</a>
         </li>
+        {% endif %}
         {% endif %}
       </ul>
     </div>
