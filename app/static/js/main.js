@@ -14,12 +14,29 @@ function postFlightSearch() {
         e.preventDefault(); // Varsayılan form gönderimini durdur
 
         const formData = new FormData(form);
-        const params = new URLSearchParams(formData).toString();
+        const formDataObject = {};
+        formData.forEach((value, key) => formDataObject[key] = value); // Form verilerini nesneye çevirme
 
-        // `flight-ticket` sayfasına arama kriterlerini URL parametreleri olarak geçiyoruz
-        window.location.href = '/flight-ticket?' + params;
+        // JSON formatında POST isteği gönderme
+        fetch('/flight-ticket', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formDataObject)
+        })
+        .then(response => response.json()) // Yanıt JSON formatında bekleniyor
+        .then(data => {
+            // Burada uçuş arama sonuçlarını işleyebilirsiniz
+            console.log('Uçuş Arama Sonuçları:', data);
+            displayFlights(data.flights); // Örneğin, sonuçları göstermek için bir fonksiyon çağırabilirsiniz
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
     });
 }
+
 
 function createCookieConsent() {
     const cookieConsent = document.createElement("div");

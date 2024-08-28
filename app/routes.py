@@ -333,13 +333,21 @@ def flight_ticket():
     if not uid:
         return redirect(url_for("index"))
 
+    search_criteria = request.get_json()
+
+    departure_date = search_criteria.get('departure_time')
+
+    domain = []
+    if departure_date:
+        domain.append(("departure_time", "==", departure_date))
+    
     flights = models.execute_kw(
         current_app.config["ODOO_DB"],
         uid,
         current_app.config["ODOO_PASSWORD"],
         "flight.management",
         "search_read",
-        [[]],
+        [[domain]],
         {
             "fields": [
                 "departure_time",
