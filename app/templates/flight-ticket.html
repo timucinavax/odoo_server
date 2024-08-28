@@ -25,7 +25,7 @@
     <!-- Uçuş arama içeriği -->
     <div class="date-selector">
       {% for date in dates %}
-      <div class="date-box{% if date == selected_date %} active{% endif %}" onclick="showFlights('{{ date }}')" data-date="{{ date }}">
+        <div class="date-box" onclick="showFlights('{{ date }}')">
         <div class="day-number">{{ date.split('-')[2] }}</div>
         <div class="day-name">{{ date | dayname }}</div>
         <div class="month-name">{{ date | monthname }}</div>
