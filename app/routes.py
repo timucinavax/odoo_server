@@ -327,25 +327,11 @@ def add_flight():
     return redirect(url_for("admin"))
 
 
-@app.route("/flight-ticket", methods=["GET"])
+@app.route("/flight-ticket")
 def flight_ticket():
     uid, models = odoo_connect()
     if not uid:
         return redirect(url_for("index"))
-
-    # URL parametrelerinden verileri alıyoruz
-    from_airport = request.args.get("departure_airport")
-    to_airport = request.args.get("arrival_airport")
-    departure_date = request.args.get("departure_time")
-
-    domain = []
-    if from_airport:
-        domain.append(("departure_airport", "=", from_airport))
-    if to_airport:
-        domain.append(("arrival_airport", "=", to_airport))
-    if departure_date:
-        domain.append(("departure_time", ">=", departure_date))
-        domain.append(("departure_time", "<=", departure_date))
 
     flights = models.execute_kw(
         current_app.config["ODOO_DB"],
@@ -353,7 +339,7 @@ def flight_ticket():
         current_app.config["ODOO_PASSWORD"],
         "flight.management",
         "search_read",
-        [domain],
+        [[]],
         {
             "fields": [
                 "departure_time",
@@ -361,17 +347,31 @@ def flight_ticket():
                 "flight_number",
                 "flight_direction",
                 "departure_airport",
+                "available_seats",
+                "departure_airport",
                 "arrival_airport",
-                "date",
                 "price",
+                "date",
             ]
         },
     )
+    date_flight_map = {}
+    for flight in flights:
+        flight_date = flight["departure_time"].split(" ")[0]
+        if flight_date not in date_flight_map:
+            date_flight_map[flight_date] = []
+        date_flight_map[flight_date].append(flight)
+
+    date_prices = {
+        date: min(flight["price"] for flight in flights)
+        for date, flights in date_flight_map.items()
+    }
 
     return render_template(
         "flight-ticket.html",
+        dates=list(date_prices.keys()),
+        date_prices=date_prices,
         flights=flights,
-        selected_date=departure_date,
         logged_in_user=session.get("username"),
         logged_in_user_role=session.get("role"),
         current_page="flight-ticket",
