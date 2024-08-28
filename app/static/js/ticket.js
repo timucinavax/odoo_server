@@ -126,8 +126,12 @@ function selectedDate() {
 
 
 document.addEventListener("DOMContentLoaded", function() {
+    const selectedDate = "{{ selected_date }}"; // Sunucudan gelen seçilen tarih
+    console.log("Selected Date:", selectedDate);
 
-    selectedDate();
+    if (selectedDate) {
+        showFlights(selectedDate);
+    }
 
     document.getElementById('confirm-purchase-button').addEventListener('click', proceedToPassengerInfo);
 });
