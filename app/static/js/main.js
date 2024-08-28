@@ -14,27 +14,10 @@ function postFlightSearch() {
         e.preventDefault(); // Varsayılan form gönderimini durdur
 
         const formData = new FormData(form);
+        const params = new URLSearchParams(formData).toString();
 
-        fetch('/flight-ticket', {
-            method: 'POST',
-            headers: {
-                'X-CSRFToken': formData.get('csrf_token')
-            },
-            body: formData
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // İşlem başarılı olduğunda yönlendirme yap
-                    window.location.href = '/flight-ticket';
-                } else {
-                    // Hata varsa hata mesajını göster
-                    console.error("Bir hata oluştu:", data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Bir hata oluştu:', error);
-            });
+        // `flight-ticket` sayfasına arama kriterlerini URL parametreleri olarak geçiyoruz
+        window.location.href = '/flight-ticket?' + params;
     });
 }
 
