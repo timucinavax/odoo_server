@@ -13,7 +13,8 @@ function showFlights(date) {
 }
 
 function selectedDate() {
-    const selectedDate = "{{ selected_date }}"; // Sunucudan gelen seçilen tarih
+    const selectedDate = "{{ selected_date }}"; 
+    console.log(selectedDate);
     if (selectedDate) {
         showFlights(selectedDate);  // Aranan tarih varsa ilgili uçuşları göster
     }
