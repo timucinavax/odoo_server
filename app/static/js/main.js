@@ -26,10 +26,10 @@ function postFlightSearch() {
         })
         .then(response => {
             if (response.redirected) {
-                // Başarılıysa yönlendirme yap
-                window.location.href = response.url;
+                
+                window.location.href = '/flight-ticket';
             } else {
-                return response.json(); // JSON veriyi döndür
+                return response.json(); 
             }
         })
         .then(data => {

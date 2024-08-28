@@ -27,7 +27,9 @@ function displayFlights(flights) {
                     </div>
                     <div class="route">
                         <div class="route-line"></div>
-                        <div class="route-logo"></div>
+                        <div class="route-logo">
+                        <img class="route-logo" src="{{ url_for('static', filename='images/sehlen_logo.png') }}"/>
+                        </div>
                         <div class="route-line"></div>
                     </div>
                     <div class="time-info">
@@ -51,10 +53,12 @@ function displayFlights(flights) {
                     </div>
                 </div>
                 <div class="time-info">
+                    <label for="passenger-count-${flight.flight_drop}">Kişi Sayısı:</label>
+                    <input type="number" id="passenger-count-${flight.flight_drop}" class="passenger-count" min="1" max="20" />
                     <button class="buy-ticket-button" onclick="buyTicket('${flight.flight_number}')">Bileti Al</button>
                 </div>
             </div>`;
-            document.getElementById('flights-container').innerHTML += flightCard;
+        document.getElementById('flights-container').innerHTML += flightCard;
     });
 }
 
@@ -86,7 +90,7 @@ function activateStep(stepNumber) {
         div.style.display = 'none';
     });
     document.querySelector(`.step-container > div[data-number="${stepNumber}"]`).style.display = 'block';
-    
+
     document.querySelectorAll('.breadcrumb-item').forEach(item => {
         item.classList.remove('active');
     });
@@ -117,7 +121,7 @@ function selectedDate() {
 }
 
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     const selectedDate = "{{ selected_date }}"; // Sunucudan gelen seçilen tarih
     console.log("Selected Date:", selectedDate);
 
