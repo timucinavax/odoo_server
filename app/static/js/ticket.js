@@ -12,14 +12,6 @@ function showFlights(date) {
     flights.length > 0 ? displayFlights(flights) : showNoFlightsMessage();
 }
 
-function selectedDate() {
-    const selectedDate = "{{ selected_date }}"; 
-    console.log(selectedDate);
-    if (selectedDate) {
-        showFlights(selectedDate);  // Aranan tarih varsa ilgili uçuşları göster
-    }
-}
-
 function displayFlights(flights) {
     flights.forEach(flight => {
         const flightDuration = calculateFlightDuration(flight.departure_time, flight.arrival_time);

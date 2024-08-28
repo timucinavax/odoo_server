@@ -336,10 +336,6 @@ def flight_ticket():
     search_criteria = request.get_json()
 
     departure_date = search_criteria.get('departure_time')
-
-    domain = []
-    if departure_date:
-        domain.append(("departure_time", "==", departure_date))
     
     flights = models.execute_kw(
         current_app.config["ODOO_DB"],
@@ -347,7 +343,7 @@ def flight_ticket():
         current_app.config["ODOO_PASSWORD"],
         "flight.management",
         "search_read",
-        [[domain]],
+        [[]],
         {
             "fields": [
                 "departure_time",
@@ -380,6 +376,7 @@ def flight_ticket():
         dates=list(date_prices.keys()),
         date_prices=date_prices,
         flights=flights,
+        selected_date = departure_date,
         logged_in_user=session.get("username"),
         logged_in_user_role=session.get("role"),
         current_page="flight-ticket",
