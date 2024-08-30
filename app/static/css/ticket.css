@@ -230,38 +230,26 @@ html {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 350px;
+    width: 150px;
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     z-index: 1000;
-    padding: 20px;
+    padding: 10px;
 }
 
 .modal-content {
     text-align: center;
-    padding: 20px;
+    padding: 10px;
 }
 
 .close-button {
     position: absolute;
     top: 10px;
-    right: 10px;
+    bottom: 10px;
     cursor: pointer;
-    font-size: 20px;
+    font-size: 10px;
     font-weight: bold;
-}
-
-.modal h3 {
-    margin-bottom: 20px;
-    font-size: 1.5rem;
-    color: #333;
-}
-
-.modal p {
-    margin-bottom: 30px;
-    font-size: 1rem;
-    color: #555;
 }
 
 .passenger-info-container {
@@ -321,7 +309,7 @@ html {
 
 
 .btn-primary {
-    padding: 10px 20px;
+    padding: 10px 10px;
     background-color: #dc3545;
     color: white;
     border: none;
@@ -337,7 +325,7 @@ html {
 }
 
 .btn-secondary {
-    padding: 10px 20px;
+    padding: 10px 10px;
     background-color: #6c757d;
     color: white;
     border: none;
