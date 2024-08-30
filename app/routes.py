@@ -333,7 +333,6 @@ def flight_ticket():
     if not uid:
         return redirect(url_for("index"))
 
-    # JSON verilerini alıyoruz
     search_criteria = request.get_json() if request.method == "POST" else None
 
     if search_criteria:
@@ -343,7 +342,6 @@ def flight_ticket():
         departure_date = search_criteria.get('departure_time')
         return_date = search_criteria.get('arrival_time')
     else:
-        # GET isteğiyle gelen veriler (kullanıcı URL'den direk geldiğinde)
         from_airport = request.args.get("departure_airport")
         to_airport = request.args.get("arrival_airport")
         departure_date = request.args.get("departure_time")
