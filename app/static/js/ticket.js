@@ -103,11 +103,14 @@ function passengerInfo(flightNumber) {
     }
 }
 
-function buyTicket(flightNumber) {
+function buyTicket(flightNumber, flightId) {
     document.getElementById('confirmFlightNumber').textContent = flightNumber;
     document.getElementById('confirmationModal').style.display = 'block';
 
     passengerInfo(flightNumber);
+
+    const seatSelectionUrl = `{{ url_for('plane_layout', flight_id='') }}/${flightId}`;
+    document.getElementById('confirm-purchase-button').setAttribute('onclick', `window.location.href='${seatSelectionUrl}'`);
 }
 
 
