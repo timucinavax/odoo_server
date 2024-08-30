@@ -336,7 +336,6 @@ def flight_ticket():
     search_criteria = request.get_json() if request.method == "POST" else None
 
     if search_criteria:
-        # POST isteğiyle gelen veriler
         from_airport = search_criteria.get('departure_airport')
         to_airport = search_criteria.get('arrival_airport')
         departure_date = search_criteria.get('departure_time')
