@@ -13,7 +13,6 @@ function showFlights(date) {
 }
 
 function displayFlights(flights) {
-
     const logoUrl = "{{ url_for('static', filename='images/sehlen_logo.png') }}";
 
     flights.forEach(flight => {
@@ -40,7 +39,7 @@ function displayFlights(flights) {
                         <p>${flight.arrival_airport}</p>
                     </div>
                     <div class="time-info">
-                        <p><span class="heading">Fiyat:</span> <span id="price-${flight.flight_number}">${flight.price}</span> TL</p>
+                        <p><span class="heading">Fiyat:</span> <span id="price-${flight.flight_number}-${flight.available_seats}">${flight.price}</span> TL</p>
                         <p><span class="heading">Süre:</span> ${flightDuration}</p>
                     </div>
                 </div>
@@ -57,7 +56,7 @@ function displayFlights(flights) {
                 </div>
                 <div class="time-info">
                     <label for="passenger-count-${flight.flight_number}-${flight.available_seats}">Kişi Sayısı:</label>
-                    <input type="number" id="passenger-count-${flight.flight_number}-${flight.available_seats}" class="passenger-count" min="1" max="${flight.available_seats}" value="1" onchange="updatePrice('${flight.flight_number}', ${flight.price}, ${flight.available_seats})" />
+                    <input type="number" id="passenger-count-${flight.flight_number}-${flight.available_seats}" class="passenger-count" min="1" max="20" value="1" onchange="updatePrice('${flight.flight_number}', ${flight.price}, ${flight.available_seats})" />
                     <button class="buy-ticket-button" onclick="buyTicket('${flight.flight_number}', '${flight.available_seats}')">Bileti Al</button>
                 </div>
             </div>`;
@@ -65,10 +64,16 @@ function displayFlights(flights) {
     });
 }
 
+
 function updatePrice(flightNumber, basePrice, availableSeats) {
-    const passengerCount = document.getElementById(`passenger-count-${flightNumber}-${availableSeats}`).value;
-    const totalPrice = basePrice * passengerCount;
-    document.getElementById(`price-${flightNumber}-${availableSeats}`).textContent = totalPrice;
+    const priceElement = document.getElementById(`price-${flightNumber}-${availableSeats}`);
+    if (priceElement) {
+        const passengerCount = document.getElementById(`passenger-count-${flightNumber}-${availableSeats}`).value;
+        const totalPrice = basePrice * passengerCount;
+        priceElement.textContent = totalPrice;
+    } else {
+        console.error(`Element with id 'price-${flightNumber}-${availableSeats}' not found.`);
+    }
 }
 
 function showNoFlightsMessage() {
