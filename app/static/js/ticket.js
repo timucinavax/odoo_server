@@ -115,6 +115,17 @@ function buyTicket(flightNumber, flightAvailableSeats) {
     loadSeatSelection(flight.flight_id);
 }
 
+function proceedToSeatSelection() {
+    activateStep(2);
+
+    const flightNumber = document.getElementById('flight-number-summary').textContent;
+    const flight = flightsData.find(f => f.flight_number === flightNumber);
+
+    if (flight) {
+        loadSeatSelection(flight.flight_id); 
+    }
+}
+
 function loadSeatSelection(flight_id) {
     const seatSelectionContainer = document.getElementById('seat-selection-container');
     
@@ -122,6 +133,7 @@ function loadSeatSelection(flight_id) {
         .then(response => response.text())
         .then(data => {
             seatSelectionContainer.innerHTML = data;
+            seatSelectionContainer.style.display = 'block';
         })
         .catch(error => console.error('Error loading seat layout:', error));
 }
@@ -130,13 +142,19 @@ function activateStep(stepNumber) {
     document.querySelectorAll('.step-container > div').forEach(div => {
         div.style.display = 'none';
     });
-    document.querySelector(`.step-container > div[data-number="${stepNumber}"]`).style.display = 'block';
+
+    if (stepNumber === 2) {
+        document.getElementById('seat-selection-container').style.display = 'block';
+    } else {
+        document.querySelector(`.step-container > div[data-number="${stepNumber}"]`).style.display = 'block';
+    }
 
     document.querySelectorAll('.breadcrumb-item').forEach(item => {
         item.classList.remove('active');
     });
     document.querySelector(`.breadcrumb-item[data-number="${stepNumber}"]`).classList.add('active');
 }
+
 
 document.getElementById('confirm-purchase-button').addEventListener('click', () => activateStep(1));
 
