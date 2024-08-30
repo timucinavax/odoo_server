@@ -481,3 +481,10 @@ select {
         text-align: center;
     }
 }
+@media (min-width: 1200px) {
+    .search-box-container {
+        max-width: 50%;
+        width: 50%; 
+        padding: 25px; 
+    }
+}

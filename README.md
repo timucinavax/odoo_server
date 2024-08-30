@@ -18,8 +18,8 @@
 
 ## Server Bilgileri  ve Çalıştırma Komutu
 
-    rm -rf odoo_sehlen
-    git clone https://gitlab.com/yunusemreth/odoo_sehlen.git
+    rm -rf odoo_server
+    git clone https://github.com/ynsemreth/odoo_server.git
     sudo systemctl daemon-reload
     sudo systemctl restart flask_app
 
