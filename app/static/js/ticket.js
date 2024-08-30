@@ -108,11 +108,21 @@ function buyTicket(flightNumber, flightId) {
     document.getElementById('confirmationModal').style.display = 'block';
 
     passengerInfo(flightNumber);
+    document.getElementById('seat-selection-container').style.display = 'block';
 
-    const seatSelectionUrl = `{{ url_for('plane_layout', flight_id='') }}/${flightId}`;
-    document.getElementById('confirm-purchase-button').setAttribute('onclick', `window.location.href='${seatSelectionUrl}'`);
+    loadSeatSelection(flightId);
 }
 
+function loadSeatSelection(flightId) {
+    const seatSelectionContainer = document.getElementById('seat-selection-container');
+    
+    fetch(`/plane_layout/${flightId}`)
+        .then(response => response.text())
+        .then(data => {
+            seatSelectionContainer.innerHTML = data;
+        })
+        .catch(error => console.error('Error loading seat layout:', error));
+}
 
 function activateStep(stepNumber) {
     document.querySelectorAll('.step-container > div').forEach(div => {
