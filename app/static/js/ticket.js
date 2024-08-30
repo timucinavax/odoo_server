@@ -71,7 +71,6 @@ function updatePrice(flightNumber, basePrice) {
     document.getElementById(`price-${flightNumber}`).textContent = totalPrice;
 }
 
-
 function showNoFlightsMessage() {
     document.getElementById('flights-container').innerHTML = '<div class="no-flights">Bu tarihte uçuş bulunmamaktadır.</div>';
 }
@@ -90,15 +89,17 @@ function calculateFlightDuration(departureTime, arrivalTime) {
     return `${hours}h ${minutes}m`;
 }
 
-function passengerInfo(flightNumber){
-
+function passengerInfo(flightNumber) {
     const flight = flightsData.find(f => f.flight_number === flightNumber);
 
     if (flight) {
+        const passengerCount = document.getElementById(`passenger-count-${flightNumber}`).value;
+        const totalPrice = flight.price * passengerCount;
+
         document.getElementById('flight-number-summary').textContent = flight.flight_number;
         document.getElementById('departure-summary').textContent = flight.departure_airport;
         document.getElementById('arrival-summary').textContent = flight.arrival_airport;
-        document.getElementById('price-summary').textContent = flight.price;
+        document.getElementById('price-summary').textContent = totalPrice; 
     }
 }
 
