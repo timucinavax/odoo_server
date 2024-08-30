@@ -56,19 +56,19 @@ function displayFlights(flights) {
                     </div>
                 </div>
                 <div class="time-info">
-                    <label for="passenger-count-${flight.available_seats}">Kişi Sayısı:</label>
-                    <input type="number" id="passenger-count-${flight.available_seats}" class="passenger-count" min="1" max="20" value="1" onchange="updatePrice('${flight.available_seats}', ${flight.price})" />
-                    <button class="buy-ticket-button" onclick="buyTicket('${flight.flight_number}' ,'${flight.available_seats}')">Bileti Al</button>
+                    <label for="passenger-count-${flight.flight_number}-${flight.available_seats}">Kişi Sayısı:</label>
+                    <input type="number" id="passenger-count-${flight.flight_number}-${flight.available_seats}" class="passenger-count" min="1" max="${flight.available_seats}" value="1" onchange="updatePrice('${flight.flight_number}', ${flight.price}, ${flight.available_seats})" />
+                    <button class="buy-ticket-button" onclick="buyTicket('${flight.flight_number}', '${flight.available_seats}')">Bileti Al</button>
                 </div>
             </div>`;
         document.getElementById('flights-container').innerHTML += flightCard;
     });
 }
 
-function updatePrice(flightAvailableSeats, basePrice) {
-    const passengerCount = document.getElementById(`passenger-count-${flightAvailableSeats}`).value;
+function updatePrice(flightNumber, basePrice, availableSeats) {
+    const passengerCount = document.getElementById(`passenger-count-${flightNumber}-${availableSeats}`).value;
     const totalPrice = basePrice * passengerCount;
-    document.getElementById(`price-${flightAvailableSeats}`).textContent = totalPrice;
+    document.getElementById(`price-${flightNumber}-${availableSeats}`).textContent = totalPrice;
 }
 
 function showNoFlightsMessage() {
@@ -89,11 +89,11 @@ function calculateFlightDuration(departureTime, arrivalTime) {
     return `${hours}h ${minutes}m`;
 }
 
-function passengerInfo(flightNumber , flightAvailableSeats) {
+function passengerInfo(flightNumber, flightAvailableSeats) {
     const flight = flightsData.find(f => f.flight_number === flightNumber);
 
     if (flight) {
-        const passengerCount = document.getElementById(`passenger-count-${flightAvailableSeats}`).value;
+        const passengerCount = document.getElementById(`passenger-count-${flightNumber}-${flightAvailableSeats}`).value;
         const totalPrice = flight.price * passengerCount;
 
         document.getElementById('flight-number-summary').textContent = flight.flight_number;
