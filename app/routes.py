@@ -439,7 +439,7 @@ def plane_layout(flight_id):
     )
 
     return render_template(
-        "plane_rev.html", airplane_type=airplane_type_name, seats=seats)
+        "plane_rev.html", airplane_type=airplane_type_name, seats=seats ,flight_id=flight_id)
 
 
 @app.route("/search_flights", methods=["GET"])
