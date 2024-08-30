@@ -31,7 +31,7 @@ function displayFlights(flights) {
                     <div class="route">
                         <div class="route-line"></div>
                         <div class="route-logo">
-                        <img class="route-logo" src="${logoUrl}" />
+                            <img class="route-logo" src="${logoUrl}" />
                         </div>
                         <div class="route-line"></div>
                     </div>
@@ -40,7 +40,7 @@ function displayFlights(flights) {
                         <p>${flight.arrival_airport}</p>
                     </div>
                     <div class="time-info">
-                        <p><span class="heading">Fiyat:</span> ${flight.price} TL</p>
+                        <p><span class="heading">Fiyat:</span> <span id="price-${flight.flight_number}">${flight.price}</span> TL</p>
                         <p><span class="heading">Süre:</span> ${flightDuration}</p>
                     </div>
                 </div>
@@ -56,14 +56,21 @@ function displayFlights(flights) {
                     </div>
                 </div>
                 <div class="time-info">
-                    <label for="passenger-count-${flight.flight_drop}">Kişi Sayısı:</label>
-                    <input type="number" id="passenger-count-${flight.flight_drop}" class="passenger-count" min="1" max="20" />
+                    <label for="passenger-count-${flight.flight_number}">Kişi Sayısı:</label>
+                    <input type="number" id="passenger-count-${flight.flight_number}" class="passenger-count" min="1" max="20" value="1" onchange="updatePrice('${flight.flight_number}', ${flight.price})" />
                     <button class="buy-ticket-button" onclick="buyTicket('${flight.flight_number}')">Bileti Al</button>
                 </div>
             </div>`;
         document.getElementById('flights-container').innerHTML += flightCard;
     });
 }
+
+function updatePrice(flightNumber, basePrice) {
+    const passengerCount = document.getElementById(`passenger-count-${flightNumber}`).value;
+    const totalPrice = basePrice * passengerCount;
+    document.getElementById(`price-${flightNumber}`).textContent = totalPrice;
+}
+
 
 function showNoFlightsMessage() {
     document.getElementById('flights-container').innerHTML = '<div class="no-flights">Bu tarihte uçuş bulunmamaktadır.</div>';
