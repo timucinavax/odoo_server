@@ -35,30 +35,13 @@
             <ol class="seats" type="A">
               {% for seat in row %}
               <li class="seat">
-                <input
-                  type="checkbox"
-                  id="seat-{{ seat.id }}"
-                  name="seat"
-                  value="{{ seat.id }}"
-                  {%
-                  if
-                  seat.id
-                  not
-                  in
-                  available_seats
-                  %}
-                  disabled
-                  class="unavailable"
-                  {%
-                  endif
-                  %}
-                />
+                <input type="checkbox" id="seat-{{ seat.id }}" name="seat" value="{{ seat.id }}"
+                       {% if seat.id not in available_seats %} disabled class="unavailable" {% endif %}>
                 <label for="seat-{{ seat.id }}">
-                  {{ chr(65 + loop.parent.loop.index0) }}{{ loop.index }}
+                    {{ chr(65 + loop.index0) }}{{ loop.index }}
                 </label>
               </li>
-
-              {% endfor %}
+            {% endfor %}
             </ol>
           </li>
           {% endfor %}
