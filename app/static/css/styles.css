@@ -409,7 +409,6 @@ select {
 @media (max-width: 768px) {
     .best-deals__swiper__item {
         flex: 0 0 100%;
-        /* Kartların tam genişlikte olmasını sağlar */
         margin-bottom: 15px;
     }
 
@@ -420,84 +419,65 @@ select {
 
     .carousel-item {
         height: auto;
-        /* Yüksekliği otomatik yaparak resimlerin tam görünmesini sağlar */
     }
 
     .search-box-container {
         display: flex;
-        /* Arama kutusunu mobilde gizler */
     }
 
     .tab-button {
         padding: 8px 12px;
-        /* Butonların boyutlarını küçült */
         font-size: 0.9rem;
-        /* Yazı boyutunu küçült */
     }
 
     .search-form {
         gap: 5px;
-        /* Arama alanları arasındaki boşluğu azalt */
     }
 
     .form-group label {
         font-size: 0.85rem;
-        /* Etiketlerin yazı boyutunu küçült */
     }
 
     .form-group input,
     .form-group select {
         padding: 8px;
-        /* Giriş alanlarının iç boşluklarını azalt */
         font-size: 0.85rem;
-        /* Giriş alanlarının yazı boyutunu küçült */
     }
 
     .search-button {
         padding: 10px;
-        /* Butonun iç boşluğunu azalt */
         font-size: 0.95rem;
-        /* Buton yazı boyutunu küçült */
     }
 
     .form-group {
         width: 100%;
-        /* Tüm form alanlarını tam genişlikte yap */
     }
 
     .cards-section {
         margin: 30px auto;
-        /* Kartlar bölümünün üst ve alt boşluklarını azalt */
         max-width: 100%;
-        /* Kartlar bölümünü tam genişlikte yap */
     }
 
     .swiper-wrapper {
         flex-direction: column;
-        /* Kartların yatay yerine dikey olarak hizalanmasını sağlar */
         gap: 15px;
     }
 
     .best-deals__swiper__item {
         width: 90%;
-        /* Kartların genişliğini mobilde azalt */
         margin: 0 auto;
-        /* Kartları merkezle */
     }
 
     .card {
         width: 100%;
-        /* Kartların genişliğini tam yap */
     }
 
     .tab-content .row {
         flex-direction: column;
-        /* Şehirler bölümü sütun olarak hizalanır */
     }
 
     .row .col-md-3 {
         width: 100%;
-        /* Şehirlerin tam genişlikte görünmesini sağlar */
         text-align: center;
     }
 }
