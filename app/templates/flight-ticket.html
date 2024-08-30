@@ -22,7 +22,6 @@
 
 <div class="step-container">
   <div class="flight-buy-container" data-number="0">
-    <!-- Uçuş arama içeriği -->
     <div class="date-selector">
       {% for date in dates %}
       <div
@@ -33,7 +32,7 @@
         <div class="day-number">{{ date.split('-')[2] }}</div>
         <div class="day-name">{{ date | dayname }}</div>
         <div class="month-name">{{ date | monthname }}</div>
-        <div class="price">TRY {{ date_prices[date] }}</div>
+        <div class="price">{{ date_prices[date] }} TRY</div>
       </div>
 
       {% endfor %}
@@ -42,7 +41,6 @@
   </div>
 
   <div class="passenger-info-container" data-number="1" style="display: none">
-    <!-- Yolcu bilgileri içeriği -->
     <h3 class="section-title">Yolcu Bilgileri</h3>
     <form id="passenger-info-form" class="passenger-info-form">
       <div class="form-section">
@@ -78,20 +76,19 @@
           <input type="tel" id="phone" name="phone" required />
         </div>
       </div>
-      <!-- Seçilen Uçuş Bilgileri -->
       <div class="flight-summary">
         <h4>Seçilen Uçuş Bilgileri</h4>
         <div class="flight-details">
-          <p>Uçuş Numarası: <span id="flight-number-summary"></span></p>
-          <p>Kalkış: <span id="departure-summary"></span></p>
-          <p>Varış: <span id="arrival-summary"></span></p>
-          <p>Fiyat: <span id="price-summary"></span> TL</p>
+            <p>Uçuş Numarası: <span id="flight-number-summary"></span></p>
+            <p>Kalkış: <span id="departure-summary"></span></p>
+            <p>Varış: <span id="arrival-summary"></span></p>
+            <p>Fiyat: <span id="price-summary"></span> TL</p>
         </div>
         <button type="submit" class="btn-primary">Devam Et</button>
         <button type="button" class="btn-secondary" onclick="activateStep(0)">
-          Geri Dön
+            Geri Dön
         </button>
-      </div>
+      </div>    
     </form>
   </div>
 </div>
