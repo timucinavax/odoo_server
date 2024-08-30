@@ -367,7 +367,6 @@ def flight_ticket():
         [domain],
         {
             "fields": [
-                "flight_id"
                 "departure_time",
                 "arrival_time",
                 "flight_number",
@@ -382,7 +381,6 @@ def flight_ticket():
         },
     )
 
-    # Fiyatları güncelleme
     date_flight_map = {}
     for flight in flights:
         flight_date = flight["departure_time"].split(" ")[0]

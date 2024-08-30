@@ -127,7 +127,7 @@ function proceedToSeatSelection() {
     const flight = flightsData.find(f => f.flight_number === flightNumber);
 
     if (flight) {
-        loadSeatSelection(flight.flight_id); 
+        loadSeatSelection(flight.id); 
     }
 }
 
