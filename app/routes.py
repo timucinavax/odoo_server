@@ -472,6 +472,7 @@ def search_flights():
         [domain],
         {
             "fields": [
+                "flight_id"
                 "flight_number",
                 "departure_time",
                 "arrival_time",
@@ -485,7 +486,6 @@ def search_flights():
     )
 
     return jsonify(flights=flights)
-
 
 @app.route("/logout")
 def logout():

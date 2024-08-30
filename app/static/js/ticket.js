@@ -56,9 +56,9 @@ function displayFlights(flights) {
                     </div>
                 </div>
                 <div class="time-info">
-                    <label for="passenger-count-${flight.flight_number}">Kişi Sayısı:</label>
-                    <input type="number" id="passenger-count-${flight.flight_number}" class="passenger-count" min="1" max="20" value="1" onchange="updatePrice('${flight.flight_number}', ${flight.price})" />
-                    <button class="buy-ticket-button" onclick="buyTicket('${flight.flight_number}')">Bileti Al</button>
+                    <label for="passenger-count-${flight.available_seats}">Kişi Sayısı:</label>
+                    <input type="number" id="passenger-count-${flight.available_seats}" class="passenger-count" min="1" max="20" value="1" onchange="updatePrice('${flight.flight_number}', ${flight.price})" />
+                    <button class="buy-ticket-button" onclick="buyTicket('${flight.flight_number}' ,'${flight.available_seats}')">Bileti Al</button>
                 </div>
             </div>`;
         document.getElementById('flights-container').innerHTML += flightCard;
@@ -89,11 +89,11 @@ function calculateFlightDuration(departureTime, arrivalTime) {
     return `${hours}h ${minutes}m`;
 }
 
-function passengerInfo(flightNumber) {
+function passengerInfo(flightNumber , flightAvailableSeats) {
     const flight = flightsData.find(f => f.flight_number === flightNumber);
 
     if (flight) {
-        const passengerCount = document.getElementById(`passenger-count-${flightNumber}`).value;
+        const passengerCount = document.getElementById(`passenger-count-${flightAvailableSeats}`).value;
         const totalPrice = flight.price * passengerCount;
 
         document.getElementById('flight-number-summary').textContent = flight.flight_number;
@@ -103,20 +103,22 @@ function passengerInfo(flightNumber) {
     }
 }
 
-function buyTicket(flightNumber, flightId) {
+function buyTicket(flightNumber, flightAvailableSeats) {
     document.getElementById('confirmFlightNumber').textContent = flightNumber;
     document.getElementById('confirmationModal').style.display = 'block';
 
-    passengerInfo(flightNumber);
+    passengerInfo(flightNumber ,flightAvailableSeats);
     document.getElementById('seat-selection-container').style.display = 'block';
 
-    loadSeatSelection(flightId);
+    const flight = flightsData.find(f => f.flight_number === flightNumber);
+
+    loadSeatSelection(flight.flight_id);
 }
 
-function loadSeatSelection(flightId) {
+function loadSeatSelection(flight_id) {
     const seatSelectionContainer = document.getElementById('seat-selection-container');
     
-    fetch(`/plane_layout/${flightId}`)
+    fetch(`/plane_layout/${flight_id}`)
         .then(response => response.text())
         .then(data => {
             seatSelectionContainer.innerHTML = data;
