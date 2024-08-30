@@ -57,7 +57,7 @@ function displayFlights(flights) {
                 </div>
                 <div class="time-info">
                     <label for="passenger-count-${flight.available_seats}">Kişi Sayısı:</label>
-                    <input type="number" id="passenger-count-${flight.available_seats}" class="passenger-count" min="1" max="20" value="1" onchange="updatePrice('${flight.flight_number}', ${flight.price})" />
+                    <input type="number" id="passenger-count-${flight.available_seats}" class="passenger-count" min="1" max="20" value="1" onchange="updatePrice('${flight.available_seats}', ${flight.price})" />
                     <button class="buy-ticket-button" onclick="buyTicket('${flight.flight_number}' ,'${flight.available_seats}')">Bileti Al</button>
                 </div>
             </div>`;
@@ -65,10 +65,10 @@ function displayFlights(flights) {
     });
 }
 
-function updatePrice(flightNumber, basePrice) {
-    const passengerCount = document.getElementById(`passenger-count-${flightNumber}`).value;
+function updatePrice(flightAvailableSeats, basePrice) {
+    const passengerCount = document.getElementById(`passenger-count-${flightAvailableSeats}`).value;
     const totalPrice = basePrice * passengerCount;
-    document.getElementById(`price-${flightNumber}`).textContent = totalPrice;
+    document.getElementById(`price-${flightAvailableSeats}`).textContent = totalPrice;
 }
 
 function showNoFlightsMessage() {
