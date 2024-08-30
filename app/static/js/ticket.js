@@ -173,7 +173,7 @@ function closeModal() {
 }
 
 function selectedDate() {
-    const selectedDate = "{{ selected_date }}"; // Sunucudan gelen seçilen tarih
+    const selectedDate = "{{ selected_date }}"; 
     const dateBoxes = document.querySelectorAll('.date-box');
 
     dateBoxes.forEach(box => {
@@ -184,9 +184,8 @@ function selectedDate() {
     });
 }
 
-
 document.addEventListener("DOMContentLoaded", function () {
-    const selectedDate = "{{ selected_date }}"; // Sunucudan gelen seçilen tarih
+    const selectedDate = "{{ selected_date }}"; 
     console.log("Selected Date:", selectedDate);
 
     if (selectedDate) {

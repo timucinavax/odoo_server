@@ -367,6 +367,7 @@ def flight_ticket():
         [domain],
         {
             "fields": [
+                "flight_id"
                 "departure_time",
                 "arrival_time",
                 "flight_number",
