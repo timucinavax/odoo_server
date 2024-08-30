@@ -72,7 +72,7 @@ function updatePrice(flightAvailableSeats, basePrice) {
 }
 
 function showNoFlightsMessage() {
-    document.getElementById('flights-container').innerHTML = '<div class="no-flights">Bu tarihte uçuş bulunmamaktadır.</div>';
+    document.getElementById('flights-container').innerHTML = '<div class="no-flights" style="text-align: center;" >Bu tarihte uçuş bulunmamaktadır.</div>';
 }
 
 function toggleDetails(button) {
