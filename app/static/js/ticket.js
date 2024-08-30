@@ -116,20 +116,21 @@ function buyTicket(flightNumber, flightAvailableSeats) {
     document.getElementById('seat-selection-container').style.display = 'block';
 }
 
-function proceedToSeatSelection() {
-    activateStep(2);
+function proceedToSeatSelection(event) {
+    event.preventDefault();
 
     const flightNumber = document.getElementById('flight-number-summary').textContent;
     const flight = flightsData.find(f => f.flight_number === flightNumber);
 
     if (flight) {
-        loadSeatSelection(flight.id); 
+        activateStep(2);
+        loadSeatSelection(flight.id);
     }
 }
 
 function loadSeatSelection(flight_id) {
     const seatSelectionContainer = document.getElementById('seat-selection-container');
-    
+
     fetch(`/plane_layout/${flight_id}`)
         .then(response => response.text())
         .then(data => {
