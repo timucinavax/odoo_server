@@ -494,7 +494,7 @@ select {
     }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1400px) {
     .search-box-container {
         top: 70%;
         left: 50%;
