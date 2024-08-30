@@ -1,3 +1,6 @@
+let maxSeats = 0;
+let selectedSeats = 0;
+
 function showFlights(date) {
     document.querySelectorAll('.date-box').forEach(box => box.classList.remove('active'));
     const selectedBox = document.querySelector(`.date-box[data-date="${date}"]`);
@@ -64,34 +67,16 @@ function displayFlights(flights) {
     });
 }
 
-
 function updatePrice(flightNumber, basePrice, availableSeats) {
     const priceElement = document.getElementById(`price-${flightNumber}-${availableSeats}`);
     if (priceElement) {
         const passengerCount = document.getElementById(`passenger-count-${flightNumber}-${availableSeats}`).value;
+        maxSeats = passengerCount;
         const totalPrice = basePrice * passengerCount;
         priceElement.textContent = totalPrice;
     } else {
         console.error(`Element with id 'price-${flightNumber}-${availableSeats}' not found.`);
     }
-}
-
-function showNoFlightsMessage() {
-    document.getElementById('flights-container').innerHTML = '<div class="no-flights" style="text-align: center;" >Bu tarihte uçuş bulunmamaktadır.</div>';
-}
-
-function toggleDetails(button) {
-    const detailsContent = button.nextElementSibling;
-    const isVisible = detailsContent.style.display === 'block';
-    detailsContent.style.display = isVisible ? 'none' : 'block';
-    button.classList.toggle('collapsed', !isVisible);
-}
-
-function calculateFlightDuration(departureTime, arrivalTime) {
-    const duration = new Date(new Date(arrivalTime) - new Date(departureTime));
-    const hours = Math.floor(duration / (1000 * 60 * 60));
-    const minutes = Math.floor((duration % (1000 * 60 * 60)) / (1000 * 60));
-    return `${hours}h ${minutes}m`;
 }
 
 function passengerInfo(flightNumber, flightAvailableSeats) {
@@ -136,8 +121,52 @@ function loadSeatSelection(flight_id) {
         .then(data => {
             seatSelectionContainer.innerHTML = data;
             seatSelectionContainer.style.display = 'block';
+            initializeSeatSelection(); // Seat selection işlemini başlat
         })
         .catch(error => console.error('Error loading seat layout:', error));
+}
+
+function initializeSeatSelection() {
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            if (this.checked) {
+                selectedSeats++;
+            } else {
+                selectedSeats--;
+            }
+            
+            if (selectedSeats >= maxSeats) {
+                checkboxes.forEach(box => {
+                    if (!box.checked) {
+                        box.disabled = true;
+                    }
+                });
+            } else {
+                checkboxes.forEach(box => {
+                    box.disabled = false;
+                });
+            }
+        });
+    });
+}
+
+function showNoFlightsMessage() {
+    document.getElementById('flights-container').innerHTML = '<div class="no-flights" style="text-align: center;" >Bu tarihte uçuş bulunmamaktadır.</div>';
+}
+
+function toggleDetails(button) {
+    const detailsContent = button.nextElementSibling;
+    const isVisible = detailsContent.style.display === 'block';
+    detailsContent.style.display = isVisible ? 'none' : 'block';
+    button.classList.toggle('collapsed', !isVisible);
+}
+
+function calculateFlightDuration(departureTime, arrivalTime) {
+    const duration = new Date(new Date(arrivalTime) - new Date(departureTime));
+    const hours = Math.floor(duration / (1000 * 60 * 60));
+    const minutes = Math.floor((duration % (1000 * 60 * 60)) / (1000 * 60));
+    return `${hours}h ${minutes}m`;
 }
 
 function activateStep(stepNumber) {
@@ -156,7 +185,6 @@ function activateStep(stepNumber) {
     });
     document.querySelector(`.breadcrumb-item[data-number="${stepNumber}"]`).classList.add('active');
 }
-
 
 document.getElementById('confirm-purchase-button').addEventListener('click', () => activateStep(1));
 
