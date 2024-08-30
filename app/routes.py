@@ -407,7 +407,6 @@ def flight_ticket():
 
 
 @app.route("/plane_layout/<int:flight_id>", methods=["GET"])
-@role_required(["admin"])
 def plane_layout(flight_id):
 
     uid, models = odoo_connect()
@@ -426,7 +425,7 @@ def plane_layout(flight_id):
 
     if not flight:
         flash("Flight not found.")
-        return redirect(url_for("admin"))
+        return redirect(url_for("index"))
     airplane_type_name = flight[0]["airplane_type_id"][1]
 
     seats = models.execute_kw(
@@ -440,8 +439,7 @@ def plane_layout(flight_id):
     )
 
     return render_template(
-        "plane_rev.html", airplane_type=airplane_type_name, seats=seats
-    )
+        "plane_rev.html", airplane_type=airplane_type_name, seats=seats)
 
 
 @app.route("/search_flights", methods=["GET"])
