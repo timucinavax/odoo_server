@@ -114,10 +114,6 @@ function buyTicket(flightNumber, flightAvailableSeats) {
 
     passengerInfo(flightNumber ,flightAvailableSeats);
     document.getElementById('seat-selection-container').style.display = 'block';
-
-    const flight = flightsData.find(f => f.flight_number === flightNumber);
-
-    loadSeatSelection(flight.flight_id);
 }
 
 function proceedToSeatSelection() {
