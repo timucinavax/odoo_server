@@ -496,7 +496,7 @@ select {
 
 @media (min-width: 1200px) {
     .search-box-container {
-        top: 70%;
+        top: 65%;
         left: 50%;
         transform: translate(-50%, -50%);
         background: rgba(255, 255, 255, 0.8);
@@ -524,7 +524,7 @@ select {
     .best-deals__header {
         text-align: center;
         font-family: "Raleway", sans-serif;
-        font-weight: 500;
+        font-weight: 800;
         font-size: 2.5rem;
         color: #2c3e50;
         background-color: white;
