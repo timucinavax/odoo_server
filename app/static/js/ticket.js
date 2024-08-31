@@ -186,6 +186,22 @@ function activateStep(stepNumber) {
     document.querySelector(`.breadcrumb-item[data-number="${stepNumber}"]`).classList.add('active');
 }
 
+function proceedToPayment() {
+    activateStep(3);
+}
+
+function proceedToSeatSelection(event) {
+    event.preventDefault();
+
+    const flightNumber = document.getElementById('flight-number-summary').textContent;
+    const flight = flightsData.find(f => f.flight_number === flightNumber);
+
+    if (flight) {
+        activateStep(2);
+        loadSeatSelection(flight.id);
+    }
+}
+
 document.getElementById('confirm-purchase-button').addEventListener('click', () => activateStep(1));
 
 function proceedToPassengerInfo() {
