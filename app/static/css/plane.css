@@ -98,6 +98,10 @@ ol {
   margin: 0;
 }
 
+.row {
+  
+}
+
 .seats {
   display: flex;
   flex-direction: row;
@@ -255,4 +259,4 @@ label {
 .rubberBand {
   -webkit-animation-name: rubberBand;
           animation-name: rubberBand;
-}
+} 
