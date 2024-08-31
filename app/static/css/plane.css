@@ -5,7 +5,30 @@ body, html {
   height: 100%;
   width: 100%;
   overflow-x: hidden;
-  background-color: #f0f2f5; /* Arka plana hafif bir gri ton ekleyelim */
+}
+
+.hero {
+  position: relative;
+  width: 100%;
+  height: 30vh;
+  color: black;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  background-color: #f5f5f5;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+}
+
+*,*:before,*:after {
+  box-sizing: border-box;
+}
+html {
+  font-size: 16px;
 }
 
 .plane {
@@ -13,25 +36,6 @@ body, html {
   transform: rotate(90deg); 
   transform-origin: center;
   max-width: 300px;
-  background-color: #ffffff; /* Beyaz arka plan rengi */
-  border-radius: 15px; /* Daha yumuşak kenarlar */
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Hafif bir gölge ekleyelim */
-  position: relative;
-  padding: 20px; /* İçeriğin kenarlara yapışmasını engellemek için padding */
-}
-
-.plane:before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 150%;
-  height: 100px;
-  background: #2c3e50;
-  transform: translate(-50%, -50%) rotate(45deg);
-  z-index: -1;
-  border-radius: 15px;
-  background: linear-gradient(135deg, #2c3e50 0%, #2980b9 100%); /* Kanat efekti için bir gradient ekleyelim */
 }
 
 .cockpit {
@@ -40,45 +44,47 @@ body, html {
   overflow: hidden;
   text-align: center;
   border-bottom: 5px solid #d8d8d8;
-  background-color: #2c3e50; /* Cockpit için lacivert arka plan */
-  color: #ffffff; /* Beyaz metin rengi */
-  border-radius: 15px 15px 0 0; /* Cockpit kısmının üst köşelerini yuvarlayalım */
-  margin-bottom: 10px;
-}
-
-.cockpit h1 {
-  font-size: 2rem;
-  padding-top: 20px;
+  &:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 500px;
+    width: 100%;
+    border-radius: 50%;
+    border-right: 5px solid #d8d8d8;
+    border-left: 5px solid #d8d8d8;
+  }
+  h1 {
+    width: 60%;
+    margin: 100px auto 35px auto;
+  }
 }
 
 .exit {
   position: relative;
   height: 50px;
-  margin: 0 auto 20px auto;
-}
-
-.exit:before,
-.exit:after {
-  content: "EXIT";
-  font-size: 14px;
-  line-height: 18px;
-  padding: 0px 2px;
-  font-family: "Arial Narrow", Arial, sans-serif;
-  display: block;
-  position: absolute;
-  background: #27ae60; /* Daha canlı bir yeşil ton */
-  color: white;
-  top: 50%;
-  transform: translate(0, -50%);
-  border-radius: 5px;
-}
-
-.exit:before {
-  left: 0;
-}
-
-.exit:after {
-  right: 0;
+  &:before,
+  &:after {
+    content: "EXIT";
+    font-size: 14px;
+    line-height: 18px;
+    padding: 0px 2px;
+    font-family: "Arial Narrow", Arial, sans-serif;
+    display: block;
+    position: absolute;
+    background: green;
+    color: white;
+    top: 50%;
+    transform: translate(0, -50%);
+  }
+  &:before {
+    left: 0;
+  }
+  &:after {
+    right: 0;
+  }
 }
 
 .fuselage {
@@ -104,46 +110,42 @@ ol {
   flex: 0 0 14.28571428571429%;
   padding: 5px;
   position: relative;  
-}
-
-.seat:nth-child(3) {
-  margin-right: 14.28571428571429%;
-}
-
-.seat input[type=checkbox] {
-  position: absolute;
-  opacity: 0;
-}
-
-.seat input[type=checkbox]:checked + label {
-  background: #27ae60;      
-  animation-name: rubberBand;
-  animation-duration: 300ms;
-  animation-fill-mode: both;
-  color: white;
-}
-
-.seat input[type=checkbox]:disabled + label {
-  background: #dddddd;
-  text-indent: -9999px;
-  overflow: hidden;
-}
-
-.seat input[type=checkbox]:disabled + label:after {
-  content: "X";
-  text-indent: 0;
-  position: absolute;
-  top: 4px;
-  left: 50%;
-  transform: translate(-50%, 0%);
-}
-
-.seat input[type=checkbox]:disabled + label:hover {
-  box-shadow: none;
-  cursor: not-allowed;
-}
-
-.seat label {    
+  &:nth-child(3) {
+    margin-right: 14.28571428571429%;
+  }
+  input[type=checkbox] {
+    position: absolute;
+    opacity: 0;
+  }
+  input[type=checkbox]:checked {
+    + label {
+      background: #bada55;      
+      -webkit-animation-name: rubberBand;
+          animation-name: rubberBand;
+      animation-duration: 300ms;
+      animation-fill-mode: both;
+    }
+  }
+  input[type=checkbox]:disabled {
+    + label {
+      background: #dddddd;
+      text-indent: -9999px;
+      overflow: hidden;
+      &:after {
+        content: "X";
+        text-indent: 0;
+        position: absolute;
+        top: 4px;
+        left: 50%;
+        transform: translate(-50%, 0%);
+      }
+      &:hover {
+        box-shadow: none;
+        cursor: not-allowed;
+      }
+    }
+  }
+label {    
   display: block;
   position: relative;    
   width: 100%;    
@@ -151,29 +153,29 @@ ol {
   font-size: 14px;
   font-weight: bold;
   line-height: 1.5rem;
-  padding: 8px 0;
-  background: #e74c3c; /* Koltuklar için daha modern kırmızı ton */
+  padding: 4px 0;
+  background: #F42536;
   border-radius: 5px;
   animation-duration: 300ms;
   animation-fill-mode: both;
-  color: #ffffff; /* Beyaz yazı */
-}
-
-.seat label:before {
-  content: "";
-  position: absolute;
-  width: 75%;
-  height: 75%;
-  top: 1px;
-  left: 50%;
-  transform: translate(-50%, 0%);
-  background: rgba(255,255,255,.4);
-  border-radius: 3px;
-}
-
-.seat label:hover {
-  cursor: pointer;
-  box-shadow: 0 0 0px 2px #5C6AFF;
+    
+    &:before {
+      content: "";
+      position: absolute;
+      width: 75%;
+      height: 75%;
+      top: 1px;
+      left: 50%;
+      transform: translate(-50%, 0%);
+      background: rgba(255,255,255,.4);
+      border-radius: 3px;
+    }
+    &:hover {
+      cursor: pointer;
+      box-shadow: 0 0 0px 2px #5C6AFF;
+    }
+    
+  }
 }
 
 @-webkit-keyframes rubberBand {
