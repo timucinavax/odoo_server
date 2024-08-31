@@ -176,6 +176,8 @@ function activateStep(stepNumber) {
 
     if (stepNumber === 2) {
         document.getElementById('seat-selection-container').style.display = 'block';
+    } else if (stepNumber === 3) {
+        proceedToPayment(); // Ödeme ekranına geçiş
     } else {
         document.querySelector(`.step-container > div[data-number="${stepNumber}"]`).style.display = 'block';
     }
@@ -187,22 +189,12 @@ function activateStep(stepNumber) {
 }
 
 function proceedToPayment() {
+    const totalPrice = document.getElementById('price-summary').textContent;
+    document.getElementById('total-price-summary').textContent = totalPrice;
     activateStep(3);
 }
 
-function proceedToSeatSelection(event) {
-    event.preventDefault();
-
-    const flightNumber = document.getElementById('flight-number-summary').textContent;
-    const flight = flightsData.find(f => f.flight_number === flightNumber);
-
-    if (flight) {
-        activateStep(2);
-        loadSeatSelection(flight.id);
-    }
-}
-
-document.getElementById('confirm-purchase-button').addEventListener('click', () => activateStep(1));
+document.getElementById('confirm-purchase-button').addEventListener('click', proceedToPassengerInfo);
 
 function proceedToPassengerInfo() {
     activateStep(1);
