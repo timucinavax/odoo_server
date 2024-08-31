@@ -502,7 +502,7 @@ select {
         background: rgba(255, 255, 255, 0.8);
         border-radius: 10px;
         padding: 20px;
-        max-width: 800px;
+        max-width: 600px;
         width: 60%;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         z-index: 100;
@@ -524,7 +524,7 @@ select {
     .best-deals__header {
         text-align: center;
         font-family: "Raleway", sans-serif;
-        font-weight: 400;
+        font-weight: 600;
         font-size: 2rem;
         color: #2c3e50;
         background-color: white;
