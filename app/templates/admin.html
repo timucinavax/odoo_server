@@ -318,24 +318,20 @@ Arama{%endblock %} {% block content %}
                   </div>
                   <div class="mb-3">
                     <label for="departure" class="form-label">Kalkış Havalimanı</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="departure"
-                      name="departure"
-                      required
-                    />
+                    <select class="form-control" id="departure" name="departure" required>
+                      {% for airport in airports %}
+                      <option value="{{ airport.id }}">{{ airport.name }} - {{ airport.city }}</option>
+                      {% endfor %}
+                    </select>
                   </div>
                   <div class="mb-3">
                     <label for="arrival" class="form-label">Varış Havalimanı</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="arrival"
-                      name="arrival"
-                      required
-                    />
-                  </div>
+                    <select class="form-control" id="arrival" name="arrival" required>
+                      {% for airport in airports %}
+                      <option value="{{ airport.id }}">{{ airport.name }} - {{ airport.city }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>          
                   <div class="mb-3">
                     <label for="date" class="form-label">Tarih</label>
                     <input
@@ -427,25 +423,21 @@ Arama{%endblock %} {% block content %}
                     />
                   </div>
                   <div class="mb-3">
-                    <label for="departure_return" class="form-label">Kalkış Havalimanı</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="departure_return"
-                      name="departure"
-                      required
-                    />
+                    <label for="departure" class="form-label">Kalkış Havalimanı</label>
+                    <select class="form-control" id="departure" name="departure" required>
+                      {% for airport in airports %}
+                      <option value="{{ airport.id }}">{{ airport.name }} - {{ airport.city }}</option>
+                      {% endfor %}
+                    </select>
                   </div>
                   <div class="mb-3">
-                    <label for="arrival_return" class="form-label">Varış Havalimanı</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="arrival_return"
-                      name="arrival"
-                      required
-                    />
-                  </div>
+                    <label for="arrival" class="form-label">Varış Havalimanı</label>
+                    <select class="form-control" id="arrival" name="arrival" required>
+                      {% for airport in airports %}
+                      <option value="{{ airport.id }}">{{ airport.name }} - {{ airport.city }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>          
                   <div class="mb-3">
                     <label for="date_return" class="form-label">Tarih</label>
                     <input
