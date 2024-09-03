@@ -20,8 +20,10 @@ function displayFlights(flights) {
     const userRole = "{{ session['role'] }}";
 
     flights.forEach(flight => {
-        const flightDuration = calculateFlightDuration(flight.departure_time, flight.arrival_time);
         const priceToShow = userRole === 'agency' ? flight.agency_price : flight.user_price;
+        console.log('Price to Show:', priceToShow);
+
+        const flightDuration = calculateFlightDuration(flight.departure_time, flight.arrival_time);
 
         const flightCard = `
             <div class="card">
@@ -45,7 +47,7 @@ function displayFlights(flights) {
                         <p>${flight.arrival_airport[1]}</p>
                     </div>
                     <div class="time-info">
-                        <p><span class="heading">Fiyat:</span> <span id="price-${flight.flight_number}-${flight.available_seats}">${priceToShow}</span> TL</p>
+                        <p><span class="heading">Fiyat:</span> <span id="price-${flight.flight_number}-${flight.available_seats}">${priceToShow ? priceToShow : 'Belirtilmemiş'}</span> TL</p>
                         <p><span class="heading">Süre:</span> ${flightDuration}</p>
                     </div>
                     <div class="time-info">
