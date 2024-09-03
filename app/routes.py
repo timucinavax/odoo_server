@@ -206,6 +206,73 @@ def register():
         return redirect(url_for("sign"))
 
 
+@app.route("/admin")
+@role_required(["admin"])
+def admin():
+    uid, models = odoo_connect()
+    if not uid:
+        return redirect(url_for("index"))
+
+    airports = models.execute_kw(
+        current_app.config["ODOO_DB"],
+        uid,
+        current_app.config["ODOO_PASSWORD"],
+        "airport",
+        "search_read",
+        [[]],
+        {"fields": ["id", "name", "city", "country"]}
+    )
+
+    flights = models.execute_kw(
+        current_app.config["ODOO_DB"],
+        uid,
+        current_app.config["ODOO_PASSWORD"],
+        "flight.management",
+        "search_read",
+        [[]],
+        {
+            "fields": [
+                "flight_direction",
+                "flight_number",
+                "svc_type",
+                "date",
+                "available_seats",
+                "departure_airport",
+                "arrival_airport",
+                "departure_time",
+                "date",
+            ]
+        },
+    )
+
+    outbound_flights = [
+        flight for flight in flights if flight["flight_direction"] == "outbound"
+    ]
+    return_flights = [
+        flight for flight in flights if flight["flight_direction"] == "return"
+    ]
+
+    users = models.execute_kw(
+        current_app.config["ODOO_DB"],
+        uid,
+        current_app.config["ODOO_PASSWORD"],
+        "custom.user",
+        "search_read",
+        [[]],
+        {"fields": ["username", "email", "role"]},
+    )
+
+    return render_template(
+        "admin.html",
+        outbound_flights=outbound_flights,
+        return_flights=return_flights,
+        users=users,
+        airports=airports,
+        current_page="admin",
+    )
+
+
+
 @app.route("/add_flight", methods=["POST"])
 @role_required(["admin"])
 def add_flight():
@@ -277,74 +344,6 @@ def add_flight():
         flash("An error occurred while adding the flight.")
 
     return redirect(url_for("admin"))
-
-@app.route("/add_flight", methods=["POST"])
-@role_required(["admin"])
-def add_flight():
-    flight_code = request.form.get("flight_code")
-    departure_id = request.form.get("departure")
-    arrival_id = request.form.get("arrival")
-    departure_time = request.form.get("departure_time")
-    arrival_time = request.form.get("arrival_time")
-    user_price = request.form.get("user_price")
-    agency_price = request.form.get("agency_price")
-    flight_direction = request.form.get("flight_direction")
-    airplane_type_name = request.form.get("airplane_type")
-    svc_type = request.form.get("svc_type")
-    date = request.form.get("date")
-
-    uid, models = odoo_connect()
-    if not uid:
-        return redirect(url_for("admin"))
-
-    airplane_type = models.execute_kw(
-        current_app.config["ODOO_DB"],
-        uid,
-        current_app.config["ODOO_PASSWORD"],
-        "airplane.type",
-        "search_read",
-        [[("name", "=", airplane_type_name)]],
-        {"fields": ["id", "seat_count"], "limit": 1},
-    )
-
-    if not airplane_type:
-        flash("Geçersiz uçak tipi.")
-        return redirect(url_for("admin"))
-
-    airplane_type_id = airplane_type[0]["id"]
-
-    flight_id = models.execute_kw(
-        current_app.config["ODOO_DB"],
-        uid,
-        current_app.config["ODOO_PASSWORD"],
-        "flight.management",
-        "create",
-        [
-            {
-                "flight_number": flight_code,
-                "available_seats": airplane_type[0]["seat_count"],
-                "departure_airport": int(departure_id),
-                "arrival_airport": int(arrival_id),
-                "departure_time": departure_time,
-                "arrival_time": arrival_time,
-                "user_price": user_price,
-                "agency_price": agency_price,
-                "flight_direction": flight_direction,
-                "airplane_type_id": airplane_type_id,
-                "svc_type": svc_type,
-                "date": date,
-                "user_id": False,
-            }
-        ],
-    )
-
-    if flight_id:
-        flash("Flight added successfully.")
-    else:
-        flash("An error occurred while adding the flight.")
-
-    return redirect(url_for("admin"))
-
 
 @app.route("/flight-ticket", methods=["POST", "GET"])
 def flight_ticket():
