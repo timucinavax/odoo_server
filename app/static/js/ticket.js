@@ -47,7 +47,7 @@ function displayFlights(flights) {
                         <p>${flight.arrival_airport[1]}</p>
                     </div>
                     <div class="time-info">
-                        <p><span class="heading">Fiyat:</span> <span id="price-${flight.flight_number}-${flight.available_seats}">${priceToShow ? priceToShow : 'Belirtilmemiş'}</span> TL</p>
+                        <p><span class="heading">Fiyat:</span> <span id="price-${flight.flight_number}-${flight.available_seats}">${priceToShow !== undefined ? priceToShow : 'Belirtilmemiş'}</span> TL</p>
                         <p><span class="heading">Süre:</span> ${flightDuration}</p>
                     </div>
                     <div class="time-info">
