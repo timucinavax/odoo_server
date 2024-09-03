@@ -42,7 +42,7 @@ function displayFlights(flights) {
                         <p>${flight.arrival_airport}</p>
                     </div>
                     <div class="time-info">
-                        <p><span class="heading">Fiyat:</span> <span id="price-${flight.flight_number}-${flight.available_seats}">${flight.price}</span> TL</p>
+                        <p><span class="heading">Fiyat:</span> <span id="price-${flight.flight_number}-${flight.available_seats}">${flight.user_price}</span> TL</p>
                         <p><span class="heading">Süre:</span> ${flightDuration}</p>
                     </div>
                 </div>
@@ -52,7 +52,7 @@ function displayFlights(flights) {
                         <p><span class="heading">Uçuş Numarası:</span> ${flight.flight_number}</p>
                         <p><span class="heading">Kalkış Zamanı:</span> ${flight.departure_time}</p>
                         <p><span class="heading">Varış Zamanı:</span> ${flight.arrival_time}</p>
-                        <p><span class="heading">Fiyat:</span> ${flight.price} TL</p>
+                        <p><span class="heading">Fiyat:</span> ${flight.user_price} TL</p>
                         <p><span class="heading">Uçuş Yönü:</span> ${flight.flight_direction}</p>
                         <p><span class="heading">Koltuk Sayısı:</span> ${flight.available_seats}</p>
                     </div>
@@ -84,7 +84,7 @@ function passengerInfo(flightNumber, flightAvailableSeats) {
 
     if (flight) {
         const passengerCount = document.getElementById(`passenger-count-${flightNumber}-${flightAvailableSeats}`).value;
-        const totalPrice = flight.price * passengerCount;
+        const totalPrice = flight.user_price * passengerCount;
 
         document.getElementById('flight-number-summary').textContent = flight.flight_number;
         document.getElementById('departure-summary').textContent = flight.departure_airport;
