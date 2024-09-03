@@ -227,7 +227,8 @@ Arama{%endblock %} {% block content %}
                 <th>Yolcu Sayısı</th>
                 <th>Kalkış</th>
                 <th>Varış</th>
-                <th>Tarih</th>
+                <th>Kalkış Tarihi</th>
+                <th>Varış Tarihi</th>
                 <th>Uçak</th>
               </tr>
             </thead>
@@ -236,9 +237,10 @@ Arama{%endblock %} {% block content %}
               <tr>
                 <td>{{ flight.flight_number }}</td>
                 <td>{{ flight.available_seats }}</td>
-                <td>{{ flight.departure_airport }}</td>
-                <td>{{ flight.arrival_airport }}</td>
+                <td>{{ flight.departure_airport.name }}</td>
+                <td>{{ flight.arrival_airport.name }}</td>
                 <td>{{ flight.departure_time }}</td>
+                <td>{{ flight.arrival_time }}</td>
                 <td>
                   <a
                     href="{{ url_for('plane_layout', flight_id=flight.id) }}"
@@ -265,7 +267,6 @@ Arama{%endblock %} {% block content %}
                 <th>Kalkış</th>
                 <th>Varış</th>
                 <th>Kalkış Saati</th>
-                <th>Tarih</th>
               </tr>
             </thead>
             <tbody id="active-flights-body"></tbody>
@@ -511,7 +512,6 @@ Arama{%endblock %} {% block content %}
                 <th>Kalkış</th>
                 <th>Varış</th>
                 <th>Kalkış Saati</th>
-                <th>Tarih</th>
               </tr>
             </thead>
             <tbody>
@@ -519,17 +519,15 @@ Arama{%endblock %} {% block content %}
               <tr>
                 <td>{{ flight.flight_number }}</td>
                 <td>{{ flight.svc_type }}</td>
-                <td>{{ flight.departure_airport }}</td>
-                <td>{{ flight.arrival_airport }}</td>
-                <td>{{ flight.date }}</td>
+                <td>{{ flight.departure_airport.name }}</td>
+                <td>{{ flight.arrival_airport.name }}</td>
               </tr>
               {% endfor %} {% for flight in return_flights %}
               <tr>
                 <td>{{ flight.flight_number }}</td>
                 <td>{{ flight.svc_type }}</td>
-                <td>{{ flight.departure_airport }}</td>
-                <td>{{ flight.arrival_airport }}</td>
-                <td>{{ flight.date }}</td>
+                <td>{{ flight.departure_airport.name }}</td>
+                <td>{{ flight.arrival_airport.name }}</td>
               </tr>
               {% endfor %}
             </tbody>
@@ -552,7 +550,6 @@ Arama{%endblock %} {% block content %}
                 <th>Yolcu Sayısı</th>
                 <th>Kalkış</th>
                 <th>Varış</th>
-                <th>Tarih</th>
                 <th>Uçak</th>
               </tr>
             </thead>
@@ -561,9 +558,8 @@ Arama{%endblock %} {% block content %}
               <tr>
                 <td>{{ flight.flight_number }}</td>
                 <td>{{ flight.available_seats }}</td>
-                <td>{{ flight.departure_airport }}</td>
-                <td>{{ flight.arrival_airport }}</td>
-                <td>{{ flight.date }}</td>
+                <td>{{ flight.departure_airport.name }}</td>
+                <td>{{ flight.arrival_airport.name }}</td>
                 <td>
                   <a
                     href="{{ url_for('plane_layout', flight_id=flight.id) }}"
@@ -590,7 +586,6 @@ Arama{%endblock %} {% block content %}
                 <th>Kalkış</th>
                 <th>Varış</th>
                 <th>Kalkış Saati</th>
-                <th>Tarih</th>
               </tr>
             </thead>
             <tbody id="active-flights-body"></tbody>

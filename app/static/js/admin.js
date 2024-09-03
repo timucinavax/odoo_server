@@ -17,7 +17,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         <td>${flight.svc_type}</td>
                         <td>${flight.departure_airport}</td>
                         <td>${flight.arrival_airport}</td>
-                        <td>${flight.date}</td>
+                        <td>${flight.departure_time}</td>
+                        <td>${flight.arrival_time}</td>
                     `;
                     activeFlightsBody.appendChild(row);
                 }
