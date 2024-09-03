@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const currentDate = new Date().setHours(0, 0, 0, 0);
     const activeFlightsBody = document.getElementById('active-flights-body');
 
-    fetch('/search_flights')
+    fetch('/flight_admin')
         .then(response => response.json())
         .then(flights => {
             flights.forEach(flight => {

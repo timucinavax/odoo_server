@@ -213,7 +213,6 @@ def admin():
     if not uid:
         return redirect(url_for("index"))
 
-    # Havalimanlarını Odoo'dan çekelim
     airports = models.execute_kw(
         current_app.config["ODOO_DB"],
         uid,
@@ -268,7 +267,7 @@ def admin():
         outbound_flights=outbound_flights,
         return_flights=return_flights,
         users=users,
-        airports=airports,  # Havalimanlarını template'e gönderiyoruz
+        airports=airports,
         current_page="admin",
     )
 
@@ -454,6 +453,33 @@ def plane_layout(flight_id):
 
     return render_template(
         "plane_rev.html", airplane_type=airplane_type_name, seats=seats, available_seats=available_seats,flight_id=flight_id )
+
+@app.route('/flight_admin', methods=['GET'])
+def search_flights():
+    uid, models = odoo_connect()
+    if not uid:
+        return jsonify({"error": "Odoo bağlantısı sağlanamadı."}), 500
+
+    flights = models.execute_kw(
+        current_app.config["ODOO_DB"],
+        uid,
+        current_app.config["ODOO_PASSWORD"],
+        "flight.management",
+        "search_read",
+        [[]], 
+        {
+            "fields": [
+                "flight_number",
+                "svc_type",
+                "departure_airport",
+                "arrival_airport",
+                "departure_time",
+                "arrival_time",
+            ]
+        }
+    )
+
+    return jsonify(flights)
 
 @app.route("/search_flights", methods=["GET"])
 def search_flights():
