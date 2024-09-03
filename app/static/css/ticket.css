@@ -40,7 +40,7 @@ html {
 }
 
 .breadcrumb-item.active {
-    background-color: #dc3545;
+    background-color: #007bff3a;
     color: #fff;
 }
 
