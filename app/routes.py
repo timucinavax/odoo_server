@@ -376,7 +376,6 @@ def flight_ticket():
     if to_airport:
         domain.append(("arrival_airport", "=", to_airport))
     if departure_date:
-        # Burada sadece verilen tarih için uçuşları alıyoruz (saat bilgisi olmadan)
         domain.append(("departure_time", ">=", departure_date.split(" ")[0] + " 00:00:00"))
         domain.append(("departure_time", "<=", departure_date.split(" ")[0] + " 23:59:59"))
     if return_date:
@@ -429,11 +428,12 @@ def flight_ticket():
         dates=list(date_prices.keys()),
         date_prices=date_prices,
         flights=flights,
-        selected_date=departure_date.split(" ")[0],
+        selected_date=departure_date.split(" ")[0] if departure_date else None,  # None kontrolü
         logged_in_user=session.get("username"),
         logged_in_user_role=session.get("role"),
         current_page="flight-ticket",
     )
+
 
 @app.route("/plane_layout/<int:flight_id>", methods=["GET"])
 def plane_layout(flight_id):
