@@ -28,7 +28,7 @@ function displayFlights(flights) {
                     </div>
                     <div class="time-info">
                         <p>${flight.departure_time.split(" ")[1]}</p>
-                        <p>${flight.departure_airport}</p>
+                        <p>${flight.departure_airport[1]}</p>
                     </div>
                     <div class="route">
                         <div class="route-line"></div>
@@ -39,33 +39,26 @@ function displayFlights(flights) {
                     </div>
                     <div class="time-info">
                         <p>${flight.arrival_time.split(" ")[1]}</p>
-                        <p>${flight.arrival_airport}</p>
+                        <p>${flight.arrival_airport[1]}</p>
                     </div>
                     <div class="time-info">
                         <p><span class="heading">Fiyat:</span> <span id="price-${flight.flight_number}-${flight.available_seats}">${flight.user_price}</span> TL</p>
                         <p><span class="heading">Süre:</span> ${flightDuration}</p>
                     </div>
-                </div>
-                <div class="card-right">
-                    <button class="details-button" onclick="toggleDetails(this)">Seyahat Detayları</button>
-                    <div class="details-content">
-                        <p><span class="heading">Uçuş Numarası:</span> ${flight.flight_number}</p>
-                        <p><span class="heading">Kalkış Zamanı:</span> ${flight.departure_time}</p>
-                        <p><span class="heading">Varış Zamanı:</span> ${flight.arrival_time}</p>
-                        <p><span class="heading">Fiyat:</span> ${flight.user_price} TL</p>
-                        <p><span class="heading">Uçuş Yönü:</span> ${flight.flight_direction}</p>
-                        <p><span class="heading">Koltuk Sayısı:</span> ${flight.available_seats}</p>
+                    <div class="time-info">
+                        <p><span class="heading">Mevcut Koltuklar:</span> ${flight.available_seats}</p>
                     </div>
                 </div>
                 <div class="time-info">
                     <label for="passenger-count-${flight.flight_number}-${flight.available_seats}">Kişi Sayısı:</label>
-                    <input type="number" id="passenger-count-${flight.flight_number}-${flight.available_seats}" class="passenger-count" min="1" max="20" value="1" onchange="updatePrice('${flight.flight_number}', ${flight.price}, ${flight.available_seats})" />
+                    <input type="number" id="passenger-count-${flight.flight_number}-${flight.available_seats}" class="passenger-count" min="1" max="20" value="1" onchange="updatePrice('${flight.flight_number}', ${flight.user_price}, ${flight.available_seats})" />
                     <button class="buy-ticket-button" onclick="buyTicket('${flight.flight_number}', '${flight.available_seats}')">Bileti Al</button>
                 </div>
             </div>`;
         document.getElementById('flights-container').innerHTML += flightCard;
     });
 }
+
 
 function updatePrice(flightNumber, basePrice, availableSeats) {
     const priceElement = document.getElementById(`price-${flightNumber}-${availableSeats}`);
