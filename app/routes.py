@@ -213,6 +213,17 @@ def admin():
     if not uid:
         return redirect(url_for("index"))
 
+    # Havalimanlarını Odoo'dan çekelim
+    airports = models.execute_kw(
+        current_app.config["ODOO_DB"],
+        uid,
+        current_app.config["ODOO_PASSWORD"],
+        "airport",
+        "search_read",
+        [[]],
+        {"fields": ["id", "name", "city", "country"]}
+    )
+
     flights = models.execute_kw(
         current_app.config["ODOO_DB"],
         uid,
@@ -257,16 +268,18 @@ def admin():
         outbound_flights=outbound_flights,
         return_flights=return_flights,
         users=users,
+        airports=airports,  # Havalimanlarını template'e gönderiyoruz
         current_page="admin",
     )
+
 
 
 @app.route("/add_flight", methods=["POST"])
 @role_required(["admin"])
 def add_flight():
     flight_code = request.form.get("flight_code")
-    departure = request.form.get("departure")
-    arrival = request.form.get("arrival")
+    departure_id = request.form.get("departure")
+    arrival_id = request.form.get("arrival")
     departure_time = request.form.get("departure_time")
     arrival_time = request.form.get("arrival_time")
     price = request.form.get("price")
@@ -305,8 +318,8 @@ def add_flight():
             {
                 "flight_number": flight_code,
                 "available_seats": airplane_type[0]["seat_count"],
-                "departure_airport": departure,
-                "arrival_airport": arrival,
+                "departure_airport": int(departure_id),
+                "arrival_airport": int(arrival_id),
                 "departure_time": departure_time,
                 "arrival_time": arrival_time,
                 "price": price,
