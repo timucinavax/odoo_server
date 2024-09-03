@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light">
   <div class="container-fluid">
-    <a class="navbar-brand" href="{{ url_for('index')}}">
+    <a class="navbar-brand" href="{{ url_for('index') }}">
       <img
         src="{{ url_for('static', filename='images/sehlen_logo.png') }}"
         alt="Sehlen Turizm"
@@ -42,29 +42,16 @@
         <li class="nav-item">
           <a class="nav-link" href="{{ url_for('index') }}">Anasayfa</a>
         </li>
-        {% elif current_page == 'flight-ticket'%}
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('flight_ticket') }}">
-            Hoş Geldiniz, {{ logged_in_user }}
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('travel') }}">Seyahat Deneyimi</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('offer') }}">Teklifler</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('support') }}">Destek</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('logout') }}">Çıkış Yap</a>
-        </li>
-        {% elif current_page == 'index' %}
+        {% else %}
         {% if logged_in_user %}
         <li class="nav-item">
           <a class="nav-link">Hoş Geldiniz, {{ logged_in_user }}</a>
         </li>
+        {% if logged_in_user_role == 'admin' %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('admin') }}">Admin Panel</a>
+        </li>
+        {% endif %}
         {% endif %}
         <li class="nav-item">
           <a class="nav-link" href="{{ url_for('index') }}">Anasayfa</a>
@@ -89,6 +76,10 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{ url_for('sign') }}">Kayıt Ol</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('logout') }}">Çıkış Yap</a>
         </li>
         {% endif %}
         {% endif %}
