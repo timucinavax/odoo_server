@@ -351,7 +351,7 @@ def add_flight():
     return redirect(url_for("admin"))
 
 @app.route("/flight-ticket", methods=["POST", "GET"])
-@role_required(["admin" , "user" , "agency"])
+@role_required(["admin", "user", "agency"])
 def flight_ticket():
     uid, models = odoo_connect()
     if not uid:
@@ -376,11 +376,12 @@ def flight_ticket():
     if to_airport:
         domain.append(("arrival_airport", "=", to_airport))
     if departure_date:
-        domain.append(("departure_time", ">=", departure_date))
-        domain.append(("departure_time", "<=", departure_date))
+        # Burada sadece verilen tarih için uçuşları alıyoruz (saat bilgisi olmadan)
+        domain.append(("departure_time", ">=", departure_date.split(" ")[0] + " 00:00:00"))
+        domain.append(("departure_time", "<=", departure_date.split(" ")[0] + " 23:59:59"))
     if return_date:
-        domain.append(("departure_time", ">=", return_date))
-        domain.append(("departure_time", "<=", return_date))
+        domain.append(("departure_time", ">=", return_date.split(" ")[0] + " 00:00:00"))
+        domain.append(("departure_time", "<=", return_date.split(" ")[0] + " 23:59:59"))
 
     flights = models.execute_kw(
         current_app.config["ODOO_DB"],
@@ -399,7 +400,7 @@ def flight_ticket():
                 "departure_airport",
                 "arrival_airport",
                 "available_seats",
-                "user_price",  
+                "user_price",
                 "agency_price",
                 "date",
             ]
@@ -414,7 +415,6 @@ def flight_ticket():
         date_flight_map[flight_date].append(flight)
 
     date_prices = {}
-
     for date, flights in date_flight_map.items():
         user_price = min(flight["user_price"] for flight in flights)
         agency_price = min(flight["agency_price"] for flight in flights)
@@ -429,7 +429,7 @@ def flight_ticket():
         dates=list(date_prices.keys()),
         date_prices=date_prices,
         flights=flights,
-        selected_date=departure_date,
+        selected_date=departure_date.split(" ")[0],
         logged_in_user=session.get("username"),
         logged_in_user_role=session.get("role"),
         current_page="flight-ticket",

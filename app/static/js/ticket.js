@@ -11,8 +11,12 @@ function showFlights(date) {
     const flightsContainer = document.getElementById('flights-container');
     flightsContainer.innerHTML = '';
 
-    const flights = flightsData.filter(flight => flight.departure_time.startsWith(date));
-    flights.length > 0 ? displayFlights(flights) : showNoFlightsMessage();
+    const flights = flightsData[date]; 
+    if (flights && flights.length > 0) {
+        displayFlights(flights);
+    } else {
+        showNoFlightsMessage();
+    }
 }
 
 function displayFlights(flights) {
