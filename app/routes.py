@@ -396,6 +396,7 @@ def flight_ticket():
                 "flight_number",
                 "flight_direction",
                 "departure_airport",
+                "arrival_airport",
                 "available_seats",
                 "user_price",  
                 "agency_price",

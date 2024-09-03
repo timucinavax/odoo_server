@@ -44,7 +44,7 @@ function displayFlights(flights) {
                     </div>
                     <div class="time-info">
                         <p>${flight.arrival_time.split(" ")[1]}</p>
-                        <p>${flight.arrival_airport[1]}</p>
+                        <p>${flight.[1]}</p>
                     </div>
                     <div class="time-info">
                         <p><span class="heading">Fiyat:</span> <span id="price-${flight.flight_number}-${flight.available_seats}">${priceToShow ? priceToShow : 'Belirtilmemiş'}</span> TL</p>
