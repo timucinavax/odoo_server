@@ -17,9 +17,12 @@ function showFlights(date) {
 
 function displayFlights(flights) {
     const logoUrl = "{{ url_for('static', filename='images/sehlen_logo.png') }}";
+    const userRole = "{{ session['role'] }}"; // Kullanıcının rolü 'user' veya 'agency' olabilir
 
     flights.forEach(flight => {
         const flightDuration = calculateFlightDuration(flight.departure_time, flight.arrival_time);
+        const priceToShow = userRole === 'agency' ? flight.agency_price : flight.user_price; // Kullanıcının rolüne göre fiyat
+
         const flightCard = `
             <div class="card">
                 <div class="card-left">
@@ -42,7 +45,7 @@ function displayFlights(flights) {
                         <p>${flight.arrival_airport[1]}</p>
                     </div>
                     <div class="time-info">
-                        <p><span class="heading">Fiyat:</span> <span id="price-${flight.flight_number}-${flight.available_seats}">${flight.user_price}</span> TL</p>
+                        <p><span class="heading">Fiyat:</span> <span id="price-${flight.flight_number}-${flight.available_seats}">${priceToShow}</span> TL</p>
                         <p><span class="heading">Süre:</span> ${flightDuration}</p>
                     </div>
                     <div class="time-info">
@@ -51,14 +54,13 @@ function displayFlights(flights) {
                 </div>
                 <div class="time-info">
                     <label for="passenger-count-${flight.flight_number}-${flight.available_seats}">Kişi Sayısı:</label>
-                    <input type="number" id="passenger-count-${flight.flight_number}-${flight.available_seats}" class="passenger-count" min="1" max="20" value="1" onchange="updatePrice('${flight.flight_number}', ${flight.user_price}, ${flight.available_seats})" />
-                    <button class="buy-ticket-button" onclick="buyTicket('${flight.flight_number}', '${flight.available_seats}')">Bileti Al</button>
+                    <input type="number" id="passenger-count-${flight.flight_number}-${flight.available_seats}" class="passenger-count" min="1" max="20" value="1" onchange="updatePrice('${flight.flight_number}', ${priceToShow}, ${flight.available_seats})" />
+                    <button class="buy-ticket-button" onclick="buyTicket('${flight.flight_number}', '${flight.available_seats}')">Bileti Seç</button>
                 </div>
             </div>`;
         document.getElementById('flights-container').innerHTML += flightCard;
     });
 }
-
 
 function updatePrice(flightNumber, basePrice, availableSeats) {
     const priceElement = document.getElementById(`price-${flightNumber}-${availableSeats}`);
@@ -71,6 +73,7 @@ function updatePrice(flightNumber, basePrice, availableSeats) {
         console.error(`Element with id 'price-${flightNumber}-${availableSeats}' not found.`);
     }
 }
+
 
 function passengerInfo(flightNumber, flightAvailableSeats) {
     const flight = flightsData.find(f => f.flight_number === flightNumber);
