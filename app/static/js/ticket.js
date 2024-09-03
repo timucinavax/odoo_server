@@ -24,12 +24,14 @@ function displayFlights(flights) {
         console.log('Price to Show:', priceToShow);
 
         const flightDuration = calculateFlightDuration(flight.departure_time, flight.arrival_time);
+        const flightDirectionLabel = flight.flight_direction === 'return' ? 'Dönüş' : 'Gidiş';
 
         const flightCard = `
             <div class="card">
                 <div class="card-left">
                     <div class="time-info">
                         <p><span class="heading">Uçuş Numarası:</span> ${flight.flight_number}</p>
+                        <p><span class="heading">Yön:</span> ${flightDirectionLabel}</p>
                     </div>
                     <div class="time-info">
                         <p>${flight.departure_time.split(" ")[1]}</p>
