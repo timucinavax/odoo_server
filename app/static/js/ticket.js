@@ -17,11 +17,11 @@ function showFlights(date) {
 
 function displayFlights(flights) {
     const logoUrl = "{{ url_for('static', filename='images/sehlen_logo.png') }}";
-    const userRole = "{{ session['role'] }}"; // Kullanıcının rolü 'user' veya 'agency' olabilir
+    const userRole = "{{ session['role'] }}";
 
     flights.forEach(flight => {
         const flightDuration = calculateFlightDuration(flight.departure_time, flight.arrival_time);
-        const priceToShow = userRole === 'agency' ? flight.agency_price : flight.user_price; // Kullanıcının rolüne göre fiyat
+        const priceToShow = userRole === 'agency' ? flight.agency_price : flight.user_price;
 
         const flightCard = `
             <div class="card">
@@ -173,7 +173,7 @@ function activateStep(stepNumber) {
     if (stepNumber === 2) {
         document.getElementById('seat-selection-container').style.display = 'block';
     } else if (stepNumber === 3) {
-        proceedToPayment(); // Ödeme ekranına geçiş
+        proceedToPayment();
     } else {
         document.querySelector(`.step-container > div[data-number="${stepNumber}"]`).style.display = 'block';
     }

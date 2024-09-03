@@ -288,7 +288,6 @@ def add_flight():
     svc_type = request.form.get("svc_type")
     date_str = request.form.get("date")
 
-    # Tarih ve saatleri uygun formata dönüştür
     departure_time = datetime.strptime(departure_time_str, "%Y-%m-%dT%H:%M").strftime("%Y-%m-%d %H:%M:%S")
     arrival_time = datetime.strptime(arrival_time_str, "%Y-%m-%dT%H:%M").strftime("%Y-%m-%d %H:%M:%S")
     date = datetime.strptime(date_str, "%Y-%m-%d").strftime("%Y-%m-%d %H:%M:%S")  # Eğer sadece tarih kullanıyorsanız, bu adımı atlayabilirsiniz
@@ -376,6 +375,9 @@ def flight_ticket():
         domain.append(("departure_time", ">=", return_date))
         domain.append(("departure_time", "<=", return_date))
 
+    user_role = session.get("role")
+    price_field = "agency_price" if user_role == "agency" else "user_price"
+
     flights = models.execute_kw(
         current_app.config["ODOO_DB"],
         uid,
@@ -394,7 +396,7 @@ def flight_ticket():
                 "available_seats",
                 "departure_airport",
                 "arrival_airport",
-                "user_price",
+                price_field, 
                 "date",
             ]
         },
@@ -408,7 +410,7 @@ def flight_ticket():
         date_flight_map[flight_date].append(flight)
 
     date_prices = {
-        date: min(flight["user_price"] for flight in flights)
+        date: min(flight[price_field] for flight in flights)
         for date, flights in date_flight_map.items()
     }
 
