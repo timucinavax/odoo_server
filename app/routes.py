@@ -288,9 +288,15 @@ def add_flight():
     svc_type = request.form.get("svc_type")
     date_str = request.form.get("date")
 
-    departure_time = datetime.strptime(departure_time_str, "%Y-%m-%dT%H:%M").strftime("%Y-%m-%d %H:%M:%S")
-    arrival_time = datetime.strptime(arrival_time_str, "%Y-%m-%dT%H:%M").strftime("%Y-%m-%d %H:%M:%S")
-    date = datetime.strptime(date_str, "%Y-%m-%d").strftime("%Y-%m-%d %H:%M:%S")  # Eğer sadece tarih kullanıyorsanız, bu adımı atlayabilirsiniz
+    departure_time = datetime.strptime(departure_time_str, "%Y-%m-%dT%H:%M").strftime(
+        "%Y-%m-%d %H:%M:%S"
+    )
+    arrival_time = datetime.strptime(arrival_time_str, "%Y-%m-%dT%H:%M").strftime(
+        "%Y-%m-%d %H:%M:%S"
+    )
+    date = datetime.strptime(date_str, "%Y-%m-%d").strftime(
+        "%Y-%m-%d %H:%M:%S"
+    ) 
 
     uid, models = odoo_connect()
     if not uid:
@@ -398,9 +404,6 @@ def flight_ticket():
         },
     )
 
-    for flight in flights:
-        print(f"Flight: {flight['flight_number']}, User Price: {flight.get('user_price')}, Agency Price: {flight.get('agency_price')}")
-
     date_flight_map = {}
     for flight in flights:
         flight_date = flight["departure_time"].split(" ")[0]
@@ -408,10 +411,16 @@ def flight_ticket():
             date_flight_map[flight_date] = []
         date_flight_map[flight_date].append(flight)
 
-    date_prices = {
-        date: min(flight["user_price"] for flight in flights)
-        for date, flights in date_flight_map.items()
-    }
+    date_prices = {}
+
+    for date, flights in date_flight_map.items():
+        user_price = min(flight["user_price"] for flight in flights)
+        agency_price = min(flight["agency_price"] for flight in flights)
+
+        if session.get("role") == "agency":
+            date_prices[date] = agency_price
+        else:
+            date_prices[date] = user_price
 
     return render_template(
         "flight-ticket.html",
@@ -458,9 +467,15 @@ def plane_layout(flight_id):
     available_seats = [seat["id"] for seat in seats if not seat["user_id"]]
 
     return render_template(
-        "plane_rev.html", airplane_type=airplane_type_name, seats=seats, available_seats=available_seats,flight_id=flight_id )
+        "plane_rev.html",
+        airplane_type=airplane_type_name,
+        seats=seats,
+        available_seats=available_seats,
+        flight_id=flight_id,
+    )
 
-@app.route('/flight_admin', methods=['GET'])
+
+@app.route("/flight_admin", methods=["GET"])
 def flight_admin():
     uid, models = odoo_connect()
     if not uid:
@@ -472,7 +487,7 @@ def flight_admin():
         current_app.config["ODOO_PASSWORD"],
         "flight.management",
         "search_read",
-        [[]], 
+        [[]],
         {
             "fields": [
                 "flight_number",
@@ -482,10 +497,11 @@ def flight_admin():
                 "departure_time",
                 "arrival_time",
             ]
-        }
+        },
     )
 
     return jsonify(flights)
+
 
 @app.route("/search_flights", methods=["GET"])
 def search_flights():
@@ -517,8 +533,7 @@ def search_flights():
         [domain],
         {
             "fields": [
-                "flight_id"
-                "flight_number",
+                "flight_id" "flight_number",
                 "departure_time",
                 "arrival_time",
                 "flight_direction",
@@ -526,12 +541,13 @@ def search_flights():
                 "arrival_airport",
                 "date",
                 "user_price",
-                "agency_price"
+                "agency_price",
             ]
         },
     )
 
     return jsonify(flights=flights)
+
 
 @app.route("/logout")
 def logout():

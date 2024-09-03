@@ -17,10 +17,11 @@ function showFlights(date) {
 
 function displayFlights(flights) {
     const logoUrl = "{{ url_for('static', filename='images/sehlen_logo.png') }}";
-    const userRole = "{{ logged_in_user_role }}";
+    const userRole = "{{ logged_in_user_role }}";  
 
     flights.forEach(flight => {
         const priceToShow = userRole === 'agency' ? flight.agency_price : flight.user_price;
+        console.log('Price to Show:', priceToShow);
 
         const flightDuration = calculateFlightDuration(flight.departure_time, flight.arrival_time);
 
@@ -46,7 +47,7 @@ function displayFlights(flights) {
                         <p>${flight.arrival_airport[1]}</p>
                     </div>
                     <div class="time-info">
-                        <p><span class="heading">Fiyat:</span> <span id="price-${flight.flight_number}-${flight.available_seats}">${priceToShow !== undefined ? priceToShow : 'Belirtilmemiş'}</span> TL</p>
+                        <p><span class="heading">Fiyat:</span> <span id="price-${flight.flight_number}-${flight.available_seats}">${priceToShow ? priceToShow : 'Belirtilmemiş'}</span> TL</p>
                         <p><span class="heading">Süre:</span> ${flightDuration}</p>
                     </div>
                     <div class="time-info">
