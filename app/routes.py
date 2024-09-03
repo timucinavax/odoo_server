@@ -206,72 +206,77 @@ def register():
         return redirect(url_for("sign"))
 
 
-@app.route("/admin")
+@app.route("/add_flight", methods=["POST"])
 @role_required(["admin"])
-def admin():
+def add_flight():
+    flight_code = request.form.get("flight_code")
+    departure_id = request.form.get("departure")
+    arrival_id = request.form.get("arrival")
+    departure_time_str = request.form.get("departure_time")
+    arrival_time_str = request.form.get("arrival_time")
+    user_price = request.form.get("user_price")
+    agency_price = request.form.get("agency_price")
+    flight_direction = request.form.get("flight_direction")
+    airplane_type_name = request.form.get("airplane_type")
+    svc_type = request.form.get("svc_type")
+    date_str = request.form.get("date")
+
+    # Tarih ve saatleri uygun formata dönüştür
+    departure_time = datetime.strptime(departure_time_str, "%Y-%m-%dT%H:%M").strftime("%Y-%m-%d %H:%M:%S")
+    arrival_time = datetime.strptime(arrival_time_str, "%Y-%m-%dT%H:%M").strftime("%Y-%m-%d %H:%M:%S")
+    date = datetime.strptime(date_str, "%Y-%m-%d").strftime("%Y-%m-%d %H:%M:%S")  # Eğer sadece tarih kullanıyorsanız, bu adımı atlayabilirsiniz
+
     uid, models = odoo_connect()
     if not uid:
-        return redirect(url_for("index"))
+        return redirect(url_for("admin"))
 
-    airports = models.execute_kw(
+    airplane_type = models.execute_kw(
         current_app.config["ODOO_DB"],
         uid,
         current_app.config["ODOO_PASSWORD"],
-        "airport",
+        "airplane.type",
         "search_read",
-        [[]],
-        {"fields": ["id", "name", "city", "country"]}
+        [[("name", "=", airplane_type_name)]],
+        {"fields": ["id", "seat_count"], "limit": 1},
     )
 
-    flights = models.execute_kw(
+    if not airplane_type:
+        flash("Geçersiz uçak tipi.")
+        return redirect(url_for("admin"))
+
+    airplane_type_id = airplane_type[0]["id"]
+
+    flight_id = models.execute_kw(
         current_app.config["ODOO_DB"],
         uid,
         current_app.config["ODOO_PASSWORD"],
         "flight.management",
-        "search_read",
-        [[]],
-        {
-            "fields": [
-                "flight_direction",
-                "flight_number",
-                "svc_type",
-                "date",
-                "available_seats",
-                "departure_airport",
-                "arrival_airport",
-                "departure_time",
-                "date",
-            ]
-        },
+        "create",
+        [
+            {
+                "flight_number": flight_code,
+                "available_seats": airplane_type[0]["seat_count"],
+                "departure_airport": int(departure_id),
+                "arrival_airport": int(arrival_id),
+                "departure_time": departure_time,
+                "arrival_time": arrival_time,
+                "user_price": user_price,
+                "agency_price": agency_price,
+                "flight_direction": flight_direction,
+                "airplane_type_id": airplane_type_id,
+                "svc_type": svc_type,
+                "date": date,
+                "user_id": False,
+            }
+        ],
     )
 
-    outbound_flights = [
-        flight for flight in flights if flight["flight_direction"] == "outbound"
-    ]
-    return_flights = [
-        flight for flight in flights if flight["flight_direction"] == "return"
-    ]
+    if flight_id:
+        flash("Flight added successfully.")
+    else:
+        flash("An error occurred while adding the flight.")
 
-    users = models.execute_kw(
-        current_app.config["ODOO_DB"],
-        uid,
-        current_app.config["ODOO_PASSWORD"],
-        "custom.user",
-        "search_read",
-        [[]],
-        {"fields": ["username", "email", "role"]},
-    )
-
-    return render_template(
-        "admin.html",
-        outbound_flights=outbound_flights,
-        return_flights=return_flights,
-        users=users,
-        airports=airports,
-        current_page="admin",
-    )
-
-
+    return redirect(url_for("admin"))
 
 @app.route("/add_flight", methods=["POST"])
 @role_required(["admin"])
