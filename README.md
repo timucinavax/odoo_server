@@ -24,3 +24,11 @@
     sudo systemctl restart flask_app
 
     sudo journalctl -u flask_app.service -f
+
+
+# Vue Formatına Çevrilmiş Halide 
+
+## Deneme için 
+    npm run serve
+
+    branch ise vue formatına çevrilicek branchte olucak.
