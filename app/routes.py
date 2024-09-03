@@ -281,7 +281,8 @@ def add_flight():
     arrival_id = request.form.get("arrival")
     departure_time = request.form.get("departure_time")
     arrival_time = request.form.get("arrival_time")
-    price = request.form.get("price")
+    user_price = request.form.get("user_price")
+    agency_price = request.form.get("agency_price")
     flight_direction = request.form.get("flight_direction")
     airplane_type_name = request.form.get("airplane_type")
     svc_type = request.form.get("svc_type")
@@ -321,7 +322,8 @@ def add_flight():
                 "arrival_airport": int(arrival_id),
                 "departure_time": departure_time,
                 "arrival_time": arrival_time,
-                "price": price,
+                "user_price": user_price,
+                "agency_price": agency_price,
                 "flight_direction": flight_direction,
                 "airplane_type_id": airplane_type_id,
                 "svc_type": svc_type,
@@ -388,7 +390,7 @@ def flight_ticket():
                 "available_seats",
                 "departure_airport",
                 "arrival_airport",
-                "price",
+                "user_price",
                 "date",
             ]
         },
@@ -402,7 +404,7 @@ def flight_ticket():
         date_flight_map[flight_date].append(flight)
 
     date_prices = {
-        date: min(flight["price"] for flight in flights)
+        date: min(flight["user_price"] for flight in flights)
         for date, flights in date_flight_map.items()
     }
 
@@ -519,7 +521,8 @@ def search_flights():
                 "departure_airport",
                 "arrival_airport",
                 "date",
-                "price",
+                "user_price",
+                "agency_price"
             ]
         },
     )

@@ -92,13 +92,24 @@ Arama{%endblock %} {% block content %}
             </select>
           </div>
           <div class="mb-3">
-            <label for="price" class="form-label">Fiyat</label>
+            <label for="user_price" class="form-label">Müşteri Fiyat</label>
             <input
               type="number"
               step="0.01"
               class="form-control"
-              id="price"
-              name="price"
+              id="user_price"
+              name="user_price"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="agency_price" class="form-label">Acenta Fiyat</label>
+            <input
+              type="number"
+              step="0.01"
+              class="form-control"
+              id="agency_price"
+              name="agency_price"
               required
             />
           </div>
@@ -196,13 +207,24 @@ Arama{%endblock %} {% block content %}
             </select>
           </div>
           <div class="mb-3">
-            <label for="price_return" class="form-label">Fiyat</label>
+            <label for="user_price_return" class="form-label">Müşteri Fiyat</label>
             <input
               type="number"
               step="0.01"
               class="form-control"
-              id="price_return"
-              name="price"
+              id="user_price_return"
+              name="user_price"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="agency_price_return" class="form-label">Acenta Fiyat</label>
+            <input
+              type="number"
+              step="0.01"
+              class="form-control"
+              id="agency_price_return"
+              name="agency_price"
               required
             />
           </div>
@@ -376,13 +398,24 @@ Arama{%endblock %} {% block content %}
                     </select>
                   </div>
                   <div class="mb-3">
-                    <label for="price" class="form-label">Fiyat</label>
+                    <label for="user_price" class="form-label">Müşteri Fiyat</label>
                     <input
                       type="number"
                       step="0.01"
                       class="form-control"
-                      id="price"
-                      name="price"
+                      id="user_price"
+                      name="user_price"
+                      required
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="agency_price" class="form-label">Acenta Fiyat</label>
+                    <input
+                      type="number"
+                      step="0.01"
+                      class="form-control"
+                      id="agency_price"
+                      name="agency_price"
                       required
                     />
                   </div>
@@ -482,13 +515,24 @@ Arama{%endblock %} {% block content %}
                     </select>
                   </div>
                   <div class="mb-3">
-                    <label for="price_return" class="form-label">Fiyat</label>
+                    <label for="user_price_return" class="form-label">Müşteri Fiyat</label>
                     <input
                       type="number"
                       step="0.01"
                       class="form-control"
-                      id="price_return"
-                      name="price"
+                      id="user_price_return"
+                      name="user_price"
+                      required
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="agency_price_return" class="form-label">Acenta Fiyat</label>
+                    <input
+                      type="number"
+                      step="0.01"
+                      class="form-control"
+                      id="agency_price_return"
+                      name="agency_price"
                       required
                     />
                   </div>
