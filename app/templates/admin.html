@@ -65,9 +65,9 @@ Arama{%endblock %} {% block content %}
             />
           </div>
           <div class="mb-3">
-            <label for="departure_time" class="form-label">Kalkış Tarihi</label>
+            <label for="departure_time" class="form-label">Kalkış Tarihi ve Saati</label>
             <input
-              type="date"
+              type="datetime-local"
               class="form-control"
               id="departure_time"
               name="departure_time"
@@ -75,15 +75,15 @@ Arama{%endblock %} {% block content %}
             />
           </div>
           <div class="mb-3">
-            <label for="arrival_time" class="form-label">Varış Tarihi</label>
+            <label for="arrival_time" class="form-label">Varış Tarihi ve Saati</label>
             <input
-              type="date"
+              type="datetime-local"
               class="form-control"
               id="arrival_time"
               name="arrival_time"
               required
             />
-          </div>
+          </div>          
           <div class="mb-3">
             <label for="svc_type" class="form-label">Hizmet Türü</label>
             <select class="form-control" id="svc_type" name="svc_type" required>
@@ -164,9 +164,9 @@ Arama{%endblock %} {% block content %}
             />
           </div>
           <div class="mb-3">
-            <label for="departure_time_return" class="form-label">Kalkış Tarihi</label>
+            <label for="departure_time_return" class="form-label">Kalkış Tarihi ve Saati</label>
             <input
-              type="date"
+              type="datetime-local"
               class="form-control"
               id="departure_time_return"
               name="departure_time"
@@ -174,15 +174,15 @@ Arama{%endblock %} {% block content %}
             />
           </div>
           <div class="mb-3">
-            <label for="arrival_time_return" class="form-label">Varış Tarihi</label>
+            <label for="arrival_time_return" class="form-label">Varış Tarihi ve Saati</label>
             <input
-              type="date"
+              type="datetime-local"
               class="form-control"
               id="arrival_time_return"
               name="arrival_time"
               required
             />
-          </div>
+          </div>          
           <div class="mb-3">
             <label for="svc_type_return" class="form-label">Hizmet Türü</label>
             <select
@@ -344,9 +344,9 @@ Arama{%endblock %} {% block content %}
                     />
                   </div>
                   <div class="mb-3">
-                    <label for="departure_time" class="form-label">Kalkış Tarihi</label>
+                    <label for="departure_time" class="form-label">Kalkış Tarihi ve Saati</label>
                     <input
-                      type="date"
+                      type="datetime-local"
                       class="form-control"
                       id="departure_time"
                       name="departure_time"
@@ -354,15 +354,15 @@ Arama{%endblock %} {% block content %}
                     />
                   </div>
                   <div class="mb-3">
-                    <label for="arrival_time" class="form-label">Varış Tarihi</label>
+                    <label for="arrival_time" class="form-label">Varış Tarihi ve Saati</label>
                     <input
-                      type="date"
+                      type="datetime-local"
                       class="form-control"
                       id="arrival_time"
                       name="arrival_time"
                       required
                     />
-                  </div>
+                  </div>                  
                   <div class="mb-3">
                     <label for="svc_type" class="form-label">Hizmet Türü</label>
                     <select
@@ -450,9 +450,9 @@ Arama{%endblock %} {% block content %}
                     />
                   </div>
                   <div class="mb-3">
-                    <label for="departure_time_return" class="form-label">Kalkış Tarihi</label>
+                    <label for="departure_time_return" class="form-label">Kalkış Tarihi ve Saati</label>
                     <input
-                      type="date"
+                      type="datetime-local"
                       class="form-control"
                       id="departure_time_return"
                       name="departure_time"
@@ -460,15 +460,15 @@ Arama{%endblock %} {% block content %}
                     />
                   </div>
                   <div class="mb-3">
-                    <label for="arrival_time_return" class="form-label">Varış Tarihi</label>
+                    <label for="arrival_time_return" class="form-label">Varış Tarihi ve Saati</label>
                     <input
-                      type="date"
+                      type="datetime-local"
                       class="form-control"
                       id="arrival_time_return"
                       name="arrival_time"
                       required
                     />
-                  </div>
+                  </div>                  
                   <div class="mb-3">
                     <label for="svc_type_return" class="form-label">Hizmet Türü</label>
                     <select
