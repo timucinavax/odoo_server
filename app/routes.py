@@ -455,7 +455,7 @@ def plane_layout(flight_id):
         "plane_rev.html", airplane_type=airplane_type_name, seats=seats, available_seats=available_seats,flight_id=flight_id )
 
 @app.route('/flight_admin', methods=['GET'])
-def search_flights():
+def flight_admin():
     uid, models = odoo_connect()
     if not uid:
         return jsonify({"error": "Odoo bağlantısı sağlanamadı."}), 500
