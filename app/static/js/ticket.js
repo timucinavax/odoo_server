@@ -18,6 +18,7 @@ function showFlights(date) {
 function displayFlights(flights) {
     const logoUrl = "{{ url_for('static', filename='images/sehlen_logo.png') }}";
     const userRole = "{{ logged_in_user_role }}";  
+    console.log('Rol:' ,userRole);
 
     flights.forEach(flight => {
         const priceToShow = userRole === 'agency' ? flight.agency_price : flight.user_price;
