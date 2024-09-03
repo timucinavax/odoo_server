@@ -16,7 +16,7 @@ function showFlights(date) {
 }
 
 function displayFlights(flights) {
-    const logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Commercial_Airplane_Silhouette.svg/1200px-Commercial_Airplane_Silhouette.svg.png";
+    const logoUrl = window.logoUrl;
     const userRole = window.loggedInUserRole;
 
     flights.forEach(flight => {
