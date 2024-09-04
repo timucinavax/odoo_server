@@ -11,10 +11,8 @@ function showFlights(date) {
     const flightsContainer = document.getElementById('flights-container');
     flightsContainer.innerHTML = '';
 
-    console.log(`Filtrelenen tarih: ${date}`);
     flightsData.forEach(flight => {
         const flightDate = flight.departure_time.split(' ')[0];
-        console.log(`Uçuş tarihi: ${flightDate} - Filtre sonrası: ${flightDate} - Eşleşti mi: ${flightDate === date}`);
     });
 
     const flights = flightsData.filter(flight => {
