@@ -373,8 +373,10 @@ def flight_ticket():
 
     domain = []
     if selected_date:
-        domain.append(("date", ">=", selected_date))
-        domain.append(("date", "<=", selected_date))
+        selected_date_start = f"{selected_date} 00:00:00"
+        selected_date_end = f"{selected_date} 23:59:59"
+        domain.append(("departure_time", ">=", selected_date_start))
+        domain.append(("departure_time", "<=", selected_date_end))
 
     flights = models.execute_kw(
         current_app.config["ODOO_DB"],
@@ -395,7 +397,6 @@ def flight_ticket():
                 "available_seats",
                 "user_price",  
                 "agency_price",
-                "date",
             ]
         },
     )
@@ -407,26 +408,16 @@ def flight_ticket():
             date_flight_map[flight_date] = []
         date_flight_map[flight_date].append(flight)
 
-    date_prices = {}
-    for date, flights in date_flight_map.items():
-        user_price = min(flight["user_price"] for flight in flights)
-        agency_price = min(flight["agency_price"] for flight in flights)
-
-        if session.get("role") == "agency":
-            date_prices[date] = agency_price
-        else:
-            date_prices[date] = user_price
-
     return render_template(
         "flight-ticket.html",
-        dates=list(date_prices.keys()),
-        date_prices=date_prices,
+        dates=list(date_flight_map.keys()), 
         flights=flights,
         selected_date=selected_date,
         logged_in_user=session.get("username"),
         logged_in_user_role=session.get("role"),
         current_page="flight-ticket",
     )
+
 
 @app.route("/plane_layout/<int:flight_id>", methods=["GET"])
 def plane_layout(flight_id):
