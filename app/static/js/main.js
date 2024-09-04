@@ -66,7 +66,9 @@ function handleSearchForm() {
     const fromSelect = document.getElementById('departure_airport');
     const toSelect = document.getElementById('arrival_airport');
     const departureDateInput = document.getElementById('departure_time');
+    const returnDateInput = document.getElementById('return_time');
 
+    // Tek Yön ve Gidiş-Dönüş butonları için event handler
     oneWayTab.addEventListener('click', function () {
         oneWayTab.classList.add('active');
         roundTripTab.classList.remove('active');
@@ -83,6 +85,7 @@ function handleSearchForm() {
 
     let flightsData = [];
 
+    // Uçuşları al ve kalkış havaalanlarını doldur
     fetch('/search_flights')
         .then(response => response.json())
         .then(data => {
@@ -98,24 +101,40 @@ function handleSearchForm() {
             console.error('Error fetching flights:', error);
         });
 
+    // Kalkış havaalanı seçildiğinde varış havaalanlarını doldur
     fromSelect.addEventListener('change', function () {
         const selectedDepartureCode = fromSelect.value.split(' - ')[1];
         const filteredFlights = flightsData.filter(flight => flight.departure_airport[0] === selectedDepartureCode);
 
         const arrivalAirports = [...new Set(filteredFlights.map(flight => `${flight.arrival_airport[1]} - ${flight.arrival_airport[0]}`))];
         populateSelectOptions(toSelect, arrivalAirports);
+    });
 
-        toSelect.addEventListener('change', function () {
-            const selectedArrivalCode = toSelect.value.split(' - ')[1];
-            const matchingFlights = filteredFlights.filter(flight => flight.arrival_airport[0] === selectedArrivalCode);
+    toSelect.addEventListener('change', function () {
+        const selectedDepartureCode = fromSelect.value.split(' - ')[1];
+        const selectedArrivalCode = toSelect.value.split(' - ')[1];
 
-            const availableDepartureDates = [...new Set(matchingFlights.map(flight => flight.departure_time.split(' ')[0]))];
-            populateSelectOptions(departureDateInput, availableDepartureDates);
+        const matchingFlights = flightsData.filter(flight =>
+            flight.departure_airport[0] === selectedDepartureCode &&
+            flight.arrival_airport[0] === selectedArrivalCode
+        );
 
-            if (availableDepartureDates.length > 0) {
-                departureDateInput.value = availableDepartureDates[0];
+        const availableDepartureDates = [...new Set(matchingFlights.map(flight => flight.departure_time.split(' ')[0]))];
+        populateSelectOptions(departureDateInput, availableDepartureDates);
+
+        if (availableDepartureDates.length > 0) {
+            departureDateInput.value = availableDepartureDates[0];
+        }
+
+        if (roundTripTab.classList.contains('active')) {
+            const returnFlights = matchingFlights.filter(flight => flight.flight_direction === 'return');
+            const availableReturnDates = [...new Set(returnFlights.map(flight => flight.departure_time.split(' ')[0]))];
+            populateSelectOptions(returnDateInput, availableReturnDates);
+
+            if (availableReturnDates.length > 0) {
+                returnDateInput.value = availableReturnDates[0];
             }
-        });
+        }
     });
 }
 
