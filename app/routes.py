@@ -239,7 +239,7 @@ def admin():
                 "departure_airport",
                 "arrival_airport",
                 "departure_time",
-                "arrival_time"
+                "arrival_time",
                 "date",
             ]
         },
