@@ -1,12 +1,16 @@
 document.addEventListener('DOMContentLoaded', function() {
     showSection('all-flights');
 
-    const currentDate = new Date(); 
+    const currentDate = new Date();
 
     fetch('/flight_admin')
         .then(response => response.json())
         .then(flights => {
             console.log(flights); 
+            if (!flights || flights.length === 0) {
+                console.error('Uçuş verisi alınamadı veya boş geldi.');
+                return;
+            }
 
             flights.forEach(flight => {
                 const flightDate = new Date(flight.departure_time);
@@ -16,8 +20,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     row.innerHTML = `
                         <td>${flight.flight_number}</td>
                         <td>${flight.svc_type}</td>
-                        <td>${flight.departure_airport[1]}</td>
-                        <td>${flight.arrival_airport[1]}</td>
+                        <td>${flight.departure_airport && flight.departure_airport[1] ? flight.departure_airport[1] : 'Bilinmiyor'}</td>
+                        <td>${flight.arrival_airport && flight.arrival_airport[1] ? flight.arrival_airport[1] : 'Bilinmiyor'}</td>
                         <td>${flight.departure_time}</td>
                         <td>${flight.arrival_time}</td>
                     `;
@@ -29,6 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Uçuş verileri alınırken bir hata oluştu:', error);
         });
 });
+
 
 function showSection(sectionId) {
     const sections = document.querySelectorAll('.content-section');
