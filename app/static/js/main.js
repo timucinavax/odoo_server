@@ -60,88 +60,72 @@ function createCookieConsent() {
 }
 
 function handleSearchForm() {
-    const departureAirportSelect = document.getElementById("departure_airport");
-    const arrivalAirportSelect = document.getElementById("arrival_airport");
-    const departureTimeSelect = document.getElementById("departure_time");
-    const arrivalTimeSelect = document.getElementById("arrival_time");
-    const oneWayTab = document.getElementById("one-way-tab");
-    const roundTripTab = document.getElementById("round-trip-tab");
-    const returnDateGroup = document.getElementById("return-date-group");
+    const oneWayTab = document.getElementById('one-way-tab');
+    const roundTripTab = document.getElementById('round-trip-tab');
+    const returnDateGroup = document.getElementById('return-date-group');
+    const fromSelect = document.getElementById('departure_airport');
+    const toSelect = document.getElementById('arrival_airport');
+    const departureDateInput = document.getElementById('departure_time');
 
-    // Başlangıçta Dönüş Tarihi alanını gizle
-    returnDateGroup.style.display = "none";
-
-    oneWayTab.addEventListener("click", function () {
-        // Tek yön seçeneği seçildiğinde dönüş tarihi alanını gizle
-        returnDateGroup.style.display = "none";
-        arrivalTimeSelect.value = ""; // Seçili dönüş tarihini temizle
+    oneWayTab.addEventListener('click', function () {
+        oneWayTab.classList.add('active');
+        roundTripTab.classList.remove('active');
+        returnDateGroup.style.display = 'none';
     });
 
-    roundTripTab.addEventListener("click", function () {
-        // Gidiş-dönüş seçeneği seçildiğinde dönüş tarihi alanını göster
-        returnDateGroup.style.display = "block";
+    roundTripTab.addEventListener('click', function () {
+        roundTripTab.classList.add('active');
+        oneWayTab.classList.remove('active');
+        returnDateGroup.style.display = 'block';
     });
 
-    departureAirportSelect.addEventListener("change", function () {
-        const departureAirport = this.value;
+    returnDateGroup.style.display = 'none';
 
-        if (departureAirport) {
-            fetch(`/search_flights?departure_airport=${departureAirport}`)
-                .then((response) => response.json())
-                .then((data) => {
-                    arrivalAirportSelect.innerHTML = ""; // Önceki seçenekleri temizle
-                    const uniqueAirports = [...new Set(data.flights.map(flight => flight.arrival_airport))];
-                    uniqueAirports.forEach((airport) => {
-                        const option = document.createElement("option");
-                        option.value = airport;
-                        option.textContent = airport;
-                        arrivalAirportSelect.appendChild(option);
-                    });
-                    arrivalAirportSelect.disabled = false;
-                });
-        }
+    let flightsData = [];
+
+    fetch('/search_flights')
+        .then(response => response.json())
+        .then(data => {
+            if (data.flights) {
+                flightsData = data.flights;
+                const departureAirports = [...new Set(data.flights.map(flight => flight.departure_airport))];
+                populateSelectOptions(fromSelect, departureAirports);
+            } else {
+                console.error("Flights data is missing in the response");
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching flights:', error);
+        });
+
+    fromSelect.addEventListener('change', function () {
+        const selectedDeparture = fromSelect.value;
+        const filteredFlights = flightsData.filter(flight => flight.departure_airport === selectedDeparture);
+
+        const arrivalAirports = [...new Set(filteredFlights.map(flight => flight.arrival_airport))];
+        populateSelectOptions(toSelect, arrivalAirports);
+
+        toSelect.addEventListener('change', function () {
+            const selectedArrival = toSelect.value;
+            const matchingFlights = filteredFlights.filter(flight => flight.arrival_airport === selectedArrival);
+
+            const availableDepartureDates = matchingFlights.map(flight => flight.departure_time.split(' ')[0]);
+
+            populateSelectOptions(departureDateInput, availableDepartureDates);
+
+            if (availableDepartureDates.length > 0) {
+                departureDateInput.value = availableDepartureDates[0];
+            }
+        });
     });
+}
 
-    arrivalAirportSelect.addEventListener("change", function () {
-        const departureAirport = departureAirportSelect.value;
-        const arrivalAirport = this.value;
-
-        if (departureAirport && arrivalAirport) {
-            fetch(`/search_flights?departure_airport=${departureAirport}&arrival_airport=${arrivalAirport}`)
-                .then((response) => response.json())
-                .then((data) => {
-                    departureTimeSelect.innerHTML = ""; // Önceki seçenekleri temizle
-                    const uniqueDates = [...new Set(data.flights.map(flight => flight.date))];
-                    uniqueDates.forEach((date) => {
-                        const option = document.createElement("option");
-                        option.value = date;
-                        option.textContent = date;
-                        departureTimeSelect.appendChild(option);
-                    });
-                    departureTimeSelect.disabled = false;
-                });
-        }
-    });
-
-    arrivalTimeSelect.addEventListener("change", function () {
-        const departureAirport = departureAirportSelect.value;
-        const arrivalAirport = arrivalAirportSelect.value;
-        const departureDate = departureTimeSelect.value;
-
-        if (departureAirport && arrivalAirport && departureDate && returnDateGroup.style.display === "block") {
-            fetch(`/search_flights?departure_airport=${arrivalAirport}&arrival_airport=${departureAirport}&date=${departureDate}`)
-                .then((response) => response.json())
-                .then((data) => {
-                    arrivalTimeSelect.innerHTML = ""; // Önceki seçenekleri temizle
-                    const uniqueDates = [...new Set(data.flights.map(flight => flight.date))];
-                    uniqueDates.forEach((date) => {
-                        const option = document.createElement("option");
-                        option.value = date;
-                        option.textContent = date;
-                        arrivalTimeSelect.appendChild(option);
-                    });
-                    arrivalTimeSelect.disabled = false;
-                });
-        }
+function populateSelectOptions(selectElement, options) {
+    selectElement.innerHTML = '<option value="">Seçiniz</option>';
+    options.forEach(optionValue => {
+        const option = document.createElement('option');
+        option.value = optionValue;
+        option.textContent = optionValue;
+        selectElement.appendChild(option);
     });
 }
