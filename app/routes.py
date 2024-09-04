@@ -359,10 +359,19 @@ def flight_ticket():
 
     search_criteria = request.form if request.method == "POST" else None
 
+    # Gelen verileri loglayalım
+    print("Search Criteria:", search_criteria)
+    
     from_airport = search_criteria.get('departure_airport') if search_criteria else request.args.get("departure_airport")
     to_airport = search_criteria.get('arrival_airport') if search_criteria else request.args.get("arrival_airport")
     departure_date = search_criteria.get('departure_time') if search_criteria else request.args.get("departure_time")
     return_date = search_criteria.get('arrival_time') if search_criteria else request.args.get("arrival_time")
+
+    # Değişkenleri loglayalım
+    print("From Airport:", from_airport)
+    print("To Airport:", to_airport)
+    print("Departure Date:", departure_date)
+    print("Return Date:", return_date)
 
     domain = []
     if from_airport:
@@ -400,6 +409,9 @@ def flight_ticket():
         },
     )
 
+    # Flight verilerini loglayalım
+    print("Flights:", flights)
+
     date_flight_map = {}
     for flight in flights:
         flight_date = flight["departure_time"].split(" ")[0]
@@ -417,6 +429,10 @@ def flight_ticket():
         else:
             date_prices[date] = user_price
 
+    # Render edilen şablona gönderilen değişkenleri loglayalım
+    print("Selected Date:", departure_date)
+    print("Date Prices:", date_prices)
+
     return render_template(
         "flight-ticket.html",
         dates=list(date_prices.keys()),
@@ -427,7 +443,7 @@ def flight_ticket():
         logged_in_user_role=session.get("role"),
         current_page="flight-ticket",
     )
-    
+
 @app.route("/plane_layout/<int:flight_id>", methods=["GET"])
 def plane_layout(flight_id):
 
