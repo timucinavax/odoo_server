@@ -66,6 +66,7 @@ function handleSearchForm() {
     const fromSelect = document.getElementById('departure_airport');
     const toSelect = document.getElementById('arrival_airport');
     const departureDateInput = document.getElementById('departure_time');
+    const returnDateInput = document.getElementById('arrival_time');
 
     oneWayTab.addEventListener('click', function () {
         oneWayTab.classList.add('active');
@@ -88,7 +89,7 @@ function handleSearchForm() {
         .then(data => {
             if (data.flights) {
                 flightsData = data.flights;
-                const departureAirports = [...new Set(data.flights.map(flight => flight.departure_airport))];
+                const departureAirports = [...new Set(data.flights.map(flight => flight.departure_airport[1]))];
                 populateSelectOptions(fromSelect, departureAirports);
             } else {
                 console.error("Flights data is missing in the response");
@@ -100,21 +101,34 @@ function handleSearchForm() {
 
     fromSelect.addEventListener('change', function () {
         const selectedDeparture = fromSelect.value;
-        const filteredFlights = flightsData.filter(flight => flight.departure_airport === selectedDeparture);
+        const filteredFlights = flightsData.filter(flight => flight.departure_airport[1] === selectedDeparture);
 
-        const arrivalAirports = [...new Set(filteredFlights.map(flight => flight.arrival_airport))];
+        const arrivalAirports = [...new Set(filteredFlights.map(flight => flight.arrival_airport[1]))];
         populateSelectOptions(toSelect, arrivalAirports);
 
         toSelect.addEventListener('change', function () {
             const selectedArrival = toSelect.value;
-            const matchingFlights = filteredFlights.filter(flight => flight.arrival_airport === selectedArrival);
+            const matchingFlights = filteredFlights.filter(flight => flight.arrival_airport[1] === selectedArrival);
 
-            const availableDepartureDates = matchingFlights.map(flight => flight.departure_time.split(' ')[0]);
-
+            const availableDepartureDates = [...new Set(matchingFlights.map(flight => flight.date.split(' ')[0]))];
             populateSelectOptions(departureDateInput, availableDepartureDates);
 
             if (availableDepartureDates.length > 0) {
                 departureDateInput.value = availableDepartureDates[0];
+            }
+
+            if (roundTripTab.classList.contains('active')) {
+                departureDateInput.addEventListener('change', function () {
+                    const selectedDepartureDate = departureDateInput.value;
+                    const returnFlights = flightsData.filter(flight =>
+                        flight.departure_airport[1] === selectedArrival &&
+                        flight.arrival_airport[1] === selectedDeparture &&
+                        flight.date.split(' ')[0] > selectedDepartureDate
+                    );
+
+                    const availableReturnDates = [...new Set(returnFlights.map(flight => flight.date.split(' ')[0]))];
+                    populateSelectOptions(returnDateInput, availableReturnDates);
+                });
             }
         });
     });
@@ -129,3 +143,4 @@ function populateSelectOptions(selectElement, options) {
         selectElement.appendChild(option);
     });
 }
+
