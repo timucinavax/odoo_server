@@ -357,7 +357,7 @@ def flight_ticket():
     if not uid:
         return redirect(url_for("index"))
 
-    search_criteria = request.form() if request.method == "POST" else None
+    search_criteria = request.form if request.method == "POST" else None
 
     from_airport = search_criteria.get('departure_airport') if search_criteria else request.args.get("departure_airport")
     to_airport = search_criteria.get('arrival_airport') if search_criteria else request.args.get("arrival_airport")
