@@ -1,7 +1,6 @@
 {% extends '/layout/layoutIndex.html' %}  
 {% block title %}Sehlen Tourism - Uçuş Arama{% endblock %} 
 
-{% block content %}
 <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-indicators">
     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slayt 1"></button>
@@ -54,9 +53,15 @@
         <button type="submit" class="search-button">UCUZ UÇUŞLARI ARA</button>
       </form>
     </div>
-  </div>
-  {% endif %}
-  
+    {% else %}
+    <div id="search-box-container" class="search-box-container position-absolute w-100">
+      <h2 class="best-deals__header"><span class="highlight">Sehlen Turizm</span><br />Kayıt Olun ve Giriş Yapın!</h2>
+      <p>Bilet almak ve ucuz uçuşları aramak için lütfen önce giriş yapın veya kayıt olun.</p>
+      <a href="/register" class="btn btn-primary">Kayıt Ol</a>
+      <a href="/login" class="btn btn-secondary">Giriş Yap</a>
+    </div>
+    {% endif %}
+
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Önceki</span>
