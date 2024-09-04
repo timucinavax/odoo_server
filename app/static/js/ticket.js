@@ -13,12 +13,12 @@ function highlightSelectedDate(date) {
 }
 
 function showFlights(date) {
-    highlightSelectedDate(date); // Tarihi seçili göster
+    highlightSelectedDate(date); 
 
     const flightsContainer = document.getElementById('flights-container');
     flightsContainer.innerHTML = '';
 
-    const flights = flightsData.filter(flight => flight.departure_time.startsWith(date) && flight.flight_direction === 'outbound');
+    const flights = flightsData.filter(flight => flight.departure_time.startsWith(date));
     
     if (flights.length > 0) {
         displayFlights(flights);
@@ -230,7 +230,7 @@ function selectedDate() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-    const selectedDate = "{{ selected_date }}"; 
+    const selectedDate = "{{ selected_date | safe }}"; 
     console.log("Selected Date:", selectedDate);
 
     if (selectedDate) {
