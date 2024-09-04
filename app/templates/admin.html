@@ -58,7 +58,7 @@ Arama{%endblock %} {% block content %}
             >
               {% for airport in airports %}
               <option value="{{ airport.id }}">
-                {{ airport.name }} - {{ airport.city }}
+                {{ airport.name }} - {{ airport.code }}
               </option>
               {% endfor %}
             </select>
@@ -76,7 +76,7 @@ Arama{%endblock %} {% block content %}
             >
               {% for airport in airports %}
               <option value="{{ airport.id }}">
-                {{ airport.name }} - {{ airport.city }}
+                {{ airport.name }} - {{ airport.code }}
               </option>
               {% endfor %}
             </select>
@@ -220,7 +220,7 @@ Arama{%endblock %} {% block content %}
             >
               {% for airport in airports %}
               <option value="{{ airport.id }}">
-                {{ airport.name }} - {{ airport.city }}
+                {{ airport.name }} - {{ airport.code }}
               </option>
               {% endfor %}
             </select>
@@ -353,8 +353,8 @@ Arama{%endblock %} {% block content %}
               <tr>
                 <td>{{ flight.flight_number }}</td>
                 <td>{{ flight.available_seats }}</td>
-                <td>{{ flight.departure_airport[1] }}</td>
-                <td>{{ flight.arrival_airport[1] }}</td>
+                <td>{{ flight.departure_airport[0] - flight.departure_airport[1] }}</td>
+                <td>{{ flight.arrival_airport[0] - flight.arrival_airport[1] }}</td>
                 <td>{{ flight.departure_time }}</td>
                 <td>{{ flight.arrival_time }}</td>
                 <td>
@@ -722,8 +722,8 @@ Arama{%endblock %} {% block content %}
                 <tr>
                     <td>{{ flight.flight_number }}</td>
                     <td>{{ flight.svc_type }}</td>
-                    <td>{{ flight.departure_airport[1] }}</td>
-                    <td>{{ flight.arrival_airport[1] }}</td>
+                    <td>{{ flight.departure_airport[0] - flight.departure_airport[1] }}</td>
+                    <td>{{ flight.arrival_airport[0] - flight.arrival_airport[1] }}</td>
                     <td>{{ flight.departure_time }}</td> 
                     <td>{{ flight.arrival_time }}</td> 
                 </tr>
@@ -732,8 +732,8 @@ Arama{%endblock %} {% block content %}
                 <tr>
                     <td>{{ flight.flight_number }}</td>
                     <td>{{ flight.svc_type }}</td>
-                    <td>{{ flight.departure_airport[1] }}</td>
-                    <td>{{ flight.arrival_airport[1] }}</td>
+                    <td>{{ flight.departure_airport[0] - flight.departure_airport[1] }}</td>
+                    <td>{{ flight.arrival_airport[0] - flight.arrival_airport[1] }}</td>
                     <td>{{ flight.departure_time }}</td> 
                     <td>{{ flight.arrival_time }}</td> 
                 </tr>
@@ -767,8 +767,8 @@ Arama{%endblock %} {% block content %}
               <tr>
                 <td>{{ flight.flight_number }}</td>
                 <td>{{ flight.available_seats }}</td>
-                <td>{{ flight.departure_airport[1] }}</td>
-                <td>{{ flight.arrival_airport[1] }}</td>
+                <td>{{ flight.departure_airport[0] - flight.departure_airport[1] }}</td>
+                <td>{{ flight.arrival_airport[0] - flight.arrival_airport[1] }}</td>
                 <td>
                   <a
                     href="{{ url_for('plane_layout', flight_id=flight.id) }}"
