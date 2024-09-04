@@ -89,7 +89,7 @@ function handleSearchForm() {
         .then(data => {
             if (data.flights) {
                 flightsData = data.flights;
-                const departureAirports = [...new Set(data.flights.map(flight => flight.departure_airport[1]))];
+                const departureAirports = data.flights.map(flight => flight.departure_airport[1]);
                 populateSelectOptions(fromSelect, departureAirports);
             } else {
                 console.error("Flights data is missing in the response");
