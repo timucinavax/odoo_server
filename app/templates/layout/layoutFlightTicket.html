@@ -34,7 +34,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>const flightsData = {{ flights | tojson }};</script>
     <script type="text/javascript">window.loggedInUserRole = "{{ logged_in_user_role }}";</script>
-    <script type="text/javascript">const selectedDate = "{{ selected_date }}";console.log("Selected Date:", selectedDate);</script>
+    <script type="text/javascript">const selectedDate = "{{ selected_date }}";</script>
     <script type="text/javascript">window.logoUrl = "{{ url_for('static', filename='images/sehlen_logo.png') }}";</script>
   
     <script src="{{ url_for('static', filename='js/ticket.js') }}"></script>

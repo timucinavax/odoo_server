@@ -221,7 +221,6 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("Selected Date:", selectedDate);
 
     if (selectedDate) {
-        highlightSelectedDate(selectedDate);
         showFlights(selectedDate);
     }
 
