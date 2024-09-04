@@ -11,10 +11,14 @@ function showFlights(date) {
     const flightsContainer = document.getElementById('flights-container');
     flightsContainer.innerHTML = '';
 
+    console.log('Filtrelenen tarih:', date);
+    flightsData.forEach(flight => console.log('Uçuş tarihi:', flight.date));
+
     const flights = flightsData.filter(flight => flight.date.startsWith(date));
-    
+
     flights.length > 0 ? displayFlights(flights) : showNoFlightsMessage();
 }
+
 
 function displayFlights(flights) {
     const logoUrl = window.logoUrl;
