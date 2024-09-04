@@ -90,7 +90,7 @@ function handleSearchForm() {
         .then(data => {
             if (data.flights) {
                 flightsData = data.flights;
-                const departureAirports = [...new Set(data.flights.map(flight => flight.departure_airport[1] + ' - ' + flight.departure_airport[0]))];
+                const departureAirports = [...new Set(data.flights.map(flight => `${flight.departure_airport[1]} - ${flight.departure_airport[2]}`))];
                 populateSelectOptions(fromSelect, departureAirports);
             } else {
                 console.error("Flights data is missing in the response");
@@ -104,21 +104,26 @@ function handleSearchForm() {
         const selectedDeparture = fromSelect.value.split(' - ')[1];
         const filteredFlights = flightsData.filter(flight => flight.departure_airport[0] === selectedDeparture);
 
-        const arrivalAirports = [...new Set(filteredFlights.map(flight => flight.arrival_airport[1] + ' - ' + flight.arrival_airport[0]))];
+        const arrivalAirports = [...new Set(filteredFlights.map(flight => `${flight.arrival_airport[1]} - ${flight.arrival_airport[2]}`))];
         populateSelectOptions(toSelect, arrivalAirports);
+    });
 
-        toSelect.addEventListener('change', function () {
-            const selectedArrival = toSelect.value.split(' - ')[1];
-            const matchingFlights = filteredFlights.filter(flight => flight.arrival_airport[0] === selectedArrival);
+    toSelect.addEventListener('change', function () {
+        const selectedDeparture = fromSelect.value.split(' - ')[1]; 
+        const selectedArrival = toSelect.value.split(' - ')[1]; 
 
-            const availableDepartureDates = matchingFlights.map(flight => flight.departure_time.split(' ')[0]);
+        const matchingFlights = flightsData.filter(flight =>
+            flight.departure_airport[0] === selectedDeparture &&
+            flight.arrival_airport[0] === selectedArrival
+        );
 
-            populateSelectOptions(departureDateInput, availableDepartureDates);
+        const availableDepartureDates = matchingFlights.map(flight => flight.departure_time.split(' ')[0]);
 
-            if (availableDepartureDates.length > 0) {
-                departureDateInput.value = availableDepartureDates[0];
-            }
-        });
+        populateSelectOptions(departureDateInput, availableDepartureDates);
+
+        if (availableDepartureDates.length > 0) {
+            departureDateInput.value = availableDepartureDates[0];
+        }
     });
 }
 
