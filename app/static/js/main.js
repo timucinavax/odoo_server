@@ -134,12 +134,12 @@ function handleSearchForm() {
                 departureDateInput.addEventListener('change', function () {
                     const selectedDepartureDate = departureDateInput.value;
 
-                    // Dönüş uçuşlarını filtreleme
+                    // Gidiş ve varış havalimanlarını ters çevirerek dönüş uçuşlarını bulma
                     const returnFlights = flightsData.filter(flight =>
-                        flight.departure_airport[1] === selectedArrival &&
-                        flight.arrival_airport[1] === selectedDeparture &&
-                        flight.date.split(' ')[0] > selectedDepartureDate &&
-                        flight.flight_direction === 'return'
+                        flight.departure_airport[1] === selectedArrival && // Ters havalimanı
+                        flight.arrival_airport[1] === selectedDeparture && // Ters havalimanı
+                        flight.date.split(' ')[0] > selectedDepartureDate && // Gidiş tarihinden sonra olmalı
+                        flight.flight_direction === 'return' // Dönüş uçuşu olmalı
                     );
 
                     const availableReturnDates = returnFlights.map(flight => flight.date.split(' ')[0]);
