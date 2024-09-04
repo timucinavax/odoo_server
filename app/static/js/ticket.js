@@ -230,9 +230,6 @@ function selectedDate() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-    const selectedDate = "{{ selected_date | tojson | safe }}";
-    console.log("Selected Date:", selectedDate);
-
     if (selectedDate) {
         highlightSelectedDate(selectedDate);
         showFlights(selectedDate);
