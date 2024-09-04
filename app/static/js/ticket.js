@@ -11,6 +11,12 @@ function showFlights(date) {
     const flightsContainer = document.getElementById('flights-container');
     flightsContainer.innerHTML = '';
 
+    console.log(`Filtrelenen tarih: ${date}`);
+    flightsData.forEach(flight => {
+        const flightDate = flight.date.split(' ')[0];
+        console.log(`Uçuş tarihi: ${flight.date} - Filtre sonrası: ${flightDate} - Eşleşti mi: ${flightDate === date}`);
+    });
+
     const flights = flightsData.filter(flight => {
         const flightDate = flight.date.split(' ')[0];
         return flightDate === date;
@@ -18,8 +24,6 @@ function showFlights(date) {
 
     flights.length > 0 ? displayFlights(flights) : showNoFlightsMessage();
 }
-
-
 
 function displayFlights(flights) {
     const logoUrl = window.logoUrl;
