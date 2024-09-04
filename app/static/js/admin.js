@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     showSection('all-flights');
-    activateFlight();
+    activateFlights();
 });
 
 function showSection(sectionId) {
@@ -23,7 +23,7 @@ function showSection(sectionId) {
     });
 }
 
-function activateFlight() {
+function activateFlights() {
     const currentDate = new Date();
 
     fetch('/flight_admin')
@@ -35,8 +35,10 @@ function activateFlight() {
                 return;
             }
 
-            const activeFlightsBody = document.getElementById('active-flights-body');
-            activeFlightsBody.innerHTML = ''; 
+            const activeOutboundFlightsBody = document.getElementById('active-outbound-flights-body');
+            const activeReturnFlightsBody = document.getElementById('active-return-flights-body');
+            activeOutboundFlightsBody.innerHTML = ''; // Önceki verileri temizle
+            activeReturnFlightsBody.innerHTML = ''; // Önceki verileri temizle
 
             flights.forEach(flight => {
                 const flightDate = new Date(flight.departure_time);
@@ -51,7 +53,12 @@ function activateFlight() {
                         <td>${flight.departure_time}</td>
                         <td>${flight.arrival_time}</td>
                     `;
-                    activeFlightsBody.appendChild(row);
+
+                    if (flight.flight_direction === 'outbound') {
+                        activeOutboundFlightsBody.appendChild(row);
+                    } else if (flight.flight_direction === 'return') {
+                        activeReturnFlightsBody.appendChild(row);
+                    }
                 }
             });
         })
