@@ -287,13 +287,14 @@ def add_flight():
     date_str = request.form.get("date")
 
     departure_time = datetime.strptime(departure_time_str, "%Y-%m-%dT%H:%M").strftime(
-    "%d %B %Y %H:%M:%S"
+    "%Y-%m-%d %H:%M:%S"
     )
     arrival_time = datetime.strptime(arrival_time_str, "%Y-%m-%dT%H:%M").strftime(
-        "%d %B %Y %H:%M:%S"
+        "%Y-%m-%d %H:%M:%S"
     )
+
     date = datetime.strptime(date_str, "%Y-%m-%d").strftime(
-        "%d %B %Y"
+    "%Y-%m-%d"
     )
 
     uid, models = odoo_connect()
