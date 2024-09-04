@@ -515,11 +515,9 @@ def search_flights():
 
     domain = []
     if from_airport:
-        from_airport_code = from_airport.split(' - ')[2] 
-        domain.append(("departure_airport", "=", from_airport_code))
+        domain.append(("departure_airport", "=", from_airport))
     if to_airport:
-        to_airport_code = to_airport.split(' - ')[2] 
-        domain.append(("arrival_airport", "=", to_airport_code))
+        domain.append(("arrival_airport", "=", to_airport))
     if departure_date:
         domain.append(("departure_time", ">=", departure_date))
         domain.append(("departure_time", "<=", departure_date))
