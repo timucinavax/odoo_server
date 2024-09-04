@@ -58,7 +58,6 @@ function createCookieConsent() {
         cookieConsent.style.display = "none";
     });
 }
-
 function handleSearchForm() {
     const oneWayTab = document.getElementById('one-way-tab');
     const roundTripTab = document.getElementById('round-trip-tab');
@@ -131,23 +130,33 @@ function handleSearchForm() {
             }
 
             if (roundTripTab.classList.contains('active')) {
-                departureDateInput.addEventListener('change', function () {
-                    const selectedDepartureDate = departureDateInput.value;
-
-                    // Gidiş ve varış havalimanlarını ters çevirerek dönüş uçuşlarını bulma
-                    const returnFlights = flightsData.filter(flight =>
-                        flight.departure_airport[1] === selectedArrival && // Ters havalimanı
-                        flight.arrival_airport[1] === selectedDeparture && // Ters havalimanı
-                        flight.date.split(' ')[0] > selectedDepartureDate && // Gidiş tarihinden sonra olmalı
-                        flight.flight_direction === 'return' // Dönüş uçuşu olmalı
-                    );
-
-                    const availableReturnDates = returnFlights.map(flight => flight.date.split(' ')[0]);
-                    populateSelectOptions(returnDateInput, availableReturnDates); // Dönüş tarihlerini listele
-                });
+                updateReturnDates(selectedDeparture, selectedArrival);
             }
         });
     });
+
+    departureDateInput.addEventListener('change', function () {
+        const selectedDeparture = fromSelect.value;
+        const selectedArrival = toSelect.value;
+
+        if (roundTripTab.classList.contains('active')) {
+            updateReturnDates(selectedDeparture, selectedArrival);
+        }
+    });
+
+    function updateReturnDates(selectedDeparture, selectedArrival) {
+        const selectedDepartureDate = departureDateInput.value;
+
+        const returnFlights = flightsData.filter(flight =>
+            flight.flight_direction === 'return' &&
+            flight.departure_airport[1] === selectedArrival && // Ters havalimanı
+            flight.arrival_airport[1] === selectedDeparture && // Ters havalimanı
+            flight.date.split(' ')[0] > selectedDepartureDate  // Gidiş tarihinden sonra olmalı
+        );
+
+        const availableReturnDates = returnFlights.map(flight => flight.date.split(' ')[0]);
+        populateSelectOptions(returnDateInput, availableReturnDates); // Dönüş tarihlerini listele
+    }
 }
 
 function populateSelectOptions(selectElement, options) {
