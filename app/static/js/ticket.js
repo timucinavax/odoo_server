@@ -10,7 +10,6 @@ function highlightSelectedDate(date) {
 }
 
 function showFlights(date) {
-    highlightSelectedDate(date); 
 
     const flightsContainer = document.getElementById('flights-container');
     flightsContainer.innerHTML = '';
