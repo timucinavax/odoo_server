@@ -18,8 +18,8 @@ function showFlights(date) {
     const flightsContainer = document.getElementById('flights-container');
     flightsContainer.innerHTML = '';
 
-    const flights = flightsData.filter(flight => flight.departure_time.startsWith(date));
-    
+    const flights = flightsData.filter(flight => flight.date.startsWith(date));
+
     if (flights.length > 0) {
         displayFlights(flights);
     } else {
@@ -33,8 +33,6 @@ function displayFlights(flights) {
 
     flights.forEach(flight => {
         const priceToShow = userRole === 'agency' ? flight.agency_price : flight.user_price;
-        console.log('Price to Show:', priceToShow);
-
         const flightDuration = calculateFlightDuration(flight.departure_time, flight.arrival_time);
         const flightDirectionLabel = flight.flight_direction === 'return' ? 'Dönüş' : 'Gidiş';
 
@@ -77,6 +75,7 @@ function displayFlights(flights) {
         document.getElementById('flights-container').innerHTML += flightCard;
     });
 }
+
 
 function updatePrice(flightNumber, basePrice, availableSeats) {
     const priceElement = document.getElementById(`price-${flightNumber}-${availableSeats}`);
