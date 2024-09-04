@@ -136,11 +136,11 @@ function handleSearchForm() {
 
 function populateSelectOptions(selectElement, options) {
     selectElement.innerHTML = '<option value="">Seçiniz</option>';
-    options.forEach(optionValue => {
+    const uniqueOptions = [...new Set(options)]; 
+    uniqueOptions.forEach(optionValue => {
         const option = document.createElement('option');
         option.value = optionValue;
         option.textContent = optionValue;
         selectElement.appendChild(option);
     });
 }
-
