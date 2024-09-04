@@ -10,32 +10,8 @@ function postFlightSearch() {
     const searchButton = document.querySelector('.search-button');
 
     searchButton.addEventListener('click', function (e) {
-        e.preventDefault(); 
 
-        const formData = new FormData(form);
-        const formDataObject = {};
-        formData.forEach((value, key) => formDataObject[key] = value);
-
-        fetch('/flight-ticket', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formDataObject)
-        })
-        .then(response => {
-            if (response.redirected) {
-                window.location.href = '/flight-ticket';
-            } else {
-                return response.json(); 
-            }
-        })
-        .then(data => {
-            console.log('Success:', data); 
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+        form.submit();
     });
 }
 
