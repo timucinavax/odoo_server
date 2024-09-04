@@ -10,10 +10,14 @@ function postFlightSearch() {
     const searchButton = document.querySelector('.search-button');
 
     searchButton.addEventListener('click', function (e) {
-
+        e.preventDefault();  
+        
+        form.action = "/search-flight-ticket";
+        form.method = "POST";
         form.submit();
     });
 }
+
 
 function createCookieConsent() {
     const cookieConsent = document.createElement("div");
@@ -47,7 +51,7 @@ function handleSearchForm() {
         oneWayTab.classList.add('active');
         roundTripTab.classList.remove('active');
         returnDateGroup.style.display = 'none';
-        returnDateInput.value = ""; // Dönüş tarihini temizle
+        returnDateInput.value = ""; 
         populateAllFlights(); 
     });
 
@@ -125,13 +129,13 @@ function handleSearchForm() {
 
         const returnFlights = flightsData.filter(flight =>
             flight.flight_direction === 'return' &&
-            flight.departure_airport[1] === selectedArrival && // Ters havalimanı
-            flight.arrival_airport[1] === selectedDeparture && // Ters havalimanı
-            flight.date.split(' ')[0] > selectedDepartureDate  // Gidiş tarihinden sonra olmalı
+            flight.departure_airport[1] === selectedArrival &&
+            flight.arrival_airport[1] === selectedDeparture &&
+            flight.date.split(' ')[0] > selectedDepartureDate 
         );
 
         const availableReturnDates = returnFlights.map(flight => flight.date.split(' ')[0]);
-        populateSelectOptions(returnDateInput, availableReturnDates); // Dönüş tarihlerini listele
+        populateSelectOptions(returnDateInput, availableReturnDates); 
     }
 }
 

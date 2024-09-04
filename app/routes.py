@@ -350,37 +350,31 @@ def add_flight():
 
     return redirect(url_for("admin"))
 
+@app.route("/search-flight-ticket", methods=["POST"])
+def search_ticket():
+    uid, models = odoo_connect()
+    if not uid:
+        return redirect(url_for("index"))
+    
+    search_criteria = request.form if request.method == "POST" else None
+
+    date = search_criteria.get('departure_time')
+    
+    return redirect(url_for("flight_ticket", selected_date=date))
+
+    
 @app.route("/flight-ticket", methods=["POST", "GET"])
-@role_required(["admin" , "user" , "agency"])
 def flight_ticket():
     uid, models = odoo_connect()
     if not uid:
         return redirect(url_for("index"))
-
-    search_criteria = request.form if request.method == "POST" else None
-
-    if search_criteria:
-        from_airport = search_criteria.get('departure_airport')
-        to_airport = search_criteria.get('arrival_airport')
-        departure_date = search_criteria.get('departure_time')
-        return_date = search_criteria.get('arrival_time')
-    else:
-        from_airport = request.args.get("departure_airport")
-        to_airport = request.args.get("arrival_airport")
-        departure_date = request.args.get("departure_time")
-        return_date = request.args.get("arrival_time")
+    
+    selected_date = request.args.get("selected_date")
 
     domain = []
-    if from_airport:
-        domain.append(("departure_airport", "=", from_airport))
-    if to_airport:
-        domain.append(("arrival_airport", "=", to_airport))
-    if departure_date:
-        domain.append(("departure_time", ">=", departure_date))
-        domain.append(("departure_time", "<=", departure_date))
-    if return_date:
-        domain.append(("departure_time", ">=", return_date))
-        domain.append(("departure_time", "<=", return_date))
+    if selected_date:
+        domain.append(("departure_time", ">=", selected_date))
+        domain.append(("departure_time", "<=", selected_date))
 
     flights = models.execute_kw(
         current_app.config["ODOO_DB"],
@@ -414,7 +408,6 @@ def flight_ticket():
         date_flight_map[flight_date].append(flight)
 
     date_prices = {}
-
     for date, flights in date_flight_map.items():
         user_price = min(flight["user_price"] for flight in flights)
         agency_price = min(flight["agency_price"] for flight in flights)
@@ -429,7 +422,7 @@ def flight_ticket():
         dates=list(date_prices.keys()),
         date_prices=date_prices,
         flights=flights,
-        selected_date=departure_date,
+        selected_date=selected_date,
         logged_in_user=session.get("username"),
         logged_in_user_role=session.get("role"),
         current_page="flight-ticket",
