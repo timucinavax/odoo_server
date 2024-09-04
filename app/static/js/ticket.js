@@ -217,18 +217,6 @@ function closeModal() {
     document.getElementById('confirmationModal').style.display = 'none';
 }
 
-function selectedDate() {
-    const selectedDate = "{{ selected_date }}"; 
-    const dateBoxes = document.querySelectorAll('.date-box');
-
-    dateBoxes.forEach(box => {
-        if (box.getAttribute('data-date') === selectedDate) {
-            box.classList.add('active');
-            showFlights(selectedDate);
-        }
-    });
-}
-
 document.addEventListener("DOMContentLoaded", function () {
     console.log("Selected Date:", selectedDate);
 
