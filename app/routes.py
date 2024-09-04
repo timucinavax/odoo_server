@@ -270,9 +270,7 @@ def admin():
         airports=airports,
         current_page="admin",
     )
-
-
-
+    
 @app.route("/add_flight", methods=["POST"])
 @role_required(["admin"])
 def add_flight():
