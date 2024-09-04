@@ -41,14 +41,6 @@ function postFlightSearch() {
     });
 }
 
-function searchBox() {
-    const logger = window.logger; 
-
-    if (logger) { 
-        document.getElementById('search-box-container').style.display = 'block'; 
-    }
-}
-
 function createCookieConsent() {
     const cookieConsent = document.createElement("div");
     cookieConsent.className = "cookie-consent";
