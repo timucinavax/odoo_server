@@ -476,6 +476,7 @@ def flight_admin():
         [[]],
         {
             "fields": [
+                "flight_direction",
                 "flight_number",
                 "svc_type",
                 "departure_airport",
