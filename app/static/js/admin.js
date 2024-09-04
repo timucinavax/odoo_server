@@ -1,26 +1,27 @@
 document.addEventListener('DOMContentLoaded', function() {
     showSection('all-flights');
 
-    const currentDate = new Date().setHours(0, 0, 0, 0);
-    const activeFlightsBody = document.getElementById('active-flights-body');
+    const currentDate = new Date(); 
 
     fetch('/flight_admin')
         .then(response => response.json())
         .then(flights => {
+            console.log(flights); 
+
             flights.forEach(flight => {
-                const flightDate = new Date(flight.date).setHours(0, 0, 0, 0);
+                const flightDate = new Date(flight.departure_time);
 
                 if (flightDate >= currentDate) {
                     const row = document.createElement('tr');
                     row.innerHTML = `
                         <td>${flight.flight_number}</td>
                         <td>${flight.svc_type}</td>
-                        <td>${flight.departure_airport}</td>
-                        <td>${flight.arrival_airport}</td>
+                        <td>${flight.departure_airport[1]}</td>
+                        <td>${flight.arrival_airport[1]}</td>
                         <td>${flight.departure_time}</td>
                         <td>${flight.arrival_time}</td>
                     `;
-                    activeFlightsBody.appendChild(row);
+                    document.getElementById('active-flights-body').appendChild(row);
                 }
             });
         })
