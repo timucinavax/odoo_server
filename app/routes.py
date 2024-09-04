@@ -536,7 +536,7 @@ def search_flights():
         [domain],
         {
             "fields": [
-                "flight_id", 
+                "id", 
                 "flight_number",
                 "departure_time",
                 "arrival_time",
