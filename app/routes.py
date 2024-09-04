@@ -350,6 +350,8 @@ def add_flight():
 
     return redirect(url_for("admin"))
 
+import logging
+
 @app.route("/flight-ticket", methods=["POST", "GET"])
 @role_required(["admin", "user", "agency"])
 def flight_ticket():
@@ -360,7 +362,7 @@ def flight_ticket():
     search_criteria = request.form if request.method == "POST" else None
 
     # Gelen verileri loglayalım
-    print("Search Criteria:", search_criteria)
+    logging.info(f"Search Criteria: {search_criteria}")
     
     from_airport = search_criteria.get('departure_airport') if search_criteria else request.args.get("departure_airport")
     to_airport = search_criteria.get('arrival_airport') if search_criteria else request.args.get("arrival_airport")
@@ -368,10 +370,10 @@ def flight_ticket():
     return_date = search_criteria.get('arrival_time') if search_criteria else request.args.get("arrival_time")
 
     # Değişkenleri loglayalım
-    print("From Airport:", from_airport)
-    print("To Airport:", to_airport)
-    print("Departure Date:", departure_date)
-    print("Return Date:", return_date)
+    logging.info(f"From Airport: {from_airport}")
+    logging.info(f"To Airport: {to_airport}")
+    logging.info(f"Departure Date: {departure_date}")
+    logging.info(f"Return Date: {return_date}")
 
     domain = []
     if from_airport:
@@ -410,7 +412,7 @@ def flight_ticket():
     )
 
     # Flight verilerini loglayalım
-    print("Flights:", flights)
+    logging.info(f"Flights: {flights}")
 
     date_flight_map = {}
     for flight in flights:
@@ -430,8 +432,8 @@ def flight_ticket():
             date_prices[date] = user_price
 
     # Render edilen şablona gönderilen değişkenleri loglayalım
-    print("Selected Date:", departure_date)
-    print("Date Prices:", date_prices)
+    logging.info(f"Selected Date: {departure_date}")
+    logging.info(f"Date Prices: {date_prices}")
 
     return render_template(
         "flight-ticket.html",
