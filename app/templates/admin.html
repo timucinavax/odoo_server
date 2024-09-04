@@ -578,7 +578,7 @@ Arama{%endblock %} {% block content %}
                             <label for="return_departure" class="form-label">Kalkış Havalimanı</label>
                             <select class="form-control" id="return_departure" name="return_departure" required>
                                 {% for airport in airports %}
-                                <option value="{{ airport.id }}">{{ airport.name }} - {{ airport.city }}</option>
+                                <option value="{{ airport.id }}">{{ airport.code }} - {{ airport.name }}</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -587,7 +587,7 @@ Arama{%endblock %} {% block content %}
                             <label for="return_arrival" class="form-label">Varış Havalimanı</label>
                             <select class="form-control" id="return_arrival" name="return_arrival" required>
                                 {% for airport in airports %}
-                                <option value="{{ airport.id }}">{{ airport.name }} - {{ airport.city }}</option>
+                                <option value="{{ airport.id }}">{{ airport.code }} - {{ airport.name }}</option>
                                 {% endfor %}
                             </select>
                         </div>
