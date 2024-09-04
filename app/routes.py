@@ -14,6 +14,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from app import app
 from datetime import datetime, timedelta
 import calendar
+import requests
 
 
 @app.template_filter("dayname")
@@ -350,30 +351,19 @@ def add_flight():
 
     return redirect(url_for("admin"))
 
-import logging
-
-@app.route("/flight-ticket", methods=["POST", "GET"])
+@app.route("/search_flights_api", methods=["POST"])
 @role_required(["admin", "user", "agency"])
-def flight_ticket():
+def search_flights_api():
     uid, models = odoo_connect()
     if not uid:
-        return redirect(url_for("index"))
+        return jsonify({"error": "Odoo connection failed"}), 500
 
-    search_criteria = request.form if request.method == "POST" else None
+    search_criteria = request.form
 
-    # Gelen verileri loglayalım
-    logging.info(f"Search Criteria: {search_criteria}")
-    
-    from_airport = search_criteria.get('departure_airport') if search_criteria else request.args.get("departure_airport")
-    to_airport = search_criteria.get('arrival_airport') if search_criteria else request.args.get("arrival_airport")
-    departure_date = search_criteria.get('departure_time') if search_criteria else request.args.get("departure_time")
-    return_date = search_criteria.get('arrival_time') if search_criteria else request.args.get("arrival_time")
-
-    # Değişkenleri loglayalım
-    logging.info(f"From Airport: {from_airport}")
-    logging.info(f"To Airport: {to_airport}")
-    logging.info(f"Departure Date: {departure_date}")
-    logging.info(f"Return Date: {return_date}")
+    from_airport = search_criteria.get('departure_airport')
+    to_airport = search_criteria.get('arrival_airport')
+    departure_date = search_criteria.get('departure_time')
+    return_date = search_criteria.get('arrival_time')
 
     domain = []
     if from_airport:
@@ -411,9 +401,22 @@ def flight_ticket():
         },
     )
 
-    # Flight verilerini loglayalım
-    logging.info(f"Flights: {flights}")
+    return jsonify({"flights": flights})
 
+@app.route("/flight-ticket", methods=["POST", "GET"])
+@role_required(["admin", "user", "agency"])
+def flight_ticket():
+    # Formdan gelen verileri al
+    form_data = request.form if request.method == "POST" else request.args
+
+    response = requests.post(
+        url_for('search_flights_api', _external=True),
+        data=form_data
+    )
+
+    # API cevabını işle
+    flights = response.json().get("flights", [])
+    
     date_flight_map = {}
     for flight in flights:
         flight_date = flight["departure_time"].split(" ")[0]
@@ -431,16 +434,12 @@ def flight_ticket():
         else:
             date_prices[date] = user_price
 
-    # Render edilen şablona gönderilen değişkenleri loglayalım
-    logging.info(f"Selected Date: {departure_date}")
-    logging.info(f"Date Prices: {date_prices}")
-
     return render_template(
         "flight-ticket.html",
         dates=list(date_prices.keys()),
         date_prices=date_prices,
         flights=flights,
-        selected_date=departure_date,
+        selected_date=form_data.get('departure_time'),
         logged_in_user=session.get("username"),
         logged_in_user_role=session.get("role"),
         current_page="flight-ticket",
