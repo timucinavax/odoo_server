@@ -353,8 +353,8 @@ Arama{%endblock %} {% block content %}
               <tr>
                 <td>{{ flight.flight_number }}</td>
                 <td>{{ flight.available_seats }}</td>
-                <td>{{ flight.departure_airport[0].name }} - {{ flight.departure_airport[0].code }}</td>
-                <td>{{ flight.arrival_airport[0].name }} - {{ flight.arrival_airport[0].code }}</td>
+                <td>{{ flight.departure_airport[1] }}</td>
+                <td>{{ flight.arrival_airport[1] }}</td>
                 <td>{{ flight.departure_time }}</td>
                 <td>{{ flight.arrival_time }}</td>
                 <td>
@@ -722,8 +722,8 @@ Arama{%endblock %} {% block content %}
                 <tr>
                     <td>{{ flight.flight_number }}</td>
                     <td>{{ flight.svc_type }}</td>
-                    <td>{{ flight.departure_airport[0].name }} - {{ flight.departure_airport[0].code }}</td>
-                    <td>{{ flight.arrival_airport[0].name }} - {{ flight.arrival_airport[0].code }}</td>
+                    <td>{{ flight.departure_airport[2] }}</td>
+                    <td>{{ flight.arrival_airport[2] }}</td>
                     <td>{{ flight.departure_time }}</td> 
                     <td>{{ flight.arrival_time }}</td> 
                 </tr>
@@ -732,8 +732,8 @@ Arama{%endblock %} {% block content %}
                 <tr>
                     <td>{{ flight.flight_number }}</td>
                     <td>{{ flight.svc_type }}</td>
-                    <td>{{ flight.departure_airport[0].name }} - {{ flight.departure_airport[0].code }}</td>
-                    <td>{{ flight.arrival_airport[0].name }} - {{ flight.arrival_airport[0].code }}</td>
+                    <td>{{ flight.departure_airport[2] }}</td>
+                    <td>{{ flight.arrival_airport[2] }}</td>
                     <td>{{ flight.departure_time }}</td> 
                     <td>{{ flight.arrival_time }}</td> 
                 </tr>
@@ -767,8 +767,8 @@ Arama{%endblock %} {% block content %}
               <tr>
                 <td>{{ flight.flight_number }}</td>
                 <td>{{ flight.available_seats }}</td>
-                <td>{{ flight.departure_airport[0].name }} - {{ flight.departure_airport[0].code }}</td>
-                <td>{{ flight.arrival_airport[0].name }} - {{ flight.arrival_airport[0].code }}</td>
+                <td>{{ flight.departure_airport[1] }}</td>
+                <td>{{ flight.arrival_airport[1] }}</td>
                 <td>
                   <a
                     href="{{ url_for('plane_layout', flight_id=flight.id) }}"
