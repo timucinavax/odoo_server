@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-
     createCookieConsent();
     handleSearchForm();
     postFlightSearch();
@@ -26,7 +25,6 @@ function postFlightSearch() {
         })
         .then(response => {
             if (response.redirected) {
-                
                 window.location.href = '/flight-ticket';
             } else {
                 return response.json(); 
@@ -90,7 +88,7 @@ function handleSearchForm() {
         .then(data => {
             if (data.flights) {
                 flightsData = data.flights;
-                const departureAirports = [...new Set(data.flights.map(flight => `${flight.departure_airport[1]} - ${flight.departure_airport[2]}`))];
+                const departureAirports = [...new Set(data.flights.map(flight => `${flight.departure_airport[1]} - ${flight.departure_airport[0]}`))];
                 populateSelectOptions(fromSelect, departureAirports);
             } else {
                 console.error("Flights data is missing in the response");
@@ -101,20 +99,20 @@ function handleSearchForm() {
         });
 
     fromSelect.addEventListener('change', function () {
-        const selectedDeparture = fromSelect.value.split(' - ')[1];
-        const filteredFlights = flightsData.filter(flight => flight.departure_airport[0] === selectedDeparture);
+        const selectedDepartureCode = fromSelect.value.split(' - ')[1]; // Airport code
+        const filteredFlights = flightsData.filter(flight => flight.departure_airport[0] === selectedDepartureCode);
 
-        const arrivalAirports = [...new Set(filteredFlights.map(flight => `${flight.arrival_airport[1]} - ${flight.arrival_airport[2]}`))];
+        const arrivalAirports = [...new Set(filteredFlights.map(flight => `${flight.arrival_airport[1]} - ${flight.arrival_airport[0]}`))];
         populateSelectOptions(toSelect, arrivalAirports);
     });
 
     toSelect.addEventListener('change', function () {
-        const selectedDeparture = fromSelect.value.split(' - ')[1]; 
-        const selectedArrival = toSelect.value.split(' - ')[1]; 
+        const selectedDepartureCode = fromSelect.value.split(' - ')[1]; // Airport code
+        const selectedArrivalCode = toSelect.value.split(' - ')[1]; // Airport code
 
         const matchingFlights = flightsData.filter(flight =>
-            flight.departure_airport[0] === selectedDeparture &&
-            flight.arrival_airport[0] === selectedArrival
+            flight.departure_airport[0] === selectedDepartureCode &&
+            flight.arrival_airport[0] === selectedArrivalCode
         );
 
         const availableDepartureDates = matchingFlights.map(flight => flight.departure_time.split(' ')[0]);
