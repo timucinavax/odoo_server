@@ -49,8 +49,8 @@ function activateFlights() {
                         <td>🟢</td>
                         <td>${flight.flight_number}</td>
                         <td>${flight.svc_type}</td>
-                        <td>${flight.departure_airport && flight.departure_airport[0] ? flight.departure_airport[0] : 'Bilinmiyor'} - ${flight.departure_airport && flight.departure_airport[1] ? flight.departure_airport[1] : 'Bilinmiyor'}</td>
-                        <td>${flight.arrival_airport && flight.arrival_airport[0] ? flight.arrival_airport[0] : 'Bilinmiyor'} - ${flight.arrival_airport && flight.arrival_airport[1] ? flight.arrival_airport[1] : 'Bilinmiyor'}</td>
+                        <td>${flight.departure_airport && flight.departure_airport[1] ? flight.departure_airport[1] : 'Bilinmiyor'}</td>
+                        <td>${flight.arrival_airport && flight.arrival_airport[1] ? flight.arrival_airport[1] : 'Bilinmiyor'}</td>
                         <td>${flight.departure_time}</td>
                         <td>${flight.arrival_time}</td>
                     `;
