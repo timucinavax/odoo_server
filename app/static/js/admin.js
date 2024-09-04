@@ -35,6 +35,9 @@ function activateFlight() {
                 return;
             }
 
+            const activeFlightsBody = document.getElementById('active-flights-body');
+            activeFlightsBody.innerHTML = ''; // Önceki verileri temizle
+
             flights.forEach(flight => {
                 const flightDate = new Date(flight.departure_time);
 
@@ -48,7 +51,7 @@ function activateFlight() {
                         <td>${flight.departure_time}</td>
                         <td>${flight.arrival_time}</td>
                     `;
-                    document.getElementById('active-flights-body').appendChild(row);
+                    activeFlightsBody.appendChild(row);
                 }
             });
         })
