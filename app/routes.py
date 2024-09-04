@@ -219,7 +219,7 @@ def admin():
         "airport",
         "search_read",
         [[]],
-        {"fields": ["id", "name", "code" ,"city", "country"]}
+        {"fields": ["name", "code" ,"city", "country"]}
     )
 
     flights = models.execute_kw(
