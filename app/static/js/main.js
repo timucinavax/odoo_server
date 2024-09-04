@@ -72,6 +72,7 @@ function handleSearchForm() {
         oneWayTab.classList.add('active');
         roundTripTab.classList.remove('active');
         returnDateGroup.style.display = 'none';
+        returnDateInput.value = ""; // Dönüş tarihini temizle
         populateAllFlights(); 
     });
 
@@ -132,6 +133,8 @@ function handleSearchForm() {
             if (roundTripTab.classList.contains('active')) {
                 departureDateInput.addEventListener('change', function () {
                     const selectedDepartureDate = departureDateInput.value;
+
+                    // Dönüş uçuşlarını filtreleme
                     const returnFlights = flightsData.filter(flight =>
                         flight.departure_airport[1] === selectedArrival &&
                         flight.arrival_airport[1] === selectedDeparture &&
