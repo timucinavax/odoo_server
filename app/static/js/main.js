@@ -143,7 +143,7 @@ function handleSearchForm() {
                     );
 
                     const availableReturnDates = returnFlights.map(flight => flight.date.split(' ')[0]);
-                    populateSelectOptions(returnDateInput, availableReturnDates);
+                    populateSelectOptions(returnDateInput, availableReturnDates); // Dönüş tarihlerini listele
                 });
             }
         });
@@ -151,7 +151,7 @@ function handleSearchForm() {
 }
 
 function populateSelectOptions(selectElement, options) {
-    selectElement.innerHTML = '<option value="">Seçiniz</option>';
+    selectElement.innerHTML = '<option value="">Dönüş Tarihi</option>';
     const uniqueOptions = [...new Set(options)];
     uniqueOptions.forEach(optionValue => {
         const option = document.createElement('option');
