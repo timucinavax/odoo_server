@@ -1,9 +1,12 @@
 from app import app
 from babel.dates import format_datetime
 import logging
+import locale
+from datetime import datetime
 
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 app.jinja_env.filters['format_datetime'] = format_datetime
+locale.setlocale(locale.LC_TIME, 'tr_TR.UTF-8')
 
 logging.basicConfig(filename='flask_app.log', level=logging.INFO)
 
