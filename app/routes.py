@@ -317,6 +317,38 @@ def add_flight():
 
     airplane_type_id = airplane_type[0]["id"]
 
+    # Departure airport bilgilerini çekiyoruz
+    departure_airport = models.execute_kw(
+        current_app.config["ODOO_DB"],
+        uid,
+        current_app.config["ODOO_PASSWORD"],
+        "airport",
+        "read",
+        [[int(departure_id)]],
+        {"fields": ["name", "code"]}
+    )
+
+    # Arrival airport bilgilerini çekiyoruz
+    arrival_airport = models.execute_kw(
+        current_app.config["ODOO_DB"],
+        uid,
+        current_app.config["ODOO_PASSWORD"],
+        "airport",
+        "read",
+        [[int(arrival_id)]],
+        {"fields": ["name", "code"]}
+    )
+
+    if not departure_airport or not arrival_airport:
+        flash("Geçersiz havalimanı bilgisi.")
+        return redirect(url_for("admin"))
+
+    departure_name = departure_airport[0]["name"]
+    departure_code = departure_airport[0]["code"]
+
+    arrival_name = arrival_airport[0]["name"]
+    arrival_code = arrival_airport[0]["code"]
+
     flight_id = models.execute_kw(
         current_app.config["ODOO_DB"],
         uid,
@@ -327,8 +359,8 @@ def add_flight():
             {
                 "flight_number": flight_code,
                 "available_seats": airplane_type[0]["seat_count"],
-                "departure_airport": int(departure_id),
-                "arrival_airport": int(arrival_id),
+                "departure_airport": [int(departure_id), departure_name, departure_code],
+                "arrival_airport": [int(arrival_id), arrival_name, arrival_code],
                 "departure_time": departure_time,
                 "arrival_time": arrival_time,
                 "user_price": user_price,
@@ -341,6 +373,14 @@ def add_flight():
             }
         ],
     )
+
+    if flight_id:
+        flash("Flight added successfully.")
+    else:
+        flash("An error occurred while adding the flight.")
+
+    return redirect(url_for("admin"))
+
 
     if flight_id:
         flash("Flight added successfully.")
