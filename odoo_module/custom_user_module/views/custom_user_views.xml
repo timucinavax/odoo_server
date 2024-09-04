@@ -1,0 +1,14 @@
+<odoo>
+    <record id="view_custom_user_tree" model="ir.ui.view">
+        <field name="name">custom.user.tree</field>
+        <field name="model">custom.user</field>
+        <field name="arch" type="xml">
+            <tree string="Custom User">
+                <field name="username"/>
+                <field name="email"/>
+                <field name="role"/>
+		<field name="password" />
+            </tree>
+        </field>
+    </record>
+</odoo>

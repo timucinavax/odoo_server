@@ -1,0 +1,255 @@
+<odoo>
+    <record id="airport_jfk" model="airport">
+        <field name="name">John F. Kennedy Uluslararası Havalimanı</field>
+        <field name="code">JFK</field>
+        <field name="city">New York</field>
+        <field name="country">Amerika Birleşik Devletleri</field>
+    </record>
+    <record id="airport_lhr" model="airport">
+        <field name="name">Heathrow Havalimanı</field>
+        <field name="code">LHR</field>
+        <field name="city">Londra</field>
+        <field name="country">Birleşik Krallık</field>
+    </record>
+    <record id="airport_cdg" model="airport">
+        <field name="name">Charles de Gaulle Havalimanı</field>
+        <field name="code">CDG</field>
+        <field name="city">Paris</field>
+        <field name="country">Fransa</field>
+    </record>
+    <record id="airport_ams" model="airport">
+        <field name="name">Amsterdam Schiphol Havalimanı</field>
+        <field name="code">AMS</field>
+        <field name="city">Amsterdam</field>
+        <field name="country">Hollanda</field>
+    </record>
+    <record id="airport_fra" model="airport">
+        <field name="name">Frankfurt am Main Havalimanı</field>
+        <field name="code">FRA</field>
+        <field name="city">Frankfurt</field>
+        <field name="country">Almanya</field>
+    </record>
+    <record id="airport_hnd" model="airport">
+        <field name="name">Tokyo Haneda Havalimanı</field>
+        <field name="code">HND</field>
+        <field name="city">Tokyo</field>
+        <field name="country">Japonya</field>
+    </record>
+    <record id="airport_lax" model="airport">
+        <field name="name">Los Angeles Uluslararası Havalimanı</field>
+        <field name="code">LAX</field>
+        <field name="city">Los Angeles</field>
+        <field name="country">Amerika Birleşik Devletleri</field>
+    </record>
+    <record id="airport_sin" model="airport">
+        <field name="name">Singapur Changi Havalimanı</field>
+        <field name="code">SIN</field>
+        <field name="city">Singapur</field>
+        <field name="country">Singapur</field>
+    </record>
+    <record id="airport_hkg" model="airport">
+        <field name="name">Hong Kong Uluslararası Havalimanı</field>
+        <field name="code">HKG</field>
+        <field name="city">Hong Kong</field>
+        <field name="country">Hong Kong</field>
+    </record>
+    <record id="airport_dxb" model="airport">
+        <field name="name">Dubai Uluslararası Havalimanı</field>
+        <field name="code">DXB</field>
+        <field name="city">Dubai</field>
+        <field name="country">Birleşik Arap Emirlikleri</field>
+    </record>
+    <record id="airport_ist" model="airport">
+        <field name="name">İstanbul Havalimanı</field>
+        <field name="code">IST</field>
+        <field name="city">İstanbul</field>
+        <field name="country">Türkiye</field>
+    </record>
+    <record id="airport_saw" model="airport">
+        <field name="name">Sabiha Gökçen Havalimanı</field>
+        <field name="code">SAW</field>
+        <field name="city">İstanbul</field>
+        <field name="country">Türkiye</field>
+    </record>
+    <record id="airport_ank" model="airport">
+        <field name="name">Esenboğa Havalimanı</field>
+        <field name="code">ESB</field>
+        <field name="city">Ankara</field>
+        <field name="country">Türkiye</field>
+    </record>
+    <record id="airport_izmir" model="airport">
+        <field name="name">Adnan Menderes Havalimanı</field>
+        <field name="code">ADB</field>
+        <field name="city">İzmir</field>
+        <field name="country">Türkiye</field>
+    </record>
+    <record id="airport_antalya" model="airport">
+        <field name="name">Antalya Havalimanı</field>
+        <field name="code">AYT</field>
+        <field name="city">Antalya</field>
+        <field name="country">Türkiye</field>
+    </record>
+    <record id="airport_adana" model="airport">
+        <field name="name">Şakirpaşa Havalimanı</field>
+        <field name="code">ADA</field>
+        <field name="city">Adana</field>
+        <field name="country">Türkiye</field>
+    </record>
+    <record id="airport_trabzon" model="airport">
+        <field name="name">Trabzon Havalimanı</field>
+        <field name="code">TZX</field>
+        <field name="city">Trabzon</field>
+        <field name="country">Türkiye</field>
+    </record>
+    <record id="airport_bodrum" model="airport">
+        <field name="name">Milas-Bodrum Havalimanı</field>
+        <field name="code">BJV</field>
+        <field name="city">Bodrum</field>
+        <field name="country">Türkiye</field>
+    </record>
+    <record id="airport_dalaman" model="airport">
+        <field name="name">Dalaman Havalimanı</field>
+        <field name="code">DLM</field>
+        <field name="city">Dalaman</field>
+        <field name="country">Türkiye</field>
+    </record>
+    <record id="airport_doh" model="airport">
+        <field name="name">Hamad Uluslararası Havalimanı</field>
+        <field name="code">DOH</field>
+        <field name="city">Doha</field>
+        <field name="country">Katar</field>
+    </record>
+    <record id="airport_muc" model="airport">
+        <field name="name">Münih Franz Josef Strauss Havalimanı</field>
+        <field name="code">MUC</field>
+        <field name="city">Münih</field>
+        <field name="country">Almanya</field>
+    </record>
+    <record id="airport_fco" model="airport">
+        <field name="name">Roma Fiumicino Havalimanı</field>
+        <field name="code">FCO</field>
+        <field name="city">Roma</field>
+        <field name="country">İtalya</field>
+    </record>
+    <record id="airport_zrh" model="airport">
+        <field name="name">Zürih Havalimanı</field>
+        <field name="code">ZRH</field>
+        <field name="city">Zürih</field>
+        <field name="country">İsviçre</field>
+    </record>
+    <record id="airport_bkk" model="airport">
+        <field name="name">Suvarnabhumi Havalimanı</field>
+        <field name="code">BKK</field>
+        <field name="city">Bangkok</field>
+        <field name="country">Tayland</field>
+    </record>
+    <record id="airport_mad" model="airport">
+        <field name="name">Madrid-Barajas Havalimanı</field>
+        <field name="code">MAD</field>
+        <field name="city">Madrid</field>
+        <field name="country">İspanya</field>
+    </record>
+    <record id="airport_vie" model="airport">
+        <field name="name">Viyana Uluslararası Havalimanı</field>
+        <field name="code">VIE</field>
+        <field name="city">Viyana</field>
+        <field name="country">Avusturya</field>
+    </record>
+    <record id="airport_syd" model="airport">
+        <field name="name">Sydney Kingsford Smith Havalimanı</field>
+        <field name="code">SYD</field>
+        <field name="city">Sydney</field>
+        <field name="country">Avustralya</field>
+    </record>
+    <record id="airport_ord" model="airport">
+        <field name="name">O'Hare Uluslararası Havalimanı</field>
+        <field name="code">ORD</field>
+        <field name="city">Chicago</field>
+        <field name="country">Amerika Birleşik Devletleri</field>
+    </record>
+    <record id="airport_gru" model="airport">
+        <field name="name">São Paulo Guarulhos Uluslararası Havalimanı</field>
+        <field name="code">GRU</field>
+        <field name="city">São Paulo</field>
+        <field name="country">Brezilya</field>
+    </record>
+    <record id="airport_gva" model="airport">
+        <field name="name">Cenevre Havalimanı</field>
+        <field name="code">GVA</field>
+        <field name="city">Cenevre</field>
+        <field name="country">İsviçre</field>
+    </record>
+    <record id="airport_cpt" model="airport">
+        <field name="name">Cape Town Uluslararası Havalimanı</field>
+        <field name="code">CPT</field>
+        <field name="city">Cape Town</field>
+        <field name="country">Güney Afrika</field>
+    </record>
+    <record id="airport_cmb" model="airport">
+        <field name="name">Bandaranaike Uluslararası Havalimanı</field>
+        <field name="code">CMB</field>
+        <field name="city">Kolombo</field>
+        <field name="country">Sri Lanka</field>
+    </record>
+    <record id="airport_hkg" model="airport">
+        <field name="name">Hong Kong Uluslararası Havalimanı</field>
+        <field name="code">HKG</field>
+        <field name="city">Hong Kong</field>
+        <field name="country">Çin</field>
+    </record>
+    <record id="airport_bom" model="airport">
+        <field name="name">Chhatrapati Shivaji Maharaj Uluslararası Havalimanı</field>
+        <field name="code">BOM</field>
+        <field name="city">Mumbai</field>
+        <field name="country">Hindistan</field>
+    </record>
+    <record id="airport_yyz" model="airport">
+        <field name="name">Toronto Pearson Uluslararası Havalimanı</field>
+        <field name="code">YYZ</field>
+        <field name="city">Toronto</field>
+        <field name="country">Kanada</field>
+    </record>
+    <record id="airport_sea" model="airport">
+        <field name="name">Seattle-Tacoma Uluslararası Havalimanı</field>
+        <field name="code">SEA</field>
+        <field name="city">Seattle</field>
+        <field name="country">Amerika Birleşik Devletleri</field>
+    </record>
+    <record id="airport_yul" model="airport">
+        <field name="name">Montreal-Trudeau Uluslararası Havalimanı</field>
+        <field name="code">YUL</field>
+        <field name="city">Montreal</field>
+        <field name="country">Kanada</field>
+    </record>
+    <record id="airport_zrh" model="airport">
+        <field name="name">Zürih Havalimanı</field>
+        <field name="code">ZRH</field>
+        <field name="city">Zürih</field>
+        <field name="country">İsviçre</field>
+    </record>
+    <record id="airport_bne" model="airport">
+        <field name="name">Brisbane Havalimanı</field>
+        <field name="code">BNE</field>
+        <field name="city">Brisbane</field>
+        <field name="country">Avustralya</field>
+    </record>
+    <record id="airport_hnd" model="airport">
+        <field name="name">Tokyo Haneda Havalimanı</field>
+        <field name="code">HND</field>
+        <field name="city">Tokyo</field>
+        <field name="country">Japonya</field>
+    </record>
+    <record id="airport_pek" model="airport">
+        <field name="name">Pekin Başkent Uluslararası Havalimanı</field>
+        <field name="code">PEK</field>
+        <field name="city">Pekin</field>
+        <field name="country">Çin</field>
+    </record>
+    <record id="airport_bkk" model="airport">
+        <field name="name">Suvarnabhumi Havalimanı</field>
+        <field name="code">BKK</field>
+        <field name="city">Bangkok</field>
+        <field name="country">Tayland</field>
+    </record>
+</odoo>
+

@@ -33,7 +33,7 @@ function postFlightSearch() {
             }
         })
         .then(data => {
-            console.log('Success:', data); // Gelen JSON veriyi işleyin
+            console.log('Success:', data); 
         })
         .catch(error => {
             console.error('Error:', error);
@@ -41,7 +41,18 @@ function postFlightSearch() {
     });
 }
 
-
+function checkUserLoggedIn() {
+    fetch('/check-login-status')
+        .then(response => response.json())
+        .then(data => {
+            if (data.is_logged_in) {
+                document.getElementById('search-box-container').style.display = 'block';
+            }
+        })
+        .catch(error => {
+            console.error('Error checking login status:', error);
+        });
+}
 
 function createCookieConsent() {
     const cookieConsent = document.createElement("div");

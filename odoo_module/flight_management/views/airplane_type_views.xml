@@ -1,0 +1,17 @@
+<!-- flight_management/views/airplane_type_views.xml -->
+<odoo>
+    <record id="view_airplane_type_form" model="ir.ui.view">
+        <field name="name">airplane.type.form</field>
+        <field name="model">airplane.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="seat_count"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_flight_management,access_flight_management,model_flight_management,base.group_user,1,1,1,1
+access_airplane_type,access_airplane_type,model_airplane_type,base.group_user,1,1,1,1
+access_flight_seat,access_flight_seat,model_flight_seat,base.group_user,1,1,1,1
+access_airport,access_airport,model_airport,base.group_user,1,1,1,1
+

@@ -504,6 +504,11 @@ def flight_admin():
 
     return jsonify(flights)
 
+@app.route('/check-login-status')
+def check_login_status():
+    is_logged_in = 'user_logged_in' in session
+    return jsonify({'is_logged_in': is_logged_in})
+
 
 @app.route("/search_flights", methods=["GET"])
 def search_flights():
@@ -535,7 +540,8 @@ def search_flights():
         [domain],
         {
             "fields": [
-                "flight_id" "flight_number",
+                "flight_id", 
+                "flight_number",
                 "departure_time",
                 "arrival_time",
                 "flight_direction",

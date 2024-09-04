@@ -1,6 +1,6 @@
 # Odoo Sehlen Project
 
-## Start Project 
+## Start Project
 
     python3 run.py
 
@@ -26,7 +26,7 @@
     sudo journalctl -u flask_app.service -f
 
 
-# Vue Formatına Çevrilmiş Halide 
+# Vue Formatına Çevrilmiş Halide
 
 ## Deneme için 
     npm run serve

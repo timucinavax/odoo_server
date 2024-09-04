@@ -1,0 +1,19 @@
+<!-- flight_management/views/seat_views.xml -->
+<odoo>
+    <record id="view_seat_form" model="ir.ui.view">
+        <field name="name">flight.seat.form</field>
+        <field name="model">flight.seat</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="flight_id"/>
+                        <field name="is_occupied"/>
+                        <field name="user_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

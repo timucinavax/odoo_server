@@ -1,0 +1,21 @@
+<odoo>
+    <record id="airplane_type_121" model="airplane.type">
+        <field name="name">TK121</field>
+        <field name="seat_count">30</field>
+    </record>
+
+    <record id="airplane_type_122" model="airplane.type">
+        <field name="name">TK122</field>
+        <field name="seat_count">40</field>
+    </record>
+
+    <record id="airplane_type_123" model="airplane.type">
+        <field name="name">TK123</field>
+        <field name="seat_count">50</field>
+    </record>
+
+    <record id="airplane_type_124" model="airplane.type">
+        <field name="name">TK124</field>
+        <field name="seat_count">70</field>
+    </record>
+</odoo>
