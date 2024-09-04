@@ -219,7 +219,7 @@ def admin():
         "airport",
         "search_read",
         [[]],
-        {"fields": ["id", "name", "city", "country"]}
+        {"fields": ["id", "name", "code" ,"city", "country"]}
     )
 
     flights = models.execute_kw(
@@ -239,6 +239,7 @@ def admin():
                 "departure_airport",
                 "arrival_airport",
                 "departure_time",
+                "arrival_time"
                 "date",
             ]
         },
@@ -288,14 +289,14 @@ def add_flight():
     date_str = request.form.get("date")
 
     departure_time = datetime.strptime(departure_time_str, "%Y-%m-%dT%H:%M").strftime(
-        "%Y-%m-%d %H:%M:%S"
+    "%d %B %Y %H:%M:%S"
     )
     arrival_time = datetime.strptime(arrival_time_str, "%Y-%m-%dT%H:%M").strftime(
-        "%Y-%m-%d %H:%M:%S"
+        "%d %B %Y %H:%M:%S"
     )
     date = datetime.strptime(date_str, "%Y-%m-%d").strftime(
-        "%Y-%m-%d %H:%M:%S"
-    ) 
+        "%d %B %Y"
+    )
 
     uid, models = odoo_connect()
     if not uid:
