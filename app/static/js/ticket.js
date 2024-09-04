@@ -204,9 +204,5 @@ function closeModal() {
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    if (selectedDate) {
-        showFlights(selectedDate);
-    }
-
     document.getElementById('confirm-purchase-button').addEventListener('click', proceedToPassengerInfo);
 });
