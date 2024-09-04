@@ -504,12 +504,6 @@ def flight_admin():
 
     return jsonify(flights)
 
-@app.route('/check-login-status')
-def check_login_status():
-    is_logged_in = 'user_logged_in' in session
-    return jsonify({'is_logged_in': is_logged_in})
-
-
 @app.route("/search_flights", methods=["GET"])
 def search_flights():
     uid, models = odoo_connect()

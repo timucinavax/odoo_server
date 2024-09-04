@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     createCookieConsent();
     handleSearchForm();
     postFlightSearch();
-
+    searchBox();
 });
 
 function postFlightSearch() {
@@ -41,17 +41,12 @@ function postFlightSearch() {
     });
 }
 
-function checkUserLoggedIn() {
-    fetch('/check-login-status')
-        .then(response => response.json())
-        .then(data => {
-            if (data.is_logged_in) {
-                document.getElementById('search-box-container').style.display = 'block';
-            }
-        })
-        .catch(error => {
-            console.error('Error checking login status:', error);
-        });
+function searchBox() {
+    const logger = window.logger; 
+
+    if (logger) { 
+        document.getElementById('search-box-container').style.display = 'block'; 
+    }
 }
 
 function createCookieConsent() {
