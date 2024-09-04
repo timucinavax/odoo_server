@@ -15,7 +15,6 @@ from app import app
 from datetime import datetime, timedelta
 import calendar
 
-
 @app.template_filter("dayname")
 def dayname_filter(date_str):
     date_obj = datetime.strptime(date_str, "%Y-%m-%d")

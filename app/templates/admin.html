@@ -706,32 +706,39 @@ Arama{%endblock %} {% block content %}
           <div class="card-header">Uçuş Listesi</div>
           <table class="table table-bordered">
             <thead>
-              <tr>
-                <th>Uçuş Numarası</th>
-                <th>Hizmet Türü</th>
-                <th>Kalkış</th>
-                <th>Varış</th>
-                <th>Kalkış Saati</th>
-              </tr>
+                <tr>
+                    <th>Uçuş Numarası</th>
+                    <th>Hizmet Türü</th>
+                    <th>Kalkış</th>
+                    <th>Varış</th>
+                    <th>Kalkış Saati</th>
+                    <th>Varış Saati</th> 
+                </tr>
             </thead>
             <tbody>
-              {% for flight in outbound_flights %}
-              <tr>
-                <td>{{ flight.flight_number }}</td>
-                <td>{{ flight.svc_type }}</td>
-                <td>{{ flight.departure_airport[1] }}</td>
-                <td>{{ flight.arrival_airport[1] }}</td>
-              </tr>
-              {% endfor %} {% for flight in return_flights %}
-              <tr>
-                <td>{{ flight.flight_number }}</td>
-                <td>{{ flight.svc_type }}</td>
-                <td>{{ flight.departure_airport[1] }}</td>
-                <td>{{ flight.arrival_airport[1] }}</td>
-              </tr>
-              {% endfor %}
+                {% for flight in outbound_flights %}
+                <tr>
+                    <td>{{ flight.flight_number }}</td>
+                    <td>{{ flight.svc_type }}</td>
+                    <td>{{ flight.departure_airport[1] }}</td>
+                    <td>{{ flight.arrival_airport[1] }}</td>
+                    <td>{{ flight.departure_time }}</td> 
+                    <td>{{ flight.arrival_time }}</td> 
+                </tr>
+                {% endfor %} 
+                {% for flight in return_flights %}
+                <tr>
+                    <td>{{ flight.flight_number }}</td>
+                    <td>{{ flight.svc_type }}</td>
+                    <td>{{ flight.departure_airport[1] }}</td>
+                    <td>{{ flight.arrival_airport[1] }}</td>
+                    <td>{{ flight.departure_time }}</td> 
+                    <td>{{ flight.arrival_time }}</td> 
+                </tr>
+                {% endfor %}
             </tbody>
-          </table>
+        </table>
+        
         </div>
       </div>
     </div>
