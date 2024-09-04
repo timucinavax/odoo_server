@@ -1,18 +1,30 @@
 let maxSeats = 0;
 let selectedSeats = 0;
 
+function highlightSelectedDate(date) {
+    const dateBoxes = document.querySelectorAll('.date-box');
+    dateBoxes.forEach(box => {
+        if (box.getAttribute('data-date') === date) {
+            box.classList.add('active'); 
+        } else {
+            box.classList.remove('active');
+        }
+    });
+}
+
 function showFlights(date) {
-    document.querySelectorAll('.date-box').forEach(box => box.classList.remove('active'));
-    const selectedBox = document.querySelector(`.date-box[data-date="${date}"]`);
-    if (selectedBox) {
-        selectedBox.classList.add('active');
-    }
+    highlightSelectedDate(date); // Tarihi seçili göster
 
     const flightsContainer = document.getElementById('flights-container');
     flightsContainer.innerHTML = '';
 
-    const flights = flightsData.filter(flight => flight.departure_time.startsWith(date));
-    flights.length > 0 ? displayFlights(flights) : showNoFlightsMessage();
+    const flights = flightsData.filter(flight => flight.departure_time.startsWith(date) && flight.flight_direction === 'outbound');
+    
+    if (flights.length > 0) {
+        displayFlights(flights);
+    } else {
+        showNoFlightsMessage();
+    }
 }
 
 function displayFlights(flights) {
@@ -222,6 +234,7 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("Selected Date:", selectedDate);
 
     if (selectedDate) {
+        highlightSelectedDate(selectedDate);
         showFlights(selectedDate);
     }
 

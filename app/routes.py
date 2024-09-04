@@ -351,7 +351,7 @@ def add_flight():
     return redirect(url_for("admin"))
 
 @app.route("/flight-ticket", methods=["POST", "GET"])
-@role_required(["admin" , "user" , "agency"])
+@role_required(["admin", "user", "agency"])
 def flight_ticket():
     uid, models = odoo_connect()
     if not uid:
@@ -359,16 +359,10 @@ def flight_ticket():
 
     search_criteria = request.get_json() if request.method == "POST" else None
 
-    if search_criteria:
-        from_airport = search_criteria.get('departure_airport')
-        to_airport = search_criteria.get('arrival_airport')
-        departure_date = search_criteria.get('departure_time')
-        return_date = search_criteria.get('arrival_time')
-    else:
-        from_airport = request.args.get("departure_airport")
-        to_airport = request.args.get("arrival_airport")
-        departure_date = request.args.get("departure_time")
-        return_date = request.args.get("arrival_time")
+    from_airport = search_criteria.get('departure_airport') if search_criteria else request.args.get("departure_airport")
+    to_airport = search_criteria.get('arrival_airport') if search_criteria else request.args.get("arrival_airport")
+    departure_date = search_criteria.get('departure_time') if search_criteria else request.args.get("departure_time")
+    return_date = search_criteria.get('arrival_time') if search_criteria else request.args.get("arrival_time")
 
     domain = []
     if from_airport:
@@ -414,7 +408,6 @@ def flight_ticket():
         date_flight_map[flight_date].append(flight)
 
     date_prices = {}
-
     for date, flights in date_flight_map.items():
         user_price = min(flight["user_price"] for flight in flights)
         agency_price = min(flight["agency_price"] for flight in flights)
@@ -434,7 +427,7 @@ def flight_ticket():
         logged_in_user_role=session.get("role"),
         current_page="flight-ticket",
     )
-
+    
 @app.route("/plane_layout/<int:flight_id>", methods=["GET"])
 def plane_layout(flight_id):
 
