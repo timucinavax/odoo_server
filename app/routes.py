@@ -373,8 +373,8 @@ def flight_ticket():
 
     domain = []
     if selected_date:
-        domain.append(("time", ">=", selected_date))
-        domain.append(("time", "<=", selected_date))
+        domain.append(("date", ">=", selected_date))
+        domain.append(("date", "<=", selected_date))
 
     flights = models.execute_kw(
         current_app.config["ODOO_DB"],
