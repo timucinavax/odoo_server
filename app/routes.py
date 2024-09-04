@@ -511,7 +511,8 @@ def search_flights():
     from_airport = request.args.get("departure_airport")
     to_airport = request.args.get("arrival_airport")
     departure_date = request.args.get("date")
-    return_date = request.args.get("date")
+    return_date = request.args.get("return_date")
+    flight_direction = request.args.get("flight_direction")
 
     domain = []
     if from_airport:
@@ -524,6 +525,8 @@ def search_flights():
     if return_date:
         domain.append(("date", ">=", return_date))
         domain.append(("date", "<=", return_date))
+    if flight_direction:
+        domain.append(("flight_direction", "=", flight_direction))
 
     flights = models.execute_kw(
         current_app.config["ODOO_DB"],
@@ -534,7 +537,7 @@ def search_flights():
         [domain],
         {
             "fields": [
-                "flight_direction"
+                "flight_direction",
                 "departure_airport",
                 "arrival_airport",
                 "date",
@@ -543,6 +546,7 @@ def search_flights():
     )
 
     return jsonify(flights=flights)
+
 
 @app.route("/logout")
 def logout():
