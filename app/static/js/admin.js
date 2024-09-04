@@ -36,7 +36,7 @@ function activateFlight() {
             }
 
             const activeFlightsBody = document.getElementById('active-flights-body');
-            activeFlightsBody.innerHTML = ''; // Önceki verileri temizle
+            activeFlightsBody.innerHTML = ''; 
 
             flights.forEach(flight => {
                 const flightDate = new Date(flight.departure_time);
