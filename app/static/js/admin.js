@@ -46,7 +46,7 @@ function activateFlights() {
                 if (flightDate >= currentDate) {
                     const row = document.createElement('tr');
                     row.innerHTML = `
-                        <td><i class="fas fa-check-circle text-success"></i></td>
+                        <td>🟢</td>
                         <td>${flight.flight_number}</td>
                         <td>${flight.svc_type}</td>
                         <td>${flight.departure_airport && flight.departure_airport[1] ? flight.departure_airport[1] : 'Bilinmiyor'}</td>
