@@ -72,14 +72,14 @@ function handleSearchForm() {
         oneWayTab.classList.add('active');
         roundTripTab.classList.remove('active');
         returnDateGroup.style.display = 'none';
-        populateAllFlights(); // Tek Yön seçiliyken tüm uçuşları getir
+        populateAllFlights(); 
     });
 
     roundTripTab.addEventListener('click', function () {
         roundTripTab.classList.add('active');
         oneWayTab.classList.remove('active');
         returnDateGroup.style.display = 'block';
-        populateAllFlights(); // Gidiş-Dönüş seçiliyken de tüm uçuşları getir
+        populateOutboundFlights(); 
     });
 
     returnDateGroup.style.display = 'none';
@@ -91,7 +91,7 @@ function handleSearchForm() {
         .then(data => {
             if (data.flights) {
                 flightsData = data.flights;
-                populateAllFlights(); // Başlangıçta tüm uçuşları getir
+                populateAllFlights();
             } else {
                 console.error("Flights data is missing in the response");
             }
@@ -102,6 +102,12 @@ function handleSearchForm() {
 
     function populateAllFlights() {
         const departureAirports = flightsData.map(flight => flight.departure_airport[1]);
+        populateSelectOptions(fromSelect, departureAirports);
+    }
+
+    function populateOutboundFlights() {
+        const outboundFlights = flightsData.filter(flight => flight.flight_direction === 'outbound');
+        const departureAirports = outboundFlights.map(flight => flight.departure_airport[1]);
         populateSelectOptions(fromSelect, departureAirports);
     }
 
@@ -129,7 +135,8 @@ function handleSearchForm() {
                     const returnFlights = flightsData.filter(flight =>
                         flight.departure_airport[1] === selectedArrival &&
                         flight.arrival_airport[1] === selectedDeparture &&
-                        flight.date.split(' ')[0] > selectedDepartureDate
+                        flight.date.split(' ')[0] > selectedDepartureDate &&
+                        flight.flight_direction === 'return'
                     );
 
                     const availableReturnDates = returnFlights.map(flight => flight.date.split(' ')[0]);
@@ -142,7 +149,7 @@ function handleSearchForm() {
 
 function populateSelectOptions(selectElement, options) {
     selectElement.innerHTML = '<option value="">Seçiniz</option>';
-    const uniqueOptions = [...new Set(options)]; // Benzersiz değerleri al
+    const uniqueOptions = [...new Set(options)];
     uniqueOptions.forEach(optionValue => {
         const option = document.createElement('option');
         option.value = optionValue;

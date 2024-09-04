@@ -534,6 +534,7 @@ def search_flights():
         [domain],
         {
             "fields": [
+                "flight_direction"
                 "departure_airport",
                 "arrival_airport",
                 "date",
