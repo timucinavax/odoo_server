@@ -206,8 +206,6 @@ function proceedToPayment() {
     activateStep(3);
 }
 
-document.getElementById('confirm-purchase-button').addEventListener('click', proceedToPassengerInfo);
-
 function proceedToPassengerInfo() {
     activateStep(1);
     document.getElementById('confirmationModal').style.display = 'none';
