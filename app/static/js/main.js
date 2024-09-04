@@ -79,7 +79,7 @@ function handleSearchForm() {
         roundTripTab.classList.add('active');
         oneWayTab.classList.remove('active');
         returnDateGroup.style.display = 'block';
-        populateOutboundFlights(); // Gidiş-Dönüş seçiliyken sadece gidiş uçuşlarını getir
+        populateAllFlights(); // Gidiş-Dönüş seçiliyken de tüm uçuşları getir
     });
 
     returnDateGroup.style.display = 'none';
@@ -102,12 +102,6 @@ function handleSearchForm() {
 
     function populateAllFlights() {
         const departureAirports = flightsData.map(flight => flight.departure_airport[1]);
-        populateSelectOptions(fromSelect, departureAirports);
-    }
-
-    function populateOutboundFlights() {
-        const outboundFlights = flightsData.filter(flight => flight.flight_direction === 'outbound');
-        const departureAirports = outboundFlights.map(flight => flight.departure_airport[1]);
         populateSelectOptions(fromSelect, departureAirports);
     }
 
