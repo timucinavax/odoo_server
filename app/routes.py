@@ -14,7 +14,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from app import app
 from datetime import datetime, timedelta
 import calendar
-import requests
 
 
 @app.template_filter("dayname")
@@ -351,19 +350,25 @@ def add_flight():
 
     return redirect(url_for("admin"))
 
-@app.route("/search_flights_api", methods=["POST"])
-@role_required(["admin", "user", "agency"])
-def search_flights_api():
+@app.route("/flight-ticket", methods=["POST", "GET"])
+@role_required(["admin" , "user" , "agency"])
+def flight_ticket():
     uid, models = odoo_connect()
     if not uid:
-        return jsonify({"error": "Odoo connection failed"}), 500
+        return redirect(url_for("index"))
 
-    search_criteria = request.form
+    search_criteria = request.form if request.method == "POST" else None
 
-    from_airport = search_criteria.get('departure_airport')
-    to_airport = search_criteria.get('arrival_airport')
-    departure_date = search_criteria.get('departure_time')
-    return_date = search_criteria.get('arrival_time')
+    if search_criteria:
+        from_airport = search_criteria.get('departure_airport')
+        to_airport = search_criteria.get('arrival_airport')
+        departure_date = search_criteria.get('departure_time')
+        return_date = search_criteria.get('arrival_time')
+    else:
+        from_airport = request.args.get("departure_airport")
+        to_airport = request.args.get("arrival_airport")
+        departure_date = request.args.get("departure_time")
+        return_date = request.args.get("arrival_time")
 
     domain = []
     if from_airport:
@@ -401,22 +406,6 @@ def search_flights_api():
         },
     )
 
-    return jsonify({"flights": flights})
-
-@app.route("/flight-ticket", methods=["POST", "GET"])
-@role_required(["admin", "user", "agency"])
-def flight_ticket():
-    # Formdan gelen verileri al
-    form_data = request.form if request.method == "POST" else request.args
-
-    response = requests.post(
-        url_for('search_flights_api', _external=True),
-        data=form_data
-    )
-
-    # API cevabını işle
-    flights = response.json().get("flights", [])
-    
     date_flight_map = {}
     for flight in flights:
         flight_date = flight["departure_time"].split(" ")[0]
@@ -425,6 +414,7 @@ def flight_ticket():
         date_flight_map[flight_date].append(flight)
 
     date_prices = {}
+
     for date, flights in date_flight_map.items():
         user_price = min(flight["user_price"] for flight in flights)
         agency_price = min(flight["agency_price"] for flight in flights)
@@ -439,7 +429,7 @@ def flight_ticket():
         dates=list(date_prices.keys()),
         date_prices=date_prices,
         flights=flights,
-        selected_date=form_data.get('departure_time'),
+        selected_date=departure_date,
         logged_in_user=session.get("username"),
         logged_in_user_role=session.get("role"),
         current_page="flight-ticket",
