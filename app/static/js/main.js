@@ -60,86 +60,80 @@ function createCookieConsent() {
 }
 
 function handleSearchForm() {
-    const oneWayTab = document.getElementById('one-way-tab');
-    const roundTripTab = document.getElementById('round-trip-tab');
-    const returnDateGroup = document.getElementById('return-date-group');
-    const fromSelect = document.getElementById('departure_airport');
-    const toSelect = document.getElementById('arrival_airport');
-    const departureDateInput = document.getElementById('departure_time');
-    const returnDateInput = document.getElementById('return_time');
+    const departureAirportSelect = document.getElementById("departure_airport");
+    const arrivalAirportSelect = document.getElementById("arrival_airport");
+    const departureDateSelect = document.getElementById("departure_date");
+    const returnDateSelect = document.getElementById("return_date");
+    const tripTypeSelect = document.getElementById("trip_type");
 
-    let flightsData = [];
+    departureAirportSelect.addEventListener("change", function () {
+        const departureAirport = this.value;
 
-    oneWayTab.addEventListener('click', function () {
-        oneWayTab.classList.add('active');
-        roundTripTab.classList.remove('active');
-        returnDateGroup.style.display = 'none';
-    });
-
-    roundTripTab.addEventListener('click', function () {
-        roundTripTab.classList.add('active');
-        oneWayTab.classList.remove('active');
-        returnDateGroup.style.display = 'block';
-    });
-
-    fetch('/search_flights')
-        .then(response => response.json())
-        .then(data => {
-            if (data.flights) {
-                flightsData = data.flights;
-                const departureAirports = [...new Set(data.flights.map(flight => `${flight.departure_airport[1]} - ${flight.departure_airport[0]}`))];
-                populateSelectOptions(fromSelect, departureAirports);
-            } else {
-                console.error("Flights data is missing in the response");
-            }
-        })
-        .catch(error => {
-            console.error('Error fetching flights:', error);
-        });
-
-    fromSelect.addEventListener('change', function () {
-        const selectedDepartureCode = fromSelect.value.split(' - ')[1];
-        const filteredFlights = flightsData.filter(flight => flight.departure_airport[0] === selectedDepartureCode);
-
-        const arrivalAirports = [...new Set(filteredFlights.map(flight => `${flight.arrival_airport[1]} - ${flight.arrival_airport[0]}`))];
-        populateSelectOptions(toSelect, arrivalAirports);
-
-        // Clear previous selections
-        departureDateInput.innerHTML = '<option value="">Gidiş Tarihi</option>';
-        returnDateInput.innerHTML = '<option value="">Dönüş Tarihi</option>';
-    });
-
-    toSelect.addEventListener('change', function () {
-        const selectedDepartureCode = fromSelect.value.split(' - ')[1];
-        const selectedArrivalCode = toSelect.value.split(' - ')[1];
-
-        const matchingFlights = flightsData.filter(flight =>
-            flight.departure_airport[0] === selectedDepartureCode &&
-            flight.arrival_airport[0] === selectedArrivalCode
-        );
-
-        const availableDepartureDates = [...new Set(matchingFlights.map(flight => flight.date))];
-        populateSelectOptions(departureDateInput, availableDepartureDates);
-
-        // If round-trip is selected, handle return date
-        if (roundTripTab.classList.contains('active')) {
-            departureDateInput.addEventListener('change', function () {
-                const selectedDepartureDate = departureDateInput.value;
-                const returnFlights = matchingFlights.filter(flight => flight.date > selectedDepartureDate);
-
-                const availableReturnDates = [...new Set(returnFlights.map(flight => flight.date))];
-                populateSelectOptions(returnDateInput, availableReturnDates);
-            });
+        if (departureAirport) {
+            fetch(`/search_flights?departure_airport=${departureAirport}`)
+                .then((response) => response.json())
+                .then((data) => {
+                    arrivalAirportSelect.innerHTML = ""; // Önceki seçenekleri temizle
+                    const uniqueAirports = [...new Set(data.flights.map(flight => flight.arrival_airport))];
+                    uniqueAirports.forEach((airport) => {
+                        const option = document.createElement("option");
+                        option.value = airport;
+                        option.textContent = airport;
+                        arrivalAirportSelect.appendChild(option);
+                    });
+                    arrivalAirportSelect.disabled = false;
+                });
         }
     });
-}
 
-function populateSelectOptions(selectElement, options) {
-    selectElement.innerHTML = '<option value="">Seçiniz</option>';
-    options.forEach(optionValue => {
-        const option = document.createElement('option');
-        option.value = optionValue;
-        option.textContent = optionValue;
-        selectElement.appendChild(option);
+    arrivalAirportSelect.addEventListener("change", function () {
+        const departureAirport = departureAirportSelect.value;
+        const arrivalAirport = this.value;
+
+        if (departureAirport && arrivalAirport) {
+            fetch(`/search_flights?departure_airport=${departureAirport}&arrival_airport=${arrivalAirport}`)
+                .then((response) => response.json())
+                .then((data) => {
+                    departureDateSelect.innerHTML = ""; 
+                    const uniqueDates = [...new Set(data.flights.map(flight => flight.date))];
+                    uniqueDates.forEach((date) => {
+                        const option = document.createElement("option");
+                        option.value = date;
+                        option.textContent = date;
+                        departureDateSelect.appendChild(option);
+                    });
+                    departureDateSelect.disabled = false;
+                });
+        }
+    });
+
+    tripTypeSelect.addEventListener("change", function () {
+        if (this.value === "round_trip") {
+            returnDateSelect.disabled = false;
+            returnDateSelect.addEventListener("change", function () {
+                const departureAirport = departureAirportSelect.value;
+                const arrivalAirport = arrivalAirportSelect.value;
+                const departureDate = departureDateSelect.value;
+
+                if (departureAirport && arrivalAirport && departureDate) {
+                    fetch(`/search_flights?departure_airport=${arrivalAirport}&arrival_airport=${departureAirport}&date=${departureDate}`)
+                        .then((response) => response.json())
+                        .then((data) => {
+                            returnDateSelect.innerHTML = ""; 
+                            const uniqueDates = [...new Set(data.flights.map(flight => flight.date))];
+                            uniqueDates.forEach((date) => {
+                                const option = document.createElement("option");
+                                option.value = date;
+                                option.textContent = date;
+                                returnDateSelect.appendChild(option);
+                            });
+                            returnDateSelect.disabled = false;
+                        });
+                }
+            });
+        } else {
+            returnDateSelect.disabled = true;
+            returnDateSelect.innerHTML = ""; // Dönüş tarihi seçeneklerini temizle
+        }
     });
 }
