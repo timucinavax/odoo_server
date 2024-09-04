@@ -510,8 +510,8 @@ def search_flights():
 
     from_airport = request.args.get("departure_airport")
     to_airport = request.args.get("arrival_airport")
-    departure_date = request.args.get("departure_time")
-    return_date = request.args.get("arrival_time")
+    departure_date = request.args.get("date")
+    return_date = request.args.get("date")
 
     domain = []
     if from_airport:
@@ -519,11 +519,11 @@ def search_flights():
     if to_airport:
         domain.append(("arrival_airport", "=", to_airport))
     if departure_date:
-        domain.append(("departure_time", ">=", departure_date))
-        domain.append(("departure_time", "<=", departure_date))
+        domain.append(("date", ">=", departure_date))
+        domain.append(("date", "<=", departure_date))
     if return_date:
-        domain.append(("departure_time", ">=", return_date))
-        domain.append(("departure_time", "<=", return_date))
+        domain.append(("date", ">=", return_date))
+        domain.append(("date", "<=", return_date))
 
     flights = models.execute_kw(
         current_app.config["ODOO_DB"],
@@ -534,23 +534,12 @@ def search_flights():
         [domain],
         {
             "fields": [
-                "id", 
-                "flight_number",
-                "departure_time",
-                "arrival_time",
-                "flight_direction",
                 "departure_airport",
                 "arrival_airport",
                 "date",
-                "user_price",
-                "agency_price",
             ]
         },
     )
-
-    for flight in flights:
-        flight['departure_airport'] = flight['departure_airport'] if isinstance(flight['departure_airport'], list) else ["", flight['departure_airport']]
-        flight['arrival_airport'] = flight['arrival_airport'] if isinstance(flight['arrival_airport'], list) else ["", flight['arrival_airport']]
 
     return jsonify(flights=flights)
 

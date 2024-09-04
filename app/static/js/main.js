@@ -68,7 +68,6 @@ function handleSearchForm() {
     const departureDateInput = document.getElementById('departure_time');
     const returnDateInput = document.getElementById('return_time');
 
-    // Tek Yön ve Gidiş-Dönüş butonları için event handler
     oneWayTab.addEventListener('click', function () {
         oneWayTab.classList.add('active');
         roundTripTab.classList.remove('active');
@@ -85,7 +84,6 @@ function handleSearchForm() {
 
     let flightsData = [];
 
-    // Uçuşları al ve kalkış havaalanlarını doldur
     fetch('/search_flights')
         .then(response => response.json())
         .then(data => {
@@ -115,7 +113,7 @@ function handleSearchForm() {
         const selectedArrivalCode = toSelect.value.split(' - ')[1];
 
         const matchingFlights = flightsData.filter(flight =>
-            flight.departure_airport[0] === selectedDepartureCode &&
+            flight.departure_airport[0] === selectedDepartureCode && 
             flight.arrival_airport[0] === selectedArrivalCode
         );
 
