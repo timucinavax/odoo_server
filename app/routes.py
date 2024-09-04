@@ -515,9 +515,11 @@ def search_flights():
 
     domain = []
     if from_airport:
-        domain.append(("departure_airport", "=", from_airport))
+        from_airport_code = from_airport.split(' - ')[1] 
+        domain.append(("departure_airport", "=", from_airport_code))
     if to_airport:
-        domain.append(("arrival_airport", "=", to_airport))
+        to_airport_code = to_airport.split(' - ')[1] 
+        domain.append(("arrival_airport", "=", to_airport_code))
     if departure_date:
         domain.append(("departure_time", ">=", departure_date))
         domain.append(("departure_time", "<=", departure_date))
@@ -548,7 +550,12 @@ def search_flights():
         },
     )
 
+    for flight in flights:
+        flight['departure_airport'] = flight['departure_airport'] if isinstance(flight['departure_airport'], list) else ["", flight['departure_airport']]
+        flight['arrival_airport'] = flight['arrival_airport'] if isinstance(flight['arrival_airport'], list) else ["", flight['arrival_airport']]
+
     return jsonify(flights=flights)
+
 
 
 @app.route("/logout")

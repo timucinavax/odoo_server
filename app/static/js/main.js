@@ -90,7 +90,7 @@ function handleSearchForm() {
         .then(data => {
             if (data.flights) {
                 flightsData = data.flights;
-                const departureAirports = [...new Set(data.flights.map(flight => flight.departure_airport))];
+                const departureAirports = [...new Set(data.flights.map(flight => flight.departure_airport[1] + ' - ' + flight.departure_airport[0]))];
                 populateSelectOptions(fromSelect, departureAirports);
             } else {
                 console.error("Flights data is missing in the response");
@@ -101,15 +101,15 @@ function handleSearchForm() {
         });
 
     fromSelect.addEventListener('change', function () {
-        const selectedDeparture = fromSelect.value;
-        const filteredFlights = flightsData.filter(flight => flight.departure_airport === selectedDeparture);
+        const selectedDeparture = fromSelect.value.split(' - ')[1];
+        const filteredFlights = flightsData.filter(flight => flight.departure_airport[0] === selectedDeparture);
 
-        const arrivalAirports = [...new Set(filteredFlights.map(flight => flight.arrival_airport))];
+        const arrivalAirports = [...new Set(filteredFlights.map(flight => flight.arrival_airport[1] + ' - ' + flight.arrival_airport[0]))];
         populateSelectOptions(toSelect, arrivalAirports);
 
         toSelect.addEventListener('change', function () {
-            const selectedArrival = toSelect.value;
-            const matchingFlights = filteredFlights.filter(flight => flight.arrival_airport === selectedArrival);
+            const selectedArrival = toSelect.value.split(' - ')[1];
+            const matchingFlights = filteredFlights.filter(flight => flight.arrival_airport[0] === selectedArrival);
 
             const availableDepartureDates = matchingFlights.map(flight => flight.departure_time.split(' ')[0]);
 
