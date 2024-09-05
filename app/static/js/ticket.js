@@ -3,6 +3,8 @@ let selectedSeats = 0;
 
 
 function showFlights(date = null) {
+    const today = new Date().toISOString().split('T')[0]; // Bugünün tarihi (YYYY-MM-DD formatında)
+    
     document.querySelectorAll('.date-box').forEach(box => box.classList.remove('active'));
 
     if (date) {
@@ -17,11 +19,12 @@ function showFlights(date = null) {
 
     const flights = flightsData.filter(flight => {
         const flightDate = flight.departure_time.split(' ')[0]; 
-        return !date || flightDate === date;
+        return (!date || flightDate === date) && flightDate >= today; // Geçmiş uçuşları filtrele
     });
 
     flights.length > 0 ? displayFlights(flights) : showNoFlightsMessage();
 }
+
 
 function displayFlights(flights) {
     const logoUrl = window.logoUrl;
