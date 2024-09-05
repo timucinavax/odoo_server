@@ -222,15 +222,13 @@ function activateStep(stepNumber) {
 
 function proceedToPayment() {
     const priceSummaryElement = document.getElementById('price-summary');
-    const flightPriceElement = document.getElementById('flight-price-summary');
     const totalPriceElement = document.getElementById('total-price-summary');
 
-    if (priceSummaryElement && flightPriceElement && totalPriceElement) {
-        const price = parseFloat(priceSummaryElement.textContent);
-        flightPriceElement.textContent = price + ' TL';
-        totalPriceElement.textContent = price + ' TL';
+    if (priceSummaryElement && totalPriceElement) {
+        totalPriceElement.textContent = priceSummaryElement.textContent + ' TL';
     }
 
+    // Adım değişikliğini ve sayfa görünümünü güncelle
     document.querySelectorAll('.step-container > div').forEach(div => {
         div.style.display = 'none';
     });
@@ -243,7 +241,6 @@ function proceedToPayment() {
 
     document.querySelector(`.breadcrumb-item[data-number="3"]`).classList.add('active');
 }
-
 
 function proceedToPassengerInfo() {
     activateStep(1);
