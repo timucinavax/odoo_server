@@ -221,8 +221,19 @@ function activateStep(stepNumber) {
 }
 
 function proceedToPayment() {
-    activateStep(3); 
+    document.querySelectorAll('.step-container > div').forEach(div => {
+        div.style.display = 'none';
+    });
+
+    document.querySelector(`.step-container > div[data-number="3"]`).style.display = 'block';
+
+    document.querySelectorAll('.breadcrumb-item').forEach(item => {
+        item.classList.remove('active');
+    });
+
+    document.querySelector(`.breadcrumb-item[data-number="3"]`).classList.add('active');
 }
+
 
 function proceedToPassengerInfo() {
     activateStep(1);
