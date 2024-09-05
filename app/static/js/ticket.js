@@ -2,27 +2,48 @@ let maxSeats = 0;
 let selectedSeats = 0;
 
 
-function showFlights(date) {
+function showFlights(departureDate, returnDate) {
     document.querySelectorAll('.date-box').forEach(box => box.classList.remove('active'));
-    const selectedBox = document.querySelector(`.date-box[data-date="${date}"]`);
-    if (selectedBox) {
-        selectedBox.classList.add('active');
+    
+    if (departureDate) {
+        const selectedDepartureBox = document.querySelector(`.date-box[data-date="${departureDate}"]`);
+        if (selectedDepartureBox) {
+            selectedDepartureBox.classList.add('active');
+        }
     }
+    
+    if (returnDate) {
+        const selectedReturnBox = document.querySelector(`.date-box[data-date="${returnDate}"]`);
+        if (selectedReturnBox) {
+            selectedReturnBox.classList.add('active');
+        }
+    }
+
     const flightsContainer = document.getElementById('flights-container');
     flightsContainer.innerHTML = '';
 
-    flightsData.forEach(flight => {
-        const flightDate = flight.departure_time.split(' ')[0];
-    });
-
-    const flights = flightsData.filter(flight => {
+    const outboundFlights = flightsData.filter(flight => {
         const flightDate = flight.departure_time.split(' ')[0]; 
-        return flightDate === date;
+        return flightDate === departureDate;
     });
 
-    flights.length > 0 ? displayFlights(flights) : showNoFlightsMessage();
-}
+    const returnFlights = flightsData.filter(flight => {
+        const flightDate = flight.arrival_time.split(' ')[0]; 
+        return flightDate === returnDate;
+    });
 
+    if (outboundFlights.length > 0) {
+        displayFlights(outboundFlights);
+    } else {
+        showNoFlightsMessage('outbound');
+    }
+
+    if (returnFlights.length > 0) {
+        displayFlights(returnFlights);
+    } else {
+        showNoFlightsMessage('return');
+    }
+}
 
 function displayFlights(flights) {
     const logoUrl = window.logoUrl;
