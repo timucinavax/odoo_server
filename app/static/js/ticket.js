@@ -2,26 +2,27 @@ let maxSeats = 0;
 let selectedSeats = 0;
 
 
-function showFlights(date = null) {
+function showFlights(dates = []) {
     document.querySelectorAll('.date-box').forEach(box => box.classList.remove('active'));
 
-    if (date) {
+    dates.forEach(date => {
         const selectedBox = document.querySelector(`.date-box[data-date="${date}"]`);
         if (selectedBox) {
             selectedBox.classList.add('active');
         }
-    }
+    });
 
     const flightsContainer = document.getElementById('flights-container');
     flightsContainer.innerHTML = '';
 
     const flights = flightsData.filter(flight => {
         const flightDate = flight.departure_time.split(' ')[0]; 
-        return !date || flightDate === date;
+        return dates.includes(flightDate);
     });
 
     flights.length > 0 ? displayFlights(flights) : showNoFlightsMessage();
 }
+
 
 function displayFlights(flights) {
     const logoUrl = window.logoUrl;

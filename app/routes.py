@@ -373,19 +373,20 @@ def flight_ticket():
     selected_departure_date = request.args.get("selected_departure_date")
     selected_return_date = request.args.get("selected_return_date")
 
+    selected_dates = []
+    if selected_departure_date:
+        selected_dates.append(selected_departure_date)
+    if selected_return_date:
+        selected_dates.append(selected_return_date)
+
     domain = []
 
-    if selected_departure_date:
-        selected_departure_start = f"{selected_departure_date} 00:00:00"
-        selected_departure_end = f"{selected_departure_date} 23:59:59"
-        domain.append(("departure_time", ">=", selected_departure_start))
-        domain.append(("departure_time", "<=", selected_departure_end))
-
-    if selected_return_date:
-        selected_return_start = f"{selected_return_date} 00:00:00"
-        selected_return_end = f"{selected_return_date} 23:59:59"
-        domain.append(("departure_time", ">=", selected_return_start))
-        domain.append(("departure_time", "<=", selected_return_end))
+    if selected_dates:
+        for selected_date in selected_dates:
+            selected_date_start = f"{selected_date} 00:00:00"
+            selected_date_end = f"{selected_date} 23:59:59"
+            domain.append(("departure_time", ">=", selected_date_start))
+            domain.append(("departure_time", "<=", selected_date_end))
 
     flights = models.execute_kw(
         current_app.config["ODOO_DB"],
@@ -421,8 +422,7 @@ def flight_ticket():
         "flight-ticket.html",
         dates=list(date_flight_map.keys()), 
         flights=flights,
-        selected_departure_date=selected_departure_date,
-        selected_return_date=selected_return_date,
+        selected_dates=selected_dates, 
         logged_in_user=session.get("username"),
         logged_in_user_role=session.get("role"),
         current_page="flight-ticket",
