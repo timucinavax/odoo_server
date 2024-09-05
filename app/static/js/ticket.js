@@ -2,22 +2,22 @@ let maxSeats = 0;
 let selectedSeats = 0;
 
 
-function showFlights(date) {
+function showFlights(date = null) {
     document.querySelectorAll('.date-box').forEach(box => box.classList.remove('active'));
-    const selectedBox = document.querySelector(`.date-box[data-date="${date}"]`);
-    if (selectedBox) {
-        selectedBox.classList.add('active');
+
+    if (date) {
+        const selectedBox = document.querySelector(`.date-box[data-date="${date}"]`);
+        if (selectedBox) {
+            selectedBox.classList.add('active');
+        }
     }
+
     const flightsContainer = document.getElementById('flights-container');
     flightsContainer.innerHTML = '';
 
-    flightsData.forEach(flight => {
-        const flightDate = flight.departure_time.split(' ')[0];
-    });
-
     const flights = flightsData.filter(flight => {
         const flightDate = flight.departure_time.split(' ')[0]; 
-        return flightDate === date;
+        return !date || flightDate === date;
     });
 
     flights.length > 0 ? displayFlights(flights) : showNoFlightsMessage();
@@ -30,7 +30,7 @@ function displayFlights(flights) {
     flights.forEach(flight => {
         const priceToShow = userRole === 'agency' ? flight.agency_price : flight.user_price;
         const flightDuration = calculateFlightDuration(flight.departure_time, flight.arrival_time);
-        const flightDirectionLabel = flightType === 'Dönüş' ? 'Dönüş' : 'Gidiş';
+        const flightDirectionLabel = flight.flight_direction === 'return' ? 'Dönüş' : 'Gidiş';
 
         const flightCard = `
             <div class="card">
@@ -71,8 +71,6 @@ function displayFlights(flights) {
         document.getElementById('flights-container').innerHTML += flightCard;
     });
 }
-
-
 
 function updatePrice(flightNumber, basePrice, availableSeats) {
     const priceElement = document.getElementById(`price-${flightNumber}-${availableSeats}`);
