@@ -90,7 +90,7 @@ function updatePrice(flightNumber, basePrice, availableSeats) {
 function scrollDates(direction) {
     const dateSelector = document.querySelector('.date-selector');
     const dateBoxes = document.querySelectorAll('.date-box');
-    const visibleBoxes = 7; 
+    const visibleBoxes = 3; 
     const boxWidth = dateBoxes[0].offsetWidth + 10;
     const scrollAmount = boxWidth * visibleBoxes;
 
