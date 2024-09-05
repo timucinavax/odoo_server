@@ -412,17 +412,30 @@ def flight_ticket():
     )
 
     date_flight_map = {}
+    outbound_count = {}
+    return_count = {}
+
     for flight in flights:
         flight_date = flight["departure_time"].split(" ")[0]
         if flight_date not in date_flight_map:
             date_flight_map[flight_date] = []
+            outbound_count[flight_date] = 0
+            return_count[flight_date] = 0
+
         date_flight_map[flight_date].append(flight)
+
+        if flight["flight_direction"] == "outbound":
+            outbound_count[flight_date] += 1
+        elif flight["flight_direction"] == "return":
+            return_count[flight_date] += 1
 
     return render_template(
         "flight-ticket.html",
         dates=list(date_flight_map.keys()), 
         flights=flights,
         selected_dates=selected_dates, 
+        outbound_count=outbound_count,
+        return_count=return_count,
         logged_in_user=session.get("username"),
         logged_in_user_role=session.get("role"),
         current_page="flight-ticket",
