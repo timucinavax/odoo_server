@@ -20,27 +20,29 @@
   </div>
 </div>
 
-<div class="step-container">
-  <div class="flight-buy-container" data-number="0">
-    <div class="date-selector">
-      {% for date in dates %}
-      <div
-        class="date-box"
-        data-date="{{ date }}"
-        onclick="showFlights('{{ date }}')"
-      >
-        <div class="flight-counts">
-          <span class="flight-count outbound-count" style="color: green;">{{ outbound_count[date] }}</span>
-          <span class="flight-count return-count" style="color: blue;">{{ return_count[date] }}</span>
-        </div>
-        <div class="day-number">{{ date.split('-')[2] }}</div>
-        <div class="day-name">{{ date | dayname }}</div>
-        <div class="month-name">{{ date | monthname }}</div>
+<div class="flight-buy-container" data-number="0">
+  <div class="date-navigation">
+      <button class="scroll-button left-scroll" onclick="scrollDates('left')">&lt;</button>
+      <div class="date-selector">
+          {% for date in dates %}
+          <div
+              class="date-box"
+              data-date="{{ date }}"
+              onclick="showFlights('{{ date }}')"
+            >
+              <div class="flight-counts">
+                  <span class="flight-count outbound-count" style="color: green;">{{ outbound_count[date] }}</span>
+                  <span class="flight-count return-count" style="color: blue;">{{ return_count[date] }}</span>
+              </div>
+              <div class="day-number">{{ date.split('-')[2] }}</div>
+              <div class="day-name">{{ date | dayname }}</div>
+              <div class="month-name">{{ date | monthname }}</div>
+          </div>
+          {% endfor %}
       </div>
-      {% endfor %}
+        <button class="scroll-button right-scroll" onclick="scrollDates('right')">&gt;</button>
     </div>
-    <div class="flights-container" id="flights-container"></div>
-  </div>
+  <div class="flights-container" id="flights-container"></div>
 
   <div class="passenger-info-container" data-number="1" style="display: none">
     <h3 class="section-title">Yolcu Bilgileri</h3>
@@ -66,7 +68,6 @@
           <input type="date" id="birthdate" name="birthdate" required />
         </div>
       </div>
-      <!-- İletişim Bilgileri -->
       <h3 class="section-title">İletişim Bilgileri</h3>
       <div class="form-section">
         <div class="form-group">

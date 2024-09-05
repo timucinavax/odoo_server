@@ -87,6 +87,24 @@ function updatePrice(flightNumber, basePrice, availableSeats) {
 }
 
 
+function scrollDates(direction) {
+    const dateSelector = document.querySelector('.date-selector');
+    const scrollAmount = 200; // Her seferinde kaydırılacak piksel miktarı
+
+    if (direction === 'left') {
+        dateSelector.scrollBy({
+            left: -scrollAmount,
+            behavior: 'smooth'
+        });
+    } else if (direction === 'right') {
+        dateSelector.scrollBy({
+            left: scrollAmount,
+            behavior: 'smooth'
+        });
+    }
+}
+
+
 function passengerInfo(flightNumber, flightAvailableSeats) {
     const flight = flightsData.find(f => f.flight_number === flightNumber);
 
@@ -95,8 +113,8 @@ function passengerInfo(flightNumber, flightAvailableSeats) {
         const totalPrice = flight.user_price * passengerCount;
 
         document.getElementById('flight-number-summary').textContent = flight.flight_number;
-        document.getElementById('departure-summary').textContent = flight.departure_airport;
-        document.getElementById('arrival-summary').textContent = flight.arrival_airport;
+        document.getElementById('departure-summary').textContent = flight.departure_airport[1];
+        document.getElementById('arrival-summary').textContent = flight.arrival_airport[1];
         document.getElementById('price-summary').textContent = totalPrice; 
     }
 }
