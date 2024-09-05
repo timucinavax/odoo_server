@@ -459,79 +459,62 @@ html {
 }
 
 .payment-container {
-    max-width: 900px;
-    margin: 0 auto;
     padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    margin-bottom: 20px;
 }
 
-.payment-summary {
-    border: 1px solid #ddd;
+.payment-card-body {
     padding: 20px;
-    margin-top: 20px;
-    border-radius: 10px;
-    background-color: #f9f9f9;
-    text-align: center;
 }
 
-.payment-summary h4 {
-    margin-bottom: 15px;
-    font-size: 1.5em;
-    font-weight: bold;
-    color: #333;
+.input {
+    position: relative;
 }
 
-.payment-form .form-group {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 15px;
+.input i {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    color: #999;
 }
 
-.payment-form .form-group label {
-    margin-bottom: 5px;
-    font-weight: 600;
-}
-
-.payment-form .form-group input {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.payment-form .form-section {
-    margin-bottom: 20px;
-}
-
-.payment-form .btn-primary {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    width: 100%;
-    margin-top: 20px;
-}
-
-.payment-form .btn-primary:hover {
-    background-color: #218838;
-}
-
-.payment-summary .total-price {
-    font-size: 1.5em;
-    font-weight: bold;
-    color: #dc3545;
-    margin-top: 10px;
+.input input {
+    padding-left: 30px;
 }
 
 .certificate-text {
-    font-size: 12px;
+    display: block;
     margin-top: 15px;
-    color: #6c757d;
-    text-align: center;
+    font-size: 0.8em;
+    color: #666;
+}
+
+.card-text {
+    font-weight: 600;
+}
+
+.super-price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #000;
+}
+
+.line {
+    border-color: #e9ecef;
+}
+
+.free-button {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.free-button:hover {
+    background-color: #0056b3;
 }
 
 
