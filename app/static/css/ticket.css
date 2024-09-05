@@ -61,16 +61,19 @@ html {
     margin-bottom: 20px;
     overflow: hidden; /* Yatay taşmaları gizlemek için */
     position: relative;
+    max-width: 700px; /* Ekranda görünen alanı sınırlamak için */
+    margin: 0 auto; /* Ortalamak için */
 }
 
 .date-selector {
     display: flex;
+    justify-content: center;
     overflow-x: auto;
     scroll-behavior: smooth;
     padding: 10px 0;
     white-space: nowrap;
-    flex: 1;
-    margin: 0 20px; /* Butonlar için boşluk bırakmak için */
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .date-box {
@@ -100,6 +103,8 @@ html {
     color: #007bff;
     position: absolute;
     z-index: 2;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .left-scroll {
@@ -113,6 +118,7 @@ html {
 .navigation-button:hover {
     background-color: #e9ecef;
 }
+
 
 .date-box.active {
     background-color: #fff;

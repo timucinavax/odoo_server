@@ -89,7 +89,10 @@ function updatePrice(flightNumber, basePrice, availableSeats) {
 
 function scrollDates(direction) {
     const dateSelector = document.querySelector('.date-selector');
-    const scrollAmount = 200; // Her seferinde kaydırılacak piksel miktarı
+    const dateBoxes = document.querySelectorAll('.date-box');
+    const visibleBoxes = 7; 
+    const boxWidth = dateBoxes[0].offsetWidth + 10;
+    const scrollAmount = boxWidth * visibleBoxes;
 
     if (direction === 'left') {
         dateSelector.scrollBy({
@@ -103,6 +106,7 @@ function scrollDates(direction) {
         });
     }
 }
+
 
 
 function passengerInfo(flightNumber, flightAvailableSeats) {
