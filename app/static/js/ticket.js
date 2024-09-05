@@ -221,6 +221,15 @@ function activateStep(stepNumber) {
 }
 
 function proceedToPayment() {
+    // Toplam fiyatı hesapla ve ödeme ekranına aktar
+    const priceSummaryElement = document.getElementById('price-summary');
+    const totalPriceElement = document.getElementById('total-price-summary');
+
+    if (priceSummaryElement && totalPriceElement) {
+        totalPriceElement.textContent = priceSummaryElement.textContent + ' TL';
+    }
+
+    // Adım değişikliğini ve sayfa görünümünü güncelle
     document.querySelectorAll('.step-container > div').forEach(div => {
         div.style.display = 'none';
     });
@@ -233,7 +242,6 @@ function proceedToPayment() {
 
     document.querySelector(`.breadcrumb-item[data-number="3"]`).classList.add('active');
 }
-
 
 function proceedToPassengerInfo() {
     activateStep(1);

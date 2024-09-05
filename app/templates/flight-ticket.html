@@ -22,32 +22,40 @@
 <div class="step-container">
   <div class="flight-buy-container" data-number="0">
     <div class="date-navigation">
-        <button class="scroll-button left-scroll" onclick="scrollDates('left')">&lt;</button>
-        <div class="date-selector">
-            {% for date in dates %}
-            <div
-                class="date-box"
-                data-date="{{ date }}"
-                onclick="showFlights('{{ date }}')"
+      <button class="scroll-button left-scroll" onclick="scrollDates('left')">
+        &lt;
+      </button>
+      <div class="date-selector">
+        {% for date in dates %}
+        <div
+          class="date-box"
+          data-date="{{ date }}"
+          onclick="showFlights('{{ date }}')"
+        >
+          <div class="flight-counts">
+            <div class="count-box">
+              <span class="flight-count outbound-count" style="color: green"
+                >{{ outbound_count[date] }}</span
               >
-                <div class="flight-counts">
-                  <div class="count-box">
-                      <span class="flight-count outbound-count" style="color: green;">{{ outbound_count[date] }}</span>
-                      <span class="flight-label">Gidiş</span>
-                  </div>
-                  <div class="count-box">
-                      <span class="flight-count return-count" style="color: blue;">{{ return_count[date] }}</span>
-                      <span class="flight-label">Dönüş</span>
-                  </div>
-                </div>
-                <div class="day-number">{{ date.split('-')[2] }}</div>
-                <div class="day-name">{{ date | dayname }}</div>
-                <div class="month-name">{{ date | monthname }}</div>
+              <span class="flight-label">Gidiş</span>
             </div>
-            {% endfor %}
+            <div class="count-box">
+              <span class="flight-count return-count" style="color: blue"
+                >{{ return_count[date] }}</span
+              >
+              <span class="flight-label">Dönüş</span>
+            </div>
+          </div>
+          <div class="day-number">{{ date.split('-')[2] }}</div>
+          <div class="day-name">{{ date | dayname }}</div>
+          <div class="month-name">{{ date | monthname }}</div>
         </div>
-          <button class="scroll-button right-scroll" onclick="scrollDates('right')">&gt;</button>
+        {% endfor %}
       </div>
+      <button class="scroll-button right-scroll" onclick="scrollDates('right')">
+        &gt;
+      </button>
+    </div>
     <div class="flights-container" id="flights-container"></div>
   </div>
 
@@ -89,45 +97,201 @@
       <div class="flight-summary">
         <h4>Seçilen Uçuş Bilgileri</h4>
         <div class="flight-details">
-            <p>Uçuş Numarası: <span id="flight-number-summary"></span></p>
-            <p>Kalkış: <span id="departure-summary"></span></p>
-            <p>Varış: <span id="arrival-summary"></span></p>
-            <p>Fiyat: <span id="price-summary"></span> TL</p>
+          <p>Uçuş Numarası: <span id="flight-number-summary"></span></p>
+          <p>Kalkış: <span id="departure-summary"></span></p>
+          <p>Varış: <span id="arrival-summary"></span></p>
+          <p>Fiyat: <span id="price-summary"></span> TL</p>
         </div>
-        <button type="submit" class="btn-primary" onclick="proceedToSeatSelection(event)">Devam Et</button>
-        <button type="button" class="btn-secondary" onclick="activateStep(0)">
-            Geri Dön
+        <button
+          type="submit"
+          class="btn-primary"
+          onclick="proceedToSeatSelection(event)"
+        >
+          Devam Et
         </button>
-      </div>    
+        <button type="button" class="btn-secondary" onclick="activateStep(0)">
+          Geri Dön
+        </button>
+      </div>
     </form>
   </div>
 
-  <div class="seat-selection-container" data-number="2" id="seat-selection-container" style="display:none;"></div>
+  <div
+    class="seat-selection-container"
+    data-number="2"
+    id="seat-selection-container"
+    style="display: none"
+  ></div>
 
   <div class="payment-container" data-number="3" style="display: none">
-    <h3 class="section-title">Ödeme Bilgileri</h3>
-    <form id="payment-form" class="payment-form">
-        <div class="form-section">
-            <div class="form-group">
-                <label for="card-number">Kart Numarası</label>
-                <input type="text" id="card-number" name="card-number" required />
-            </div>
-            <div class="form-group">
-                <label for="expiry-date">Son Kullanma Tarihi</label>
-                <input type="text" id="expiry-date" name="expiry-date" required placeholder="MM/YY"/>
-            </div>
-            <div class="form-group">
-                <label for="cvv">CVV</label>
-                <input type="text" id="cvv" name="cvv" required />
-            </div>
-        </div>
-        <div class="payment-summary">
-            <h4>Toplam Tutar: <span id="total-price-summary"></span> TL</h4>
-        </div>
-        <button type="submit" class="btn-primary">Ödeme Yap</button>
-    </form>
-  </div>
+    <div class="container d-flex justify-content-center mt-5 mb-5">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <span>Payment Method</span>
+          <div class="card">
+            <div class="accordion" id="accordionExample">
+              <div class="card">
+                <div class="card-header p-0" id="headingTwo">
+                  <h2 class="mb-0">
+                    <button
+                      class="btn btn-light btn-block text-left collapsed p-3 rounded-0 border-bottom-custom"
+                      type="button"
+                      data-toggle="collapse"
+                      data-target="#collapseTwo"
+                      aria-expanded="false"
+                      aria-controls="collapseTwo"
+                    >
+                      <div
+                        class="d-flex align-items-center justify-content-between"
+                      >
+                        <span>Paypal</span>
+                        <img src="https://i.imgur.com/7kQEsHU.png" width="30" />
+                      </div>
+                    </button>
+                  </h2>
+                </div>
+                <div
+                  id="collapseTwo"
+                  class="collapse"
+                  aria-labelledby="headingTwo"
+                  data-parent="#accordionExample"
+                >
+                  <div class="card-body">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Paypal email"
+                    />
+                  </div>
+                </div>
+              </div>
 
+              <div class="card">
+                <div class="card-header p-0">
+                  <h2 class="mb-0">
+                    <button
+                      class="btn btn-light btn-block text-left p-3 rounded-0"
+                      data-toggle="collapse"
+                      data-target="#collapseOne"
+                      aria-expanded="true"
+                      aria-controls="collapseOne"
+                    >
+                      <div
+                        class="d-flex align-items-center justify-content-between"
+                      >
+                        <span>Credit card</span>
+                        <div class="icons">
+                          <img
+                            src="https://i.imgur.com/2ISgYja.png"
+                            width="30"
+                          />
+                          <img
+                            src="https://i.imgur.com/W1vtnOV.png"
+                            width="30"
+                          />
+                          <img
+                            src="https://i.imgur.com/35tC99g.png"
+                            width="30"
+                          />
+                          <img
+                            src="https://i.imgur.com/2ISgYja.png"
+                            width="30"
+                          />
+                        </div>
+                      </div>
+                    </button>
+                  </h2>
+                </div>
+                <div
+                  id="collapseOne"
+                  class="collapse show"
+                  aria-labelledby="headingOne"
+                  data-parent="#accordionExample"
+                >
+                  <div class="card-body payment-card-body">
+                    <span class="font-weight-normal card-text"
+                      >Card Number</span
+                    >
+                    <div class="input">
+                      <i class="fa fa-credit-card"></i>
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="0000 0000 0000 0000"
+                      />
+                    </div>
+                    <div class="row mt-3 mb-3">
+                      <div class="col-md-6">
+                        <span class="font-weight-normal card-text"
+                          >Expiry Date</span
+                        >
+                        <div class="input">
+                          <i class="fa fa-calendar"></i>
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="MM/YY"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <span class="font-weight-normal card-text"
+                          >CVC/CVV</span
+                        >
+                        <div class="input">
+                          <i class="fa fa-lock"></i>
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="000"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <span class="text-muted certificate-text"
+                      ><i class="fa fa-lock"></i> Your transaction is secured
+                      with SSL certificate</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <span>Summary</span>
+          <div class="card">
+            <div class="d-flex justify-content-between p-3">
+              <div class="d-flex flex-column">
+                <span>Selected Flight</span>
+              </div>
+              <div class="mt-1">
+                <sup class="super-price"
+                  ><span id="total-price-summary">TL</span></sup
+                >
+              </div>
+            </div>
+            <hr class="mt-0 line" />
+            <div class="p-3 d-flex justify-content-between">
+              <div class="d-flex flex-column">
+                <span>Total Amount</span>
+              </div>
+              <span id="total-price-summary">0 TL</span>
+            </div>
+            <div class="p-3">
+              <button
+                type="submit"
+                class="btn btn-primary btn-block free-button"
+              >
+                Complete Payment
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div id="confirmationModal" class="modal" style="display: none">
@@ -135,11 +299,11 @@
     <span class="close-button" onclick="closeModal()">&times;</span>
     <h3>Uçuş Onayı</h3>
     <p>
-      <span id="confirmFlightNumber"></span> numaralı uçuşu almak istediğinize emin misiniz?
+      <span id="confirmFlightNumber"></span> numaralı uçuşu almak istediğinize
+      emin misiniz?
     </p>
     <button id="confirm-purchase-button" class="btn-primary">Evet</button>
     <button class="btn-secondary" onclick="closeModal()">Hayır</button>
   </div>
 </div>
 {% endblock %}
-
