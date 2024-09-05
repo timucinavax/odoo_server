@@ -31,13 +31,14 @@ function displayFlights(flights) {
         const priceToShow = userRole === 'agency' ? flight.agency_price : flight.user_price;
         const flightDuration = calculateFlightDuration(flight.departure_time, flight.arrival_time);
         const flightDirectionLabel = flight.flight_direction === 'return' ? 'Dönüş' : 'Gidiş';
+        const flightDirectionColor = flight.flight_direction === 'return' ? 'blue' : 'green';
 
         const flightCard = `
             <div class="card">
                 <div class="card-left">
                     <div class="time-info">
                         <p><span class="heading">Uçuş Numarası:</span> ${flight.flight_number}</p>
-                        <p><span class="heading">Yön:</span> ${flightDirectionLabel}</p>
+                        <p><span class="heading">Yön:</span> <span style="color: ${flightDirectionColor};">${flightDirectionLabel}</span></p>
                     </div>
                     <div class="time-info">
                         <p>${flight.departure_time.split(" ")[1]}</p>
@@ -71,6 +72,7 @@ function displayFlights(flights) {
         document.getElementById('flights-container').innerHTML += flightCard;
     });
 }
+
 
 function updatePrice(flightNumber, basePrice, availableSeats) {
     const priceElement = document.getElementById(`price-${flightNumber}-${availableSeats}`);
