@@ -5,13 +5,6 @@ let selectedSeats = 0;
 function showFlights(departureDate, returnDate = null) {
     document.querySelectorAll('.date-box').forEach(box => box.classList.remove('active'));
     
-    if (departureDate) {
-        const selectedBox = document.querySelector(`.date-box[data-date="${departureDate}"]`);
-        if (selectedBox) {
-            selectedBox.classList.add('active');
-        }
-    }
-
     const flightsContainer = document.getElementById('flights-container');
     flightsContainer.innerHTML = '';
 
@@ -26,28 +19,27 @@ function showFlights(departureDate, returnDate = null) {
     }) : [];
 
     if (outboundFlights.length > 0) {
-        displayFlights(outboundFlights);
+        displayFlights(outboundFlights, 'Gidiş');
     } else {
         showNoFlightsMessage('Gidiş');
     }
 
     if (returnDate && returnFlights.length > 0) {
-        displayFlights(returnFlights);
+        displayFlights(returnFlights, 'Dönüş');
     } else if (returnDate) {
         showNoFlightsMessage('Dönüş');
     }
 }
 
 
-
-function displayFlights(flights) {
+function displayFlights(flights, flightType) {
     const logoUrl = window.logoUrl;
     const userRole = window.loggedInUserRole;
 
     flights.forEach(flight => {
         const priceToShow = userRole === 'agency' ? flight.agency_price : flight.user_price;
         const flightDuration = calculateFlightDuration(flight.departure_time, flight.arrival_time);
-        const flightDirectionLabel = flight.flight_direction === 'return' ? 'Dönüş' : 'Gidiş';
+        const flightDirectionLabel = flightType === 'Dönüş' ? 'Dönüş' : 'Gidiş';
 
         const flightCard = `
             <div class="card">
@@ -88,6 +80,7 @@ function displayFlights(flights) {
         document.getElementById('flights-container').innerHTML += flightCard;
     });
 }
+
 
 
 function updatePrice(flightNumber, basePrice, availableSeats) {
@@ -175,9 +168,11 @@ function initializeSeatSelection() {
     });
 }
 
-function showNoFlightsMessage() {
-    document.getElementById('flights-container').innerHTML = '<div class="no-flights" style="text-align: center;" >Bu tarihte uçuş bulunmamaktadır.</div>';
+function showNoFlightsMessage(flightType) {
+    const message = flightType === 'Dönüş' ? 'Bu tarihte dönüş uçuşu bulunmamaktadır.' : 'Bu tarihte gidiş uçuşu bulunmamaktadır.';
+    document.getElementById('flights-container').innerHTML += `<div class="no-flights" style="text-align: center;">${message}</div>`;
 }
+
 
 function toggleDetails(button) {
     const detailsContent = button.nextElementSibling;
