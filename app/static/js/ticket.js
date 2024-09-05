@@ -221,9 +221,7 @@ function activateStep(stepNumber) {
 }
 
 function proceedToPayment() {
-    const totalPrice = document.getElementById('price-summary').textContent;
-    document.getElementById('total-price-summary').textContent = totalPrice;
-    activateStep(3);
+    activateStep(3); 
 }
 
 function proceedToPassengerInfo() {
