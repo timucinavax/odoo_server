@@ -15,26 +15,22 @@ function showFlights(departureDate, returnDate = null) {
     const flightsContainer = document.getElementById('flights-container');
     flightsContainer.innerHTML = '';
 
-    // Sadece gidiş uçuşlarını filtreleme
     const outboundFlights = flightsData.filter(flight => {
         const flightOutboundDate = flight.departure_time.split(' ')[0];
         return flightOutboundDate === departureDate;
     });
 
-    // Eğer dönüş tarihi verilmişse dönüş uçuşlarını da filtreleme
     const returnFlights = returnDate ? flightsData.filter(flight => {
         const flightReturnDate = flight.arrival_time.split(' ')[0];
         return flightReturnDate === returnDate;
     }) : [];
 
-    // Gidiş uçuşları varsa göster, yoksa mesaj ver
     if (outboundFlights.length > 0) {
         displayFlights(outboundFlights);
     } else {
         showNoFlightsMessage('Gidiş');
     }
 
-    // Dönüş uçuşları varsa göster, yoksa mesaj ver
     if (returnDate && returnFlights.length > 0) {
         displayFlights(returnFlights);
     } else if (returnDate) {
