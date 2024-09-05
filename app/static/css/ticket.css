@@ -140,26 +140,30 @@ html {
 }
 
 .flight-counts {
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    right: 5px;
     display: flex;
     justify-content: space-between;
-  }
-  
-  .flight-count {
-    font-weight: bold;
-  }
-  
-  .outbound-count {
-    color: green;
-  }
-  
-  .return-count {
-    color: blue;
-  }
+    align-items: center;
+    width: 100%;
+    margin-bottom: 5px;
+}
 
+.count-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 50px;
+}
+
+.flight-count {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.flight-label {
+    font-size: 0.8rem;
+    color: #555;
+    margin-top: 2px;
+}
 
 .day-number {
     font-size: 1.5rem;

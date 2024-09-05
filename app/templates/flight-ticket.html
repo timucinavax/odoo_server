@@ -31,8 +31,14 @@
               onclick="showFlights('{{ date }}')"
             >
               <div class="flight-counts">
-                  <span class="flight-count outbound-count" style="color: green;">{{ outbound_count[date] }}</span>
-                  <span class="flight-count return-count" style="color: blue;">{{ return_count[date] }}</span>
+                <div class="count-box">
+                    <span class="flight-count outbound-count" style="color: green;">{{ outbound_count[date] }}</span>
+                    <span class="flight-label">Gidiş</span>
+                </div>
+                <div class="count-box">
+                    <span class="flight-count return-count" style="color: blue;">{{ return_count[date] }}</span>
+                    <span class="flight-label">Dönüş</span>
+                </div>
               </div>
               <div class="day-number">{{ date.split('-')[2] }}</div>
               <div class="day-name">{{ date | dayname }}</div>
