@@ -357,9 +357,11 @@ def search_ticket():
     
     search_criteria = request.form if request.method == "POST" else None
 
-    date = search_criteria.get('departure_time')
+    departure_date = search_criteria.get('departure_time')
+    return_date = search_criteria.get('arrival_time')
     
-    return redirect(url_for("flight_ticket", selected_date=date))
+    return redirect(url_for("flight_ticket", selected_departure_date=departure_date, selected_return_date=return_date))
+
 
     
 @app.route("/flight-ticket", methods=["POST", "GET"])
@@ -368,14 +370,22 @@ def flight_ticket():
     if not uid:
         return redirect(url_for("index"))
     
-    selected_date = request.args.get("selected_date")
+    selected_departure_date = request.args.get("selected_departure_date")
+    selected_return_date = request.args.get("selected_return_date")
 
     domain = []
-    if selected_date:
-        selected_date_start = f"{selected_date} 00:00:00"
-        selected_date_end = f"{selected_date} 23:59:59"
-        domain.append(("departure_time", ">=", selected_date_start))
-        domain.append(("departure_time", "<=", selected_date_end))
+
+    if selected_departure_date:
+        selected_departure_start = f"{selected_departure_date} 00:00:00"
+        selected_departure_end = f"{selected_departure_date} 23:59:59"
+        domain.append(("departure_time", ">=", selected_departure_start))
+        domain.append(("departure_time", "<=", selected_departure_end))
+
+    if selected_return_date:
+        selected_return_start = f"{selected_return_date} 00:00:00"
+        selected_return_end = f"{selected_return_date} 23:59:59"
+        domain.append(("departure_time", ">=", selected_return_start))
+        domain.append(("departure_time", "<=", selected_return_end))
 
     flights = models.execute_kw(
         current_app.config["ODOO_DB"],
@@ -411,12 +421,12 @@ def flight_ticket():
         "flight-ticket.html",
         dates=list(date_flight_map.keys()), 
         flights=flights,
-        selected_date=selected_date,
+        selected_departure_date=selected_departure_date,
+        selected_return_date=selected_return_date,
         logged_in_user=session.get("username"),
         logged_in_user_role=session.get("role"),
         current_page="flight-ticket",
     )
-
 
 @app.route("/plane_layout/<int:flight_id>", methods=["GET"])
 def plane_layout(flight_id):
