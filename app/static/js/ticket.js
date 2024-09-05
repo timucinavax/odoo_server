@@ -17,12 +17,12 @@ function showFlights(departureDate, returnDate = null) {
 
     const outboundFlights = flightsData.filter(flight => {
         const flightOutboundDate = flight.departure_time.split(' ')[0];
-        return flightOutboundDate === departureDate;
+        return flight.flight_direction === 'outbound' && flightOutboundDate === departureDate;
     });
 
     const returnFlights = returnDate ? flightsData.filter(flight => {
-        const flightReturnDate = flight.arrival_time.split(' ')[0];
-        return flightReturnDate === returnDate;
+        const flightReturnDate = flight.departure_time.split(' ')[0];
+        return flight.flight_direction === 'return' && flightReturnDate === returnDate;
     }) : [];
 
     if (outboundFlights.length > 0) {
@@ -30,12 +30,14 @@ function showFlights(departureDate, returnDate = null) {
     } else {
         showNoFlightsMessage('Gidiş');
     }
+
     if (returnDate && returnFlights.length > 0) {
         displayFlights(returnFlights, 'Dönüş');
     } else if (returnDate) {
         showNoFlightsMessage('Dönüş');
     }
 }
+
 
 
 function displayFlights(flights, flightType) {
