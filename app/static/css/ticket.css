@@ -80,6 +80,27 @@ html {
     position: relative; /* Gölgeleri ve yuvarlak köşeleri daha belirgin hale getirmek için */
 }
 
+.flight-counts {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .flight-count {
+    font-weight: bold;
+  }
+  
+  .outbound-count {
+    color: green;
+  }
+  
+  .return-count {
+    color: blue;
+  }
+
 .date-box.active {
     background-color: #fff;
     border-color: #007bff;
