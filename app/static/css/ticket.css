@@ -126,7 +126,6 @@ html {
     border-color: #007bff;
     color: #007bff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    min-width: 130px; /* Aktif kutunun genişliğini de artırmak için */
 }
 
 
