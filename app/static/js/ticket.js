@@ -90,9 +90,9 @@ function updatePrice(flightNumber, basePrice, availableSeats) {
 function scrollDates(direction) {
     const dateSelector = document.querySelector('.date-selector');
     const dateBoxes = document.querySelectorAll('.date-box');
-    const visibleBoxes = 3; 
-    const boxWidth = dateBoxes[0].offsetWidth + 10;
-    const scrollAmount = boxWidth * visibleBoxes;
+    const visibleBoxes = 3; // Aynı anda görünen kutu sayısı
+    const boxWidth = dateBoxes[0].offsetWidth + 10; // Bir kutunun genişliği (margin ile)
+    const scrollAmount = boxWidth * visibleBoxes; // Her seferinde kaydırılacak piksel miktarı
 
     if (direction === 'left') {
         dateSelector.scrollBy({
@@ -106,8 +106,6 @@ function scrollDates(direction) {
         });
     }
 }
-
-
 
 function passengerInfo(flightNumber, flightAvailableSeats) {
     const flight = flightsData.find(f => f.flight_number === flightNumber);

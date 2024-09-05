@@ -59,20 +59,21 @@ html {
     align-items: center;
     justify-content: center;
     margin-bottom: 20px;
-    overflow: hidden; /* Yatay taşmaları gizlemek için */
+    overflow: hidden; 
     position: relative;
-    max-width: 700px; /* Ekranda görünen alanı sınırlamak için */
-    margin: 0 auto; /* Ortalamak için */
+    max-width: 400px; 
+    margin: 0 auto; 
 }
 
 .date-selector {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     overflow-x: auto;
     scroll-behavior: smooth;
     padding: 10px 0;
     white-space: nowrap;
-    width: 100%;
+    flex: 1;
+    max-width: 300px; 
     box-sizing: border-box;
 }
 
@@ -89,6 +90,7 @@ html {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     position: relative;
 }
+
 
 .navigation-button {
     display: flex;
