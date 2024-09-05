@@ -19,36 +19,37 @@
     <div class="breadcrumb-label">Ödeme</div>
   </div>
 </div>
-
-<div class="flight-buy-container" data-number="0">
-  <div class="date-navigation">
-      <button class="scroll-button left-scroll" onclick="scrollDates('left')">&lt;</button>
-      <div class="date-selector">
-          {% for date in dates %}
-          <div
-              class="date-box"
-              data-date="{{ date }}"
-              onclick="showFlights('{{ date }}')"
-            >
-              <div class="flight-counts">
-                <div class="count-box">
-                    <span class="flight-count outbound-count" style="color: green;">{{ outbound_count[date] }}</span>
-                    <span class="flight-label">Gidiş</span>
+<div class="step-container">
+  <div class="flight-buy-container" data-number="0">
+    <div class="date-navigation">
+        <button class="scroll-button left-scroll" onclick="scrollDates('left')">&lt;</button>
+        <div class="date-selector">
+            {% for date in dates %}
+            <div
+                class="date-box"
+                data-date="{{ date }}"
+                onclick="showFlights('{{ date }}')"
+              >
+                <div class="flight-counts">
+                  <div class="count-box">
+                      <span class="flight-count outbound-count" style="color: green;">{{ outbound_count[date] }}</span>
+                      <span class="flight-label">Gidiş</span>
+                  </div>
+                  <div class="count-box">
+                      <span class="flight-count return-count" style="color: blue;">{{ return_count[date] }}</span>
+                      <span class="flight-label">Dönüş</span>
+                  </div>
                 </div>
-                <div class="count-box">
-                    <span class="flight-count return-count" style="color: blue;">{{ return_count[date] }}</span>
-                    <span class="flight-label">Dönüş</span>
-                </div>
-              </div>
-              <div class="day-number">{{ date.split('-')[2] }}</div>
-              <div class="day-name">{{ date | dayname }}</div>
-              <div class="month-name">{{ date | monthname }}</div>
-          </div>
-          {% endfor %}
+                <div class="day-number">{{ date.split('-')[2] }}</div>
+                <div class="day-name">{{ date | dayname }}</div>
+                <div class="month-name">{{ date | monthname }}</div>
+            </div>
+            {% endfor %}
+        </div>
+          <button class="scroll-button right-scroll" onclick="scrollDates('right')">&gt;</button>
       </div>
-        <button class="scroll-button right-scroll" onclick="scrollDates('right')">&gt;</button>
-    </div>
-  <div class="flights-container" id="flights-container"></div>
+    <div class="flights-container" id="flights-container"></div>
+  </div>
 
   <div class="passenger-info-container" data-number="1" style="display: none">
     <h3 class="section-title">Yolcu Bilgileri</h3>
@@ -100,35 +101,34 @@
       </div>    
     </form>
   </div>
+
+  <div class="seat-selection-container" data-number="2" id="seat-selection-container" style="display:none;"></div>
+
+  <div class="payment-container" data-number="3" style="display: none">
+    <h3 class="section-title">Ödeme Bilgileri</h3>
+    <form id="payment-form" class="payment-form">
+        <div class="form-section">
+            <div class="form-group">
+                <label for="card-number">Kart Numarası</label>
+                <input type="text" id="card-number" name="card-number" required />
+            </div>
+            <div class="form-group">
+                <label for="expiry-date">Son Kullanma Tarihi</label>
+                <input type="text" id="expiry-date" name="expiry-date" required placeholder="MM/YY"/>
+            </div>
+            <div class="form-group">
+                <label for="cvv">CVV</label>
+                <input type="text" id="cvv" name="cvv" required />
+            </div>
+        </div>
+        <div class="payment-summary">
+            <h4>Toplam Tutar: <span id="total-price-summary"></span> TL</h4>
+        </div>
+        <button type="submit" class="btn-primary">Ödeme Yap</button>
+    </form>
+  </div>
+
 </div>
-
-<div class="seat-selection-container" id="seat-selection-container" style="display:none;"></div>
-
-
-<div class="payment-container" data-number="3" style="display: none">
-  <h3 class="section-title">Ödeme Bilgileri</h3>
-  <form id="payment-form" class="payment-form">
-      <div class="form-section">
-          <div class="form-group">
-              <label for="card-number">Kart Numarası</label>
-              <input type="text" id="card-number" name="card-number" required />
-          </div>
-          <div class="form-group">
-              <label for="expiry-date">Son Kullanma Tarihi</label>
-              <input type="text" id="expiry-date" name="expiry-date" required placeholder="MM/YY"/>
-          </div>
-          <div class="form-group">
-              <label for="cvv">CVV</label>
-              <input type="text" id="cvv" name="cvv" required />
-          </div>
-      </div>
-      <div class="payment-summary">
-          <h4>Toplam Tutar: <span id="total-price-summary"></span> TL</h4>
-      </div>
-      <button type="submit" class="btn-primary">Ödeme Yap</button>
-  </form>
-</div>
-
 
 <div id="confirmationModal" class="modal" style="display: none">
   <div class="modal-content">
