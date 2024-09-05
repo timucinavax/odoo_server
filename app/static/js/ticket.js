@@ -201,6 +201,7 @@ function calculateFlightDuration(departureTime, arrivalTime) {
 }
 
 function activateStep(stepNumber) {
+    console.log("Aktif adım:", stepNumber); // Adım numarasını konsolda kontrol etmek için
     document.querySelectorAll('.step-container > div').forEach(div => {
         div.style.display = 'none';
     });
@@ -229,10 +230,11 @@ function proceedToPassengerInfo() {
     activateStep(1);
     document.getElementById('confirmationModal').style.display = 'none';
 }
+document.getElementById('confirm-purchase-button').addEventListener('click', proceedToPassengerInfo);
 
 function closeModal() {
     document.getElementById('confirmationModal').style.display = 'none';
 }
 
-document.getElementById('confirm-purchase-button').addEventListener('click', proceedToPassengerInfo);
+
 
