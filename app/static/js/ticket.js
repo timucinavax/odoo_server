@@ -211,6 +211,5 @@ function closeModal() {
     document.getElementById('confirmationModal').style.display = 'none';
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById('confirm-purchase-button').addEventListener('click', proceedToPassengerInfo);
-});
+document.getElementById('confirm-purchase-button').addEventListener('click', proceedToPassengerInfo);
+
