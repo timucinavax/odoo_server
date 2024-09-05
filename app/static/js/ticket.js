@@ -2,45 +2,28 @@ let maxSeats = 0;
 let selectedSeats = 0;
 
 
-function showFlights(departureDate, returnDate = null) {
+function showFlights(date) {
     document.querySelectorAll('.date-box').forEach(box => box.classList.remove('active'));
-
-    if (departureDate) {
-        const selectedBox = document.querySelector(`.date-box[data-date="${departureDate}"]`);
-        if (selectedBox) {
-            selectedBox.classList.add('active');
-        }
+    const selectedBox = document.querySelector(`.date-box[data-date="${date}"]`);
+    if (selectedBox) {
+        selectedBox.classList.add('active');
     }
-    
     const flightsContainer = document.getElementById('flights-container');
     flightsContainer.innerHTML = '';
 
-    const outboundFlights = flightsData.filter(flight => {
-        const flightOutboundDate = flight.departure_time.split(' ')[0];
-        return flight.flight_direction === 'outbound' && flightOutboundDate === departureDate;
+    flightsData.forEach(flight => {
+        const flightDate = flight.departure_time.split(' ')[0];
     });
 
-    const returnFlights = returnDate ? flightsData.filter(flight => {
-        const flightReturnDate = flight.departure_time.split(' ')[0];
-        return flight.flight_direction === 'return' && flightReturnDate === returnDate;
-    }) : [];
+    const flights = flightsData.filter(flight => {
+        const flightDate = flight.departure_time.split(' ')[0]; 
+        return flightDate === date;
+    });
 
-    if (outboundFlights.length > 0) {
-        displayFlights(outboundFlights, 'Gidiş');
-    } else {
-        showNoFlightsMessage('Gidiş');
-    }
-
-    if (returnDate && returnFlights.length > 0) {
-        displayFlights(returnFlights, 'Dönüş');
-    } else if (returnDate) {
-        showNoFlightsMessage('Dönüş');
-    }
+    flights.length > 0 ? displayFlights(flights) : showNoFlightsMessage();
 }
 
-
-
-function displayFlights(flights, flightType) {
+function displayFlights(flights) {
     const logoUrl = window.logoUrl;
     const userRole = window.loggedInUserRole;
 
