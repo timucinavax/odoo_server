@@ -4,6 +4,13 @@ let selectedSeats = 0;
 
 function showFlights(departureDate, returnDate = null) {
     document.querySelectorAll('.date-box').forEach(box => box.classList.remove('active'));
+
+    if (departureDate) {
+        const selectedBox = document.querySelector(`.date-box[data-date="${departureDate}"]`);
+        if (selectedBox) {
+            selectedBox.classList.add('active');
+        }
+    }
     
     const flightsContainer = document.getElementById('flights-container');
     flightsContainer.innerHTML = '';
