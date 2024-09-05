@@ -2,48 +2,47 @@ let maxSeats = 0;
 let selectedSeats = 0;
 
 
-function showFlights(departureDate, returnDate) {
+function showFlights(departureDate, returnDate = null) {
     document.querySelectorAll('.date-box').forEach(box => box.classList.remove('active'));
     
     if (departureDate) {
-        const selectedDepartureBox = document.querySelector(`.date-box[data-date="${departureDate}"]`);
-        if (selectedDepartureBox) {
-            selectedDepartureBox.classList.add('active');
-        }
-    }
-    
-    if (returnDate) {
-        const selectedReturnBox = document.querySelector(`.date-box[data-date="${returnDate}"]`);
-        if (selectedReturnBox) {
-            selectedReturnBox.classList.add('active');
+        const selectedBox = document.querySelector(`.date-box[data-date="${departureDate}"]`);
+        if (selectedBox) {
+            selectedBox.classList.add('active');
         }
     }
 
     const flightsContainer = document.getElementById('flights-container');
     flightsContainer.innerHTML = '';
 
+    // Sadece gidiş uçuşlarını filtreleme
     const outboundFlights = flightsData.filter(flight => {
-        const flightDate = flight.departure_time.split(' ')[0]; 
-        return flightDate === departureDate;
+        const flightOutboundDate = flight.departure_time.split(' ')[0];
+        return flightOutboundDate === departureDate;
     });
 
-    const returnFlights = flightsData.filter(flight => {
-        const flightDate = flight.arrival_time.split(' ')[0]; 
-        return flightDate === returnDate;
-    });
+    // Eğer dönüş tarihi verilmişse dönüş uçuşlarını da filtreleme
+    const returnFlights = returnDate ? flightsData.filter(flight => {
+        const flightReturnDate = flight.arrival_time.split(' ')[0];
+        return flightReturnDate === returnDate;
+    }) : [];
 
+    // Gidiş uçuşları varsa göster, yoksa mesaj ver
     if (outboundFlights.length > 0) {
         displayFlights(outboundFlights);
     } else {
-        showNoFlightsMessage('outbound');
+        showNoFlightsMessage('Gidiş');
     }
 
-    if (returnFlights.length > 0) {
+    // Dönüş uçuşları varsa göster, yoksa mesaj ver
+    if (returnDate && returnFlights.length > 0) {
         displayFlights(returnFlights);
-    } else {
-        showNoFlightsMessage('return');
+    } else if (returnDate) {
+        showNoFlightsMessage('Dönüş');
     }
 }
+
+
 
 function displayFlights(flights) {
     const logoUrl = window.logoUrl;
