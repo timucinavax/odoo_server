@@ -45,20 +45,20 @@ function handleSearchForm() {
     const fromSelect = document.getElementById('departure_airport');
     const toSelect = document.getElementById('arrival_airport');
     const departureDateInput = document.getElementById('departure_time');
-    const returnDepartureSelect = document.getElementById('return_departure_airport');
-    const returnArrivalSelect = document.getElementById('return_arrival_airport');
-    const returnDateInput = document.getElementById('return_time');
+    const returnDateInput = document.getElementById('return_time'); // Gidiş-dönüş için ikinci tarih alanı
 
     oneWayTab.addEventListener('click', function () {
         oneWayTab.classList.add('active');
         roundTripTab.classList.remove('active');
         returnSection.style.display = 'none';
+        returnDateInput.parentElement.style.display = 'none'; // Dönüş tarihini gizle
     });
 
     roundTripTab.addEventListener('click', function () {
         roundTripTab.classList.add('active');
         oneWayTab.classList.remove('active');
         returnSection.style.display = 'block';
+        returnDateInput.parentElement.style.display = 'block'; // Dönüş tarihini göster
     });
 
     let flightsData = [];
@@ -97,32 +97,10 @@ function handleSearchForm() {
             populateSelectOptions(departureDateInput, availableDepartureDates);
 
             if (roundTripTab.classList.contains('active')) {
-                updateReturnOptions(selectedDeparture, selectedArrival);
+                populateSelectOptions(returnDateInput, availableDepartureDates); // İkinci tarih alanını da aynı seçeneklerle doldur
             }
         });
     });
-
-    function updateReturnOptions(departure, arrival) {
-        const returnFlights = flightsData.filter(flight =>
-            flight.flight_direction === 'return' &&
-            flight.departure_airport[1] === arrival &&
-            flight.arrival_airport[1] === departure
-        );
-
-        const returnDepartureAirports = [...new Set(returnFlights.map(flight => flight.departure_airport[1]))];
-        const returnArrivalAirports = [...new Set(returnFlights.map(flight => flight.arrival_airport[1]))];
-
-        populateSelectOptions(returnDepartureSelect, returnDepartureAirports);
-        populateSelectOptions(returnArrivalSelect, returnArrivalAirports);
-
-        returnArrivalSelect.addEventListener('change', function () {
-            const selectedReturnArrival = returnArrivalSelect.value;
-            const matchingReturnFlights = returnFlights.filter(flight => flight.arrival_airport[1] === selectedReturnArrival);
-
-            const availableReturnDates = [...new Set(matchingReturnFlights.map(flight => flight.date.split(' ')[0]))];
-            populateSelectOptions(returnDateInput, availableReturnDates);
-        });
-    }
 }
 
 function populateSelectOptions(selectElement, options) {
