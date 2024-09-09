@@ -15,7 +15,6 @@ function postFlightSearch() {
         const departureTime = document.getElementById('departure_time').value;
         const returnTime = document.getElementById('return_time').value;
 
-        // Eğer bir gidiş dönüş yolculuk yapılıyorsa, hidden inputları ekleyin
         if (departureTime) {
             addHiddenInput(form, 'departure_time', departureTime);
         }
@@ -23,8 +22,6 @@ function postFlightSearch() {
         if (returnTime) {
             addHiddenInput(form, 'return_time', returnTime);
         }
-
-        // Formun aksiyonu ve metodunu ayarlayın, ardından gönderin
         form.action = "/search-flight-ticket";
         form.method = "POST";
         form.submit();

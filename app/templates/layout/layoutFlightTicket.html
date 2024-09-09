@@ -34,7 +34,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>const flightsData = {{ flights | tojson }};</script>
     <script type="text/javascript">window.loggedInUserRole = "{{ logged_in_user_role }}";</script>
-    <script type="text/javascript">const selected_dates = {{ selected_dates | tojson }};</script>
+    <script type="text/javascript">const selected_dates = {{ selected_dates | tojson }}; console.log(selected_dates)</script>
     <script type="text/javascript">const outboundCount = {{ outbound_count | tojson }};</script>
     <script type="text/javascript">const returnCount = {{ return_count | tojson }};</script>
     <script type="text/javascript">window.logoUrl = "{{ url_for('static', filename='images/sehlen_logo.png') }}";</script>
