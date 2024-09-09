@@ -1,28 +1,17 @@
 let maxSeats = 0;
 let selectedSeats = 0;
 
-let selectedDates = null;
 
 function showFlights(date = null) {
-    const today = new Date().toISOString().split('T')[0];
+    const today = new Date().toISOString().split('T')[0]; // Bugünün tarihi (YYYY-MM-DD formatında)
     
-    if (date) {
-        if (selectedDates === null) {
-            selectedDates = [date];
-        } else {
-            selectedDates.push(date);
-        }
-    }
-
     document.querySelectorAll('.date-box').forEach(box => box.classList.remove('active'));
 
-    if (selectedDates) {
-        selectedDates.forEach(date => {
-            const selectedBox = document.querySelector(`.date-box[data-date="${date}"]`);
-            if (selectedBox) {
-                selectedBox.classList.add('active');
-            }
-        });
+    if (date) {
+        const selectedBox = document.querySelector(`.date-box[data-date="${date}"]`);
+        if (selectedBox) {
+            selectedBox.classList.add('active');
+        }
     }
 
     const flightsContainer = document.getElementById('flights-container');
@@ -30,12 +19,12 @@ function showFlights(date = null) {
 
     const outboundFlights = flightsData.filter(flight => {
         const flightDate = flight.departure_time.split(' ')[0]; 
-        return (selectedDates === null || selectedDates.includes(flightDate)) && flightDate >= today && flight.flight_direction === 'outbound'; // Gidiş uçuşları
+        return (!date || flightDate === date) && flightDate >= today && flight.flight_direction === 'outbound'; // Gidiş uçuşları
     });
 
     const returnFlights = flightsData.filter(flight => {
         const flightDate = flight.departure_time.split(' ')[0]; 
-        return (selectedDates === null || selectedDates.includes(flightDate)) && flightDate >= today && flight.flight_direction === 'return'; // Dönüş uçuşları
+        return (!date || flightDate === date) && flightDate >= today && flight.flight_direction === 'return'; // Dönüş uçuşları
     });
 
     // Gidiş Uçuşları
@@ -52,7 +41,6 @@ function showFlights(date = null) {
         showNoFlightsMessage();
     }
 }
-
 
 function displayFlights(flights, header) {
     const logoUrl = window.logoUrl;
