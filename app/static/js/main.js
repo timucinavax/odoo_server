@@ -12,14 +12,13 @@ function postFlightSearch() {
     searchButton.addEventListener('click', function (e) {
         e.preventDefault();
         
-        // Gidiş ve dönüş tarihlerini aynı adı kullanarak göndermek için gizli inputlar ekle
         const departureTime = document.getElementById('departure_time').value;
         const returnTime = document.getElementById('return_time').value;
 
         addHiddenInput(form, 'departure_time', departureTime);
 
-        console.log("Departure Date:", departureDate);
-        console.log("Return Date:", returnDate);
+        console.log("Departure Date:", departureTime);
+        console.log("Return Date:", returnTime);
         
         if (returnTime) {
             addHiddenInput(form, 'departure_time', returnTime);
