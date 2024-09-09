@@ -17,6 +17,9 @@ function postFlightSearch() {
         const returnTime = document.getElementById('return_time').value;
 
         addHiddenInput(form, 'departure_time', departureTime);
+
+        console.log("Departure Date:", departureDate);
+        console.log("Return Date:", returnDate);
         
         if (returnTime) {
             addHiddenInput(form, 'departure_time', returnTime);
