@@ -11,24 +11,30 @@ function postFlightSearch() {
 
     searchButton.addEventListener('click', function (e) {
         e.preventDefault();
-        
+
         const departureTime = document.getElementById('departure_time').value;
         const returnTime = document.getElementById('return_time').value;
 
-        addHiddenInput(form, 'departure_time', departureTime);
+        // Mevcut gizli inputları temizle
+        form.querySelectorAll('input[name="departure_time"]').forEach(input => input.remove());
 
-        console.log("Departure Date:", departureTime);
-        console.log("Return Date:", returnTime);
-        
+        // Gidiş tarihini ekle
+        if (departureTime) {
+            addHiddenInput(form, 'departure_time', departureTime);
+        }
+
+        // Dönüş tarihini ekle
         if (returnTime) {
             addHiddenInput(form, 'departure_time', returnTime);
         }
 
-        form.action = "/search-flight-ticket";
-        form.method = "POST";
+        console.log("Departure Date:", departureTime);
+        console.log("Return Date:", returnTime);
+
         form.submit();
     });
 }
+
 function createCookieConsent() {
     const cookieConsent = document.createElement("div");
     cookieConsent.className = "cookie-consent";
