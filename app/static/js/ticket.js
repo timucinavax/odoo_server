@@ -1,12 +1,11 @@
 let maxSeats = 0;
 let selectedSeats = 0;
 
-let selectedDates = window.selected_dates || null; 
+let selectedDates = null;
 
 function showFlights(date = null) {
-    const today = new Date().toISOString().split('T')[0]; // Bugünün tarihi (YYYY-MM-DD formatında)
+    const today = new Date().toISOString().split('T')[0];
     
-    // Eğer date parametresi varsa selectedDates arrayine ekle
     if (date) {
         if (selectedDates === null) {
             selectedDates = [date];
