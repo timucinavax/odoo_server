@@ -12,10 +12,29 @@ function postFlightSearch() {
     searchButton.addEventListener('click', function (e) {
         e.preventDefault();
         
+        // Gidiş ve dönüş tarihlerini aynı adı kullanarak göndermek için gizli inputlar ekle
+        const departureTime = document.getElementById('departure_time').value;
+        const returnTime = document.getElementById('return_time').value;
+
+        addHiddenInput(form, 'departure_time', departureTime);
+        
+        if (returnTime) {
+            addHiddenInput(form, 'departure_time', returnTime);
+        }
+
         form.action = "/search-flight-ticket";
         form.method = "POST";
         form.submit();
     });
+}
+
+// Gizli input ekleyen fonksiyon
+function addHiddenInput(form, name, value) {
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = name;
+    input.value = value;
+    form.appendChild(input);
 }
 
 function createCookieConsent() {
