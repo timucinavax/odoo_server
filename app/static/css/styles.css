@@ -70,12 +70,6 @@ html {
     color: #007bff;
 }
 
-.search-form {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
 .form-group {
     flex: 1;
     min-width: 180px;
@@ -387,10 +381,31 @@ select {
         font-size: 0.9rem;
     }
 
-    .search-form {
-        gap: 5px;
+    form-group {
+        flex: 1 1 200px; /* Minimum 200px genişlik */
+        max-width: 300px; /* Maksimum genişlik */
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 15px; /* Daha fazla boşluk ekleyelim */
     }
-
+    
+    /* Gidiş ve Dönüş başlıkları için düzenleme */
+    #outbound-section h3, 
+    #return-section h3 {
+        text-align: left;
+        font-size: 1.2rem;
+        color: #333;
+        margin-bottom: 10px;
+    }
+    
+    /* Formun genel düzenlemesi */
+    .search-form {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between; /* Elemanlar arasında boşluk bırakır */
+        gap: 20px; /* Elemanlar arasındaki boşluk */
+    }
+    
     .form-group label {
         font-size: 0.85rem;
     }
