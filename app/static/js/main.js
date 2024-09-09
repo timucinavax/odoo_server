@@ -45,6 +45,8 @@ function handleSearchForm() {
     const fromSelect = document.getElementById('departure_airport');
     const toSelect = document.getElementById('arrival_airport');
     const departureDateInput = document.getElementById('departure_time');
+    const returnDepartureSelect = document.getElementById('return_departure_airport');
+    const returnArrivalSelect = document.getElementById('return_arrival_airport');
     const returnDateInput = document.getElementById('return_time');
 
     oneWayTab.addEventListener('click', function () {
@@ -106,8 +108,19 @@ function handleSearchForm() {
             flight.arrival_airport[1] === departure
         );
 
-        const availableReturnDates = [...new Set(returnFlights.map(flight => flight.date.split(' ')[0]))];
-        populateSelectOptions(returnDateInput, availableReturnDates);
+        const returnDepartureAirports = [...new Set(returnFlights.map(flight => flight.departure_airport[1]))];
+        const returnArrivalAirports = [...new Set(returnFlights.map(flight => flight.arrival_airport[1]))];
+
+        populateSelectOptions(returnDepartureSelect, returnDepartureAirports);
+        populateSelectOptions(returnArrivalSelect, returnArrivalAirports);
+
+        returnArrivalSelect.addEventListener('change', function () {
+            const selectedReturnArrival = returnArrivalSelect.value;
+            const matchingReturnFlights = returnFlights.filter(flight => flight.arrival_airport[1] === selectedReturnArrival);
+
+            const availableReturnDates = [...new Set(matchingReturnFlights.map(flight => flight.date.split(' ')[0]))];
+            populateSelectOptions(returnDateInput, availableReturnDates);
+        });
     }
 }
 
