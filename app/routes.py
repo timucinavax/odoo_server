@@ -358,26 +358,25 @@ def search_ticket():
     search_criteria = request.form if request.method == "POST" else None
 
     departure_date = search_criteria.get('departure_time')
-    return_date = search_criteria.get('arrival_time')
+    return_date = search_criteria.get('return_time')
     
-    return redirect(url_for("flight_ticket", selected_departure_date=departure_date, selected_return_date=return_date))
-
-
+    # Tarihleri ayrı ayrı almak yerine bir liste olarak birleştiriyoruz
+    selected_dates = []
+    if departure_date:
+        selected_dates.append(departure_date)
+    if return_date:
+        selected_dates.append(return_date)
+    
+    return redirect(url_for("flight_ticket", selected_dates=selected_dates))
     
 @app.route("/flight-ticket", methods=["POST", "GET"])
 def flight_ticket():
     uid, models = odoo_connect()
     if not uid:
         return redirect(url_for("index"))
-    
-    selected_departure_date = request.args.get("selected_departure_date")
-    selected_return_date = request.args.get("selected_return_date")
 
-    selected_dates = []
-    if selected_departure_date:
-        selected_dates.append(selected_departure_date)
-    if selected_return_date:
-        selected_dates.append(selected_return_date)
+    # selected_dates parametresini GET isteğiyle alın
+    selected_dates = request.args.getlist("selected_dates")
 
     domain = []
 
@@ -440,6 +439,7 @@ def flight_ticket():
         logged_in_user_role=session.get("role"),
         current_page="flight-ticket",
     )
+
 
 @app.route("/plane_layout/<int:flight_id>", methods=["GET"])
 def plane_layout(flight_id):
