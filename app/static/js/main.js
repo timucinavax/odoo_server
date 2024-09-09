@@ -13,11 +13,11 @@ function postFlightSearch() {
         e.preventDefault();
 
         // Gidiş ve dönüş tarihlerini alıyoruz
-        const departureDate = document.querySelector('select[name="departure_time[]"]').value;
-        const returnDate = document.querySelector('select[name="return_time"]').value;
+        const departureDate = document.querySelector('departure_time').value;
+        const returnDate = document.querySelector('return_time').value;
 
         // Var olan gizli input'ları temizleyelim (formu yeniden doldururken sorun olmasın)
-        form.querySelectorAll('input[name="departure_time[]"]').forEach(input => input.remove());
+        form.querySelectorAll('departure_time').forEach(input => input.remove());
 
         // Gidiş tarihini ekle
         const departureInput = document.createElement('input');
