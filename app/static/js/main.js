@@ -10,13 +10,14 @@ function postFlightSearch() {
     const searchButton = document.querySelector('.search-button');
 
     searchButton.addEventListener('click', function (e) {
-        e.preventDefault();
+        e.preventDefault();  
         
         form.action = "/search-flight-ticket";
         form.method = "POST";
         form.submit();
     });
 }
+
 
 function createCookieConsent() {
     const cookieConsent = document.createElement("div");
@@ -37,29 +38,33 @@ function createCookieConsent() {
         cookieConsent.style.display = "none";
     });
 }
-
 function handleSearchForm() {
     const oneWayTab = document.getElementById('one-way-tab');
     const roundTripTab = document.getElementById('round-trip-tab');
-    const returnSection = document.getElementById('return-section');
+    const returnDateGroup = document.getElementById('return-date-group');
     const fromSelect = document.getElementById('departure_airport');
     const toSelect = document.getElementById('arrival_airport');
     const departureDateInput = document.getElementById('departure_time');
-    const returnDepartureSelect = document.getElementById('return_departure_airport');
-    const returnArrivalSelect = document.getElementById('return_arrival_airport');
-    const returnDateInput = document.getElementById('return_time'); // Gidiş-dönüş için ikinci tarih alanı
+    const returnDepartureDateInput = document.getElementById('return_departure_time');
+    const returnDateInput = document.getElementById('arrival_time');
+    const returnArrivalDateInput = document.getElementById('return_arrival_time');
 
     oneWayTab.addEventListener('click', function () {
         oneWayTab.classList.add('active');
         roundTripTab.classList.remove('active');
-        returnSection.style.display = 'none';
+        returnDateGroup.style.display = 'none';
+        returnDateInput.value = ""; 
+        populateAllFlights(); 
     });
 
     roundTripTab.addEventListener('click', function () {
         roundTripTab.classList.add('active');
         oneWayTab.classList.remove('active');
-        returnSection.style.display = 'block';
+        returnDateGroup.style.display = 'block';
+        populateOutboundFlights(); 
     });
+
+    returnDateGroup.style.display = 'none';
 
     let flightsData = [];
 
@@ -78,7 +83,13 @@ function handleSearchForm() {
         });
 
     function populateAllFlights() {
-        const departureAirports = [...new Set(flightsData.map(flight => flight.departure_airport[1]))];
+        const departureAirports = flightsData.map(flight => flight.departure_airport[1]);
+        populateSelectOptions(fromSelect, departureAirports);
+    }
+
+    function populateOutboundFlights() {
+        const outboundFlights = flightsData.filter(flight => flight.flight_direction === 'outbound');
+        const departureAirports = outboundFlights.map(flight => flight.departure_airport[1]);
         populateSelectOptions(fromSelect, departureAirports);
     }
 
@@ -86,36 +97,57 @@ function handleSearchForm() {
         const selectedDeparture = fromSelect.value;
         const filteredFlights = flightsData.filter(flight => flight.departure_airport[1] === selectedDeparture);
 
-        const arrivalAirports = [...new Set(filteredFlights.map(flight => flight.arrival_airport[1]))];
+        const arrivalAirports = filteredFlights.map(flight => flight.arrival_airport[1]);
         populateSelectOptions(toSelect, arrivalAirports);
 
         toSelect.addEventListener('change', function () {
             const selectedArrival = toSelect.value;
             const matchingFlights = filteredFlights.filter(flight => flight.arrival_airport[1] === selectedArrival);
 
-            const availableDepartureDates = [...new Set(matchingFlights.map(flight => flight.date.split(' ')[0]))];
+            const availableDepartureDates = matchingFlights.map(flight => flight.date.split(' ')[0]);
             populateSelectOptions(departureDateInput, availableDepartureDates);
 
+            if (availableDepartureDates.length > 0) {
+                departureDateInput.value = availableDepartureDates[0];
+            }
+
             if (roundTripTab.classList.contains('active')) {
-                updateReturnOptions(selectedArrival, selectedDeparture); // Dönüş uçuşları için doğru yönü kontrol et
+                updateReturnDates(selectedDeparture, selectedArrival);
             }
         });
     });
 
-    function updateReturnOptions(arrival, departure) {
+    departureDateInput.addEventListener('change', function () {
+        const selectedDeparture = fromSelect.value;
+        const selectedArrival = toSelect.value;
+
+        if (roundTripTab.classList.contains('active')) {
+            updateReturnDates(selectedDeparture, selectedArrival);
+        }
+    });
+
+    function updateReturnDates(selectedDeparture, selectedArrival) {
+        const selectedDepartureDate = departureDateInput.value;
+        const selectedReturnDepartureDate = returnDepartureDateInput.value;
+
         const returnFlights = flightsData.filter(flight =>
-            flight.departure_airport[1] === arrival &&
-            flight.arrival_airport[1] === departure
+            flight.flight_direction === 'return' &&
+            flight.departure_airport[1] === selectedArrival &&
+            flight.arrival_airport[1] === selectedDeparture &&
+            flight.date.split(' ')[0] > selectedDepartureDate &&
+            flight.date.split(' ')[0] > selectedReturnDepartureDate 
         );
 
-        const availableReturnDates = [...new Set(returnFlights.map(flight => flight.date.split(' ')[0]))];
-        populateSelectOptions(returnDateInput, availableReturnDates);
+        const availableReturnDates = returnFlights.map(flight => flight.date.split(' ')[0]);
+        populateSelectOptions(returnDateInput, availableReturnDates); 
+        populateSelectOptions(returnArrivalDateInput, availableReturnDates); 
     }
 }
 
 function populateSelectOptions(selectElement, options) {
-    selectElement.innerHTML = '<option value="">Seçiniz</option>';
-    options.forEach(optionValue => {
+    selectElement.innerHTML = '<option value="">Dönüş Tarihi</option>';
+    const uniqueOptions = [...new Set(options)];
+    uniqueOptions.forEach(optionValue => {
         const option = document.createElement('option');
         option.value = optionValue;
         option.textContent = optionValue;
