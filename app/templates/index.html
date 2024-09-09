@@ -81,12 +81,12 @@ Arama{% endblock %} {% block content %}
             </div>
             <div class="form-group">
                 <label for="departure_time">Gidiş Tarihi</label>
-                <select id="departure_time" name="departure_time" class="form-control" required>
+                <select id="departure_time" name="departure_time[]" class="form-control" required>
                     <option value="">Gidiş Tarihi</option>
                 </select>
             </div>
         </div>
-
+    
         <!-- Dönüş Bölümü (Gidiş-Dönüş seçeneğinde görünecek) -->
         <div id="return-section" style="display:none;">
             <h3>Dönüş</h3>
@@ -104,14 +104,14 @@ Arama{% endblock %} {% block content %}
             </div>
             <div class="form-group">
                 <label for="return_time">Dönüş Tarihi</label>
-                <select id="return_time" name="return_time" class="form-control">
+                <select id="return_time" name="departure_time[]" class="form-control">
                     <option value="">Dönüş Tarihi</option>
                 </select>
             </div>
         </div>
-
+    
         <button type="submit" class="search-button">UCUZ UÇUŞLARI ARA</button>
-    </form>
+      </form>
     </div>
     {% else %}
     <div
