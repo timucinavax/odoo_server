@@ -46,15 +46,6 @@ function postFlightSearch() {
     });
 }
 
-// Gizli input ekleyen fonksiyon
-function addHiddenInput(form, name, value) {
-    const input = document.createElement('input');
-    input.type = 'hidden';
-    input.name = name;
-    input.value = value;
-    form.appendChild(input);
-}
-
 function createCookieConsent() {
     const cookieConsent = document.createElement("div");
     cookieConsent.className = "cookie-consent";
