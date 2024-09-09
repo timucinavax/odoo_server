@@ -11,19 +11,20 @@ function postFlightSearch() {
 
     searchButton.addEventListener('click', function (e) {
         e.preventDefault();
-        
+
         const departureTime = document.getElementById('departure_time').value;
         const returnTime = document.getElementById('return_time').value;
 
-        addHiddenInput(form, 'departure_time', departureTime);
-
-        console.log("Departure Date:", departureTime);
-        console.log("Return Date:", returnTime);
-        
-        if (returnTime) {
-            addHiddenInput(form, 'departure_time', returnTime);
+        // Eğer bir gidiş dönüş yolculuk yapılıyorsa, hidden inputları ekleyin
+        if (departureTime) {
+            addHiddenInput(form, 'departure_time', departureTime);
         }
 
+        if (returnTime) {
+            addHiddenInput(form, 'return_time', returnTime);
+        }
+
+        // Formun aksiyonu ve metodunu ayarlayın, ardından gönderin
         form.action = "/search-flight-ticket";
         form.method = "POST";
         form.submit();
@@ -32,11 +33,16 @@ function postFlightSearch() {
 
 // Gizli input ekleyen fonksiyon
 function addHiddenInput(form, name, value) {
-    const input = document.createElement('input');
-    input.type = 'hidden';
-    input.name = name;
-    input.value = value;
-    form.appendChild(input);
+    const existingInput = form.querySelector(`input[name="${name}"]`);
+    if (existingInput) {
+        existingInput.value = value; // Eğer hidden input varsa, sadece değerini güncelleyin
+    } else {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = name;
+        input.value = value;
+        form.appendChild(input);
+    }
 }
 
 function createCookieConsent() {
