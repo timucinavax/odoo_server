@@ -17,18 +17,37 @@ function showFlights(date = null) {
     const flightsContainer = document.getElementById('flights-container');
     flightsContainer.innerHTML = '';
 
-    const flights = flightsData.filter(flight => {
+    const outboundFlights = flightsData.filter(flight => {
         const flightDate = flight.departure_time.split(' ')[0]; 
-        return (!date || flightDate === date) && flightDate >= today; // Geçmiş uçuşları filtrele
+        return (!date || flightDate === date) && flightDate >= today && flight.flight_direction === 'outbound'; // Gidiş uçuşları
     });
 
-    flights.length > 0 ? displayFlights(flights) : showNoFlightsMessage();
+    const returnFlights = flightsData.filter(flight => {
+        const flightDate = flight.departure_time.split(' ')[0]; 
+        return (!date || flightDate === date) && flightDate >= today && flight.flight_direction === 'return'; // Dönüş uçuşları
+    });
+
+    // Gidiş Uçuşları
+    if (outboundFlights.length > 0) {
+        displayFlights(outboundFlights, 'Gidiş Uçuşları');
+    }
+
+    // Dönüş Uçuşları
+    if (returnFlights.length > 0) {
+        displayFlights(returnFlights, 'Dönüş Uçuşları');
+    }
+
+    if (outboundFlights.length === 0 && returnFlights.length === 0) {
+        showNoFlightsMessage();
+    }
 }
 
-
-function displayFlights(flights) {
+function displayFlights(flights, header) {
     const logoUrl = window.logoUrl;
     const userRole = window.loggedInUserRole;
+
+    const flightsContainer = document.getElementById('flights-container');
+    flightsContainer.innerHTML += `<h2>${header}</h2>`;
 
     flights.forEach(flight => {
         const priceToShow = userRole === 'agency' ? flight.agency_price : flight.user_price;
@@ -72,9 +91,11 @@ function displayFlights(flights) {
                     <button class="buy-ticket-button" onclick="buyTicket('${flight.flight_number}', '${flight.available_seats}')">Bileti Seç</button>
                 </div>
             </div>`;
-        document.getElementById('flights-container').innerHTML += flightCard;
+        flightsContainer.innerHTML += flightCard;
     });
 }
+
+
 
 
 function updatePrice(flightNumber, basePrice, availableSeats) {
