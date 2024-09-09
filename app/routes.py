@@ -362,30 +362,31 @@ def search_ticket():
     
     return redirect(url_for("flight_ticket", selected_departure_date=departure_date, selected_return_date=return_date))
 
+
+    
 @app.route("/flight-ticket", methods=["POST", "GET"])
 def flight_ticket():
     uid, models = odoo_connect()
     if not uid:
         return redirect(url_for("index"))
     
-    # Sadece tek bir parametre seti olarak alıyoruz.
     selected_departure_date = request.args.get("selected_departure_date")
     selected_return_date = request.args.get("selected_return_date")
 
+    selected_dates = []
+    if selected_departure_date:
+        selected_dates.append(selected_departure_date)
+    if selected_return_date:
+        selected_dates.append(selected_return_date)
+
     domain = []
 
-    # Gidiş ve dönüş tarihlerini aynı sorguda birleştiriyoruz.
-    if selected_departure_date:
-        selected_date_start = f"{selected_departure_date} 00:00:00"
-        selected_date_end = f"{selected_departure_date} 23:59:59"
-        domain.append(("departure_time", ">=", selected_date_start))
-        domain.append(("departure_time", "<=", selected_date_end))
-    
-    if selected_return_date:
-        selected_date_start = f"{selected_return_date} 00:00:00"
-        selected_date_end = f"{selected_return_date} 23:59:59"
-        domain.append(("departure_time", ">=", selected_date_start))
-        domain.append(("departure_time", "<=", selected_date_end))
+    if selected_dates:
+        for selected_date in selected_dates:
+            selected_date_start = f"{selected_date} 00:00:00"
+            selected_date_end = f"{selected_date} 23:59:59"
+            domain.append(("departure_time", ">=", selected_date_start))
+            domain.append(("departure_time", "<=", selected_date_end))
 
     flights = models.execute_kw(
         current_app.config["ODOO_DB"],
@@ -432,7 +433,7 @@ def flight_ticket():
         "flight-ticket.html",
         dates=list(date_flight_map.keys()), 
         flights=flights,
-        selected_dates=[selected_departure_date, selected_return_date], 
+        selected_dates=selected_dates, 
         outbound_count=outbound_count,
         return_count=return_count,
         logged_in_user=session.get("username"),
