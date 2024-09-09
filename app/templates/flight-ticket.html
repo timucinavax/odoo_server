@@ -22,40 +22,10 @@
 <div class="step-container">
   <div class="flight-buy-container" data-number="0">
     <div class="date-navigation">
-      <button class="scroll-button left-scroll" onclick="scrollDates('left')">
-        &lt;
-      </button>
-      <div class="date-selector">
-        {% for date in dates %}
-        <div
-          class="date-box"
-          data-date="{{ date }}"
-          onclick="showFlights('{{ date }}')"
-        >
-          <div class="flight-counts">
-            <div class="count-box">
-              <span class="flight-count outbound-count" style="color: green"
-                >{{ outbound_count[date] }}</span
-              >
-              <span class="flight-label">Gidiş</span>
-            </div>
-            <div class="count-box">
-              <span class="flight-count return-count" style="color: blue"
-                >{{ return_count[date] }}</span
-              >
-              <span class="flight-label">Dönüş</span>
-            </div>
-          </div>
-          <div class="day-number">{{ date.split('-')[2] }}</div>
-          <div class="day-name">{{ date | dayname }}</div>
-          <div class="month-name">{{ date | monthname }}</div>
-        </div>
-        {% endfor %}
-      </div>
-      <button class="scroll-button right-scroll" onclick="scrollDates('right')">
-        &gt;
-      </button>
-    </div>
+      <button class="scroll-button left-scroll" onclick="scrollDates('left')">&lt;</button>
+      <div class="date-selector" id="date-selector"></div>
+      <button class="scroll-button right-scroll" onclick="scrollDates('right')">&gt;</button>
+    </div>    
     <div class="flights-container" id="flights-container"></div>
   </div>
 
