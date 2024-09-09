@@ -70,11 +70,38 @@ html {
     color: #007bff;
 }
 
+.search-form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+}
+
 .form-group {
     flex: 1;
-    min-width: 180px;
+    min-width: 220px; /* Minimum genişlik */
+    max-width: 48%;   /* Yan yana durabilmesi için genişlik ayarı */
     display: flex;
     flex-direction: column;
+}
+
+#outbound-section, #return-section {
+    flex: 1;
+    min-width: 45%;   /* Her iki bölümün de %45 genişliğinde olmasını sağlıyoruz */
+}
+
+.search-button {
+    background-color: #dc3545;
+    border: none;
+    color: white;
+    font-weight: bold;
+    padding: 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    align-self: flex-start; /* Buttonu hizalıyoruz */
+    margin-top: 25px; /* Butonun diğer elemanlardan biraz aşağıda olması için boşluk ekliyoruz */
+    flex: 1;
+    max-width: 200px; /* Buttonun genişliği */
 }
 
 label {
@@ -87,18 +114,6 @@ select {
     padding: 10px;
     border-radius: 5px;
     border: 1px solid #ccc;
-}
-
-.search-button {
-    background-color: #dc3545;
-    border: none;
-    color: white;
-    font-weight: bold;
-    padding: 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    align-self: flex-end;
-    flex: 1;
 }
 
 .cards-section {
@@ -380,31 +395,6 @@ select {
         padding: 8px 12px;
         font-size: 0.9rem;
     }
-
-    form-group {
-        flex: 1 1 200px; /* Minimum 200px genişlik */
-        max-width: 300px; /* Maksimum genişlik */
-        display: flex;
-        flex-direction: column;
-        margin-bottom: 15px; /* Daha fazla boşluk ekleyelim */
-    }
-    
-    /* Gidiş ve Dönüş başlıkları için düzenleme */
-    #outbound-section h3, 
-    #return-section h3 {
-        text-align: left;
-        font-size: 1.2rem;
-        color: #333;
-        margin-bottom: 10px;
-    }
-    
-    /* Formun genel düzenlemesi */
-    .search-form {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between; /* Elemanlar arasında boşluk bırakır */
-        gap: 20px; /* Elemanlar arasındaki boşluk */
-    }
     
     .form-group label {
         font-size: 0.85rem;
@@ -414,11 +404,6 @@ select {
     .form-group select {
         padding: 8px;
         font-size: 0.85rem;
-    }
-
-    .search-button {
-        padding: 10px;
-        font-size: 0.95rem;
     }
 
     .form-group {
