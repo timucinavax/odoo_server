@@ -1,13 +1,23 @@
 let maxSeats = 0;
 let selectedSeats = 0;
 
-function showFlights(selected_date = null) {
+flet selectedDates = null; // Başlangıçta selectedDates null olarak tanımlandı.
+
+function showFlights(date = null) {
     const today = new Date().toISOString().split('T')[0]; // Bugünün tarihi (YYYY-MM-DD formatında)
     
+    // Eğer date parametresi varsa selectedDates arrayine ekle
+    if (date) {
+        if (selectedDates === null) {
+            selectedDates = [date];
+        } else {
+            selectedDates.push(date);
+        }
+    }
+
     document.querySelectorAll('.date-box').forEach(box => box.classList.remove('active'));
 
-    // Tarih kutularını aktif hale getirme
-    if (selected_date) {
+    if (selectedDates) {
         selectedDates.forEach(date => {
             const selectedBox = document.querySelector(`.date-box[data-date="${date}"]`);
             if (selectedBox) {
@@ -19,16 +29,14 @@ function showFlights(selected_date = null) {
     const flightsContainer = document.getElementById('flights-container');
     flightsContainer.innerHTML = '';
 
-    // Gidiş uçuşlarını filtreleme
     const outboundFlights = flightsData.filter(flight => {
-        const flightDate = flight.departure_time.split(' ')[0];
-        return (selected_date === null || selected_date.includes(flightDate)) && flightDate >= today && flight.flight_direction === 'outbound';
+        const flightDate = flight.departure_time.split(' ')[0]; 
+        return (selectedDates === null || selectedDates.includes(flightDate)) && flightDate >= today && flight.flight_direction === 'outbound'; // Gidiş uçuşları
     });
 
-    // Dönüş uçuşlarını filtreleme
     const returnFlights = flightsData.filter(flight => {
-        const flightDate = flight.departure_time.split(' ')[0];
-        return (selected_date === null || selected_date.includes(flightDate)) && flightDate >= today && flight.flight_direction === 'return';
+        const flightDate = flight.departure_time.split(' ')[0]; 
+        return (selectedDates === null || selectedDates.includes(flightDate)) && flightDate >= today && flight.flight_direction === 'return'; // Dönüş uçuşları
     });
 
     // Gidiş Uçuşları
@@ -41,7 +49,6 @@ function showFlights(selected_date = null) {
         displayFlights(returnFlights, 'Dönüş Uçuşları');
     }
 
-    // Eğer hiçbir uçuş bulunamazsa
     if (outboundFlights.length === 0 && returnFlights.length === 0) {
         showNoFlightsMessage();
     }
