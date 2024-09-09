@@ -2,29 +2,29 @@ let maxSeats = 0;
 let selectedSeats = 0;
 
 
-function showFlights(date = null) {
+function showFlights(dateList = []) {
     const today = new Date().toISOString().split('T')[0]; // Bugünün tarihi (YYYY-MM-DD formatında)
     
     document.querySelectorAll('.date-box').forEach(box => box.classList.remove('active'));
 
-    if (date) {
+    dateList.forEach(date => {
         const selectedBox = document.querySelector(`.date-box[data-date="${date}"]`);
         if (selectedBox) {
             selectedBox.classList.add('active');
         }
-    }
+    });
 
     const flightsContainer = document.getElementById('flights-container');
     flightsContainer.innerHTML = '';
 
     const outboundFlights = flightsData.filter(flight => {
-        const flightDate = flight.departure_time.split(' ')[0]; 
-        return (!date || flightDate === date) && flightDate >= today && flight.flight_direction === 'outbound'; // Gidiş uçuşları
+        const flightDate = flight.departure_time.split(' ')[0];
+        return (dateList.includes(flightDate) || dateList.length === 0) && flightDate >= today && flight.flight_direction === 'outbound'; // Gidiş uçuşları
     });
 
     const returnFlights = flightsData.filter(flight => {
-        const flightDate = flight.departure_time.split(' ')[0]; 
-        return (!date || flightDate === date) && flightDate >= today && flight.flight_direction === 'return'; // Dönüş uçuşları
+        const flightDate = flight.departure_time.split(' ')[0];
+        return (dateList.includes(flightDate) || dateList.length === 0) && flightDate >= today && flight.flight_direction === 'return'; // Dönüş uçuşları
     });
 
     // Gidiş Uçuşları
@@ -41,6 +41,14 @@ function showFlights(date = null) {
         showNoFlightsMessage();
     }
 }
+
+dateList.forEach(date => {
+    const selectedBox = document.querySelector(`.date-box[data-date="${date}"]`);
+    if (selectedBox) {
+        selectedBox.classList.add('active');
+    }
+});
+
 
 function displayFlights(flights, header) {
     const logoUrl = window.logoUrl;
