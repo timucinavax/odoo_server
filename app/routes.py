@@ -357,16 +357,10 @@ def search_ticket():
     
     search_criteria = request.form if request.method == "POST" else None
 
-    # 'departure_time' parametresini list olarak alıyoruz.
-    departure_dates = search_criteria.getlist('departure_time[]')
-    
-    # Gidiş ve dönüş tarihlerini aynı parametre olarak gönderip, birleştiriyoruz.
-    # Eğer birden fazla tarih varsa, hepsini işleyebiliriz.
-    departure_date = departure_dates[0] if len(departure_dates) > 0 else None
-    return_date = departure_dates[1] if len(departure_dates) > 1 else None
+    departure_date = search_criteria.get('departure_time')
+    return_date = search_criteria.get('arrival_time')
     
     return redirect(url_for("flight_ticket", selected_departure_date=departure_date, selected_return_date=return_date))
-
 
 @app.route("/flight-ticket", methods=["POST", "GET"])
 def flight_ticket():
