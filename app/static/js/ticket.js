@@ -1,68 +1,49 @@
 let maxSeats = 0;
 let selectedSeats = 0;
 
+let selectedDates = null;
 
 function showFlights(date = null) {
     const today = new Date().toISOString().split('T')[0];
-
-    // Get unique dates from the flights data
-    const uniqueDates = [...new Set(flightsData.map(flight => flight.departure_time.split(' ')[0]))].sort();
-
-    // Clear the date selector and generate new date boxes
-    const dateSelector = document.getElementById('date-selector');
-    dateSelector.innerHTML = '';
-
-    uniqueDates.forEach(flightDate => {
-        const outboundCount = flightsData.filter(flight => flight.departure_time.split(' ')[0] === flightDate && flight.flight_direction === 'outbound').length;
-        const returnCount = flightsData.filter(flight => flight.departure_time.split(' ')[0] === flightDate && flight.flight_direction === 'return').length;
-
-        const dateBox = `
-            <div class="date-box" data-date="${flightDate}" onclick="showFlights('${flightDate}')">
-                <div class="flight-counts">
-                    <div class="count-box">
-                        <span class="flight-count outbound-count" style="color: green">${outboundCount}</span>
-                        <span class="flight-label">Gidiş</span>
-                    </div>
-                    <div class="count-box">
-                        <span class="flight-count return-count" style="color: blue">${returnCount}</span>
-                        <span class="flight-label">Dönüş</span>
-                    </div>
-                </div>
-                <div class="day-number">${flightDate.split('-')[2]}</div>
-                <div class="day-name">${new Date(flightDate).toLocaleString('tr-TR', { weekday: 'long' })}</div>
-                <div class="month-name">${new Date(flightDate).toLocaleString('tr-TR', { month: 'long' })}</div>
-            </div>
-        `;
-
-        dateSelector.innerHTML += dateBox;
-    });
+    
+    if (date) {
+        if (selectedDates === null) {
+            selectedDates = [date];
+        } else {
+            selectedDates.push(date);
+        }
+    }
 
     document.querySelectorAll('.date-box').forEach(box => box.classList.remove('active'));
-    if (date) {
-        const selectedBox = document.querySelector(`.date-box[data-date="${date}"]`);
-        if (selectedBox) {
-            selectedBox.classList.add('active');
-        }
+
+    if (selectedDates) {
+        selectedDates.forEach(date => {
+            const selectedBox = document.querySelector(`.date-box[data-date="${date}"]`);
+            if (selectedBox) {
+                selectedBox.classList.add('active');
+            }
+        });
     }
 
     const flightsContainer = document.getElementById('flights-container');
     flightsContainer.innerHTML = '';
 
     const outboundFlights = flightsData.filter(flight => {
-        const flightDate = flight.departure_time.split(' ')[0];
-        return (!date || flightDate === date) && flightDate >= today && flight.flight_direction === 'outbound';
+        const flightDate = flight.departure_time.split(' ')[0]; 
+        return (selectedDates === null || selectedDates.includes(flightDate)) && flightDate >= today && flight.flight_direction === 'outbound'; // Gidiş uçuşları
     });
 
     const returnFlights = flightsData.filter(flight => {
-        const flightDate = flight.departure_time.split(' ')[0];
-        return (!date || flightDate === date) && flightDate >= today && flight.flight_direction === 'return';
+        const flightDate = flight.departure_time.split(' ')[0]; 
+        return (selectedDates === null || selectedDates.includes(flightDate)) && flightDate >= today && flight.flight_direction === 'return'; // Dönüş uçuşları
     });
 
-    // Display flights
+    // Gidiş Uçuşları
     if (outboundFlights.length > 0) {
         displayFlights(outboundFlights, 'Gidiş Uçuşları');
     }
 
+    // Dönüş Uçuşları
     if (returnFlights.length > 0) {
         displayFlights(returnFlights, 'Dönüş Uçuşları');
     }
@@ -71,6 +52,64 @@ function showFlights(date = null) {
         showNoFlightsMessage();
     }
 }
+
+
+function displayFlights(flights, header) {
+    const logoUrl = window.logoUrl;
+    const userRole = window.loggedInUserRole;
+
+    const flightsContainer = document.getElementById('flights-container');
+    flightsContainer.innerHTML += `<h2>${header}</h2>`;
+
+    flights.forEach(flight => {
+        const priceToShow = userRole === 'agency' ? flight.agency_price : flight.user_price;
+        const flightDuration = calculateFlightDuration(flight.departure_time, flight.arrival_time);
+        const flightDirectionLabel = flight.flight_direction === 'return' ? 'Dönüş' : 'Gidiş';
+        const flightDirectionColor = flight.flight_direction === 'return' ? 'blue' : 'green';
+
+        const flightCard = `
+            <div class="card">
+                <div class="card-left">
+                    <div class="time-info">
+                        <p><span class="heading">Uçuş Numarası:</span> ${flight.flight_number}</p>
+                        <p><span class="heading">Yön:</span> <span style="color: ${flightDirectionColor};">${flightDirectionLabel}</span></p>
+                    </div>
+                    <div class="time-info">
+                        <p>${flight.departure_time.split(" ")[1]}</p>
+                        <p>${flight.departure_airport[1]}</p>
+                    </div>
+                    <div class="route">
+                        <div class="route-line"></div>
+                        <div class="route-logo">
+                            <img class="route-logo" src="${logoUrl}" />
+                        </div>
+                        <div class="route-line"></div>
+                    </div>
+                    <div class="time-info">
+                        <p>${flight.arrival_time.split(" ")[1]}</p>
+                        <p>${flight.arrival_airport[1]}</p>
+                    </div>
+                    <div class="time-info">
+                        <p><span class="heading">Fiyat:</span> <span id="price-${flight.flight_number}-${flight.available_seats}">${priceToShow ? priceToShow : 'Belirtilmemiş'}</span> TL</p>
+                        <p><span class="heading">Süre:</span> ${flightDuration}</p>
+                    </div>
+                    <div class="time-info">
+                        <p><span class="heading">Mevcut Koltuklar:</span> ${flight.available_seats}</p>
+                    </div>
+                </div>
+                <div class="time-info">
+                    <label for="passenger-count-${flight.flight_number}-${flight.available_seats}">Kişi Sayısı:</label>
+                    <input type="number" id="passenger-count-${flight.flight_number}-${flight.available_seats}" class="passenger-count" min="1" max="20" value="1" onchange="updatePrice('${flight.flight_number}', ${priceToShow}, ${flight.available_seats})" />
+                    <button class="buy-ticket-button" onclick="buyTicket('${flight.flight_number}', '${flight.available_seats}')">Bileti Seç</button>
+                </div>
+            </div>`;
+        flightsContainer.innerHTML += flightCard;
+    });
+}
+
+
+
+
 function updatePrice(flightNumber, basePrice, availableSeats) {
     const priceElement = document.getElementById(`price-${flightNumber}-${availableSeats}`);
     if (priceElement) {
