@@ -1,7 +1,7 @@
 let maxSeats = 0;
 let selectedSeats = 0;
 
-flet selectedDates = null; // Başlangıçta selectedDates null olarak tanımlandı.
+let selectedDates = null; // Başlangıçta selectedDates null olarak tanımlandı.
 
 function showFlights(date = null) {
     const today = new Date().toISOString().split('T')[0]; // Bugünün tarihi (YYYY-MM-DD formatında)
