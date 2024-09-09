@@ -45,20 +45,20 @@ function handleSearchForm() {
     const fromSelect = document.getElementById('departure_airport');
     const toSelect = document.getElementById('arrival_airport');
     const departureDateInput = document.getElementById('departure_time');
+    const returnDepartureSelect = document.getElementById('return_departure_airport');
+    const returnArrivalSelect = document.getElementById('return_arrival_airport');
     const returnDateInput = document.getElementById('return_time'); // Gidiş-dönüş için ikinci tarih alanı
 
     oneWayTab.addEventListener('click', function () {
         oneWayTab.classList.add('active');
         roundTripTab.classList.remove('active');
         returnSection.style.display = 'none';
-        returnDateInput.parentElement.style.display = 'none'; // Dönüş tarihini gizle
     });
 
     roundTripTab.addEventListener('click', function () {
         roundTripTab.classList.add('active');
         oneWayTab.classList.remove('active');
         returnSection.style.display = 'block';
-        returnDateInput.parentElement.style.display = 'block'; // Dönüş tarihini göster
     });
 
     let flightsData = [];
@@ -97,10 +97,20 @@ function handleSearchForm() {
             populateSelectOptions(departureDateInput, availableDepartureDates);
 
             if (roundTripTab.classList.contains('active')) {
-                populateSelectOptions(returnDateInput, availableDepartureDates); // İkinci tarih alanını da aynı seçeneklerle doldur
+                updateReturnOptions(selectedArrival, selectedDeparture); // Dönüş uçuşları için doğru yönü kontrol et
             }
         });
     });
+
+    function updateReturnOptions(arrival, departure) {
+        const returnFlights = flightsData.filter(flight =>
+            flight.departure_airport[1] === arrival &&
+            flight.arrival_airport[1] === departure
+        );
+
+        const availableReturnDates = [...new Set(returnFlights.map(flight => flight.date.split(' ')[0]))];
+        populateSelectOptions(returnDateInput, availableReturnDates);
+    }
 }
 
 function populateSelectOptions(selectElement, options) {
