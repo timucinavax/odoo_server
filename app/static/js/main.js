@@ -11,41 +11,24 @@ function postFlightSearch() {
 
     searchButton.addEventListener('click', function (e) {
         e.preventDefault();
+        
+        const departureTime = document.getElementById('departure_time').value;
+        const returnTime = document.getElementById('return_time').value;
 
-        // Gidiş ve dönüş tarihlerini alıyoruz
-        const departureDate = document.querySelector('departure_time').value;
-        const returnDate = document.querySelector('return_time').value;
+        addHiddenInput(form, 'departure_time', departureTime);
 
-        // Var olan gizli input'ları temizleyelim (formu yeniden doldururken sorun olmasın)
-        form.querySelectorAll('departure_time').forEach(input => input.remove());
-
-        // Gidiş tarihini ekle
-        const departureInput = document.createElement('input');
-        departureInput.type = 'hidden';
-        departureInput.name = 'departure_time[]';
-        departureInput.value = departureDate;
-        form.appendChild(departureInput);
-
-        // Dönüş tarihi varsa ekle
-        if (returnDate) {
-            const returnInput = document.createElement('input');
-            returnInput.type = 'hidden';
-            returnInput.name = 'departure_time[]'; // Aynı adla gönderiyoruz
-            returnInput.value = returnDate;
-            form.appendChild(returnInput);
+        console.log("Departure Date:", departureTime);
+        console.log("Return Date:", returnTime);
+        
+        if (returnTime) {
+            addHiddenInput(form, 'departure_time', returnTime);
         }
 
-        // Console'a tarihleri yazdır (Debugging için)
-        console.log("Departure Date:", departureDate);
-        console.log("Return Date:", returnDate);
-
-        // Formu gönder
         form.action = "/search-flight-ticket";
         form.method = "POST";
         form.submit();
     });
 }
-
 function createCookieConsent() {
     const cookieConsent = document.createElement("div");
     cookieConsent.className = "cookie-consent";
