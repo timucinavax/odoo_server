@@ -45,7 +45,9 @@ function handleSearchForm() {
     const fromSelect = document.getElementById('departure_airport');
     const toSelect = document.getElementById('arrival_airport');
     const departureDateInput = document.getElementById('departure_time');
+    const returnDepartureDateInput = document.getElementById('return_departure_time');
     const returnDateInput = document.getElementById('arrival_time');
+    const returnArrivalDateInput = document.getElementById('return_arrival_time');
 
     oneWayTab.addEventListener('click', function () {
         oneWayTab.classList.add('active');
@@ -126,16 +128,19 @@ function handleSearchForm() {
 
     function updateReturnDates(selectedDeparture, selectedArrival) {
         const selectedDepartureDate = departureDateInput.value;
+        const selectedReturnDepartureDate = returnDepartureDateInput.value;
 
         const returnFlights = flightsData.filter(flight =>
             flight.flight_direction === 'return' &&
             flight.departure_airport[1] === selectedArrival &&
             flight.arrival_airport[1] === selectedDeparture &&
-            flight.date.split(' ')[0] > selectedDepartureDate 
+            flight.date.split(' ')[0] > selectedDepartureDate &&
+            flight.date.split(' ')[0] > selectedReturnDepartureDate 
         );
 
         const availableReturnDates = returnFlights.map(flight => flight.date.split(' ')[0]);
         populateSelectOptions(returnDateInput, availableReturnDates); 
+        populateSelectOptions(returnArrivalDateInput, availableReturnDates); 
     }
 }
 
