@@ -11,24 +11,36 @@ function postFlightSearch() {
 
     searchButton.addEventListener('click', function (e) {
         e.preventDefault();
-        
-        const departureTime = document.getElementById('departure_time').value;
-        const returnTime = document.getElementById('return_time').value;
 
-        addHiddenInput(form, 'departure_time', departureTime);
+        // Gidiş ve dönüş tarihlerini alıyoruz
+        const departureDate = document.querySelector('select[name="departure_time[]"]').value;
+        const returnDate = document.querySelector('select[name="return_time"]').value;
 
-        console.log("Departure Date:", departureTime);
-        console.log("Return Date:", returnTime);
-        
-        if (returnTime) {
-            addHiddenInput(form, 'departure_time', returnTime);
+        // İki tarihi de 'departure_time[]' olarak göndereceğiz
+        const departureInput = document.createElement('input');
+        departureInput.type = 'hidden';
+        departureInput.name = 'departure_time[]';
+        departureInput.value = departureDate;
+        form.appendChild(departureInput);
+
+        if (returnDate) { // Eğer dönüş tarihi seçildiyse
+            const returnInput = document.createElement('input');
+            returnInput.type = 'hidden';
+            returnInput.name = 'departure_time[]'; // Aynı adla gönderiyoruz
+            returnInput.value = returnDate;
+            form.appendChild(returnInput);
         }
+
+        // Console'a tarihleri yazdır
+        console.log("Departure Date:", departureDate);
+        console.log("Return Date:", returnDate);
 
         form.action = "/search-flight-ticket";
         form.method = "POST";
         form.submit();
     });
 }
+
 
 // Gizli input ekleyen fonksiyon
 function addHiddenInput(form, name, value) {
