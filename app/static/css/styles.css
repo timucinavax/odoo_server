@@ -48,26 +48,16 @@ html {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     z-index: 100;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .search-tabs {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+    gap: 10px;
     margin-bottom: 20px;
-}
-
-.tab-button {
-    padding: 10px 20px;
-    background: none;
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.tab-button.active {
-    background-color: #fff;
-    border-color: #007bff;
-    color: #007bff;
 }
 
 .search-form {
@@ -75,6 +65,7 @@ html {
     flex-wrap: wrap;
     justify-content: space-between;
     gap: 20px;
+    align-items: flex-start;
 }
 
 .form-group {
@@ -100,8 +91,22 @@ html {
     cursor: pointer;
     align-self: flex-start; /* Buttonu hizalıyoruz */
     margin-top: 25px; /* Butonun diğer elemanlardan biraz aşağıda olması için boşluk ekliyoruz */
-    flex: 1;
     max-width: 200px; /* Buttonun genişliği */
+}
+
+
+.tab-button {
+    padding: 10px 20px;
+    background: none;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.tab-button.active {
+    background-color: #fff;
+    border-color: #007bff;
+    color: #007bff;
 }
 
 label {
@@ -114,12 +119,6 @@ select {
     padding: 10px;
     border-radius: 5px;
     border: 1px solid #ccc;
-}
-
-.cards-section {
-    text-align: center;
-    margin: 50px auto;
-    max-width: 1200px;
 }
 
 .best-deals__header__title {
@@ -188,9 +187,7 @@ select {
 
 .container {
     max-width: 1200px;
-    /* Maksimum genişliği ayarla */
     margin: 0 auto;
-    /* Sağ ve sol kenar boşluklarını otomatik yaparak ortala */
     text-align: center;
 }
 
@@ -205,15 +202,11 @@ select {
 
 .row {
     display: flex;
-    /* Flexbox kullan */
     justify-content: center;
-    /* Yatay olarak ortala */
     align-items: center;
-    /* Dikey olarak ortala */
     font-size: 1.1rem;
     padding: 20px;
     flex-wrap: wrap;
-    /* İçerik taşarsa alta geç */
 }
 
 .row .col-md-3 {
@@ -307,7 +300,6 @@ select {
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
-/* Kartların üst üste yığılmasını önlemek için hover durumu */
 .best-deals__swiper__item:hover {
     transform: translateY(-5px);
 }
