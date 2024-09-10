@@ -289,7 +289,7 @@
     </div>
   </div>
 
-  <div class="content-section" id="outbound-list">
+  <div class="content-section" id="return-list">
     <div class="card">
       <div class="card-header">Gidiş Uçuşları</div>
       <div class="card-body">
@@ -310,7 +310,7 @@
               </tr>
             </thead>
             <tbody>
-              {% for flight in outbound_flights %}
+              {% for flight in return_flights %}
               <tr>
                 <td>{{ flight.flight_number }}</td>
                 <td>{{ flight.available_seats }}</td>
@@ -347,7 +347,7 @@
                 <th>Varış Saati</th>
               </tr>
             </thead>
-            <tbody id="active-outbound-flights-body"></tbody>
+            <tbody id="active-return-flights-body"></tbody>
           </table>
         </div>
       </div>
