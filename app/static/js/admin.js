@@ -3,37 +3,6 @@ document.addEventListener('DOMContentLoaded', function() {
     activateFlights();
 });
 
-function formatToTurkishDateTime(dateString) {
-    const date = new Date(dateString);
-    const options = {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-    };
-    return date.toLocaleString('tr-TR', options).replace(' ', ', ');
-}
-
-document.addEventListener('DOMContentLoaded', function () {
-    document.getElementById('departure_time_outbound').addEventListener('change', function () {
-        this.value = formatToTurkishDateTime(this.value);
-    });
-
-    document.getElementById('arrival_time_outbound').addEventListener('change', function () {
-        this.value = formatToTurkishDateTime(this.value);
-    });
-
-    document.getElementById('departure_time_return').addEventListener('change', function () {
-        this.value = formatToTurkishDateTime(this.value);
-    });
-
-    document.getElementById('arrival_time_return').addEventListener('change', function () {
-        this.value = formatToTurkishDateTime(this.value);
-    });
-});
-
-
 function showSection(sectionId) {
     const sections = document.querySelectorAll('.content-section');
     sections.forEach(section => section.style.display = 'none');
