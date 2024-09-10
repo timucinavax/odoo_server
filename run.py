@@ -5,12 +5,17 @@ import locale
 from datetime import datetime
 import pytz
 
+# Flask uygulaması için dosya önbellekleme ayarlarını kapatma
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+
+# Tarih ve saat formatını yerelleştirmek için gerekli ayarlar
+locale.setlocale(locale.LC_TIME, 'tr_TR.UTF-8')
 now = datetime.now(pytz.timezone('Europe/Istanbul'))
 formatted_date = format_datetime(now, 'dd MMMM yyyy HH:mm', locale='tr_TR')
-locale.setlocale(locale.LC_TIME, 'tr_TR.UTF-8')
 
+# Log dosyasını yapılandırma
 logging.basicConfig(filename='flask_app.log', level=logging.INFO)
 
+# Uygulamayı başlatma
 if __name__ == '__main__':
-    app.run(debug=True ,host='0.0.0.0', port="8450")
+    app.run(debug=True, host='0.0.0.0', port=8450)

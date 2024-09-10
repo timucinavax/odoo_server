@@ -21,11 +21,6 @@ def dayname_filter(date_str):
     date_obj = datetime.strptime(date_str, "%Y-%m-%d")
     return date_obj.strftime("%A")
 
-@app.template_filter("format_datetime")
-def format_datetime(value):
-    return value.strftime('%d %B %Y, %H:%M')
-
-
 @app.template_filter("monthname")
 def monthname_filter(date_str):
     date_obj = datetime.strptime(date_str, "%Y-%m-%d")
