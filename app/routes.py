@@ -281,16 +281,16 @@ def add_flight():
     airline_company = request.form.get("airline_company")
     chain_number = request.form.get("chain_number")
 
-    istanbul_tz = pytz.timezone('Europe/Istanbul')
+    departure_time = datetime.strptime(departure_time_str, "%Y-%m-%dT%H:%M").strftime(
+    "%Y-%m-%d %H:%M:%S"
+    )
+    arrival_time = datetime.strptime(arrival_time_str, "%Y-%m-%dT%H:%M").strftime(
+        "%Y-%m-%d %H:%M:%S"
+    )
 
-    departure_time = datetime.strptime(departure_time_str, "%Y-%m-%dT%H:%M")
-    departure_time = departure_time.astimezone(istanbul_tz).strftime("%d %B %Y %H:%M:%S")
-
-    arrival_time = datetime.strptime(arrival_time_str, "%Y-%m-%dT%H:%M")
-    arrival_time = arrival_time.astimezone(istanbul_tz).strftime("%d %B %Y %H:%M:%S")
-
-    date = datetime.strptime(date_str, "%Y-%m-%d")
-    date = date.strftime("%d %B %Y")
+    date = datetime.strptime(date_str, "%Y-%m-%d").strftime(
+    "%Y-%m-%d"
+    )
 
     uid, models = odoo_connect()
     if not uid:
