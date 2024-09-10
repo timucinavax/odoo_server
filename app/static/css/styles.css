@@ -60,6 +60,7 @@ html {
     margin-bottom: 20px;
 }
 
+/* Container for Gidiş and Dönüş sections */
 .search-form {
     display: flex;
     justify-content: space-between;
@@ -67,6 +68,7 @@ html {
     align-items: flex-start;
 }
 
+/* Gidiş and Dönüş sections aligned horizontally */
 #outbound-section, #return-section {
     flex: 1;
     display: flex;
@@ -87,6 +89,7 @@ html {
 .form-group label {
     flex: 0 0 30%;
     margin-bottom: 0;
+    text-align: left;  /* Ensure labels are left-aligned */
 }
 
 .form-group select,
@@ -110,6 +113,18 @@ html {
     margin-top: 25px;
     max-width: 200px;
 }
+
+/* Additional padding for the Dönüş section */
+#return-section .form-group label {
+    padding-right: 10px;  /* Adds space between labels and inputs in Dönüş section */
+}
+
+/* Ensure the labels in both sections are consistent */
+#outbound-section .form-group label,
+#return-section .form-group label {
+    flex-basis: 30%;
+}
+
 
 .tab-button {
     padding: 10px 20px;
