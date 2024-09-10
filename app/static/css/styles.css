@@ -43,7 +43,7 @@ html {
     background: rgba(255, 255, 255, 0.8);
     border-radius: 10px;
     padding: 20px;
-    max-width: 800px;
+    max-width: 1100px;
     width: 97%;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     z-index: 100;
@@ -60,47 +60,27 @@ html {
     margin-bottom: 20px;
 }
 
-/* Container for Gidiş and Dönüş sections */
 .search-form {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     gap: 20px;
     align-items: flex-start;
 }
 
-/* Gidiş and Dönüş sections aligned horizontally */
-#outbound-section, #return-section {
+.form-group {
     flex: 1;
+    min-width: 220px; /* Minimum genişlik */
+    max-width: 48%;   /* Yan yana durabilmesi için genişlik ayarı */
     display: flex;
     flex-direction: column;
-    gap: 10px;
 }
 
-/* Align form groups in a row */
-.form-group {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-}
-
-/* Ensure labels and inputs/selects are aligned properly */
-.form-group label {
-    flex: 0 0 30%;
-    margin-bottom: 0;
-    text-align: left;  /* Ensure labels are left-aligned */
-}
-
-.form-group select,
-.form-group input {
+#outbound-section, #return-section {
     flex: 1;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+    min-width: 45%;   /* Her iki bölümün de %45 genişliğinde olmasını sağlıyoruz */
 }
 
-/* Adjust the search button alignment */
 .search-button {
     background-color: #dc3545;
     border: none;
@@ -109,20 +89,9 @@ html {
     padding: 15px;
     border-radius: 5px;
     cursor: pointer;
-    align-self: flex-start; /* Align to the start */
-    margin-top: 25px;
-    max-width: 200px;
-}
-
-/* Additional padding for the Dönüş section */
-#return-section .form-group label {
-    padding-right: 10px;  /* Adds space between labels and inputs in Dönüş section */
-}
-
-/* Ensure the labels in both sections are consistent */
-#outbound-section .form-group label,
-#return-section .form-group label {
-    flex-basis: 30%;
+    align-self: flex-start; /* Buttonu hizalıyoruz */
+    margin-top: 25px; /* Butonun diğer elemanlardan biraz aşağıda olması için boşluk ekliyoruz */
+    max-width: 200px; /* Buttonun genişliği */
 }
 
 
@@ -238,6 +207,7 @@ select {
     font-size: 1.1rem;
     padding: 20px;
     flex-wrap: wrap;
+    /* İçerik taşarsa alta geç */
 }
 
 .row .col-md-3 {
@@ -331,6 +301,7 @@ select {
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
+/* Kartların üst üste yığılmasını önlemek için hover durumu */
 .best-deals__swiper__item:hover {
     transform: translateY(-5px);
 }
