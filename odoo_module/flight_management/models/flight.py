@@ -16,7 +16,7 @@ class Flight(models.Model):
     arrival_time = fields.Datetime(string="Arrival Time", required=True)
     flight_duration = fields.Char(string="Flight Duration", compute='_compute_flight_duration')
     available_seats = fields.Integer(string="Available Seats", required=True)
-    date = fields.Datetime(string="Deaprture Time" , required=True)
+    date = fields.Date(string="Deaprture Time" , required=True)
     user_price = fields.Float(string="User Price", required=True)
     agency_price = fields.Float(string="Agency Price", required=True)
     user_id = fields.Many2one('custom.user', string="Assigned User", readonly=True)

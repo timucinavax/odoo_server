@@ -251,5 +251,25 @@
         <field name="city">Bangkok</field>
         <field name="country">Tayland</field>
     </record>
+    <record id="airport_jed" model="airport">
+  	  <field name="name">King Abdulaziz Uluslararası Havalimanı</field>
+   	 <field name="code">JED</field>
+   	 <field name="city">Cidde</field>
+   	 <field name="country">Suudi Arabistan</field>
+    </record>
+
+    <record id="airport_gzt" model="airport">
+    	<field name="name">Gaziantep Havalimanı</field>
+    	<field name="code">GZT</field>
+    	<field name="city">Gaziantep</field>
+    	<field name="country">Türkiye</field>
+   </record>
+
+   <record id="airport_med" model="airport">
+   	<field name="name">Prens Muhammed Bin Abdülaziz Uluslararası Havalimanı</field>
+    	<field name="code">MED</field>
+    	<field name="city">Medine</field>
+    	<field name="country">Suudi Arabistan</field>
+  </record>
 </odoo>
 
