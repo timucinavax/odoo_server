@@ -8,22 +8,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function initReferenceCarousel() {
     const carouselInner = document.querySelector('.reference-carousel-inner');
-    const items = carouselInner.children;
+    const items = document.querySelectorAll('.reference-carousel-item');
     let currentIndex = 0;
 
     function slideCarousel() {
         currentIndex = (currentIndex + 1) % items.length;
-        const offset = -currentIndex * 20;  
-        carouselInner.style.transition = 'transform 0.5s ease';
+        const offset = -currentIndex * 100;  
         carouselInner.style.transform = `translateX(${offset}%)`;
-
-        if (currentIndex === items.length - 1) {
-            setTimeout(() => {
-                carouselInner.style.transition = 'none';
-                carouselInner.style.transform = `translateX(0%)`;
-                currentIndex = 0;
-            }, 500);
-        }
     }
 
     setInterval(slideCarousel, 3000);

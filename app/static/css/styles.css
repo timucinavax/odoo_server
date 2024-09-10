@@ -447,26 +447,31 @@ select {
     }
 }
 
+.reference-carousel {
+    width: 100%;
+    overflow: hidden; /* Taşan içeriği gizle */
+    position: relative;
+}
+
 .reference-carousel-inner {
+    display: flex;
+    transition: transform 0.5s ease;
+    width: calc(10 * 100%); /* 10 logo için genişlik */
+}
+
+.reference-carousel-item {
+    min-width: 100%; /* Her bir logo genişliği */
     display: flex;
     justify-content: space-around;
     align-items: center;
-    flex-wrap: wrap;
 }
 
 .reference-carousel img {
-    max-height: 100px;
-    max-width: 150px;
-    width: auto;
-    height: auto;
-    margin: 0 15px;
-    object-fit: contain;
+    max-height: 100px; /* Logoların maksimum yüksekliği */
+    flex-shrink: 0; /* Logoların küçülmesini engelle */
+    margin: 0 10px; /* Logolar arasında boşluk */
 }
 
-.reference-carousel {
-    background-color: #f8f9fa;
-    padding: 20px 0;
-}
 
 @media (min-width: 1200px) {
     .search-box-container {
