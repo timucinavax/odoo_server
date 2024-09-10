@@ -447,6 +447,13 @@ select {
     }
 }
 
+.owl-carousel .item img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+
 @media (min-width: 1200px) {
     .search-box-container {
         top: 65%;
