@@ -447,7 +447,7 @@ select {
     }
 }
 
-#references-carousel {
+.reference-carousel {
     overflow: hidden;
     width: 100%;
     position: relative;
@@ -457,30 +457,21 @@ select {
     display: flex;
     transition: transform 0.5s ease-in-out;
     will-change: transform;
-}
-
-.reference-carousel-item {
-    flex: 0 0 100%;
-    display: flex;
     justify-content: space-around;
-    align-items: center;
 }
 
-.reference-carousel-item img {
+.reference-carousel-inner img {
     max-height: 100px;
+    width: auto;
     opacity: 0.8;
     transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
-.reference-carousel-item img:hover {
+.reference-carousel-inner img:hover {
     opacity: 1;
     transform: scale(1.1);
 }
 
-.d-flex {
-    gap: 20px;
-    /* Aralarındaki boşluğu ayarlar */
-}
 
 @media (min-width: 1200px) {
     .search-box-container {

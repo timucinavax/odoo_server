@@ -8,12 +8,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function carousel_item(){
     const carouselInner = document.querySelector('.reference-carousel-inner');
-    const carouselItems = document.querySelectorAll('.reference-carousel-item');
+    const items = carouselInner.children;
     let currentIndex = 0;
 
     function slideCarousel() {
-        currentIndex = (currentIndex + 1) % carouselItems.length;
-        const offset = -currentIndex * 100;
+        currentIndex = (currentIndex + 1) % items.length;
+        const offset = -currentIndex * 20;  
         carouselInner.style.transform = `translateX(${offset}%)`;
     }
 
