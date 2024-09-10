@@ -28,9 +28,7 @@
         <button class="tab-button" id="round-trip-tab">Gidiş-Dönüş</button>
       </div>
       <form action="/flight-ticket" method="post" class="search-form">
-        <!-- Gidiş Bölümü -->
         <div id="outbound-section">
-            <h3>Gidiş</h3>
             <div class="form-group">
                 <label for="departure_airport">Nereden</label>
                 <select id="departure_airport" name="departure_airport" class="form-select" required>
@@ -53,7 +51,6 @@
     
         <!-- Dönüş Bölümü (Gidiş-Dönüş seçeneğinde görünecek) -->
         <div id="return-section" style="display:none;">
-            <h3>Dönüş</h3>
             <div class="form-group">
                 <label for="return_departure_airport">Nereden</label>
                 <select id="return_departure_airport" name="return_departure_airport" class="form-select" required>
