@@ -7,17 +7,26 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function initReferenceCarousel() {
-    const carouselInner = document.querySelector('.reference-carousel-inner');
-    const items = carouselInner.children;
-    let currentIndex = 0;
-
-    function slideCarousel() {
-        currentIndex = (currentIndex + 1) % items.length;
-        const offset = -currentIndex * 20;  
-        carouselInner.style.transform = `translateX(${offset}%)`;
-    }
-
-    setInterval(slideCarousel, 3000);
+    // Owl Carousel initialization
+    $(".owl-carousel").owlCarousel({
+        loop: true,
+        margin: 10,
+        nav: false,
+        autoplay: true,
+        autoplayTimeout: 3000,
+        autoplayHoverPause: true,
+        responsive: {
+            0: {
+                items: 2
+            },
+            600: {
+                items: 4
+            },
+            1000: {
+                items: 5
+            }
+        }
+    });
 }
 
 function postFlightSearch() {

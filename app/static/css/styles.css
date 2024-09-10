@@ -447,37 +447,6 @@ select {
     }
 }
 
-.reference-carousel {
-    width: 100%;
-    overflow: hidden; /* Taşan içeriği gizle */
-    position: relative;
-    background-color: #fff; /* Arka plan rengini beyaz yap */
-}
-
-.reference-carousel-inner {
-    display: flex;
-    transition: transform 0.5s ease;
-    width: 200%; /* İçerik genişliğini ayarla */
-}
-
-.reference-carousel-item {
-    flex: 1 0 20%; /* Her bir öğe genişliği */
-    display: flex;
-    justify-content: center; /* Logoları ortala */
-    align-items: center;
-}
-
-.reference-carousel img {
-    max-height: 100px; /* Logoların maksimum yüksekliği */
-    flex-shrink: 0; /* Logoların küçülmesini engelle */
-    margin: 0 15px; /* Logolar arasında boşluk */
-    width: auto;
-    height: auto;
-    max-width: 100%;
-}
-
-
-
 @media (min-width: 1200px) {
     .search-box-container {
         top: 65%;
