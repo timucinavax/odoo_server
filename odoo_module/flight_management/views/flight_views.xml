@@ -23,15 +23,18 @@
                         </field>
                     </group>
                     <group>
-			<field name="date"/> 
+                        <field name="date"/> 
                         <field name="departure_time"/>
                         <field name="arrival_time"/>
                         <field name="flight_duration" readonly="1"/>
                     </group>
                     <group>
-			<field name="svc_type"/>
+                        <field name="svc_type"/>
+                        <field name="aircraft_category"/>
+                        <field name="chain_number"/>
+                        <field name="airline_company"/>
                         <field name="user_price"/>
-			<field name="agency_price"/>
+                        <field name="agency_price"/>
                     </group>
                     <group>
                         <field name="user_id" readonly="1"/>
@@ -49,8 +52,11 @@
             <tree string="Flights">
                 <field name="flight_direction"/>
                 <field name="flight_number"/>
-		<field name="date"/>
-		<field name="svc_type"/>
+                <field name="date"/>
+                <field name="svc_type"/>
+                <field name="aircraft_category"/>
+                <field name="chain_number"/>
+                <field name="airline_company"/>
                 <field name="departure_airport"/>
                 <field name="arrival_airport"/>
                 <field name="departure_time"/>
@@ -58,7 +64,7 @@
                 <field name="available_seats"/>
                 <field name="user_price"/>
                 <field name="agency_price"/>
-	     </tree>
+            </tree>
         </field>
     </record>
 
@@ -80,4 +86,3 @@
     <!-- Submenu for Flights under Flight Management, linked to the action -->
     <menuitem id="menu_flight_management" name="Flights" parent="menu_flight_management_root" action="action_flight_management"/>
 </odoo>
-

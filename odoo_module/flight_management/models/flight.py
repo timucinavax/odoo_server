@@ -10,20 +10,36 @@ class Flight(models.Model):
     ], string="Flight Direction", required=True)
 
     flight_number = fields.Char(string="Flight Number", required=True)
-    departure_airport = fields.Many2one('airport',string="Departure Airport", required=True)
-    arrival_airport = fields.Many2one('airport',string="Arrival Airport", required=True)
+    departure_airport = fields.Many2one('airport', string="Departure Airport", required=True)
+    arrival_airport = fields.Many2one('airport', string="Arrival Airport", required=True)
     departure_time = fields.Datetime(string="Departure Time", required=True)
     arrival_time = fields.Datetime(string="Arrival Time", required=True)
     flight_duration = fields.Char(string="Flight Duration", compute='_compute_flight_duration')
     available_seats = fields.Integer(string="Available Seats", required=True)
-    date = fields.Date(string="Deaprture Time" , required=True)
+    date = fields.Date(string="Departure Date", required=True)
     user_price = fields.Float(string="User Price", required=True)
     agency_price = fields.Float(string="Agency Price", required=True)
     user_id = fields.Many2one('custom.user', string="Assigned User", readonly=True)
     svc_type = fields.Selection([
-	('FRY','FRY'),('LIVE','LIVE')], required=True)    
+        ('FRY', 'FRY'),
+        ('LIVE', 'LIVE')
+    ], required=True)
     airplane_type_id = fields.Many2one('airplane.type', string="Airplane Type", required=True)
     seat_ids = fields.One2many('flight.seat', 'flight_id', string="Seats")
+    aircraft_category = fields.Selection([
+        ('Tarifeli', 'Tarifeli'),
+        ('Zincir', 'Zincir'),
+        ('İlaveli Sefer', 'İlaveli Sefer')
+    ], required=True)
+    airline_company = fields.Selection([
+        ('Turkish Airlines', 'Turkish Airlines'),
+        ('Pegasus', 'Pegasus'),
+        ('Saudia', 'Saudia')
+    ], required=True)
+    chain_number = fields.Selection(
+        [(str(num), f'Zincir {num}') for num in range(1, 51)],
+        string="Zincir Numarası"
+    )
     
     @api.depends('departure_time', 'arrival_time')
     def _compute_flight_duration(self):
