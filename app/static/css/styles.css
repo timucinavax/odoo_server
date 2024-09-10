@@ -312,6 +312,22 @@ select {
     transform: translateY(-5px);
 }
 
+.owl-carousel .item img {
+    width: 150px; /* Resmin genişliği */
+    height: auto; /* Yüksekliğin otomatik olarak ayarlanması */
+    max-height: 100px; /* Maksimum yüksekliği ayarla */
+    object-fit: contain; /* Resmin bozulmadan içeri sığmasını sağla */
+    margin: 0 auto; /* Resimleri yatayda ortala */
+    display: block; /* Resimleri blok elementi olarak ayarla */
+}
+
+.owl-carousel .item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px; /* Her bir resim etrafına boşluk ekle */
+}
+
 @media (max-width: 768px) {
     .best-deals__swiper__item {
         flex: 0 0 100%;
