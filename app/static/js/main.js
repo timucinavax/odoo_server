@@ -3,11 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     handleSearchForm();
     postFlightSearch();
     searchBox();
-    initReferenceCarousel();
-});
-
-function initReferenceCarousel() {
-    // Owl Carousel initialization
+    
     $(".owl-carousel").owlCarousel({
         loop: true,
         margin: 10,
@@ -27,7 +23,8 @@ function initReferenceCarousel() {
             }
         }
     });
-}
+
+});
 
 function postFlightSearch() {
     const form = document.querySelector('.search-form');
