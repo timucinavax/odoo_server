@@ -23,72 +23,40 @@
       <h2 class="best-deals__header">
         <span class="highlight">Sehlen Turizm</span><br />Merhaba, Nereye Gitmek İstiyorsunuz?
       </h2>
-      <div class="search-tabs">
-        <button class="tab-button active" id="one-way-tab">Tek Yön</button>
-        <button class="tab-button" id="round-trip-tab">Gidiş-Dönüş</button>
-      </div>
-      <form action="/flight-ticket" method="post" class="search-form">
-        <div class="form-group">
-          <label for="departure_airport">Nereden</label>
-          <select
-            id="departure_airport"
-            name="departure_airport"
-            class="form-select"
-            required
-          >
-            <option value="">Nereden</option>
-          </select>
+      {% if logged_in_user %}
+      <div id="search-box-container" class="search-box-container position-absolute w-100">
+        <h2 class="best-deals__header"><span class="highlight">Sehlen Turizm</span><br />Merhaba, Nereye Gitmek İstiyorsunuz?</h2>
+        <div class="search-tabs">
+          <button class="tab-button active" id="one-way-tab">Tek Yön</button>
+          <button class="tab-button" id="round-trip-tab">Gidiş-Dönüş</button>
         </div>
-        <div class="form-group">
-          <label for="arrival_airport">Nereye</label>
-          <select
-            id="arrival_airport"
-            name="arrival_airport"
-            class="form-control"
-            required
-          >
-            <option value="">Nereye</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="departure_time">Gidiş Tarihi</label>
-          <select
-            id="departure_time"
-            name="departure_time"
-            class="form-control"
-            required
-          >
-            <option value="">Gidiş Tarihi</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="return_departure_time">Dönüş Gidiş Tarihi</label>
-          <select
-            id="return_departure_time"
-            name="return_departure_time"
-            class="form-control"
-          >
-            <option value="">Gidiş Dönüş Tarihi</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="return_arrival_time">Dönüş Tarihi</label>
-          <select
-            id="return_arrival_time"
-            name="return_arrival_time"
-            class="form-control"
-          >
-            <option value="">Dönüş Tarihi</option>
-          </select>
-        </div>
-        <div class="form-group" id="return-date-group">
-          <label for="arrival_time">Dönüş Dönüş Tarihi</label>
-          <select id="arrival_time" name="arrival_time" class="form-control">
-            <option value="">Dönüş Dönüş Tarihi</option>
-          </select>
-        </div>
-        <button type="submit" class="search-button">UCUZ UÇUŞLARI ARA</button>
-      </form>
+        <form action="/flight-ticket" method="post" class="search-form">
+          <div class="form-group">
+            <label for="departure_airport">Nereden</label>
+            <select id="departure_airport" name="departure_airport" class="form-select" required>
+              <option value="">Nereden</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="arrival_airport">Nereye</label>
+            <select id="arrival_airport" name="arrival_airport" class="form-control" required>
+              <option value="">Nereye</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="departure_time">Gidiş Tarihi</label>
+            <select id="departure_time" name="departure_time" class="form-control" required>
+              <option value="">Gidiş Tarihi</option>
+            </select>
+          </div>   
+          <div class="form-group" id="return-date-group">
+            <label for="arrival_time">Dönüş Tarihi</label>
+            <select id="arrival_time" name="arrival_time" class="form-control">
+              <option value="">Dönüş Tarihi</option>
+            </select>
+          </div>        
+          <button type="submit" class="search-button">UCUZ UÇUŞLARI ARA</button>
+        </form>
     </div>
     {% else %}
     <div id="search-box-container" class="search-box-container position-absolute w-100">
