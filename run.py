@@ -1,6 +1,5 @@
 from app import app
 from babel.dates import format_datetime
-from flask_babel import Babel, format_datetime
 import logging
 import locale
 from datetime import datetime
