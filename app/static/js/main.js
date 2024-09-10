@@ -1,8 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-    createCookieConsent();
-    handleSearchForm();
-    postFlightSearch();
-    searchBox();
     
     $(".owl-carousel").owlCarousel({
         loop: true,
@@ -23,6 +19,10 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
     });
+
+    handleSearchForm();
+    postFlightSearch();
+    searchBox();
 
 });
 
@@ -61,26 +61,6 @@ function addHiddenInput(form, name, value) {
         input.value = value;
         form.appendChild(input);
     }
-}
-
-function createCookieConsent() {
-    const cookieConsent = document.createElement("div");
-    cookieConsent.className = "cookie-consent";
-    cookieConsent.innerHTML = `
-        <p>Sitemizde yasal düzenlemelere uygun çerezler (cookies) kullanıyoruz. Detaylı bilgiye 
-        <a href="https://www.sehlentur.com/gizlilik-politikasi-ve-cerez-aydinlatma-metni/">Gizlilik Politikası Ve Çerez Aydınlatma Metni</a> sayfamızdan ulaşabilirsiniz.</p>
-        <div class="cookie-buttons">
-            <a href="#" class="btn btn-consent">Tamam</a>
-            <a href="https://www.sehlentur.com/gizlilik-politikasi-ve-cerez-aydinlatma-metni/" class="btn">Gizlilik Politikası Ve Çerez Aydınlatma Metni</a>
-            <a href="https://www.sehlentur.com/kisisel-verilerin-korunmasi-kanunu/" class="btn">Kişisel Verilerin Korunması Kanunu Aydınlatma Metni</a>
-        </div>
-    `;
-    document.body.appendChild(cookieConsent);
-
-    document.querySelector(".btn-consent").addEventListener("click", function (e) {
-        e.preventDefault();
-        cookieConsent.style.display = "none";
-    });
 }
 
 function handleSearchForm() {
