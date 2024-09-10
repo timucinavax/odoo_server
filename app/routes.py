@@ -16,17 +16,6 @@ from datetime import datetime, timedelta
 import calendar
 import pytz
 
-@app.template_filter("dayname")
-def dayname_filter(date_str):
-    date_obj = datetime.strptime(date_str, "%Y-%m-%d")
-    return date_obj.strftime("%A")
-
-@app.template_filter("monthname")
-def monthname_filter(date_str):
-    date_obj = datetime.strptime(date_str, "%Y-%m-%d")
-    return date_obj.strftime("%B")
-
-
 def odoo_connect():
     url = current_app.config["ODOO_URL"]
     db = current_app.config["ODOO_DB"]
