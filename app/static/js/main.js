@@ -7,11 +7,17 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function carousel_item(){
-    var myCarousel = document.querySelector('#references-carousel');
-    var carousel = new bootstrap.Carousel(myCarousel, {
-        interval: 2000,
-        wrap: true
-    });
+    const carouselInner = document.querySelector('.reference-carousel-inner');
+    const carouselItems = document.querySelectorAll('.reference-carousel-item');
+    let currentIndex = 0;
+
+    function slideCarousel() {
+        currentIndex = (currentIndex + 1) % carouselItems.length;
+        const offset = -currentIndex * 100;
+        carouselInner.style.transform = `translateX(${offset}%)`;
+    }
+
+    setInterval(slideCarousel, 3000);
 }
 
 function postFlightSearch() {

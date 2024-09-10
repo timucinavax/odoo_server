@@ -168,9 +168,9 @@ Arama{% endblock %} {% block content %}
     </p>
   </div>
 
-  <div id="references-carousel" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-ref">
-        <div class="carousel-ref-item active">
+  <div id="references-carousel" class="reference-carousel">
+    <div class="reference-carousel-inner">
+        <div class="reference-carousel-item active">
             <div class="d-flex justify-content-around align-items-center">
                 <img src="{{ url_for('static', filename='images/tursablogo.png') }}" class="d-block" alt="Referans 1">
                 <img src="{{ url_for('static', filename='images/iatalogo.png') }}" class="d-block" alt="Referans 2">
@@ -179,7 +179,7 @@ Arama{% endblock %} {% block content %}
                 <img src="{{ url_for('static', filename='images/saudia.png') }}"  class="d-block" alt="Referans 5">
             </div>
         </div>
-        <div class="carousel-ref-item">
+        <div class="reference-carousel-item">
             <div class="d-flex justify-content-around align-items-center">
                 <img src="{{ url_for('static', filename='images/hursad.png') }}" class="d-block" alt="Referans 6">
                 <img src="{{ url_for('static', filename='images/islamgroup.png') }}" class="d-block" alt="Referans 7">

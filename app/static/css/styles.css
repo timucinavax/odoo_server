@@ -447,44 +447,39 @@ select {
     }
 }
 
-#references-carousel .carousel-ref {
+#references-carousel {
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+}
+
+.reference-carousel-inner {
     display: flex;
+    transition: transform 0.5s ease-in-out;
+    will-change: transform;
+}
+
+.reference-carousel-item {
+    flex: 0 0 100%;
+    display: flex;
+    justify-content: space-around;
     align-items: center;
-    height: 150px;
 }
 
-#references-carousel .carousel-ref-item {
-    transition: transform 1s ease;
-}
-
-#references-carousel img {
+.reference-carousel-item img {
     max-height: 100px;
     opacity: 0.8;
     transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
-#references-carousel img:hover {
+.reference-carousel-item img:hover {
     opacity: 1;
     transform: scale(1.1);
 }
 
-#references-carousel {
-    background-color: #f8f9fa;
-    padding: 20px 0;
-    position: relative;
-    overflow: hidden;
-}
-
-.carousel-ref-item {
-    display: flex;
-    justify-content: space-around;
-}
-
-.carousel-ref {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
+.d-flex {
+    gap: 20px;
+    /* Aralarındaki boşluğu ayarlar */
 }
 
 @media (min-width: 1200px) {
