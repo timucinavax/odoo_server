@@ -447,31 +447,26 @@ select {
     }
 }
 
-.reference-carousel {
-    overflow: hidden;
-    width: 100%;
-    position: relative;
-}
-
 .reference-carousel-inner {
     display: flex;
-    transition: transform 0.5s ease-in-out;
-    will-change: transform;
     justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
-.reference-carousel-inner img {
+.reference-carousel img {
     max-height: 100px;
+    max-width: 150px;
     width: auto;
-    opacity: 0.8;
-    transition: opacity 0.5s ease, transform 0.5s ease;
+    height: auto;
+    margin: 0 15px;
+    object-fit: contain;
 }
 
-.reference-carousel-inner img:hover {
-    opacity: 1;
-    transform: scale(1.1);
+.reference-carousel {
+    background-color: #f8f9fa;
+    padding: 20px 0;
 }
-
 
 @media (min-width: 1200px) {
     .search-box-container {
