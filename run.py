@@ -3,9 +3,11 @@ from babel.dates import format_datetime
 import logging
 import locale
 from datetime import datetime
+import pytz
 
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
-app.jinja_env.filters['format_datetime'] = format_datetime
+now = datetime.now(pytz.timezone('Europe/Istanbul'))
+formatted_date = format_datetime(now, 'dd MMMM yyyy HH:mm', locale='tr_TR')
 locale.setlocale(locale.LC_TIME, 'tr_TR.UTF-8')
 
 logging.basicConfig(filename='flask_app.log', level=logging.INFO)
