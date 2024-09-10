@@ -60,25 +60,23 @@ html {
     margin-bottom: 20px;
 }
 
-.search-form {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 20px;
-    align-items: flex-start;
-}
-
 .form-group {
     flex: 1;
-    min-width: 220px; /* Minimum genişlik */
-    max-width: 48%;   /* Yan yana durabilmesi için genişlik ayarı */
+    min-width: 180px;
     display: flex;
     flex-direction: column;
 }
 
-#outbound-section, #return-section {
-    flex: 1;
-    min-width: 45%;   /* Her iki bölümün de %45 genişliğinde olmasını sağlıyoruz */
+label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input,
+select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
 }
 
 .search-button {
@@ -89,9 +87,8 @@ html {
     padding: 15px;
     border-radius: 5px;
     cursor: pointer;
-    align-self: flex-start; /* Buttonu hizalıyoruz */
-    margin-top: 25px; /* Butonun diğer elemanlardan biraz aşağıda olması için boşluk ekliyoruz */
-    max-width: 200px; /* Buttonun genişliği */
+    align-self: flex-end;
+    flex: 1;
 }
 
 
