@@ -451,26 +451,31 @@ select {
     width: 100%;
     overflow: hidden; /* Taşan içeriği gizle */
     position: relative;
+    background-color: #fff; /* Arka plan rengini beyaz yap */
 }
 
 .reference-carousel-inner {
     display: flex;
     transition: transform 0.5s ease;
-    width: calc(10 * 100%); /* 10 logo için genişlik */
+    width: 200%; /* İçerik genişliğini ayarla */
 }
 
 .reference-carousel-item {
-    min-width: 100%; /* Her bir logo genişliği */
+    flex: 1 0 20%; /* Her bir öğe genişliği */
     display: flex;
-    justify-content: space-around;
+    justify-content: center; /* Logoları ortala */
     align-items: center;
 }
 
 .reference-carousel img {
     max-height: 100px; /* Logoların maksimum yüksekliği */
     flex-shrink: 0; /* Logoların küçülmesini engelle */
-    margin: 0 10px; /* Logolar arasında boşluk */
+    margin: 0 15px; /* Logolar arasında boşluk */
+    width: auto;
+    height: auto;
+    max-width: 100%;
 }
+
 
 
 @media (min-width: 1200px) {
