@@ -1,5 +1,6 @@
-{% extends '/layout/layoutAdmin.html' %} {% block title %}Sehlen Tourism - Uçuş
-Arama{%endblock %} {% block content %}
+{% extends '/layout/layoutAdmin.html' %}
+{% block title %}Sehlen Tourism - Uçuş Arama{% endblock %}
+{% block content %}
 
 <section class="hero">
   <div class="container">
@@ -17,15 +18,8 @@ Arama{%endblock %} {% block content %}
           <input type="hidden" name="flight_direction" value="outbound" />
 
           <div class="mb-3">
-            <label for="airplane_type_outbound" class="form-label"
-              >Uçak Tipi</label
-            >
-            <select
-              class="form-control"
-              id="airplane_type_outbound"
-              name="airplane_type"
-              required
-            >
+            <label for="airplane_type_outbound" class="form-label">Uçak Tipi</label>
+            <select class="form-control" id="airplane_type_outbound" name="airplane_type" required>
               <option value="TK121">TK121 - 30 Koltuk</option>
               <option value="TK122">TK122 - 40 Koltuk</option>
               <option value="TK123">TK123 - 50 Koltuk</option>
@@ -34,137 +28,89 @@ Arama{%endblock %} {% block content %}
           </div>
 
           <div class="mb-3">
-            <label for="flight_code_outbound" class="form-label"
-              >Uçuş Numarası</label
-            >
-            <input
-              type="text"
-              class="form-control"
-              id="flight_code_outbound"
-              name="flight_code"
-              required
-            />
+            <label for="flight_code_outbound" class="form-label">Uçuş Numarası</label>
+            <input type="text" class="form-control" id="flight_code_outbound" name="flight_code" required />
           </div>
 
           <div class="mb-3">
-            <label for="departure_outbound" class="form-label"
-              >Kalkış Havalimanı</label
-            >
-            <select
-              class="form-control"
-              id="departure_outbound"
-              name="departure"
-              required
-            >
+            <label for="departure_outbound" class="form-label">Kalkış Havalimanı</label>
+            <select class="form-control" id="departure_outbound" name="departure" required>
               {% for airport in airports %}
-              <option value="{{ airport.id }}">
-                {{ airport.code }} - {{ airport.name }}
-              </option>
+              <option value="{{ airport.id }}">{{ airport.code }} - {{ airport.name }}</option>
               {% endfor %}
             </select>
           </div>
 
           <div class="mb-3">
-            <label for="arrival_outbound" class="form-label"
-              >Varış Havalimanı</label
-            >
-            <select
-              class="form-control"
-              id="arrival_outbound"
-              name="arrival"
-              required
-            >
+            <label for="arrival_outbound" class="form-label">Varış Havalimanı</label>
+            <select class="form-control" id="arrival_outbound" name="arrival" required>
               {% for airport in airports %}
-              <option value="{{ airport.id }}">
-                {{ airport.code }} - {{ airport.name }}
-              </option>
+              <option value="{{ airport.id }}">{{ airport.code }} - {{ airport.name }}</option>
               {% endfor %}
             </select>
           </div>
 
           <div class="mb-3">
             <label for="date_outbound" class="form-label">Tarih</label>
-            <input
-              type="date"
-              class="form-control"
-              id="date_outbound"
-              name="date"
-              required
-            />
+            <input type="date" class="form-control" id="date_outbound" name="date" required />
           </div>
 
           <div class="mb-3">
-            <label for="departure_time_outbound" class="form-label"
-              >Kalkış Tarihi ve Saati</label
-            >
-            <input
-              type="datetime-local"
-              class="form-control"
-              id="departure_time_outbound"
-              name="departure_time"
-              required
-            />
+            <label for="departure_time_outbound" class="form-label">Kalkış Tarihi ve Saati</label>
+            <input type="datetime-local" class="form-control" id="departure_time_outbound" name="departure_time" required />
           </div>
 
           <div class="mb-3">
-            <label for="arrival_time_outbound" class="form-label"
-              >Varış Tarihi ve Saati</label
-            >
-            <input
-              type="datetime-local"
-              class="form-control"
-              id="arrival_time_outbound"
-              name="arrival_time"
-              required
-            />
+            <label for="arrival_time_outbound" class="form-label">Varış Tarihi ve Saati</label>
+            <input type="datetime-local" class="form-control" id="arrival_time_outbound" name="arrival_time" required />
           </div>
 
           <div class="mb-3">
-            <label for="svc_type_outbound" class="form-label"
-              >Hizmet Türü</label
-            >
-            <select
-              class="form-control"
-              id="svc_type_outbound"
-              name="svc_type"
-              required
-            >
+            <label for="svc_type_outbound" class="form-label">Hizmet Türü</label>
+            <select class="form-control" id="svc_type_outbound" name="svc_type" required>
               <option value="LIVE">LIVE</option>
               <option value="FRY">FRY</option>
             </select>
           </div>
 
           <div class="mb-3">
-            <label for="user_price_outbound" class="form-label"
-              >Müşteri Fiyat</label
-            >
-            <input
-              type="number"
-              step="0.01"
-              class="form-control"
-              id="user_price_outbound"
-              name="user_price"
-              required
-            />
+            <label for="aircraft_category_outbound" class="form-label">Uçak Kategorisi</label>
+            <select class="form-control" id="aircraft_category_outbound" name="aircraft_category" required>
+              <option value="Tarifeli">Tarifeli</option>
+              <option value="Zincir">Zincir</option>
+              <option value="İlaveli Sefer">İlaveli Sefer</option>
+            </select>
           </div>
 
           <div class="mb-3">
-            <label for="agency_price_outbound" class="form-label"
-              >Acenta Fiyat</label
-            >
-            <input
-              type="number"
-              step="0.01"
-              class="form-control"
-              id="agency_price_outbound"
-              name="agency_price"
-              required
-            />
+            <label for="chain_number_outbound" class="form-label">Zincir Numarası</label>
+            <select class="form-control" id="chain_number_outbound" name="chain_number">
+              {% for num in range(1, 51) %}
+              <option value="{{ num }}">Zincir {{ num }}</option>
+              {% endfor %}
+            </select>
           </div>
 
-          <button type="submit" class="btn btn-primary">
-            Gidiş Uçuşu Ekle
-          </button>
+          <div class="mb-3">
+            <label for="airline_company_outbound" class="form-label">Havayolu Şirketi</label>
+            <select class="form-control" id="airline_company_outbound" name="airline_company" required>
+              <option value="Turkish Airlines">Turkish Airlines</option>
+              <option value="Pegasus">Pegasus</option>
+              <option value="Saudia">Saudia</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="user_price_outbound" class="form-label">Müşteri Fiyat</label>
+            <input type="number" step="0.01" class="form-control" id="user_price_outbound" name="user_price" required />
+          </div>
+
+          <div class="mb-3">
+            <label for="agency_price_outbound" class="form-label">Acenta Fiyat</label>
+            <input type="number" step="0.01" class="form-control" id="agency_price_outbound" name="agency_price" required />
+          </div>
+
+          <button type="submit" class="btn btn-primary">Gidiş Uçuşu Ekle</button>
         </form>
       </div>
     </div>
@@ -179,15 +125,8 @@ Arama{%endblock %} {% block content %}
           <input type="hidden" name="flight_direction" value="return" />
 
           <div class="mb-3">
-            <label for="airplane_type_return" class="form-label"
-              >Uçak Tipi</label
-            >
-            <select
-              class="form-control"
-              id="airplane_type_return"
-              name="airplane_type"
-              required
-            >
+            <label for="airplane_type_return" class="form-label">Uçak Tipi</label>
+            <select class="form-control" id="airplane_type_return" name="airplane_type" required>
               <option value="TK121">TK121 - 30 Koltuk</option>
               <option value="TK122">TK122 - 40 Koltuk</option>
               <option value="TK123">TK123 - 50 Koltuk</option>
@@ -196,135 +135,89 @@ Arama{%endblock %} {% block content %}
           </div>
 
           <div class="mb-3">
-            <label for="flight_code_return" class="form-label"
-              >Uçuş Numarası</label
-            >
-            <input
-              type="text"
-              class="form-control"
-              id="flight_code_return"
-              name="flight_code"
-              required
-            />
+            <label for="flight_code_return" class="form-label">Uçuş Numarası</label>
+            <input type="text" class="form-control" id="flight_code_return" name="flight_code" required />
           </div>
 
           <div class="mb-3">
-            <label for="departure_return" class="form-label"
-              >Kalkış Havalimanı</label
-            >
-            <select
-              class="form-control"
-              id="departure_return"
-              name="departure"
-              required
-            >
+            <label for="departure_return" class="form-label">Kalkış Havalimanı</label>
+            <select class="form-control" id="departure_return" name="departure" required>
               {% for airport in airports %}
-              <option value="{{ airport.id }}">
-                {{ airport.code }} - {{ airport.name }}
-              </option>
+              <option value="{{ airport.id }}">{{ airport.code }} - {{ airport.name }}</option>
               {% endfor %}
             </select>
           </div>
 
           <div class="mb-3">
-            <label for="arrival_return" class="form-label"
-              >Varış Havalimanı</label
-            >
-            <select
-              class="form-control"
-              id="arrival_return"
-              name="arrival"
-              required
-            >
+            <label for="arrival_return" class="form-label">Varış Havalimanı</label>
+            <select class="form-control" id="arrival_return" name="arrival" required>
               {% for airport in airports %}
-              <option value="{{ airport.id }}">
-                {{ airport.code }} - {{ airport.name }}
-              </option>
+              <option value="{{ airport.id }}">{{ airport.code }} - {{ airport.name }}</option>
               {% endfor %}
             </select>
           </div>
 
           <div class="mb-3">
             <label for="date_return" class="form-label">Tarih</label>
-            <input
-              type="date"
-              class="form-control"
-              id="date_return"
-              name="date"
-              required
-            />
+            <input type="date" class="form-control" id="date_return" name="date" required />
           </div>
 
           <div class="mb-3">
-            <label for="departure_time_return" class="form-label"
-              >Kalkış Tarihi ve Saati</label
-            >
-            <input
-              type="datetime-local"
-              class="form-control"
-              id="departure_time_return"
-              name="departure_time"
-              required
-            />
+            <label for="departure_time_return" class="form-label">Kalkış Tarihi ve Saati</label>
+            <input type="datetime-local" class="form-control" id="departure_time_return" name="departure_time" required />
           </div>
 
           <div class="mb-3">
-            <label for="arrival_time_return" class="form-label"
-              >Varış Tarihi ve Saati</label
-            >
-            <input
-              type="datetime-local"
-              class="form-control"
-              id="arrival_time_return"
-              name="arrival_time"
-              required
-            />
+            <label for="arrival_time_return" class="form-label">Varış Tarihi ve Saati</label>
+            <input type="datetime-local" class="form-control" id="arrival_time_return" name="arrival_time" required />
           </div>
 
           <div class="mb-3">
             <label for="svc_type_return" class="form-label">Hizmet Türü</label>
-            <select
-              class="form-control"
-              id="svc_type_return"
-              name="svc_type"
-              required
-            >
+            <select class="form-control" id="svc_type_return" name="svc_type" required>
               <option value="LIVE">LIVE</option>
               <option value="FRY">FRY</option>
             </select>
           </div>
 
           <div class="mb-3">
-            <label for="user_price_return" class="form-label"
-              >Müşteri Fiyat</label
-            >
-            <input
-              type="number"
-              step="0.01"
-              class="form-control"
-              id="user_price_return"
-              name="user_price"
-              required
-            />
+            <label for="aircraft_category_return" class="form-label">Uçak Kategorisi</label>
+            <select class="form-control" id="aircraft_category_return" name="aircraft_category" required>
+              <option value="Tarifeli">Tarifeli</option>
+              <option value="Zincir">Zincir</option>
+              <option value="İlaveli Sefer">İlaveli Sefer</option>
+            </select>
           </div>
 
           <div class="mb-3">
-            <label for="agency_price_return" class="form-label"
-              >Acenta Fiyat</label
-            >
-            <input
-              type="number"
-              step="0.01"
-              class="form-control"
-              id="agency_price_return"
-              name="agency_price"
-              required
-            />
+            <label for="chain_number_return" class="form-label">Zincir Numarası</label>
+            <select class="form-control" id="chain_number_return" name="chain_number">
+              {% for num in range(1, 51) %}
+              <option value="{{ num }}">Zincir {{ num }}</option>
+              {% endfor %}
+            </select>
           </div>
 
-          <button type="submit" class="btn btn-primary">
-            Dönüş Uçuşu Ekle
-          </button>
+          <div class="mb-3">
+            <label for="airline_company_return" class="form-label">Havayolu Şirketi</label>
+            <select class="form-control" id="airline_company_return" name="airline_company" required>
+              <option value="Turkish Airlines">Turkish Airlines</option>
+              <option value="Pegasus">Pegasus</option>
+              <option value="Saudia">Saudia</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="user_price_return" class="form-label">Müşteri Fiyat</label>
+            <input type="number" step="0.01" class="form-control" id="user_price_return" name="user_price" required />
+          </div>
+
+          <div class="mb-3">
+            <label for="agency_price_return" class="form-label">Acenta Fiyat</label>
+            <input type="number" step="0.01" class="form-control" id="agency_price_return" name="agency_price" required />
+          </div>
+
+          <button type="submit" class="btn btn-primary">Dönüş Uçuşu Ekle</button>
         </form>
       </div>
     </div>
@@ -394,6 +287,71 @@ Arama{%endblock %} {% block content %}
     </div>
   </div>
 
+  <div class="content-section" id="outbound-list">
+    <div class="card">
+      <div class="card-header">Gidiş Uçuşları</div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Uçuş Numarası</th>
+                <th>Yolcu Sayısı</th>
+                <th>Kalkış</th>
+                <th>Varış</th>
+                <th>Kalkış Tarihi</th>
+                <th>Varış Tarihi</th>
+                <th>Uçak Kategorisi</th>
+                <th>Zincir Numarası</th>
+                <th>Havayolu Şirketi</th>
+                <th>Uçak</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for flight in outbound_flights %}
+              <tr>
+                <td>{{ flight.flight_number }}</td>
+                <td>{{ flight.available_seats }}</td>
+                <td>{{ flight.departure_airport[1] }}</td>
+                <td>{{ flight.arrival_airport[1] }}</td>
+                <td>{{ flight.departure_time }}</td>
+                <td>{{ flight.arrival_time }}</td>
+                <td>{{ flight.aircraft_category }}</td>
+                <td>{{ flight.chain_number }}</td>
+                <td>{{ flight.airline_company }}</td>
+                <td>
+                  <a href="{{ url_for('plane_layout', flight_id=flight.id) }}" class="btn btn-primary">Uçak Koltuğu</a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">Aktif Uçuşlar</div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Durum</th>
+                <th>Uçuş Numarası</th>
+                <th>Hizmet Türü</th>
+                <th>Kalkış</th>
+                <th>Varış</th>
+                <th>Kalkış Saati</th>
+                <th>Varış Saati</th>
+              </tr>
+            </thead>
+            <tbody id="active-outbound-flights-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="content-section" id="all-flights">
     <div class="card">
       <div class="card-header">Tüm Uçuşlar ve Uçuş Yönetimi</div>
@@ -406,21 +364,11 @@ Arama{%endblock %} {% block content %}
               <div class="card-header">Gidiş Uçuşu Ekle</div>
               <div class="card-body">
                 <form action="{{ url_for('add_flight') }}" method="post">
-                  <input
-                    type="hidden"
-                    name="flight_direction"
-                    value="outbound"
-                  />
-                  <label for="airplane_type" class="form-label"
-                    >Uçak Tipi</label
-                  >
+                  <input type="hidden" name="flight_direction" value="outbound" />
+
+                  <label for="airplane_type_outbound" class="form-label">Uçak Tipi</label>
                   <div class="mb-3">
-                    <select
-                      class="form-control"
-                      id="airplane_type"
-                      name="airplane_type"
-                      required
-                    >
+                    <select class="form-control" id="airplane_type" name="airplane_type_outbound" required>
                       <option value="TK121">TK121 - 30 Koltuk</option>
                       <option value="TK122">TK122 - 40 Koltuk</option>
                       <option value="TK123">TK123 - 50 Koltuk</option>
@@ -428,126 +376,77 @@ Arama{%endblock %} {% block content %}
                     </select>
                   </div>
                   <div class="mb-3">
-                    <label for="flight_code" class="form-label"
-                      >Uçuş Numarası</label
-                    >
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="flight_code"
-                      name="flight_code"
-                      required
-                    />
+                    <label for="flight_code_outbound" class="form-label">Uçuş Numarası</label>
+                    <input type="text" class="form-control" id="flight_code" name="flight_code_outbound" required />
                   </div>
                   <div class="mb-3">
-                    <label for="departure" class="form-label"
-                      >Kalkış Havalimanı</label
-                    >
-                    <select
-                      class="form-control"
-                      id="departure"
-                      name="departure"
-                      required
-                    >
+                    <label for="departure_outbound" class="form-label">Kalkış Havalimanı</label>
+                    <select class="form-control" id="departure" name="departure_outbound" required>
                       {% for airport in airports %}
-                      <option value="{{ airport.id }}">
-                        {{ airport.code }} - {{ airport.name }}
-                      </option>
+                      <option value="{{ airport.id }}">{{ airport.code }} - {{ airport.name }}</option>
                       {% endfor %}
                     </select>
                   </div>
                   <div class="mb-3">
-                    <label for="arrival" class="form-label"
-                      >Varış Havalimanı</label
-                    >
-                    <select
-                      class="form-control"
-                      id="arrival"
-                      name="arrival"
-                      required
-                    >
+                    <label for="arrival_outbound" class="form-label">Varış Havalimanı</label>
+                    <select class="form-control" id="arrival" name="arrival_outbound" required>
                       {% for airport in airports %}
-                      <option value="{{ airport.id }}">
-                        {{ airport.code }} - {{ airport.name }}
-                      </option>
+                      <option value="{{ airport.id }}">{{ airport.code }} - {{ airport.name }}</option>
                       {% endfor %}
                     </select>
                   </div>
                   <div class="mb-3">
-                    <label for="date" class="form-label">Tarih</label>
-                    <input
-                      type="date"
-                      class="form-control"
-                      id="date"
-                      name="date"
-                      required
-                    />
+                    <label for="date_outbound" class="form-label">Tarih</label>
+                    <input type="date" class="form-control" id="date" name="date_outbound" required />
                   </div>
                   <div class="mb-3">
-                    <label for="departure_time" class="form-label"
-                      >Kalkış Tarihi ve Saati</label
-                    >
-                    <input
-                      type="datetime-local"
-                      class="form-control"
-                      id="departure_time"
-                      name="departure_time"
-                      required
-                    />
+                    <label for="departure_time_outbound" class="form-label">Kalkış Tarihi ve Saati</label>
+                    <input type="datetime-local" class="form-control" id="departure_time" name="departure_time_outbound" required />
                   </div>
                   <div class="mb-3">
-                    <label for="arrival_time" class="form-label"
-                      >Varış Tarihi ve Saati</label
-                    >
-                    <input
-                      type="datetime-local"
-                      class="form-control"
-                      id="arrival_time"
-                      name="arrival_time"
-                      required
-                    />
+                    <label for="arrival_time_outbound" class="form-label">Varış Tarihi ve Saati</label>
+                    <input type="datetime-local" class="form-control" id="arrival_time" name="arrival_time_outbound" required />
                   </div>
                   <div class="mb-3">
-                    <label for="svc_type" class="form-label">Hizmet Türü</label>
-                    <select
-                      class="form-control"
-                      id="svc_type"
-                      name="svc_type"
-                      required
-                    >
+                    <label for="svc_type_outbound" class="form-label">Hizmet Türü</label>
+                    <select class="form-control" id="svc_type" name="svc_type_outbound" required>
                       <option value="LIVE">LIVE</option>
                       <option value="FRY">FRY</option>
                     </select>
                   </div>
                   <div class="mb-3">
-                    <label for="user_price" class="form-label"
-                      >Müşteri Fiyat</label
-                    >
-                    <input
-                      type="number"
-                      step="0.01"
-                      class="form-control"
-                      id="user_price"
-                      name="user_price"
-                      required
-                    />
+                    <label for="aircraft_category_outbound" class="form-label">Uçak Kategorisi</label>
+                    <select class="form-control" id="aircraft_category" name="aircraft_category_outbound" required>
+                      <option value="Tarifeli">Tarifeli</option>
+                      <option value="Zincir">Zincir</option>
+                      <option value="İlaveli Sefer">İlaveli Sefer</option>
+                    </select>
                   </div>
                   <div class="mb-3">
-                    <label for="agency_price" class="form-label"
-                      >Acenta Fiyat</label
-                    >
-                    <input
-                      type="number"
-                      step="0.01"
-                      class="form-control"
-                      id="agency_price"
-                      name="agency_price"
-                      required
-                    />
+                    <label for="chain_number_outbound" class="form-label">Zincir Numarası</label>
+                    <select class="form-control" id="chain_number" name="chain_number_outbound">
+                      {% for num in range(1, 51) %}
+                      <option value="{{ num }}">Zincir {{ num }}</option>
+                      {% endfor %}
+                    </select>
                   </div>
-                  <button type="submit" class="btn btn-primary">
-                    Gidiş Uçuşu Ekle
-                  </button>
+                  <div class="mb-3">
+                    <label for="airline_company_outbound" class="form-label">Havayolu Şirketi</label>
+                    <select class="form-control" id="airline_company" name="airline_company_outbound" required>
+                      <option value="Turkish Airlines">Turkish Airlines</option>
+                      <option value="Pegasus">Pegasus</option>
+                      <option value="Saudia">Saudia</option>
+                    </select>
+                  </div>
+                  <div class="mb-3">
+                    <label for="user_price_outbound" class="form-label">Müşteri Fiyat</label>
+                    <input type="number" step="0.01" class="form-control" id="user_price" name="user_price_outbound" required />
+                  </div>
+                  <div class="mb-3">
+                    <label for="agency_price_outbound" class="form-label">Acenta Fiyat</label>
+                    <input type="number" step="0.01" class="form-control" id="agency_price" name="agency_price_outbound" required />
+                  </div>
+                  <button type="submit" class="btn btn-primary">Gidiş Uçuşu Ekle</button>
                 </form>
               </div>
             </div>
@@ -561,153 +460,87 @@ Arama{%endblock %} {% block content %}
                 <form action="{{ url_for('add_flight') }}" method="post">
                   <input type="hidden" name="flight_direction" value="return" />
 
-                  <label for="return_airplane_type_id" class="form-label"
-                    >Uçak Tipi</label
-                  >
-                  <select
-                    class="form-control"
-                    id="return_airplane_type_id"
-                    name="return_airplane_type_id"
-                    required
-                  >
-                    <option value="TK121">TK121 - 30 Koltuk</option>
-                    <option value="TK122">TK122 - 40 Koltuk</option>
-                    <option value="TK123">TK123 - 50 Koltuk</option>
-                    <option value="TK124">TK124 - 70 Koltuk</option>
-                  </select>
-
+                  <label for="airplane_type_return" class="form-label">Uçak Tipi</label>
                   <div class="mb-3">
-                    <label for="return_flight_code" class="form-label"
-                      >Uçuş Numarası</label
-                    >
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="return_flight_code"
-                      name="return_flight_code"
-                      required
-                    />
+                    <select class="form-control" id="airplane_type" name="airplane_type_return" required>
+                      <option value="TK121">TK121 - 30 Koltuk</option>
+                      <option value="TK122">TK122 - 40 Koltuk</option>
+                      <option value="TK123">TK123 - 50 Koltuk</option>
+                      <option value="TK124">TK124 - 70 Koltuk</option>
+                    </select>
                   </div>
-
                   <div class="mb-3">
-                    <label for="return_departure" class="form-label"
-                      >Kalkış Havalimanı</label
-                    >
-                    <select
-                      class="form-control"
-                      id="return_departure"
-                      name="return_departure"
-                      required
-                    >
+                    <label for="flight_code_return" class="form-label">Uçuş Numarası</label>
+                    <input type="text" class="form-control" id="flight_code" name="flight_code_return" required />
+                  </div>
+                  <div class="mb-3">
+                    <label for="departure_return" class="form-label">Kalkış Havalimanı</label>
+                    <select class="form-control" id="departure" name="departure_return" required>
                       {% for airport in airports %}
-                      <option value="{{ airport.id }}">
-                        {{ airport.code }} - {{ airport.name }}
-                      </option>
+                      <option value="{{ airport.id }}">{{ airport.code }} - {{ airport.name }}</option>
                       {% endfor %}
                     </select>
                   </div>
-
                   <div class="mb-3">
-                    <label for="return_arrival" class="form-label"
-                      >Varış Havalimanı</label
-                    >
-                    <select
-                      class="form-control"
-                      id="return_arrival"
-                      name="return_arrival"
-                      required
-                    >
+                    <label for="arrival_return" class="form-label">Varış Havalimanı</label>
+                    <select class="form-control" id="arrival" name="arrival_return" required>
                       {% for airport in airports %}
-                      <option value="{{ airport.id }}">
-                        {{ airport.code }} - {{ airport.name }}
-                      </option>
+                      <option value="{{ airport.id }}">{{ airport.code }} - {{ airport.name }}</option>
                       {% endfor %}
                     </select>
                   </div>
-
                   <div class="mb-3">
                     <label for="date_return" class="form-label">Tarih</label>
-                    <input
-                      type="date"
-                      class="form-control"
-                      id="date_return"
-                      name="date"
-                      required
-                    />
+                    <input type="date" class="form-control" id="date" name="date_return" required />
                   </div>
-
                   <div class="mb-3">
-                    <label for="departure_time_return" class="form-label"
-                      >Kalkış Tarihi ve Saati</label
-                    >
-                    <input
-                      type="datetime-local"
-                      class="form-control"
-                      id="departure_time_return"
-                      name="departure_time"
-                      required
-                    />
+                    <label for="departure_time_return" class="form-label">Kalkış Tarihi ve Saati</label>
+                    <input type="datetime-local" class="form-control" id="departure_time" name="departure_time_return" required />
                   </div>
-
                   <div class="mb-3">
-                    <label for="arrival_time_return" class="form-label"
-                      >Varış Tarihi ve Saati</label
-                    >
-                    <input
-                      type="datetime-local"
-                      class="form-control"
-                      id="arrival_time_return"
-                      name="arrival_time"
-                      required
-                    />
+                    <label for="arrival_time_return" class="form-label">Varış Tarihi ve Saati</label>
+                    <input type="datetime-local" class="form-control" id="arrival_time" name="arrival_time_return" required />
                   </div>
-
                   <div class="mb-3">
-                    <label for="return_svc_type" class="form-label"
-                      >Hizmet Türü</label
-                    >
-                    <select
-                      class="form-control"
-                      id="return_svc_type"
-                      name="return_svc_type"
-                      required
-                    >
+                    <label for="svc_type_return" class="form-label">Hizmet Türü</label>
+                    <select class="form-control" id="svc_type" name="svc_type_return" required>
                       <option value="LIVE">LIVE</option>
                       <option value="FRY">FRY</option>
                     </select>
                   </div>
-
                   <div class="mb-3">
-                    <label for="return_user_price" class="form-label"
-                      >Müşteri Fiyat</label
-                    >
-                    <input
-                      type="number"
-                      step="0.01"
-                      class="form-control"
-                      id="return_user_price"
-                      name="return_user_price"
-                      required
-                    />
+                    <label for="aircraft_category_return" class="form-label">Uçak Kategorisi</label>
+                    <select class="form-control" id="aircraft_category" name="aircraft_category_return" required>
+                      <option value="Tarifeli">Tarifeli</option>
+                      <option value="Zincir">Zincir</option>
+                      <option value="İlaveli Sefer">İlaveli Sefer</option>
+                    </select>
                   </div>
-
                   <div class="mb-3">
-                    <label for="return_agency_price" class="form-label"
-                      >Acenta Fiyat</label
-                    >
-                    <input
-                      type="number"
-                      step="0.01"
-                      class="form-control"
-                      id="return_agency_price"
-                      name="return_agency_price"
-                      required
-                    />
+                    <label for="chain_number_return" class="form-label">Zincir Numarası</label>
+                    <select class="form-control" id="chain_number" name="chain_number_return">
+                      {% for num in range(1, 51) %}
+                      <option value="{{ num }}">Zincir {{ num }}</option>
+                      {% endfor %}
+                    </select>
                   </div>
-
-                  <button type="submit" class="btn btn-primary">
-                    Dönüş Uçuşu Ekle
-                  </button>
+                  <div class="mb-3">
+                    <label for="airline_company_return" class="form-label">Havayolu Şirketi</label>
+                    <select class="form-control" id="airline_company" name="airline_company_return" required>
+                      <option value="Turkish Airlines">Turkish Airlines</option>
+                      <option value="Pegasus">Pegasus</option>
+                      <option value="Saudia">Saudia</option>
+                    </select>
+                  </div>
+                  <div class="mb-3">
+                    <label for="user_price_return" class="form-label">Müşteri Fiyat</label>
+                    <input type="number" step="0.01" class="form-control" id="user_price" name="user_price_return" required />
+                  </div>
+                  <div class="mb-3">
+                    <label for="agency_price_return" class="form-label">Acenta Fiyat</label>
+                    <input type="number" step="0.01" class="form-control" id="agency_price" name="agency_price_return" required />
+                  </div>
+                  <button type="submit" class="btn btn-primary">Dönüş Uçuşu Ekle</button>
                 </form>
               </div>
             </div>
@@ -721,6 +554,9 @@ Arama{%endblock %} {% block content %}
                 <tr>
                   <th>Uçuş Numarası</th>
                   <th>Hizmet Türü</th>
+                  <th>Uçak Kategorisi</th>
+                  <th>Zincir Numarası</th>
+                  <th>Havayolu Şirketi</th>
                   <th>Kalkış</th>
                   <th>Varış</th>
                   <th>Kalkış Saati</th>
@@ -732,15 +568,22 @@ Arama{%endblock %} {% block content %}
                 <tr>
                   <td>{{ flight.flight_number }}</td>
                   <td>{{ flight.svc_type }}</td>
+                  <td>{{ flight.aircraft_category }}</td>
+                  <td>{{ flight.chain_number }}</td>
+                  <td>{{ flight.airline_company }}</td>
                   <td>{{ flight.departure_airport[1] }}</td>
                   <td>{{ flight.arrival_airport[1] }}</td>
                   <td>{{ flight.departure_time }}</td>
                   <td>{{ flight.arrival_time }}</td>
                 </tr>
-                {% endfor %} {% for flight in return_flights %}
+                {% endfor %}
+                {% for flight in return_flights %}
                 <tr>
                   <td>{{ flight.flight_number }}</td>
                   <td>{{ flight.svc_type }}</td>
+                  <td>{{ flight.aircraft_category }}</td>
+                  <td>{{ flight.chain_number }}</td>
+                  <td>{{ flight.airline_company }}</td>
                   <td>{{ flight.departure_airport[1] }}</td>
                   <td>{{ flight.arrival_airport[1] }}</td>
                   <td>{{ flight.departure_time }}</td>
@@ -769,6 +612,9 @@ Arama{%endblock %} {% block content %}
                   <th>Varış</th>
                   <th>Kalkış Tarihi</th>
                   <th>Varış Tarihi</th>
+                  <th>Uçak Kategorisi</th>
+                  <th>Zincir Numarası</th>
+                  <th>Havayolu Şirketi</th>
                   <th>Uçak</th>
                 </tr>
               </thead>
@@ -781,12 +627,11 @@ Arama{%endblock %} {% block content %}
                   <td>{{ flight.arrival_airport[1] }}</td>
                   <td>{{ flight.departure_time }}</td>
                   <td>{{ flight.arrival_time }}</td>
+                  <td>{{ flight.aircraft_category }}</td>
+                  <td>{{ flight.chain_number }}</td>
+                  <td>{{ flight.airline_company }}</td>
                   <td>
-                    <a
-                      href="{{ url_for('plane_layout', flight_id=flight.id) }}"
-                      class="btn btn-primary"
-                      >Uçak Koltuğu</a
-                    >
+                    <a href="{{ url_for('plane_layout', flight_id=flight.id) }}" class="btn btn-primary">Uçak Koltuğu</a>
                   </td>
                 </tr>
                 {% endfor %}
@@ -834,16 +679,19 @@ Arama{%endblock %} {% block content %}
               </tr>
             </thead>
             <tbody>
-              {% for user in users %} {% if user.role != 'admin' %}
+              {% for user in users %}
+              {% if user.role != 'admin' %}
               <tr>
                 <td>{{ user.username }}</td>
                 <td>{{ user.email }}</td>
                 <td>
-                  {% if user.role == 'agency' %} Acenta {% elif user.role ==
-                  'user' %} Müşteri {% endif %}
+                  {% if user.role == 'agency' %} Acenta
+                  {% elif user.role == 'user' %} Müşteri
+                  {% endif %}
                 </td>
               </tr>
-              {% endif %} {% endfor %}
+              {% endif %}
+              {% endfor %}
             </tbody>
           </table>
         </div>

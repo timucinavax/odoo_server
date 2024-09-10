@@ -235,6 +235,9 @@ def admin():
                 "flight_number",
                 "svc_type",
                 "date",
+                "aircraft_category",
+                "airline_company",
+                "chain_number",
                 "available_seats",
                 "departure_airport",
                 "arrival_airport",
@@ -285,17 +288,17 @@ def add_flight():
     airplane_type_name = request.form.get("airplane_type")
     svc_type = request.form.get("svc_type")
     date_str = request.form.get("date")
+    aircraft_category = request.form.get("aircraft_category")
+    airline_company = request.form.get("airline_company")
+    chain_number = request.form.get("chain_number")
 
     departure_time = datetime.strptime(departure_time_str, "%Y-%m-%dT%H:%M").strftime(
-    "%Y-%m-%d %H:%M:%S"
+        "%Y-%m-%d %H:%M:%S"
     )
     arrival_time = datetime.strptime(arrival_time_str, "%Y-%m-%dT%H:%M").strftime(
         "%Y-%m-%d %H:%M:%S"
     )
-
-    date = datetime.strptime(date_str, "%Y-%m-%d").strftime(
-    "%Y-%m-%d"
-    )
+    date = datetime.strptime(date_str, "%Y-%m-%d").strftime("%Y-%m-%d")
 
     uid, models = odoo_connect()
     if not uid:
@@ -337,6 +340,9 @@ def add_flight():
                 "airplane_type_id": airplane_type_id,
                 "svc_type": svc_type,
                 "date": date,
+                "aircraft_category": aircraft_category,
+                "airline_company": airline_company,
+                "chain_number": chain_number,
                 "user_id": False,
             }
         ],
@@ -348,6 +354,7 @@ def add_flight():
         flash("An error occurred while adding the flight.")
 
     return redirect(url_for("admin"))
+
 
 @app.route("/search-flight-ticket", methods=["POST"])
 def search_ticket():
