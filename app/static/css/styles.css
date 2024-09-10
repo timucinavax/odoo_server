@@ -62,25 +62,42 @@ html {
 
 .search-form {
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-between;
     gap: 20px;
     align-items: flex-start;
 }
 
-.form-group {
-    flex: 1;
-    min-width: 220px; /* Minimum genişlik */
-    max-width: 48%;   /* Yan yana durabilmesi için genişlik ayarı */
-    display: flex;
-    flex-direction: column;
-}
-
 #outbound-section, #return-section {
     flex: 1;
-    min-width: 45%;   /* Her iki bölümün de %45 genişliğinde olmasını sağlıyoruz */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
+/* Align form groups in a row */
+.form-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+/* Ensure labels and inputs/selects are aligned properly */
+.form-group label {
+    flex: 0 0 30%;
+    margin-bottom: 0;
+}
+
+.form-group select,
+.form-group input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+/* Adjust the search button alignment */
 .search-button {
     background-color: #dc3545;
     border: none;
@@ -89,11 +106,10 @@ html {
     padding: 15px;
     border-radius: 5px;
     cursor: pointer;
-    align-self: flex-start; /* Buttonu hizalıyoruz */
-    margin-top: 25px; /* Butonun diğer elemanlardan biraz aşağıda olması için boşluk ekliyoruz */
-    max-width: 200px; /* Buttonun genişliği */
+    align-self: flex-start; /* Align to the start */
+    margin-top: 25px;
+    max-width: 200px;
 }
-
 
 .tab-button {
     padding: 10px 20px;
