@@ -291,7 +291,7 @@
 
   <div class="content-section" id="return-list">
     <div class="card">
-      <div class="card-header">Gidiş Uçuşları</div>
+      <div class="card-header">Dönüş Uçuşları</div>
       <div class="card-body">
         <div class="table-responsive">
           <table class="table table-bordered">
@@ -333,22 +333,23 @@
     </div>
     <div class="card">
       <div class="card-header">Aktif Uçuşlar</div>
-      <div class="card-body">
-        <div class="table-responsive">
-          <table class="table table-bordered">
-            <thead>
-              <tr>
-                <th>Durum</th>
-                <th>Uçuş Numarası</th>
-                <th>Hizmet Türü</th>
-                <th>Kalkış</th>
-                <th>Varış</th>
-                <th>Kalkış Saati</th>
-                <th>Varış Saati</th>
-              </tr>
-            </thead>
-            <tbody id="active-return-flights-body"></tbody>
-          </table>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead>
+                tr>
+                  <th>Durum</th>
+                  <th>Uçuş Numarası</th>
+                  <th>Hizmet Türü</th>
+                  <th>Kalkış</th>
+                  <th>Varış</th>
+                  <th>Kalkış Saati</th>
+                  <th>Varış Saati</th>
+                </tr>
+              </thead>
+              <tbody id="active-return-flights-body"></tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
@@ -613,74 +614,7 @@
           </div>
         </div>
       </div>
-    </div>
-
-    <!-- Dönüş Uçuşları Listesi -->
-    <div class="content-section" id="return-list">
-      <div class="card">
-        <div class="card-header">Dönüş Uçuşları</div>
-        <div class="card-body">
-          <div class="table-responsive">
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <th>Uçuş Numarası</th>
-                  <th>Yolcu Sayısı</th>
-                  <th>Kalkış</th>
-                  <th>Varış</th>
-                  <th>Kalkış Tarihi</th>
-                  <th>Varış Tarihi</th>
-                  <th>Uçak Kategorisi</th>
-                  <th>Zincir Numarası</th>
-                  <th>Havayolu Şirketi</th>
-                  <th>Uçak</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for flight in return_flights %}
-                <tr>
-                  <td>{{ flight.flight_number }}</td>
-                  <td>{{ flight.available_seats }}</td>
-                  <td>{{ flight.departure_airport[1] }}</td>
-                  <td>{{ flight.arrival_airport[1] }}</td>
-                  <td>{{ flight.departure_time }}</td>
-                  <td>{{ flight.arrival_time }}</td>
-                  <td>{{ flight.aircraft_category }}</td>
-                  <td>{{ flight.chain_number }}</td>
-                  <td>{{ flight.airline_company }}</td>
-                  <td>
-                    <a href="{{ url_for('plane_layout', flight_id=flight.id) }}" class="btn btn-primary">Uçak Koltuğu</a>
-                  </td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-header">Aktif Uçuşlar</div>
-        <div class="card-body">
-          <div class="table-responsive">
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <th>Durum</th>
-                  <th>Uçuş Numarası</th>
-                  <th>Hizmet Türü</th>
-                  <th>Kalkış</th>
-                  <th>Varış</th>
-                  <th>Kalkış Saati</th>
-                  <th>Varış Saati</th>
-                </tr>
-              </thead>
-              <tbody id="active-return-flights-body"></tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+    </div>    
 
   <!-- Kullanıcılar Tablosu -->
   <div class="content-section" id="users-list">
