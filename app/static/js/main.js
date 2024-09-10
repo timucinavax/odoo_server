@@ -3,7 +3,16 @@ document.addEventListener("DOMContentLoaded", function () {
     handleSearchForm();
     postFlightSearch();
     searchBox();
+    carousel_item();
 });
+
+function carousel_item(){
+    var myCarousel = document.querySelector('#references-carousel');
+    var carousel = new bootstrap.Carousel(myCarousel, {
+        interval: 2000,
+        wrap: true
+    });
+}
 
 function postFlightSearch() {
     const form = document.querySelector('.search-form');
