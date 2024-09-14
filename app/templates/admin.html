@@ -671,11 +671,12 @@
             <tbody>
               {% for flight in flights %}
               <tr>
+                <td>
                 {% if flight.flight_direction == "outbound" %}
                   Gidiş
                 {% elif flight.flight_direction == "return" %}
                   Dönüş
-                {%endif%}
+                </td>
                 <td>{{ flight.flight_number }}</td>
                 <td>{{ flight.airline_company }}</td>
                 <td>{{ flight.departure_airport[1] }}</td>
