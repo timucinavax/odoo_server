@@ -68,6 +68,22 @@ select {
     margin-bottom: 20px;
 }
 
+.tab-button {
+    padding: 10px 20px;
+    background: none;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    flex: 1; /* Bu satır düğmelerin eşit genişlikte olmasını sağlar */
+    text-align: center;
+}
+
+.tab-button.active {
+    background-color: #fff;
+    border-color: #007bff;
+    color: #007bff;
+}
+
 .search-button {
     background-color: #dc3545;
     border: none;
@@ -76,9 +92,11 @@ select {
     padding: 15px;
     border-radius: 5px;
     cursor: pointer;
-    align-self: flex-end;
-    flex: 1;
+    align-self: center; /* Bu satır düğmenin merkezde olmasını sağlar */
+    width: 100%; /* Bu satır düğmenin genişliğini ayarlar */
+    max-width: 300px; /* Maksimum genişliği ayarlar */
 }
+
 
 .best-deals__header {
     text-align: center;
