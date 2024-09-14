@@ -35,8 +35,7 @@ function showFlights(date = null) {
         displayFlights(returnFlightsByDate, 'Dönüş Uçuşları');
     }
 
-    if (outboundFlightsBySelectedDates.length === 0 && returnFlightsBySelectedDates.length === 0 &&
-        outboundFlightsByDate.length === 0 && returnFlightsByDate.length === 0) {
+    if (outboundFlightsByDate.length === 0 && returnFlightsByDate.length === 0) {
         showNoFlightsMessage();
     }
 }
