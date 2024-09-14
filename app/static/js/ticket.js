@@ -6,14 +6,6 @@ function showFlights(date = null) {
     const today = new Date().toISOString().split('T')[0]; 
     
     document.querySelectorAll('.date-box').forEach(box => box.classList.remove('active'));
-    if (Array.isArray(selectedDates) && selectedDates.length > 0) {
-        selectedDates.forEach(selectedDate => {
-            const selectedBox = document.querySelector(`.date-box[data-date="${selectedDate}"]`);
-            if (selectedBox) {
-                selectedBox.classList.add('active');
-            }
-        });
-    }
 
     if (date) {
         const selectedBox = document.querySelector(`.date-box[data-date="${date}"]`);
