@@ -55,7 +55,11 @@ function handleSearchForm() {
         .then(response => response.json())
         .then(data => {
             if (data.flights) {
-                flightsData = data.flights;
+                const today = new Date().toISOString().split('T')[0]; // Bugünün tarihini alıyoruz
+                flightsData = data.flights.filter(flight => {
+                    const flightDate = flight.date.split(' ')[0];
+                    return flightDate >= today; // Geçmiş tarihli uçuşları filtreleme
+                });
                 populateAllFlights();
             } else {
                 console.error("Flights data is missing in the response");
