@@ -8,15 +8,23 @@ html {
     overflow-x: hidden;
 }
 
+/* Genel başlık ve metin stilleri */
+label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input,
+select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
 .carousel {
     margin-left: 100px;
     margin-right: 100px;
     position: relative;
-}
-
-.a {
-    font-weight: bold;
-    font-size: 1rem;
 }
 
 .carousel img {
@@ -60,25 +68,6 @@ html {
     margin-bottom: 20px;
 }
 
-.form-group {
-    flex: 1;
-    min-width: 180px;
-    display: flex;
-    flex-direction: column;
-}
-
-label {
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-input,
-select {
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-}
-
 .search-button {
     background-color: #dc3545;
     border: none;
@@ -91,31 +80,16 @@ select {
     flex: 1;
 }
 
-
-.tab-button {
+.best-deals__header {
+    text-align: center;
+    font-family: "Raleway", sans-serif;
+    font-weight: 700;
+    font-size: 3rem;
+    color: #2c3e50;
+    background-color: white;
     padding: 10px 20px;
-    background: none;
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.tab-button.active {
-    background-color: #fff;
-    border-color: #007bff;
-    color: #007bff;
-}
-
-label {
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-input,
-select {
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+    border-radius: 10px;
+    margin-bottom: 20px;
 }
 
 .best-deals__header__title {
@@ -204,13 +178,31 @@ select {
     font-size: 1.1rem;
     padding: 20px;
     flex-wrap: wrap;
-    /* İçerik taşarsa alta geç */
 }
 
 .row .col-md-3 {
     padding: 10px;
     font-weight: 600;
     text-align: left;
+}
+
+.a {
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.tab-button {
+    padding: 10px 20px;
+    background: none;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.tab-button.active {
+    background-color: #fff;
+    border-color: #007bff;
+    color: #007bff;
 }
 
 .nav-tabs .nav-link {
@@ -220,95 +212,17 @@ select {
     margin-right: 10px;
 }
 
-.best-deals__header__title {
-    font-family: "Raleway", sans-serif;
-    /* Yazı tipi */
-    font-weight: 700;
-    /* Kalın yazı */
-    font-size: 3.5rem;
-    /* Yazı boyutu */
-    text-align: left;
-    /* Ortala */
-    margin-top: 20px;
-    margin-bottom: 30px;
-    /* Alt boşluk */
-}
-
-.best-deals__header__title .highlight {
-    color: #ff5733;
-    /* Kırmızıdan çalan turuncu renk */
-}
-
-.best-deals__header__title span {
-    color: #f39c12;
-    /* Orta turuncu renk */
-}
-
-.best-deals__header__title {
-    color: #2c3e50;
-    /* Lacivert renk */
-}
-
-.best-deals__header {
-    text-align: center;
-    font-family: "Raleway", sans-serif;
-    font-weight: 700;
-    font-size: 3rem;
-    color: #2c3e50;
-    background-color: white;
-    padding: 10px 20px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    /* Altına boşluk ekleyin */
-}
-
-.best-deals__header .highlight {
-    color: #ff5733;
-    /* Kırmızıdan çalan turuncu renk */
-}
-
-.best-deals__header span {
-    color: #f39c12;
-    /* Orta turuncu renk */
-}
-
-.best-deals__header {
-    color: #2c3e50;
-    /* Lacivert renk */
-}
-
 .nav-tabs .nav-link.active {
     background-color: #f8f9fa;
     border-color: #ddd;
 }
 
-.swiper-wrapper {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    padding: 20px 0;
-    flex-wrap: wrap;
-}
-
-.best-deals__swiper__item {
-    flex: 0 0 calc(33.333% - 20px);
-    /* Kartların üç sütunda yer almasını sağlar */
-    box-sizing: border-box;
-    margin-bottom: 20px;
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-
-/* Kartların üst üste yığılmasını önlemek için hover durumu */
-.best-deals__swiper__item:hover {
-    transform: translateY(-5px);
-}
-
 .owl-carousel .item img {
     width: auto;
-    max-width: 150px; /* Maksimum genişlik */
-    max-height: 100px; /* Maksimum yükseklik */
-    object-fit: contain; /* Logoları kutu içinde tutar ve oranları bozmadan sığdırır */
-    margin: 0 auto; /* Ortalar */
+    max-width: 150px;
+    max-height: 100px;
+    object-fit: contain;
+    margin: 0 auto;
 }
 
 .owl-carousel .item {
@@ -317,7 +231,6 @@ select {
     align-items: center;
     padding: 10px;
 }
-
 
 @media (max-width: 768px) {
     .best-deals__swiper__item {
@@ -394,13 +307,6 @@ select {
     }
 }
 
-.owl-carousel .item img {
-    display: block;
-    width: 100%;
-    height: auto;
-}
-
-
 @media (min-width: 1200px) {
     .search-box-container {
         top: 65%;
@@ -439,5 +345,4 @@ select {
         border-radius: 10px;
         margin-bottom: 20px;
     }
-
 }
