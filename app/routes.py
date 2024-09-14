@@ -256,7 +256,13 @@ def admin():
         {"fields": ["username", "email", "role"]},
     )
 
-    # Group flights by chain_number
+    outbound_flights = [
+        flight for flight in flights if flight["flight_direction"] == "outbound"
+    ]
+    return_flights = [
+        flight for flight in flights if flight["flight_direction"] == "return"
+    ]
+
     grouped_flights = defaultdict(list)
     for flight in flights:
         grouped_flights[flight["chain_number"]].append(flight)
@@ -264,6 +270,8 @@ def admin():
     return render_template(
         "admin.html",
         grouped_flights=grouped_flights,
+        outbound_flights=outbound_flights,
+        return_flights=return_flights,
         users=users,
         airports=airports,
         current_page="admin",
