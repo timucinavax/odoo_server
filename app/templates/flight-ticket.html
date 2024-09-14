@@ -27,30 +27,29 @@
       </button>
       <div class="date-selector">
         {% for date in dates %}
-          <div
-            class="date-box"
-            data-date="{{ date }}"
-            onclick="showFlights('{{ date }}')"
-          >
-            <div class="flight-counts">
-              <div class="count-box">
-                <span class="flight-count outbound-count" style="color: green">
-                  {{ outbound_count[date] }}
-                </span>
-                <span class="flight-label">Gidiş</span>
-              </div>
-              <div class="count-box">
-                <span class="flight-count return-count" style="color: blue">
-                  {{ return_count[date] }}
-                </span>
-                <span class="flight-label">Dönüş</span>
-              </div>
+        <div
+          class="date-box"
+          data-date="{{ date }}"
+          onclick="showFlights('{{ date }}')"
+        >
+          <div class="flight-counts">
+            <div class="count-box">
+              <span class="flight-count outbound-count" style="color: green"
+                >{{ outbound_count[date] }}</span
+              >
+              <span class="flight-label">Gidiş</span>
             </div>
-            <div class="day-number">{{ date.split('-')[2] }}</div>
-            <div class="day-name">{{ date | dayname }}</div>
-            <div class="month-name">{{ date | monthname }}</div>
+            <div class="count-box">
+              <span class="flight-count return-count" style="color: blue"
+                >{{ return_count[date] }}</span
+              >
+              <span class="flight-label">Dönüş</span>
+            </div>
           </div>
-          {% endif %}
+          <div class="day-number">{{ date.split('-')[2] }}</div>
+          <div class="day-name">{{ date | dayname }}</div>
+          <div class="month-name">{{ date | monthname }}</div>
+        </div>
         {% endfor %}
       </div>
       <button class="scroll-button right-scroll" onclick="scrollDates('right')">
