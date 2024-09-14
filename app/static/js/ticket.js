@@ -3,9 +3,12 @@ let selectedSeats = 0;
 
 
 function showFlights(dates = []) {
-    const today = new Date().toISOString().split('T')[0]; 
+    if (!Array.isArray(dates)) {
+        dates = [dates];
+    }
 
-    // Tüm date-box elemanlarını aktif duruma getiriyoruz.
+    const today = new Date().toISOString().split('T')[0]; 
+    
     document.querySelectorAll('.date-box').forEach(box => box.classList.remove('active'));
 
     const flightsContainer = document.getElementById('flights-container');
@@ -40,6 +43,7 @@ function showFlights(dates = []) {
         showNoFlightsMessage();
     }
 }
+
 
 function displayFlights(flights, header) {
     const logoUrl = window.logoUrl;
