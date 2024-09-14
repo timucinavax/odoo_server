@@ -47,7 +47,7 @@ function displayFlights(flights, header) {
     const userRole = window.loggedInUserRole;
 
     const flightsContainer = document.getElementById('flights-container');
-    flightsContainer.innerHTML += `<h2>${header}</h2>`;
+    flightsContainer.innerHTML += `<h2 style="text-align: center; color: red;">${header}</h2>`;
 
     flights.forEach(flight => {
         const priceToShow = userRole === 'agency' ? flight.agency_price : flight.user_price;
