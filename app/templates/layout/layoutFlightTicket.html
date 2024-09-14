@@ -37,9 +37,10 @@
     <script type="text/javascript">
       const flightsData = {{ flights | tojson }};
       const selectedDates = {{ selected_dates | tojson }};
-      const today_date = {{ today | tojson }};
       window.loggedInUserRole = "{{ logged_in_user_role }}";
       window.logoUrl = "{{ url_for('static', filename='images/sehlen_logo.png') }}";
+      const todayDate = new Date().toISOString().split('T')[0];
+      window.todayDate = todayDate;
     </script>
     <script type="text/javascript">const outboundCount = {{ outbound_count | tojson }};</script>
     <script type="text/javascript">const returnCount = {{ return_count | tojson }};</script>

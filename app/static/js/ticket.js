@@ -4,10 +4,6 @@ let selectedSeats = 0;
 
 function showFlights(date = null) {
     const today = new Date().toISOString().split('T')[0]; 
-
-    if (date < today) {
-        return;
-    }
     
     document.querySelectorAll('.date-box').forEach(box => box.classList.remove('active'));
 
@@ -23,12 +19,12 @@ function showFlights(date = null) {
 
     const outboundFlightsByDate = flightsData.filter(flight => {
         const flightDate = flight.departure_time.split(' ')[0];
-        return flightDate === date && flightDate >= today && flight.flight_direction === 'outbound';
+        return flightDate === date && flightDate >= today && flight.flight_direction === 'outbound'; 
     });
 
     const returnFlightsByDate = flightsData.filter(flight => {
         const flightDate = flight.departure_time.split(' ')[0];
-        return flightDate === date && flightDate >= today && flight.flight_direction === 'return';
+        return flightDate === date && flightDate >= today && flight.flight_direction === 'return'; 
     });
 
     if (outboundFlightsByDate.length > 0) {
@@ -39,7 +35,8 @@ function showFlights(date = null) {
         displayFlights(returnFlightsByDate, 'Dönüş Uçuşları');
     }
 
-    if (outboundFlightsByDate.length === 0 && returnFlightsByDate.length === 0) {
+    if (outboundFlightsBySelectedDates.length === 0 && returnFlightsBySelectedDates.length === 0 &&
+        outboundFlightsByDate.length === 0 && returnFlightsByDate.length === 0) {
         showNoFlightsMessage();
     }
 }
