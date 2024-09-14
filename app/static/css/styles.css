@@ -8,7 +8,6 @@ html {
     overflow-x: hidden;
 }
 
-/* Genel başlık ve metin stilleri */
 label {
     margin-bottom: 5px;
     font-weight: bold;
@@ -88,19 +87,7 @@ select {
     flex: 1;
     min-width: 180px;
     display: flex;
-    flex-direction: column;
-}
-
-label {
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-input,
-select {
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+    flex-direction:row;
 }
 
 .search-button {
