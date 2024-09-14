@@ -95,7 +95,7 @@ select {
 }
 
 .search-button {
-    background-color: #dc3545;
+    background-color: #007bff;
     border: none;
     color: white;
     font-weight: bold;
@@ -249,8 +249,8 @@ select {
     max-height: 100px;
     object-fit: contain;
     margin: 0 auto;
-    filter: grayscale(100%); /* Başlangıçta siyah beyaz yap */
-    transition: filter 0.3s ease; /* Geçiş efekti ekle */
+    filter: grayscale(100%); 
+    transition: filter 0.3s ease; 
 }
 
 .owl-carousel .item {
@@ -261,7 +261,7 @@ select {
 }
 
 .owl-carousel .item:hover img {
-    filter: grayscale(0%); /* Üzerine gelindiğinde renkli yap */
+    filter: grayscale(0%);
 }
 
 @media (max-width: 768px) {

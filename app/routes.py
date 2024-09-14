@@ -388,7 +388,6 @@ def flight_ticket():
     if not uid:
         return redirect(url_for("index"))
 
-    # selected_dates parametresini GET isteğiyle alın
     selected_dates = request.args.getlist("selected_dates")
 
     domain = []
@@ -399,6 +398,8 @@ def flight_ticket():
             selected_date_end = f"{selected_date} 23:59:59"
             domain.append(("departure_time", ">=", selected_date_start))
             domain.append(("departure_time", "<=", selected_date_end))
+    else:
+        domain.append(("departure_time", ">=", f"{datetime.today().strftime('%Y-%m-%d')} 00:00:00"))
 
     flights = models.execute_kw(
         current_app.config["ODOO_DB"],
@@ -441,17 +442,19 @@ def flight_ticket():
         elif flight["flight_direction"] == "return":
             return_count[flight_date] += 1
 
+    dates_to_render = selected_dates if selected_dates else list(date_flight_map.keys())
+
     return render_template(
         "flight-ticket.html",
-        dates=list(date_flight_map.keys()), 
+        dates=dates_to_render,
         flights=flights,
-        selected_dates=selected_dates, 
         outbound_count=outbound_count,
         return_count=return_count,
         logged_in_user=session.get("username"),
         logged_in_user_role=session.get("role"),
         current_page="flight-ticket",
     )
+
 
 
 @app.route("/plane_layout/<int:flight_id>", methods=["GET"])
