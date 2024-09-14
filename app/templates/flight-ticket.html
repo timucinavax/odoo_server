@@ -27,6 +27,7 @@
       </button>
       <div class="date-selector">
         {% for date in dates %}
+        <pre>{{ flights | pprint }}</pre>
         <div
           class="date-box"
           data-date="{{ date }}"
