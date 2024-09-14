@@ -44,7 +44,7 @@ select {
 }
 
 .search-box-container {
-    top: 70%;
+    top: 65%;
     left: 50%;
     transform: translate(-50%, -50%);
     background: rgba(255, 255, 255, 0.8);
@@ -80,7 +80,7 @@ select {
 .search-form {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
 }
 
 .row {
