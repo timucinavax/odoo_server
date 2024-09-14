@@ -14,6 +14,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from app import app
 from datetime import datetime, timedelta
 import calendar
+from collections import defaultdict
 
 @app.template_filter("dayname")
 def dayname_filter(date_str):
@@ -203,7 +204,6 @@ def register():
         flash("Kayıt sırasında bir hata oluştu.")
         return redirect(url_for("sign"))
 
-
 @app.route("/admin")
 @role_required(["admin"])
 def admin():
@@ -218,7 +218,7 @@ def admin():
         "airport",
         "search_read",
         [[]],
-        {"fields": ["name", "code" ,"city", "country"]}
+        {"fields": ["name", "code", "city", "country"]}
     )
 
     flights = models.execute_kw(
@@ -246,13 +246,6 @@ def admin():
         },
     )
 
-    outbound_flights = [
-        flight for flight in flights if flight["flight_direction"] == "outbound"
-    ]
-    return_flights = [
-        flight for flight in flights if flight["flight_direction"] == "return"
-    ]
-
     users = models.execute_kw(
         current_app.config["ODOO_DB"],
         uid,
@@ -263,15 +256,19 @@ def admin():
         {"fields": ["username", "email", "role"]},
     )
 
+    # Group flights by chain_number
+    grouped_flights = defaultdict(list)
+    for flight in flights:
+        grouped_flights[flight["chain_number"]].append(flight)
+
     return render_template(
         "admin.html",
-        outbound_flights=outbound_flights,
-        return_flights=return_flights,
+        grouped_flights=grouped_flights,
         users=users,
         airports=airports,
         current_page="admin",
     )
-    
+
 @app.route("/add_flight", methods=["POST"])
 @role_required(["admin"])
 def add_flight():

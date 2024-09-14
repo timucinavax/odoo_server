@@ -647,6 +647,48 @@
       </div>
     </div>
   </div>
+
+  <div class="content-section" id="zincir-list">
+    <div class="card">
+      <div class="card-header">Zincirler</div>
+      <div class="card-body">
+        <div class="table-responsive">
+          {% for chain_number, flights in grouped_flights.items() %}
+          <h3>Zincir {{ chain_number }}</h3>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Yön</th>
+                <th>Uçuş Numarası</th>
+                <th>Havayolu Şirketi</th>
+                <th>Kalkış Havaalanı</th>
+                <th>Varış Havaalanı</th>
+                <th>Kalkış Zamanı</th>
+                <th>Varış Zamanı</th>
+                <th>Mevcut Koltuklar</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for flight in flights %}
+              <tr>
+                <td>{{ flight.flight_direction }}</td>
+                <td>{{ flight.flight_number }}</td>
+                <td>{{ flight.airline_company }}</td>
+                <td>{{ flight.departure_airport }}</td>
+                <td>{{ flight.arrival_airport }}</td>
+                <td>{{ flight.departure_time }}</td>
+                <td>{{ flight.arrival_time }}</td>
+                <td>{{ flight.available_seats }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+  
 </div>
 
 {% endblock %}
