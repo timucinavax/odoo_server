@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    
+    // Owl Carousel Başlatma
     $(".owl-carousel").owlCarousel({
         loop: true,
         margin: 10,
@@ -22,46 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     handleSearchForm();
     postFlightSearch();
-    searchBox();
-
 });
-
-function postFlightSearch() {
-    const form = document.querySelector('.search-form');
-    const searchButton = document.querySelector('.search-button');
-
-    searchButton.addEventListener('click', function (e) {
-        e.preventDefault();
-
-        const departureTime = document.getElementById('departure_time').value;
-        const returnTime = document.getElementById('return_time').value;
-
-        if (departureTime) {
-            addHiddenInput(form, 'departure_time', departureTime);
-        }
-
-        if (returnTime) {
-            addHiddenInput(form, 'return_time', returnTime);
-        }
-        form.action = "/search-flight-ticket";
-        form.method = "POST";
-        form.submit();
-    });
-}
-
-// Gizli input ekleyen fonksiyon
-function addHiddenInput(form, name, value) {
-    const existingInput = form.querySelector(`input[name="${name}"]`);
-    if (existingInput) {
-        existingInput.value = value; // Eğer hidden input varsa, sadece değerini güncelleyin
-    } else {
-        const input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = name;
-        input.value = value;
-        form.appendChild(input);
-    }
-}
 
 function handleSearchForm() {
     const oneWayTab = document.getElementById('one-way-tab');
@@ -74,20 +35,22 @@ function handleSearchForm() {
     const returnArrivalSelect = document.getElementById('return_arrival_airport');
     const returnDateInput = document.getElementById('return_time');
 
+    // Tek Yön ve Gidiş-Dönüş sekmeleri arasında geçiş yapma
     oneWayTab.addEventListener('click', function () {
         oneWayTab.classList.add('active');
         roundTripTab.classList.remove('active');
-        returnSection.style.display = 'none';
+        returnSection.style.display = 'none'; // Dönüş bölümünü gizliyoruz
     });
 
     roundTripTab.addEventListener('click', function () {
         roundTripTab.classList.add('active');
         oneWayTab.classList.remove('active');
-        returnSection.style.display = 'block';
+        returnSection.style.display = 'flex'; // Dönüş bölümünü gösteriyoruz ve flex olarak hizalıyoruz
     });
 
     let flightsData = [];
 
+    // Uçuş verilerini sunucudan çekme
     fetch('/search_flights')
         .then(response => response.json())
         .then(data => {
@@ -157,4 +120,42 @@ function populateSelectOptions(selectElement, options) {
         option.textContent = optionValue;
         selectElement.appendChild(option);
     });
+}
+
+function postFlightSearch() {
+    const form = document.querySelector('.search-form');
+    const searchButton = document.querySelector('.search-button');
+
+    searchButton.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        const departureTime = document.getElementById('departure_time').value;
+        const returnTime = document.getElementById('return_time').value;
+
+        if (departureTime) {
+            addHiddenInput(form, 'departure_time', departureTime);
+        }
+
+        if (returnTime) {
+            addHiddenInput(form, 'return_time', returnTime);
+        }
+
+        form.action = "/search-flight-ticket";
+        form.method = "POST";
+        form.submit();
+    });
+}
+
+// Gizli input ekleyen fonksiyon
+function addHiddenInput(form, name, value) {
+    const existingInput = form.querySelector(`input[name="${name}"]`);
+    if (existingInput) {
+        existingInput.value = value; // Eğer hidden input varsa, sadece değerini güncelleyin
+    } else {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = name;
+        input.value = value;
+        form.appendChild(input);
+    }
 }
