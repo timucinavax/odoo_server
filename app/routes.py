@@ -373,14 +373,13 @@ def search_ticket():
     departure_date = search_criteria.get('departure_time')
     return_date = search_criteria.get('return_time')
     
-    # Tarihleri ayrı ayrı almak yerine bir liste olarak birleştiriyoruz
     selected_dates = []
     if departure_date:
         selected_dates.append(departure_date)
     if return_date:
         selected_dates.append(return_date)
     
-    return redirect(url_for("flight_ticket", selected_dates=selected_dates))
+    return redirect(url_for("flight_ticket", **{'selected_dates': selected_dates}))
     
 @app.route("/flight-ticket", methods=["POST", "GET"])
 def flight_ticket():
@@ -389,6 +388,7 @@ def flight_ticket():
         return redirect(url_for("index"))
 
     selected_dates = request.args.getlist("selected_dates")
+    print(f"Selected dates: {selected_dates}")  # URL'den gelen seçili tarihleri kontrol edin
 
     domain = []
 
