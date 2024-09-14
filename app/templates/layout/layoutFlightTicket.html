@@ -37,6 +37,7 @@
     <script type="text/javascript">
       const flightsData = {{ flights | tojson }};
       const selectedDates = {{ selected_dates | tojson }};
+      const today = {{ today | tojson }};
       window.loggedInUserRole = "{{ logged_in_user_role }}";
       window.logoUrl = "{{ url_for('static', filename='images/sehlen_logo.png') }}";
     </script>

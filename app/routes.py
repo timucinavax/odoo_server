@@ -233,7 +233,6 @@ def admin():
                 "flight_direction",
                 "flight_number",
                 "svc_type",
-                "date",
                 "aircraft_category",
                 "airline_company",
                 "chain_number",
@@ -384,7 +383,6 @@ def flight_ticket():
     if not uid:
         return redirect(url_for("index"))
 
-    # selected_dates parametresini GET isteğiyle alın
     selected_dates = request.args.getlist("selected_dates")
 
     domain = []
@@ -419,6 +417,7 @@ def flight_ticket():
         },
     )
 
+    today_date = datetime.today().strftime('%Y-%m-%d')
     date_flight_map = {}
     outbound_count = {}
     return_count = {}
@@ -441,6 +440,7 @@ def flight_ticket():
         "flight-ticket.html",
         dates=list(date_flight_map.keys()), 
         flights=flights,
+        today = today_date,
         selected_dates=selected_dates, 
         outbound_count=outbound_count,
         return_count=return_count,

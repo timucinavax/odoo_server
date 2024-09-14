@@ -5,7 +5,6 @@ let selectedSeats = 0;
 function showFlights(date = null) {
     const today = new Date().toISOString().split('T')[0]; 
 
-    // Prevent showing flights for past dates
     if (date < today) {
         return;
     }
