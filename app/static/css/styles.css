@@ -79,15 +79,18 @@ select {
 
 .search-form {
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
 }
 
 .form-group {
     flex: 1;
     min-width: 180px;
-    display: flex;
-    flex-direction:row;
 }
 
 .search-button {
@@ -101,6 +104,7 @@ select {
     align-self: flex-end;
     flex: 1;
 }
+
 .best-deals__header {
     text-align: center;
     font-family: "Raleway", sans-serif;
