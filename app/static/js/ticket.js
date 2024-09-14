@@ -4,6 +4,11 @@ let selectedSeats = 0;
 
 function showFlights(date = null) {
     const today = new Date().toISOString().split('T')[0]; 
+
+    // Prevent showing flights for past dates
+    if (date < today) {
+        return;
+    }
     
     document.querySelectorAll('.date-box').forEach(box => box.classList.remove('active'));
 
@@ -39,6 +44,7 @@ function showFlights(date = null) {
         showNoFlightsMessage();
     }
 }
+
 
 function displayFlights(flights, header) {
     const logoUrl = window.logoUrl;

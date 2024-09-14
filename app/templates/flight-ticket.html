@@ -27,6 +27,7 @@
       </button>
       <div class="date-selector">
         {% for date in dates %}
+        {% if date >= today_date %}
         <div
           class="date-box"
           data-date="{{ date }}"
