@@ -258,6 +258,10 @@ select {
     padding: 10px;
 }
 
+.owl-carousel .item:hover img {
+    filter: grayscale(100%);
+}
+
 @media (max-width: 768px) {
     .best-deals__swiper__item {
         flex: 0 0 100%;
