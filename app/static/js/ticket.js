@@ -1,10 +1,11 @@
 let maxSeats = 0;
 let selectedSeats = 0;
 
-
 function showFlights(date = null) {
     const today = new Date().toISOString().split('T')[0]; 
-    
+
+    console.log("Selected date:", date); // Seçilen tarihi kontrol edin
+
     document.querySelectorAll('.date-box').forEach(box => box.classList.remove('active'));
 
     if (date) {
@@ -26,6 +27,9 @@ function showFlights(date = null) {
         const flightDate = flight.departure_time.split(' ')[0];
         return flightDate === date && flightDate >= today && flight.flight_direction === 'return'; 
     });
+
+    console.log("Outbound Flights:", outboundFlightsByDate); // Gidiş uçuşlarını kontrol edin
+    console.log("Return Flights:", returnFlightsByDate); // Dönüş uçuşlarını kontrol edin
 
     if (outboundFlightsByDate.length > 0) {
         displayFlights(outboundFlightsByDate, 'Gidiş Uçuşları');
