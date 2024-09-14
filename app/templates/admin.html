@@ -671,11 +671,15 @@
             <tbody>
               {% for flight in flights %}
               <tr>
-                <td>{{ flight.flight_direction }}</td>
+                {% if flight.flight_direction == "outbound" %}
+                  Gidiş
+                {% elif flight.flight_direction == "return" %}
+                  Dönüş
+                {%endif%}
                 <td>{{ flight.flight_number }}</td>
                 <td>{{ flight.airline_company }}</td>
-                <td>{{ flight.departure_airport }}</td>
-                <td>{{ flight.arrival_airport }}</td>
+                <td>{{ flight.departure_airport[1] }}</td>
+                <td>{{ flight.arrival_airport[1] }}</td>
                 <td>{{ flight.departure_time }}</td>
                 <td>{{ flight.arrival_time }}</td>
                 <td>{{ flight.available_seats }}</td>
