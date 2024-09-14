@@ -36,8 +36,8 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript">
       const flightsData = {{ flights | tojson }};
+      console.log("flight data :" flightsData);
       const selectedDates = {{ selected_dates | tojson }};
-      console.log('Selected Dates:', selectedDates); 
       window.loggedInUserRole = "{{ logged_in_user_role }}";
       window.logoUrl = "{{ url_for('static', filename='images/sehlen_logo.png') }}";
     </script>
