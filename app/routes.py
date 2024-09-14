@@ -388,10 +388,12 @@ def flight_ticket():
     if not uid:
         return redirect(url_for("index"))
 
+    # GET isteğinden selected_dates parametresini alıyoruz
     selected_dates = request.args.getlist("selected_dates")
 
     domain = []
 
+    # Eğer selected_dates doluysa, bu tarihler için domain filtresi ekliyoruz
     if selected_dates:
         for selected_date in selected_dates:
             selected_date_start = f"{selected_date} 00:00:00"
@@ -399,8 +401,12 @@ def flight_ticket():
             domain.append(("departure_time", ">=", selected_date_start))
             domain.append(("departure_time", "<=", selected_date_end))
     else:
-        domain.append(("departure_time", ">=", f"{datetime.today().strftime('%Y-%m-%d')} 00:00:00"))
+        # Eğer selected_dates boşsa, bugünün tarihini kullanarak domain filtresi oluşturuyoruz
+        today = datetime.today().strftime('%Y-%m-%d')
+        domain.append(("departure_time", ">=", f"{today} 00:00:00"))
+        domain.append(("departure_time", "<=", f"{today} 23:59:59"))
 
+    # Filtrelenmiş uçuşları veritabanından çekiyoruz
     flights = models.execute_kw(
         current_app.config["ODOO_DB"],
         uid,
@@ -424,6 +430,7 @@ def flight_ticket():
         },
     )
 
+    # Uçuşları tarih bazlı haritalıyoruz
     date_flight_map = {}
     outbound_count = {}
     return_count = {}
@@ -442,6 +449,7 @@ def flight_ticket():
         elif flight["flight_direction"] == "return":
             return_count[flight_date] += 1
 
+    # Eğer selected_dates boşsa, date_flight_map içindeki tarihler kullanılacak
     dates_to_render = selected_dates if selected_dates else list(date_flight_map.keys())
 
     return render_template(
@@ -454,7 +462,6 @@ def flight_ticket():
         logged_in_user_role=session.get("role"),
         current_page="flight-ticket",
     )
-
 
 
 @app.route("/plane_layout/<int:flight_id>", methods=["GET"])
