@@ -51,20 +51,16 @@ select {
     background: rgba(255, 255, 255, 0.8);
     border-radius: 10px;
     padding: 20px;
-    max-width: 600px;
-    width: 80%;
+    max-width: 1100px;
+    width: 97%;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     z-index: 100;
     text-align: center;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
 }
 
 .search-tabs {
     display: flex;
-    justify-content: center;
-    gap: 10px;
+    justify-content: space-around;
     margin-bottom: 20px;
 }
 
@@ -74,14 +70,37 @@ select {
     border: 2px solid #ccc;
     border-radius: 5px;
     cursor: pointer;
-    flex: 1; /* Bu satır düğmelerin eşit genişlikte olmasını sağlar */
-    text-align: center;
 }
 
 .tab-button.active {
     background-color: #fff;
     border-color: #007bff;
     color: #007bff;
+}
+
+.search-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.form-group {
+    flex: 1;
+    min-width: 180px;
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input,
+select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
 }
 
 .search-button {
@@ -92,12 +111,9 @@ select {
     padding: 15px;
     border-radius: 5px;
     cursor: pointer;
-    align-self: center; /* Bu satır düğmenin merkezde olmasını sağlar */
-    width: 100%; /* Bu satır düğmenin genişliğini ayarlar */
-    max-width: 300px; /* Maksimum genişliği ayarlar */
+    align-self: flex-end;
+    flex: 1;
 }
-
-
 .best-deals__header {
     text-align: center;
     font-family: "Raleway", sans-serif;
