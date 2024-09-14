@@ -28,7 +28,7 @@ select {
 
 .carousel img {
     width: 50%;
-    height: 40vh;
+    height: 60vh;
     object-fit: cover;
     clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);
 }
