@@ -46,8 +46,8 @@
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                     {{ seat.name }}
                     <span class="badge bg-primary rounded-pill">
-                        {% if seat.user_name %}
-                            {{ seat.user_name }}
+                        {% if seat.occupant_name %}
+                            {{ seat.occupant_name }}
                         {% else %}
                             None
                         {% endif %}
