@@ -240,6 +240,9 @@
                 <th>Varış</th>
                 <th>Kalkış Tarihi</th>
                 <th>Varış Tarihi</th>
+                <th>Uçak Kategorisi</th>
+                <th>Zincir Numarası</th>
+                <th>Havayolu Şirketi</th>
                 <th>Uçak</th>
               </tr>
             </thead>
@@ -252,6 +255,9 @@
                 <td>{{ flight.arrival_airport[1] }}</td>
                 <td>{{ flight.departure_time }}</td>
                 <td>{{ flight.arrival_time }}</td>
+                <td>{{ flight.aircraft_category }}</td>
+                <td>{{ flight.chain_number }}</td>
+                <td>{{ flight.airline_company }}</td>
                 <td>
                   <a
                     href="{{ url_for('plane_layout', flight_id=flight.id) }}"

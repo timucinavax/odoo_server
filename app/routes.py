@@ -497,10 +497,15 @@ def plane_layout(flight_id):
                     current_app.config['ODOO_DB'], uid, current_app.config['ODOO_PASSWORD'],
                     'custom.user', 'read',
                     [seat['user_id'][0]],
-                    {'fields': ['username']}
+                    {'fields': ['username' ,'role']}
                 )
                 if user:
                     seat['occupant_name'] = user[0]['username']
+                    
+                    if user[0]['role'] == 'user':
+                        seat['occupant_role'] = 'Müşteri'
+                    elif user[0]['role'] == 'agency':
+                        seat['occupant_role']  = 'Acenta'             
                 else:
                     seat['occupant_name'] = 'Bilinmeyen'
             else:

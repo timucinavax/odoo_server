@@ -10,6 +10,13 @@
     <link href="{{ url_for('static', filename='css/plane.css') }}" rel="stylesheet">
 </head>
 <body>
+
+    {% if user_role == 'admin' %}
+        <div class="mb-3">
+            <a href="{{ url_for('admin') }}" class="btn btn-secondary">&larr; Admin Panele Geri Dön</a>
+        </div>
+    {% endif %}
+    
     <div class="container mt-4">
         <div id="seat-selection" class="plane mt-4">
             <div class="cockpit">
@@ -47,7 +54,7 @@
                     {{ seat.name }}
                     <span class="badge bg-primary rounded-pill">
                         {% if seat.occupant_name %}
-                            {{ seat.occupant_name }}
+                            {{ seat.occupant_name }} - {{seat.occupant_role}}
                         {% else %}
                             None
                         {% endif %}
