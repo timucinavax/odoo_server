@@ -468,46 +468,22 @@ def flight_ticket():
         current_page="flight-ticket",
     )
 
-@app.route("/plane_layout/<int:flight_id>", methods=["GET"])
+@app.route('/plane_layout/<int:flight_id>')
 def plane_layout(flight_id):
-
     uid, models = odoo_connect()
     if not uid:
-        return redirect(url_for("index"))
+        return redirect(url_for('login'))
 
-    flight = models.execute_kw(
-        current_app.config["ODOO_DB"],
-        uid,
-        current_app.config["ODOO_PASSWORD"],
-        "flight.management",
-        "read",
-        [[flight_id]],
-        {"fields": ["flight_number", "airplane_type_id", "seat_ids"]},
-    )
-
-    if not flight:
-        flash("Flight not found.")
-        return redirect(url_for("index"))
-    airplane_type_name = flight[0]["airplane_type_id"][1]
-
+    # Uçağın koltuklarını alıyoruz
     seats = models.execute_kw(
-        current_app.config["ODOO_DB"],
-        uid,
-        current_app.config["ODOO_PASSWORD"],
-        "flight.seat",
-        "search_read",
-        [[("flight_id", "=", flight_id)]],
-        {"fields": ["id", "name", "user_id"]},
+        current_app.config['ODOO_DB'], uid, current_app.config['ODOO_PASSWORD'],
+        'flight.seat', 'search_read',
+        [[('flight_id', '=', flight_id)]],
+        {'fields': ['id', 'name', 'is_occupied']}
     )
-    available_seats = [seat["id"] for seat in seats if not seat["user_id"]]
+    available_seats = [seat['id'] for seat in seats if not seat['is_occupied']]
 
-    return render_template(
-        "plane_rev.html",
-        airplane_type=airplane_type_name,
-        seats=seats,
-        available_seats=available_seats,
-        flight_id=flight_id,
-    )
+    return render_template('plane_rev.html', seats=seats, available_seats=available_seats)
 
 
 @app.route("/flight_admin", methods=["GET"])

@@ -23,7 +23,9 @@
                         {% for seat in row %}
                         <li class="seat">
                             <input type="checkbox" id="seat-{{ seat.id }}" name="seat" value="{{ seat.id }}"
-                                   {% if seat.id not in available_seats %} disabled class="unavailable" {% endif %}>
+                                   {% if seat.is_occupied %} disabled class="occupied"
+                                   {% elif seat.id not in available_seats %} disabled class="unavailable"
+                                   {% endif %}>
                             <label for="seat-{{ seat.id }}">{{ seat.name }}</label>
                         </li>
                         {% endfor %}
@@ -35,6 +37,7 @@
         <div class="text-center mt-4">
             <button class="btn btn-primary" onclick="proceedToPayment()">Devam Et</button>
         </div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ url_for('static', filename='js/ticket.js') }}"></script>
 </body>
