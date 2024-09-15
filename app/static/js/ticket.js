@@ -2,44 +2,40 @@ let maxSeats = 0;
 let selectedSeats = 0;
 
 
-function showFlights(dates = []) {
-    if (!Array.isArray(dates)) {
-        dates = [dates];
-    }
-
+function showFlights(date = null) {
     const today = new Date().toISOString().split('T')[0]; 
     
     document.querySelectorAll('.date-box').forEach(box => box.classList.remove('active'));
 
-    const flightsContainer = document.getElementById('flights-container');
-    flightsContainer.innerHTML = '';
-
-    dates.forEach(date => {
+    if (date) {
         const selectedBox = document.querySelector(`.date-box[data-date="${date}"]`);
         if (selectedBox) {
             selectedBox.classList.add('active');
         }
+    }
 
-        const outboundFlightsByDate = flightsData.filter(flight => {
-            const flightDate = flight.departure_time.split(' ')[0];
-            return flightDate === date && flightDate >= today && flight.flight_direction === 'outbound'; 
-        });
+    const flightsContainer = document.getElementById('flights-container');
+    flightsContainer.innerHTML = '';
 
-        const returnFlightsByDate = flightsData.filter(flight => {
-            const flightDate = flight.departure_time.split(' ')[0];
-            return flightDate === date && flightDate >= today && flight.flight_direction === 'return'; 
-        });
-
-        if (outboundFlightsByDate.length > 0) {
-            displayFlights(outboundFlightsByDate, `Gidiş Uçuşları - ${date}`);
-        }
-
-        if (returnFlightsByDate.length > 0) {
-            displayFlights(returnFlightsByDate, `Dönüş Uçuşları - ${date}`);
-        }
+    const outboundFlightsByDate = flightsData.filter(flight => {
+        const flightDate = flight.departure_time.split(' ')[0];
+        return flightDate === date && flightDate >= today && flight.flight_direction === 'outbound'; 
     });
 
-    if (flightsContainer.innerHTML === '') {
+    const returnFlightsByDate = flightsData.filter(flight => {
+        const flightDate = flight.departure_time.split(' ')[0];
+        return flightDate === date && flightDate >= today && flight.flight_direction === 'return'; 
+    });
+
+    if (outboundFlightsByDate.length > 0) {
+        displayFlights(outboundFlightsByDate, 'Gidiş Uçuşları');
+    }
+
+    if (returnFlightsByDate.length > 0) {
+        displayFlights(returnFlightsByDate, 'Dönüş Uçuşları');
+    }
+
+    if (outboundFlightsByDate.length === 0 && returnFlightsByDate.length === 0) {
         showNoFlightsMessage();
     }
 }
@@ -98,7 +94,6 @@ function displayFlights(flights, header) {
         flightsContainer.innerHTML += flightCard;
     });
 }
-
 
 function updatePrice(flightNumber, basePrice, availableSeats) {
     const priceElement = document.getElementById(`price-${flightNumber}-${availableSeats}`);

@@ -379,30 +379,38 @@ def search_ticket():
     if return_date:
         selected_dates.append(return_date)
     
-    return redirect(url_for("flight_ticket", **{'selected_dates': selected_dates}))
+    # Seçilen tarihleri session'a kaydediyoruz
+    session['selected_dates'] = selected_dates
     
-@app.route("/flight-ticket", methods=["POST", "GET"])
+    return redirect(url_for("flight_ticket"))
+    
+@app.route("/flight-ticket", methods=["GET"])
 def flight_ticket():
     uid, models = odoo_connect()
     if not uid:
         return redirect(url_for("index"))
 
-    selected_dates = request.args.getlist("selected_dates")
-    print(f"Selected dates: {selected_dates}")  # Seçilen tarihleri kontrol edin
-
+    selected_dates = session.get('selected_dates', [])
     domain = []
 
     if selected_dates:
+        date_domains = []
         for selected_date in selected_dates:
-            selected_date_start = f"{selected_date} 00:00:00"
-            selected_date_end = f"{selected_date} 23:59:59"
-            domain.append(("departure_time", ">=", selected_date_start))
-            domain.append(("departure_time", "<=", selected_date_end))
+            next_day = (datetime.strptime(selected_date, '%Y-%m-%d') + timedelta(days=1)).strftime('%Y-%m-%d')
+            date_domain = [
+                '&',
+                ("departure_time", ">=", selected_date),
+                ("departure_time", "<", next_day),
+            ]
+            date_domains.append(date_domain)
+        domain = date_domains[0]
+        for date_domain in date_domains[1:]:
+            domain = ['|'] + domain + date_domain
     else:
-        domain.append(("departure_time", ">=", f"{datetime.today().strftime('%Y-%m-%d')} 00:00:00"))
+        today = datetime.today().strftime('%Y-%m-%d')
+        domain = [("departure_time", ">=", today)]
 
-    print(f"Domain: {domain}")  # Domain'in doğru oluşturulup oluşturulmadığını kontrol edin
-
+    # Odoo'dan uçuşları çekme işlemi
     flights = models.execute_kw(
         current_app.config["ODOO_DB"],
         uid,
@@ -420,14 +428,13 @@ def flight_ticket():
                 "departure_airport",
                 "arrival_airport",
                 "available_seats",
-                "user_price",  
+                "user_price",
                 "agency_price",
             ]
         },
     )
 
-    print(f"Flights: {flights}")  # Bulunan uçuşları kontrol edin
-
+    # Uçuşları tarihe göre gruplama ve sayma işlemleri
     date_flight_map = {}
     outbound_count = {}
     return_count = {}
@@ -447,8 +454,8 @@ def flight_ticket():
             return_count[flight_date] += 1
 
     dates_to_render = selected_dates if selected_dates else list(date_flight_map.keys())
-
-    print(f"Dates to Render: {dates_to_render}")  # Tarihlerin doğru işlendiğini kontrol edin
+    
+    session.pop('selected_dates', None)
 
     return render_template(
         "flight-ticket.html",
@@ -460,7 +467,6 @@ def flight_ticket():
         logged_in_user_role=session.get("role"),
         current_page="flight-ticket",
     )
-
 
 @app.route("/plane_layout/<int:flight_id>", methods=["GET"])
 def plane_layout(flight_id):
