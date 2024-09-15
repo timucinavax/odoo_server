@@ -35,7 +35,6 @@
             </ol>
         </div>
         
-        <!-- Admin kullanıcı için yolcu bilgileri kartı -->
         {% if user_role == 'admin' %}
         <div class="card mt-4">
             <div class="card-header">
@@ -43,23 +42,23 @@
             </div>
             <div class="card-body">
                 <ul class="list-group">
-                    {% for seat in seats %}
+                {% for seat in seats %}
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        {{ seat.name }}
-                        <span class="badge bg-primary rounded-pill">
-                            {% if seat.occupant_name %}
-                                {{ seat.occupant_name }}
-                            {% else %}
-                                None
-                            {% endif %}
-                        </span>
+                    {{ seat.name }}
+                    <span class="badge bg-primary rounded-pill">
+                        {% if seat.user_name %}
+                            {{ seat.user_name }}
+                        {% else %}
+                            None
+                        {% endif %}
+                    </span>
                     </li>
-                    {% endfor %}
+                {% endfor %}
                 </ul>
             </div>
         </div>
         {% endif %}
-        
+
         {% if user_role != 'admin' %}
         <div class="text-center mt-4">
             <button class="btn btn-primary" onclick="proceedToPayment()">Devam Et</button>
