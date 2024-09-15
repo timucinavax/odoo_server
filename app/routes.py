@@ -474,16 +474,44 @@ def plane_layout(flight_id):
     if not uid:
         return redirect(url_for('login'))
 
+    # Kullanıcının rolünü alıyoruz
+    user_role = session.get('role')
+
     # Uçağın koltuklarını alıyoruz
     seats = models.execute_kw(
         current_app.config['ODOO_DB'], uid, current_app.config['ODOO_PASSWORD'],
         'flight.seat', 'search_read',
         [[('flight_id', '=', flight_id)]],
-        {'fields': ['id', 'name', 'is_occupied']}
+        {'fields': ['id', 'name', 'is_occupied', 'user_id']}
     )
+
+    # Mevcut (seçilebilir) koltukların ID'lerini alıyoruz
     available_seats = [seat['id'] for seat in seats if not seat['is_occupied']]
 
-    return render_template('plane_rev.html', seats=seats, available_seats=available_seats)
+    # Eğer kullanıcı admin ise, koltukların kullanıcı isimlerini alıyoruz
+    if user_role == 'admin':
+        for seat in seats:
+            if seat['is_occupied'] and seat['user_id']:
+                # Kullanıcının ismini alıyoruz
+                user = models.execute_kw(
+                    current_app.config['ODOO_DB'], uid, current_app.config['ODOO_PASSWORD'],
+                    'res.users', 'read',
+                    [seat['user_id'][0]],
+                    {'fields': ['name']}
+                )
+                if user:
+                    seat['occupant_name'] = user[0]['name']
+                else:
+                    seat['occupant_name'] = 'Bilinmeyen'
+            else:
+                seat['occupant_name'] = None
+    else:
+        # Admin değilse occupant_name alanını None yapıyoruz
+        for seat in seats:
+            seat['occupant_name'] = None
+
+    return render_template('plane_rev.html', seats=seats, available_seats=available_seats, user_role=user_role)
+
 
 
 @app.route("/flight_admin", methods=["GET"])

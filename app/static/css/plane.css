@@ -35,7 +35,7 @@ html {
   margin: 20px auto;
   transform: rotate(90deg); 
   transform-origin: center;
-  max-width: 300px;
+  max-width: 400px;
 }
 
 .cockpit {
