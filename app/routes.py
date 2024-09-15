@@ -487,6 +487,7 @@ def plane_layout(flight_id):
         {'fields': ['id', 'name', 'is_occupied', 'user_id']}
     )
 
+    # Mevcut (seçilebilir) koltukların ID'lerini alıyoruz
     available_seats = [seat['id'] for seat in seats if not seat['is_occupied']]
 
     if user_role == 'admin':
@@ -494,21 +495,22 @@ def plane_layout(flight_id):
             if seat['is_occupied'] and seat['user_id']:
                 user = models.execute_kw(
                     current_app.config['ODOO_DB'], uid, current_app.config['ODOO_PASSWORD'],
-                    'res.users', 'read',
+                    'custom.user', 'read',
                     [seat['user_id'][0]],
-                    {'fields': ['name']}
+                    {'fields': ['username']}
                 )
                 if user:
-                    seat['user_name'] = user[0]['name']
+                    seat['occupant_name'] = user[0]['username']
                 else:
-                    seat['user_name'] = 'Bilinmeyen'
+                    seat['occupant_name'] = 'Bilinmeyen'
             else:
-                seat['user_name'] = None
+                seat['occupant_name'] = None
     else:
         for seat in seats:
-            seat['user_name'] = None
+            seat['occupant_name'] = None
 
     return render_template('plane_rev.html', seats=seats, available_seats=available_seats, user_role=user_role)
+
 
 @app.route("/flight_admin", methods=["GET"])
 def flight_admin():
