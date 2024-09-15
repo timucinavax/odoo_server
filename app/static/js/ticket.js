@@ -322,10 +322,10 @@ function proceedToPayment() {
 
 // Ödeme işlemini tamamlayan fonksiyon
 function completePayment() {
-  // Ödeme işlemleri burada gerçekleştirilebilir
-  // Ödeme işlemi tamamlandıktan sonra kullanıcıya bilgi veriyoruz
+  // Burada ödeme işlemleri gerçekleştirilebilir
+  // Şimdilik, ödeme işlemi tamamlandıktan sonra bir mesaj gösterip /home sayfasına yönlendiriyoruz
   alert('Ödemeniz başarıyla tamamlandı. Rezervasyonunuz oluşturuldu!');
-  window.location.href = '/home'; // Veya rezervasyon detaylarına yönlendirebilirsiniz
+  window.location.href = '/home';
 }
 
 // Ödeme butonuna tıklama olayını dinliyoruz
