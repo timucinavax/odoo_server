@@ -276,25 +276,13 @@ function initializeSeatSelection() {
   });
 }
 
-// Ödeme adımına geçiş
+// Ödeme adımına geçiş ve koltukları kullanıcıya atama
 function proceedToPayment() {
   if (selectedSeatIds.length !== passengerCount) {
     alert('Lütfen yolcu sayısına eşit sayıda koltuk seçiniz.');
     return;
   }
 
-  activateStep(3);
-
-  const priceSummaryElement = document.getElementById('price-summary');
-  const totalPriceElement = document.getElementById('total-price-summary');
-
-  if (priceSummaryElement && totalPriceElement) {
-    totalPriceElement.textContent = priceSummaryElement.textContent + ' TL';
-  }
-}
-
-// Ödeme işlemini tamamlayan fonksiyon
-function completePayment() {
   // Rezervasyon verilerini hazırlıyoruz
   const reservationData = {
     flightId: selectedFlight.id,
@@ -302,8 +290,8 @@ function completePayment() {
     totalPrice: document.getElementById('price-summary').textContent,
   };
 
-  // Rezervasyon verilerini sunucuya gönderiyoruz
-  fetch('/make_reservation', {
+  // Koltukları sunucuya atamak için POST isteği gönderiyoruz
+  fetch('/assign_seats', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -313,17 +301,31 @@ function completePayment() {
   .then(response => response.json())
   .then(data => {
     if (data.success) {
-      alert('Rezervasyonunuz başarıyla tamamlandı!');
-      // Başarılıysa, bir başarı sayfasına yönlendirebilir veya formu sıfırlayabilirsiniz
-      window.location.href = '/home';
+      // Koltuk ataması başarılıysa ödeme adımına geçiyoruz
+      activateStep(3);
+
+      const priceSummaryElement = document.getElementById('price-summary');
+      const totalPriceElement = document.getElementById('total-price-summary');
+
+      if (priceSummaryElement && totalPriceElement) {
+        totalPriceElement.textContent = priceSummaryElement.textContent + ' TL';
+      }
     } else {
-      alert('Rezervasyon sırasında bir hata oluştu: ' + data.message);
+      alert('Koltuk ataması sırasında bir hata oluştu: ' + data.message);
     }
   })
   .catch(error => {
     console.error('Error:', error);
-    alert('Rezervasyon sırasında bir hata oluştu. Lütfen tekrar deneyiniz.');
+    alert('Koltuk ataması sırasında bir hata oluştu. Lütfen tekrar deneyiniz.');
   });
+}
+
+// Ödeme işlemini tamamlayan fonksiyon
+function completePayment() {
+  // Ödeme işlemleri burada gerçekleştirilebilir
+  // Ödeme işlemi tamamlandıktan sonra kullanıcıya bilgi veriyoruz
+  alert('Ödemeniz başarıyla tamamlandı. Rezervasyonunuz oluşturuldu!');
+  window.location.href = '/home'; // Veya rezervasyon detaylarına yönlendirebilirsiniz
 }
 
 // Ödeme butonuna tıklama olayını dinliyoruz
@@ -342,6 +344,8 @@ function activateStep(stepNumber) {
 
   if (stepNumber === 2) {
     document.getElementById('seat-selection-container').style.display = 'block';
+  } else if (stepNumber === 3) {
+    document.querySelector(`.step-container > div[data-number="3"]`).style.display = 'block';
   } else {
     document.querySelector(`.step-container > div[data-number="${stepNumber}"]`).style.display = 'block';
   }

@@ -581,6 +581,63 @@ def search_flights():
 
     return jsonify(flights=flights)
 
+@app.route("/assign_seats", methods=["POST"])
+def assign_seats():
+    if not session.get("username"):
+        return jsonify({"success": False, "message": "Lütfen giriş yapınız."}), 401
+
+    uid, models = odoo_connect()
+    if not uid:
+        return jsonify({"success": False, "message": "Odoo bağlantısı sağlanamadı."}), 500
+
+    data = request.get_json()
+    if not data:
+        return jsonify({"success": False, "message": "Geçersiz veri."}), 400
+
+    flight_id = data.get("flightId")
+    seat_ids = data.get("seats")
+
+    # Kullanıcı ID'sini oturumdan alıyoruz
+    user_id = session.get("user_id")
+
+    # Gerekli verileri kontrol ediyoruz
+    if not flight_id or not seat_ids:
+        return jsonify({"success": False, "message": "Eksik veri."}), 400
+
+    # Koltukların geçerli olup olmadığını kontrol ediyoruz
+    seats = models.execute_kw(
+        current_app.config["ODOO_DB"],
+        uid,
+        current_app.config["ODOO_PASSWORD"],
+        "flight.seat",
+        "search_read",
+        [[("id", "in", seat_ids), ("flight_id", "=", flight_id)]],
+        {"fields": ["id", "user_id", "is_occupied"]},
+    )
+
+    # Seçilen koltuklardan herhangi biri rezerve edilmiş mi kontrol ediyoruz
+    for seat in seats:
+        if seat["user_id"] or seat["is_occupied"]:
+            return jsonify({"success": False, "message": f"Koltuk {seat['id']} zaten rezerve edilmiş."}), 400
+
+    try:
+        # Koltukları kullanıcıya atıyoruz
+        for seat_id in seat_ids:
+            models.execute_kw(
+                current_app.config["ODOO_DB"],
+                uid,
+                current_app.config["ODOO_PASSWORD"],
+                "flight.seat",
+                "write",
+                [[seat_id], {"user_id": user_id, "is_occupied": True}]
+            )
+
+        return jsonify({"success": True, "message": "Koltuklar başarıyla atandı."})
+
+    except Exception as e:
+        return jsonify({"success": False, "message": f"Hata oluştu: {str(e)}"}), 500
+
+
 
 @app.route("/logout")
 def logout():
